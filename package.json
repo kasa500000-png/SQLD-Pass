@@ -1,0 +1,52 @@
+{
+  "name": "sqld-pass",
+  "version": "0.1.0",
+  "private": true,
+  "main": "index.ts",
+  "engines": {"node": ">=22.13.0"},
+  "scripts": {
+    "start": "expo start --dev-client",
+    "android": "expo run:android",
+    "ios": "expo run:ios",
+    "typecheck": "tsc -p tsconfig.core.json",
+    "typecheck:native": "tsc -p tsconfig.json --noEmit",
+    "test": "tsc -p tsconfig.core.json && node --test tests/*.test.cjs",
+    "preview:build": "node scripts/build_preview.cjs",
+    "doctor": "expo-doctor",
+    "content:check": "node scripts/check-content.cjs",
+    "release:check": "node scripts/release-gate.cjs",
+    "eas-build-pre-install": "node scripts/materialize-content.cjs && node scripts/build-guard.cjs",
+    "build:android:internal": "eas build --platform android --profile internal",
+    "build:ios:simulator": "eas build --platform ios --profile simulator",
+    "build:ios:internal": "eas build --platform ios --profile internal",
+    "build:production": "npm run release:check && eas build --platform all --profile production",
+    "content:materialize": "node scripts/materialize-content.cjs",
+    "postinstall": "node scripts/materialize-content.cjs",
+    "prestart": "node scripts/materialize-content.cjs",
+    "preandroid": "node scripts/materialize-content.cjs",
+    "preios": "node scripts/materialize-content.cjs",
+    "pretypecheck:native": "node scripts/materialize-content.cjs",
+    "pretest": "node scripts/materialize-content.cjs",
+    "prepreview:build": "node scripts/materialize-content.cjs",
+    "precontent:check": "node scripts/materialize-content.cjs",
+    "prerelease:check": "node scripts/materialize-content.cjs"
+  },
+  "dependencies": {
+    "expo": "57.0.18",
+    "expo-build-properties": "57.0.15",
+    "expo-crypto": "57.0.2",
+    "expo-dev-client": "57.0.16",
+    "expo-sqlite": "57.0.2",
+    "expo-status-bar": "57.0.1",
+    "react": "19.2.3",
+    "react-native": "0.86.3",
+    "react-native-safe-area-context": "5.7.0"
+  },
+  "devDependencies": {
+    "@types/react": "19.2.18",
+    "@types/node": "22.20.0",
+    "typescript": "6.0.3",
+    "expo-doctor": "1.20.2",
+    "eas-cli": "22.2.0"
+  }
+}

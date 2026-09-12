@@ -16,3 +16,8 @@ ios/
 credentials.json
 *.tsbuildinfo
 .DS_Store
+generated/content.json
+source-materials/**/*.json
+preview/SQLD_Pass_Preview.html
+qa/*.png
+docs/reference/*.png

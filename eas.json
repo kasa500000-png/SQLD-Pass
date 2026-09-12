@@ -1,0 +1,9 @@
+{
+  "cli": {"version": ">= 22.2.0", "appVersionSource": "local"},
+  "build": {
+    "development": {"developmentClient": true, "distribution": "internal", "env": {"EXPO_PUBLIC_APP_ENV": "development"}, "android": {"buildType": "apk"}},
+    "internal": {"distribution": "internal", "env": {"EXPO_PUBLIC_APP_ENV": "internal"}, "android": {"buildType": "apk"}},
+    "simulator": {"extends": "internal", "ios": {"simulator": true}},
+    "production": {"distribution": "store", "autoIncrement": true, "env": {"EXPO_PUBLIC_APP_ENV": "production"}, "android": {"buildType": "app-bundle"}}
+  }
+}
