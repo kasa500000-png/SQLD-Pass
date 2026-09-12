@@ -1,0 +1,19 @@
+{
+  "migrationIncomplete": true,
+  "manifest": {
+    "schema": 1,
+    "version": "phase1.20260908.1",
+    "theoryVersion": "1.0.0",
+    "examVersion": "1.0.0",
+    "releaseReady": false,
+    "humanReviewed": false,
+    "officialSyllabusVerified": false,
+    "counts": {"lessons": 60, "practice": 120, "exams": 20, "examQuestions": 1000},
+    "note": "Git 저장소 분리 단계의 placeholder입니다. 전체 콘텐츠 팩을 materialize한 뒤 내부 앱을 실행하세요."
+  },
+  "lessons": [],
+  "questions": {},
+  "exams": [],
+  "days": [],
+  "sources": {}
+}
