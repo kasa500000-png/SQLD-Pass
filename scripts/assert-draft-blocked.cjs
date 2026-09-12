@@ -1,0 +1,15 @@
+'use strict';
+const assert = require('node:assert/strict');
+const fs = require('node:fs');
+const path = require('node:path');
+const {spawnSync} = require('node:child_process');
+const {validateBuffer,readInput} = require('./content-integrity.cjs');
+const root = path.resolve(__dirname,'..');
+const lock = JSON.parse(fs.readFileSync(path.join(root,'content-pack/content.lock.json'),'utf8'));
+const {content} = validateBuffer(readInput(path.join(root,'generated/content.json')),lock);
+assert.equal(content.manifest.releaseReady,false,'Update this draft-specific assertion only after real content approval.');
+const run = spawnSync(process.execPath,[path.join(root,'scripts/release-gate.cjs')],{encoding:'utf8',timeout:10000});
+assert.ifError(run.error);
+assert.notEqual(run.status,0,'Draft unexpectedly passed the production gate');
+assert.match(run.stderr,/Content approval evidence is incomplete/,'Missing files, dependency failures or unrelated errors are not proof of the review gate');
+console.log('Verified exact content-review rejection, not a generic failing command.');

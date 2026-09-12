@@ -1,37 +1,59 @@
 name: SQLD Pass validation
 on:
   workflow_dispatch:
+  pull_request:
+    branches: [main]
+  push:
+    branches: [main]
 permissions:
   contents: read
+concurrency:
+  group: sqld-validation-${{ github.ref }}
+  cancel-in-progress: true
 jobs:
-  source:
+  content:
     runs-on: ubuntu-latest
+    timeout-minutes: 5
     steps:
       - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
       - uses: actions/setup-node@v4
         with:
           node-version: '22'
-      - name: Install
+      - name: Content pipeline unit tests (no install or SDK required)
+        run: node --test tests/content-import.test.cjs
+      - name: Require exact full authored content
         run: |
-          if [ -f package-lock.json ]; then npm ci; else npm install; fi
-      - name: Core tests
-        run: npm test
-      - name: Native typecheck
-        run: npm run typecheck:native
-      - name: Expo compatibility
+          node scripts/materialize-content.cjs --required
+          node scripts/check-content.cjs
+      - name: Verify actual content-review rejection
+        run: node scripts/assert-draft-blocked.cjs
+  native-source:
+    needs: content
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    env:
+      CI: '1'
+      EXPO_PUBLIC_APP_ENV: internal
+      EXPO_PUBLIC_ADS_MODE: 'off'
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Require reviewed dependency lock
         run: |
-          npx expo install --check
-          npx expo-doctor
-      - name: Full content check when pack is present
-        run: |
-          if [ -f content-pack/content.json.gz ] || [ -f generated/content.json.gz ]; then
-            npm run content:materialize
-            npm run content:check
-          else
-            echo 'Full Phase 1 content pack is intentionally not materialized in this migration yet.'
-          fi
-      - name: Draft must not pass production release gate
-        run: |
-          if npm run release:check; then
-            echo 'Review why an unapproved build became production eligible'; exit 1
-          fi
+          test -f package-lock.json || { echo 'Commit the resolved, reviewed package-lock.json from the dependency readiness workflow before a native build.'; exit 1; }
+      - run: npm ci --no-audit --no-fund
+      - run: npm test
+      - run: npm run typecheck:native
+      - run: npx --no-install expo install --check
+      - run: npx --no-install expo-doctor
+      - run: npm run ads:check
+      - name: Generate Android and iOS projects using test ads only
+        env:
+          EXPO_PUBLIC_ADS_MODE: test
+        run: npx --no-install expo prebuild --platform all --no-install

@@ -1,0 +1,19 @@
+{
+  "schema": 1,
+  "contentVersion": "phase1.20260908.1",
+  "sha256": "08b6d35d539ed9b7c225befed155b126bf35809c1ec331e1ca12de6576fb0ead",
+  "bytes": 1941994,
+  "counts": {
+    "lessons": 60,
+    "practice": 120,
+    "exams": 20,
+    "examQuestions": 1000
+  },
+  "sourceHashes": {
+    "SQLD_Pass_Textbook_v1_0/content_pack.json": "778cea8c8f19877f42d018b2226021aaf5172e8c653daa041c4f625c17758792",
+    "SQLD_Pass_Mock_20_v1_0/app/mock_exam_pack.json": "eb9acfae7b12e98bfce50b93ffce2524c68af3a18234fb67a3fa57c5cfed03ee",
+    "SQLD_Pass_Textbook_v1_0/dataset.json": "b73bf8e221c35a27dd28b8f9a69dff41e59095d6c993957145950789f8161e1a"
+  },
+  "status": "editorial_draft",
+  "note": "Content identity only; not human review, DBMS validation or permission to release."
+}
