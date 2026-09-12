@@ -11,12 +11,13 @@ import {createNativeServices} from './src/platform/native';
 import contentData from './generated/content.json';
 
 const content = contentData as unknown as Content;
+const migrationIncomplete = Boolean((contentData as unknown as {migrationIncomplete?: boolean}).migrationIncomplete);
 class RenderBoundary extends Component<React.PropsWithChildren, {failed: boolean}> {
   state = {failed: false};
   static getDerivedStateFromError(){return {failed: true};}
   render(){return this.state.failed ? <View style={{flex:1,padding:28,justifyContent:'center',backgroundColor:'#F6F8FC'}}>
     <Text style={{fontSize:22,fontWeight:'700',color:'#172033'}}>화면을 표시하지 못했습니다.</Text>
-    <Text style={{fontSize:16,lineHeight:26,color:'#53647F',marginTop:12}}>기록을 삭제하지 않았습니다. 앱을 완전히 닫은 뒤 다시 열어 주세요. 문제가 계속되면 오류 상황을 기록해 개발 담당자에게 알려 주세요.</Text>
+    <Text style={{fontSize:16,lineHeight:26,color:'#53647F',marginTop:12}}>기록을 삭제하지 않았습니다. 앱을 완전히 닫은 뒤 다시 열어 주세요.</Text>
   </View> : this.props.children;}
 }
 function LearnerApp(){
@@ -40,9 +41,16 @@ function LearnerApp(){
     </KeyboardAvoidingView>
   </SafeAreaView>;
 }
+function MigrationNotice(){
+  return <View style={{flex:1,padding:28,justifyContent:'center',backgroundColor:'#F6F8FC'}}>
+    <Text style={{fontSize:28,fontWeight:'800',color:'#172033'}}>SQLD Pass 저장소 분리 완료</Text>
+    <Text style={{fontSize:16,lineHeight:26,color:'#53647F',marginTop:14}}>앱 소스는 SQLD-Pass 전용 저장소로 이동했습니다. 현재 Git에는 안전한 placeholder 콘텐츠만 있으며, 기존 Phase 1 콘텐츠 팩을 materialize한 뒤 학습 앱이 실행됩니다.</Text>
+    <Text style={{fontSize:14,lineHeight:22,color:'#8A4B08',marginTop:14}}>QueryPass와는 별도 프로젝트이며 데이터베이스와 앱 식별자도 분리되어 있습니다.</Text>
+  </View>;
+}
 export default function App(){
   const blocked=process.env.EXPO_PUBLIC_APP_ENV==='production'&&!canRelease(content);
-  return <SafeAreaProvider><RenderBoundary>{blocked?
+  return <SafeAreaProvider><RenderBoundary>{migrationIncomplete?<MigrationNotice/>:blocked?
     <View style={{flex:1,padding:28,justifyContent:'center'}}><Text>콘텐츠 운영 승인이 완료되지 않았습니다. 공개 배포를 중단합니다.</Text></View>:
     <LearnerApp />}</RenderBoundary></SafeAreaProvider>;
 }
