@@ -1,1 +1,26 @@
-{"compilerOptions":{"target":"ES2022","module":"CommonJS","moduleResolution":"Node","strict":true,"lib":["ES2022","DOM"],"outDir":".build","rootDir":"src","esModuleInterop":true,"skipLibCheck":true,"noUncheckedIndexedAccess":false},"include":["src/core/**/*.ts","src/ui/**/*.ts","src/platform/web.ts"],"exclude":["src/platform/native.ts"]}
+{
+  "compilerOptions": {
+    "target": "ES2022",
+    "module": "CommonJS",
+    "moduleResolution": "Node",
+    "strict": true,
+    "lib": [
+      "ES2022",
+      "DOM"
+    ],
+    "outDir": ".build",
+    "rootDir": "src",
+    "esModuleInterop": true,
+    "skipLibCheck": true,
+    "noUncheckedIndexedAccess": false
+  },
+  "include": [
+    "src/core/**/*.ts",
+    "src/ui/**/*.ts",
+    "src/platform/web.ts",
+    "src/monetization/**/*.ts"
+  ],
+  "exclude": [
+    "src/platform/native.ts"
+  ]
+}
