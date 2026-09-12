@@ -1,0 +1,3 @@
+content-pack/*.gz binary
+*.cjs text eol=lf
+*.yml text eol=lf

@@ -1,0 +1,59 @@
+name: SQLD Pass native test build
+on:
+  workflow_dispatch:
+    inputs:
+      target:
+        description: Internal testing only; official test ads, no store submission
+        required: true
+        type: choice
+        options: [android, ios-simulator]
+permissions:
+  contents: read
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    env:
+      CI: '1'
+      EXPO_PUBLIC_APP_ENV: internal
+      EXPO_PUBLIC_ADS_MODE: test
+      BUILD_TARGET: ${{ inputs.target }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Verify content and reproducible dependencies before contacting EAS
+        run: |
+          node scripts/materialize-content.cjs --required
+          node scripts/check-content.cjs
+          test -f package-lock.json || { echo 'A reviewed package-lock.json is required.'; exit 1; }
+      - run: npm ci --no-audit --no-fund
+      - run: npm test
+      - run: npm run typecheck:native
+      - run: npx --no-install expo install --check
+      - run: npx --no-install expo-doctor
+      - run: npm run ads:check
+      - name: Internal EAS build only
+        env:
+          EXPO_TOKEN: ${{ secrets.EXPO_TOKEN }}
+          EXPO_OWNER: ${{ vars.EXPO_OWNER }}
+          EXPO_PUBLIC_EAS_PROJECT_ID: ${{ vars.EXPO_PUBLIC_EAS_PROJECT_ID }}
+        shell: bash
+        run: |
+          test -n "$EXPO_TOKEN" || { echo 'Configure the authorized EXPO_TOKEN secret; never commit it.'; exit 1; }
+          test -n "$EXPO_PUBLIC_EAS_PROJECT_ID" || { echo 'Set this standalone SQLD-Pass EAS project ID.'; exit 1; }
+          mkdir -p build-evidence
+          case "$BUILD_TARGET" in
+            android) npx --no-install eas build --platform android --profile ads-test --non-interactive --wait --json > build-evidence/build.json ;;
+            ios-simulator) npx --no-install eas build --platform ios --profile ads-test-simulator --non-interactive --wait --json > build-evidence/build.json ;;
+            *) echo 'Unsupported internal build target'; exit 1 ;;
+          esac
+      - uses: actions/upload-artifact@v4
+        with:
+          name: sqld-test-build-${{ inputs.target }}-${{ github.sha }}
+          path: build-evidence/build.json
+          retention-days: 7
+          if-no-files-found: error
