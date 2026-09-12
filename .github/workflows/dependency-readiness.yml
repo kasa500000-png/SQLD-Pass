@@ -1,0 +1,60 @@
+name: SQLD Pass dependency readiness
+on:
+  workflow_dispatch:
+  push:
+    branches: [work/content-build-readiness-20260912]
+    paths: [.github/workflows/dependency-readiness.yml]
+permissions:
+  contents: read
+concurrency:
+  group: sqld-readiness-${{ github.ref }}
+  cancel-in-progress: true
+jobs:
+  dependency-readiness:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    env:
+      EXPO_PUBLIC_APP_ENV: internal
+      EXPO_PUBLIC_ADS_MODE: 'off'
+      CI: '1'
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Preserve exact source snapshot for verification
+        run: |
+          mkdir -p /tmp/sqld-readiness
+          git archive --format=tar.gz --output=/tmp/sqld-readiness/source.tar.gz HEAD
+          git rev-parse HEAD > /tmp/sqld-readiness/commit.txt
+      - name: Resolve dependencies without running package lifecycle scripts
+        shell: bash
+        run: |
+          set -o pipefail
+          npm install --ignore-scripts --no-audit --no-fund 2>&1 | tee /tmp/sqld-readiness/install.log
+      - name: Check native TypeScript and SDK compatibility
+        shell: bash
+        run: |
+          set +e
+          npm run typecheck:native > /tmp/sqld-readiness/typecheck.log 2>&1
+          ts=$?
+          npx --no-install expo install --check > /tmp/sqld-readiness/expo-check.log 2>&1
+          sdk=$?
+          npx --no-install expo-doctor > /tmp/sqld-readiness/doctor.log 2>&1
+          doctor=$?
+          printf '{"nativeTypecheck":%s,"sdkCheck":%s,"expoDoctor":%s}\n' "$ts" "$sdk" "$doctor" > /tmp/sqld-readiness/exit-codes.json
+          cat /tmp/sqld-readiness/exit-codes.json
+          test "$ts" -eq 0 && test "$sdk" -eq 0 && test "$doctor" -eq 0
+      - name: Include resolved lockfile when produced
+        if: always()
+        run: |
+          if [ -f package-lock.json ]; then cp package-lock.json /tmp/sqld-readiness/; fi
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: sqld-dependency-readiness-${{ github.sha }}
+          path: /tmp/sqld-readiness/
+          retention-days: 7
+          if-no-files-found: error
