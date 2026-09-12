@@ -1,0 +1,57 @@
+name: SQLD Pass integration audit
+on:
+  workflow_dispatch:
+  push:
+    branches: [work/learning-ui-polish-20260912]
+    paths: [.github/workflows/integration-audit.yml]
+permissions:
+  contents: read
+concurrency:
+  group: sqld-integration-${{ github.ref }}
+  cancel-in-progress: true
+jobs:
+  audit:
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    env:
+      EXPO_PUBLIC_APP_ENV: internal
+      EXPO_PUBLIC_ADS_MODE: 'off'
+      CI: '1'
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Exact tracked source snapshot
+        run: |
+          mkdir -p /tmp/sqld-audit
+          git archive --format=zip --output=/tmp/sqld-audit/source.zip HEAD
+          git rev-parse HEAD > /tmp/sqld-audit/commit.txt
+          git ls-tree -r HEAD > /tmp/sqld-audit/tree.txt
+      - name: Resolve declared dependencies without lifecycle scripts
+        run: |
+          set -o pipefail
+          npm install --ignore-scripts --no-audit --no-fund 2>&1 | tee /tmp/sqld-audit/install.log
+      - name: Core and native source checks
+        if: success()
+        shell: bash
+        run: |
+          set +e
+          npm run typecheck > /tmp/sqld-audit/core-types.log 2>&1; core=$?
+          npm run typecheck:native > /tmp/sqld-audit/native-types.log 2>&1; native=$?
+          npx --no-install expo install --check > /tmp/sqld-audit/expo-check.log 2>&1; sdk=$?
+          printf '{"core":%s,"native":%s,"sdk":%s}\n' "$core" "$native" "$sdk" > /tmp/sqld-audit/results.json
+          cat /tmp/sqld-audit/results.json
+          test "$core" -eq 0 && test "$native" -eq 0 && test "$sdk" -eq 0
+      - name: Collect dependency lock when resolved
+        if: always()
+        run: if [ -f package-lock.json ]; then cp package-lock.json /tmp/sqld-audit/; fi
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: sqld-integration-audit-${{ github.sha }}
+          path: /tmp/sqld-audit/
+          retention-days: 7
+          if-no-files-found: error
