@@ -3,7 +3,9 @@
   "version": "0.1.0",
   "private": true,
   "main": "index.ts",
-  "engines": {"node": ">=22.13.0"},
+  "engines": {
+    "node": ">=22.13.0"
+  },
   "scripts": {
     "start": "expo start --dev-client",
     "android": "expo run:android",
@@ -12,14 +14,14 @@
     "typecheck:native": "tsc -p tsconfig.json --noEmit",
     "test": "tsc -p tsconfig.core.json && node --test tests/*.test.cjs",
     "doctor": "expo-doctor",
-    "content:materialize": "node scripts/materialize-content.cjs",
     "content:check": "node scripts/check-content.cjs",
-    "release:check": "node scripts/release-gate.cjs",
+    "release:check": "node scripts/release-gate.cjs && node scripts/check-ads.cjs",
     "eas-build-pre-install": "node scripts/materialize-content.cjs && node scripts/build-guard.cjs",
     "build:android:internal": "eas build --platform android --profile internal",
     "build:ios:simulator": "eas build --platform ios --profile simulator",
     "build:ios:internal": "eas build --platform ios --profile internal",
     "build:production": "npm run release:check && eas build --platform all --profile production",
+    "content:materialize": "node scripts/materialize-content.cjs",
     "postinstall": "node scripts/materialize-content.cjs",
     "prestart": "node scripts/materialize-content.cjs",
     "preandroid": "node scripts/materialize-content.cjs",
@@ -27,7 +29,10 @@
     "pretypecheck:native": "node scripts/materialize-content.cjs",
     "pretest": "node scripts/materialize-content.cjs",
     "precontent:check": "node scripts/materialize-content.cjs",
-    "prerelease:check": "node scripts/materialize-content.cjs"
+    "prerelease:check": "node scripts/materialize-content.cjs",
+    "ads:check": "node scripts/check-ads.cjs",
+    "ads:hash": "node scripts/check-ads.cjs --hash",
+    "test:monetization": "tsc -p tsconfig.core.json && node --test tests/monetization*.test.cjs"
   },
   "dependencies": {
     "expo": "57.0.18",
@@ -38,7 +43,8 @@
     "expo-status-bar": "57.0.1",
     "react": "19.2.3",
     "react-native": "0.86.3",
-    "react-native-safe-area-context": "5.7.0"
+    "react-native-safe-area-context": "5.7.0",
+    "react-native-google-mobile-ads": "16.4.0"
   },
   "devDependencies": {
     "@types/react": "19.2.18",
