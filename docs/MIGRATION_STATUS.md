@@ -1,35 +1,32 @@
-# SQLD Pass Git migration status
+# SQLD Pass Git migration status — 2026-09-12 follow-up
 
-Canonical repository: `kasa500000-png/SQLD-Pass`
+Canonical repository: `kasa500000-png/SQLD-Pass` (separate from QueryPass and SpicPass).
 
-## Completed
-- SQLD Pass is now treated as an independent repository and product.
-- Expo/React Native app entry, Android/iOS config, EAS profiles, core domain/controller, UI renderer and SQLite adapter are stored here.
-- Default internal app identifier: `com.sqldpass.app.internal`.
-- Local learner database: `sqld_pass.sqlite`.
-- QueryPass is not a build dependency, workspace dependency, database source, package ID, or release target.
-- Production release remains gated until real content/device/policy approval evidence exists.
+## Completed source work
 
-## Content pack handoff
-The full authored Phase 1 content is versioned separately from source code during this migration. The repository currently contains a safe placeholder at `generated/content.json` so an incomplete migration cannot masquerade as a working learning build.
+Standalone Expo/React Native app, SQLite, core learning/review/exam flow and opt-in rewarded-exam policy exist here.
+Internal app identifier remains `com.sqldpass.app.internal`; learner DB remains `sqld_pass.sqlite`.
+Added exact-hash import, structural/reference validation, atomic content replacement, 51 Node pipeline tests,
+strict required-content CI and manual Android/iOS test-build workflow. Live ads and publication approvals remain off.
 
-Expected approved migration input:
-- 60 theory lessons
-- 120 lesson check questions
-- 20 mock exams × 50 = 1,000 mock questions
-- total question objects: 1,120
-- manifest version: `phase1.20260908.1`
+## Full content payload: NOT YET in Git
 
-Known source hashes from the authored content package:
-- theory `content_pack.json`: `778cea8c8f19877f42d018b2226021aaf5172e8c653daa041c4f625c17758792`
-- mock `mock_exam_pack.json`: `eb9acfae7b12e98bfce50b93ffce2524c68af3a18234fb67a3fa57c5cfed03ee`
-- dataset `dataset.json`: `b73bf8e221c35a27dd28b8f9a69dff41e59095d6c993957145950789f8161e1a`
+The local authored runtime was recovered from the attached Phase1 ZIP and byte-verified:
+- 60 theory lessons; 120 confirmation questions; 20 mocks x 50 = 1,000 questions; 30 study days.
+- Version: `phase1.20260908.1`.
+- Raw bytes: 1,941,994.
+- SHA-256: `08b6d35d539ed9b7c225befed155b126bf35809c1ec331e1ca12de6576fb0ead`.
+- Original theory/mock/dataset hashes are pinned in `content-pack/content.lock.json` and were verified locally.
 
-Place the generated gzip content pack at `content-pack/content.json.gz` and run `npm run content:materialize`. `npm run content:check` must then pass before native QA.
+The prepared `content.json.gz` is supplied as a handoff file. It has not been directly uploaded to this Git repository.
+The remote placeholder must remain visibly incomplete until that actual payload is committed.
+Run `node scripts/import-content.cjs <content.json.gz>` and commit `content-pack/content.json.gz`.
+The importer does not mark content reviewed and does not touch learner SQLite or ad grants.
 
-## Not claimed complete
-- Full authored content pack has not yet been checked into this Git repository.
-- Android APK/AAB and iOS IPA/TestFlight builds are not verified by this migration.
-- Human content approval, target DBMS verification, official syllabus verification and store policy evidence are still pending.
+## Validation and release blockers
 
-This document deliberately distinguishes Git project separation from store-ready release completion.
+Local: 51 new pipeline tests passed; full supplied runtime schema and hash passed.
+Remote dependency-readiness run 34684197704 failed before steps/log creation. Exact cause not established.
+No new lockfile, native APK/AAB/IPA, TestFlight, real ad playback or store submission was completed.
+Independent content/target DBMS/official syllabus and device/policy approval remain pending.
+See `docs/CONTENT_IMPORT_20260912.md` for commands, workflow boundaries and remaining actions.
