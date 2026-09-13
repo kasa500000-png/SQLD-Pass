@@ -1,4 +1,5 @@
 import {render} from '../ui/views';
+import {polishLearning} from '../ui/learning-polish';
 import {box,button,dark,light,text,type Node} from '../ui/nodes';
 import type {MonetizedController} from './controller';
 import {isFreeExam} from './policy';
@@ -59,5 +60,6 @@ export function renderMonetized(c:MonetizedController):Node {
     root.children!.splice(idx+1,0,box([],{minHeight:0},'monetization-banner'));
   }
   const lock=(n:Node):Node=>({...n,disabled:n.kind==='button'&&c.rewardBusy?true:n.disabled,children:n.children?.map(lock)});
-  return c.rewardBusy?lock(root):root;
+  const improved=polishLearning(c,root,{hasAccess:id=>c.hasAccess(id),offerUnlock:id=>c.offerUnlock(id),mode:c.ads.mode,busy:c.rewardBusy,resetLearning:()=>c.requestLearningReset()});
+  return c.rewardBusy?lock(improved):improved;
 }

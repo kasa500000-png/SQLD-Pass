@@ -1,6 +1,27 @@
 {
   "extends": "expo/tsconfig.base",
-  "compilerOptions": {"strict": true, "resolveJsonModule": true, "esModuleInterop": true, "noEmit": true},
-  "include": ["App.tsx", "index.ts", "app.config.ts", "src/core/**/*.ts", "src/ui/**/*.ts", "src/platform/native.ts", "src/platform/NativeView.tsx"],
-  "exclude": [".build", "preview", "src/platform/web.ts"]
+  "compilerOptions": {
+    "strict": true,
+    "resolveJsonModule": true,
+    "esModuleInterop": true,
+    "noEmit": true,
+    "types": [
+      "node",
+      "react"
+    ]
+  },
+  "include": [
+    "App.tsx",
+    "index.ts",
+    "app.config.ts",
+    "src/core/**/*.ts",
+    "src/ui/**/*.ts",
+    "src/platform/native.ts",
+    "src/platform/NativeView.tsx"
+  ],
+  "exclude": [
+    ".build",
+    "preview",
+    "src/platform/web.ts"
+  ]
 }
