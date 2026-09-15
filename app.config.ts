@@ -14,7 +14,7 @@ export default ({config}:ConfigContext):ExpoConfig=>{
     ...(process.env.EXPO_OWNER?{owner:process.env.EXPO_OWNER}:{}),
     platforms:['android','ios'],orientation:'default',userInterfaceStyle:'light',
     scheme:production?'sqld-pass':'sqld-pass-internal',updates:{enabled:false},
-    ios:{bundleIdentifier:process.env.IOS_BUNDLE_IDENTIFIER??'com.sqldpass.app.internal',buildNumber:'1',supportsTablet:false,
+    ios:{bundleIdentifier:process.env.IOS_BUNDLE_IDENTIFIER??'com.sqldpass.app.internal',buildNumber:'1',supportsTablet:true,
       infoPlist:{ITSAppUsesNonExemptEncryption:false}},
     android:{package:process.env.ANDROID_PACKAGE??'com.sqldpass.app.internal',versionCode:1,allowBackup:false,
       permissions:[],softwareKeyboardLayoutMode:'resize',blockedPermissions:[

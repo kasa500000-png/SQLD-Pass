@@ -1,0 +1,63 @@
+
+> sqld-pass@0.1.0 test:content-pipeline
+> node --test tests/content-import.test.cjs
+
+✔ complete independent synthetic fixture validates (10.5746ms)
+✔ placeholder is never complete (1.4675ms)
+✔ empty lesson list (1.8163ms)
+✔ missing question (1.7195ms)
+✔ duplicate lesson ID (1.5928ms)
+✔ question key differs from ID (2.4627ms)
+✔ empty theory body (1.1649ms)
+✔ unknown prerequisite (0.8926ms)
+✔ self prerequisite (1.3827ms)
+✔ unknown source reference (1.1027ms)
+✔ missing answer choice (1.5252ms)
+✔ duplicate choice ID (2.013ms)
+✔ empty choice text (1.8457ms)
+✔ missing explanation (2.6599ms)
+✔ missing per-option explanation (1.5622ms)
+✔ unknown related lesson (2.374ms)
+✔ SQL not a string (1.7311ms)
+✔ table row width mismatch (2.7508ms)
+✔ exam with 49 questions (4.3632ms)
+✔ duplicate exam question (3.7207ms)
+✔ exam questions from another set (4.7399ms)
+✔ assessment mixed into practice (1.0943ms)
+✔ wrong subject ratio (4.3236ms)
+✔ invalid subject (3.2217ms)
+✔ wrong duration (3.187ms)
+✔ duplicate exam order (3.176ms)
+✔ wrong canonical exam order (3.831ms)
+✔ duplicate study day (3.7584ms)
+✔ unknown daily lesson (3.2717ms)
+✔ rewarded exam inserted into free curriculum (4.1588ms)
+✔ curriculum omits lessons (3.5655ms)
+✔ lying manifest counts (2.5434ms)
+✔ non-boolean review flag (3.6818ms)
+✔ byte-identical pack matches pinned lock (21.0885ms)
+✔ same-length text edit fails SHA check (16.621ms)
+✔ review flag change cannot silently change approval (14.0936ms)
+✔ lock content version must agree (20.9558ms)
+✔ lock provenance must agree (19.1724ms)
+✔ invalid UTF-8 is rejected (0.1961ms)
+✔ gzip expansion is bounded (46.5399ms)
+✔ missing archive is pending only for source editing (8.5153ms)
+✔ missing archive blocks required native build (8.4156ms)
+✔ valid gzip replaces placeholder with identical bytes (36.7777ms)
+✔ already materialized exact content works without archive (24.8926ms)
+✔ corrupt archive leaves previous content untouched (10.1114ms)
+✔ conflicting secondary archive is not ignored (26.8723ms)
+✔ valid raw import creates a decompressible archive (56.2389ms)
+✔ invalid raw import leaves both destinations unchanged (20.6004ms)
+✔ repeated materialize is idempotent (76.2422ms)
+✔ atomic write leaves no temporary files (6.1088ms)
+✔ failed rename cleans temporary file (4.3554ms)
+ℹ tests 51
+ℹ suites 0
+ℹ pass 51
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 652.0619

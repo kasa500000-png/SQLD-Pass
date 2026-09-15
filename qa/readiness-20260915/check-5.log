@@ -1,0 +1,518 @@
+
+> sqld-pass@0.1.0 pretest
+> node scripts/materialize-content.cjs
+
+{"status":"pending","message":"Content pack is absent. Placeholder is retained for source editing only; native builds and content checks remain blocked."}
+
+> sqld-pass@0.1.0 test
+> tsc -p tsconfig.core.json && node --test tests/*.test.cjs
+
+✔ complete independent synthetic fixture validates (18.1091ms)
+✔ placeholder is never complete (6.1202ms)
+✔ empty lesson list (2.0623ms)
+✔ missing question (1.1594ms)
+✔ duplicate lesson ID (1.1675ms)
+✔ question key differs from ID (2.4066ms)
+✔ empty theory body (1.1205ms)
+✔ unknown prerequisite (0.9601ms)
+✔ self prerequisite (3.0301ms)
+✔ unknown source reference (1.235ms)
+✔ missing answer choice (1.6848ms)
+✔ duplicate choice ID (2.2871ms)
+✔ empty choice text (1.7658ms)
+✔ missing explanation (4.5498ms)
+✔ missing per-option explanation (1.7361ms)
+✔ unknown related lesson (3.7954ms)
+✔ SQL not a string (1.5018ms)
+✔ table row width mismatch (2.8301ms)
+✔ exam with 49 questions (13.5678ms)
+✔ duplicate exam question (5.3616ms)
+✔ exam questions from another set (6.2352ms)
+✔ assessment mixed into practice (0.9351ms)
+✔ wrong subject ratio (8.5664ms)
+✔ invalid subject (4.2244ms)
+✔ wrong duration (3.0363ms)
+✔ duplicate exam order (3.9927ms)
+✔ wrong canonical exam order (3.8572ms)
+✔ duplicate study day (3.2753ms)
+✔ unknown daily lesson (6.1041ms)
+✔ rewarded exam inserted into free curriculum (5.4234ms)
+✔ curriculum omits lessons (4.5743ms)
+✔ lying manifest counts (3.436ms)
+✔ non-boolean review flag (4.3441ms)
+✔ byte-identical pack matches pinned lock (26.2108ms)
+✔ same-length text edit fails SHA check (19.1776ms)
+✔ review flag change cannot silently change approval (19.033ms)
+✔ lock content version must agree (20.8432ms)
+✔ lock provenance must agree (26.8581ms)
+✔ invalid UTF-8 is rejected (0.1812ms)
+✔ gzip expansion is bounded (62.4149ms)
+✔ missing archive is pending only for source editing (12.4333ms)
+✔ missing archive blocks required native build (11.3929ms)
+✔ valid gzip replaces placeholder with identical bytes (41.3153ms)
+✔ already materialized exact content works without archive (26.3958ms)
+✔ corrupt archive leaves previous content untouched (11.364ms)
+✔ conflicting secondary archive is not ignored (30.0749ms)
+✔ valid raw import creates a decompressible archive (61.6863ms)
+✔ invalid raw import leaves both destinations unchanged (23.337ms)
+✔ repeated materialize is idempotent (85.4375ms)
+✔ atomic write leaves no temporary files (7.6357ms)
+✔ failed rename cleans temporary file (4.3986ms)
+✔ 50문항 10+40 구성에서 전부 정답이면 100점 (1.485ms)
+✔ 총점이 높아도 1과목 최소 기준 미달이면 연습 기준 미충족 (1.368ms)
+✔ 목표일은 오늘 이후의 실제 YYYY-MM-DD만 허용 (3.0724ms)
+✖ authored payload identity is unchanged (4.9862ms)
+✔ Markdown headings and fenced SQL are semantic nodes (1.1689ms)
+✔ pipe table handles escaped pipes without splitting data (2.2427ms)
+✔ SQL text and HTML are not interpreted as executable markup (0.1967ms)
+✔ zero, NULL, empty string and missing cell remain distinct (0.1639ms)
+✔ all dialect names remain explicit (0.1777ms)
+✖ body keywords are searchable, not just titles (13.1842ms)
+✖ Hangul NULL alias and subject filters both apply (9.5634ms)
+✖ catalog empty search has reset action (1.2227ms)
+✖ bookmark filter shows only selected theory (0.8558ms)
+✔ every day exposes all assigned lessons rather than only first (0.5325ms)
+✖ current day can collapse and reopen (0.3319ms)
+✔ all 60 lesson bodies and examples render without changing source (0.2118ms)
+✖ read status and confirmation progress are separate (2.495ms)
+✔ all 120 confirmation screens withhold rationale before submission (1.1125ms)
+✖ explicit submission reveals explanation and related theory (0.2994ms)
+✖ practice has only one sticky submit/next primary action (0.3427ms)
+✖ radio semantics include selection and non-color status (0.2291ms)
+✖ unfinished practice resumes without discarding a selection (0.1655ms)
+✖ available exam filter lists exactly the free four in ads-off mode (0.6712ms)
+✖ locked exam action opens opt-in dialog, not an attempt (0.3919ms)
+✖ active exam disables starting other sets without touching access policy (0.5021ms)
+✖ all 1000 timed exam screens withhold answers and explanations (0.2125ms)
+✖ exam scroll key changes on next question but not timer ticks (0.1966ms)
+✖ exam clears selected answer without removing independent flag (0.1993ms)
+✖ sheet differentiates answered and flagged; jumps to first unanswered (0.2006ms)
+✖ submitting from sheet still requires confirmation (0.286ms)
+✖ result shows subject minimums and time-trust caveat (0.2027ms)
+✖ wrong-only review uses saved exam snapshots in order (0.5686ms)
+✖ perfect score disables wrong-only action and has an empty filter state (0.3942ms)
+✖ result review does not use a newly changed current question answer (0.8335ms)
+✔ reward processing locks all updated buttons (0.3577ms)
+✔ reward save retry control survives screen replacement (0.2602ms)
+✔ font controls only persist supported scale and preserve grants (0.7452ms)
+✔ rendering is deterministic and has no state persistence side effects (0.2585ms)
+✖ failed practice answer save does not display a new answer key (0.2274ms)
+✔ startup failures are left intact, not hidden by new presentation (0.154ms)
+✔ native adapter source transpiles without syntax diagnostics (1.1134ms)
+✔ off mode does not load SDK or invent a reward (1.5521ms)
+✔ consent denial prevents SDK initialization and ad display (1.0745ms)
+✔ consent errors fail closed (1.0435ms)
+✔ closed event alone is not an earned reward (9.5182ms)
+✔ earned reward is persisted before closed promise resolves (1.5111ms)
+✔ load timeout does not reward (1.5534ms)
+✔ error event does not reward (1.2502ms)
+✔ late earned event after close is ignored (1.3685ms)
+✔ concurrent native ad requests are rejected (1.4462ms)
+✔ privacy change disables future banners (1.2702ms)
+✔ banner requests have startup delay, spacing and session cap (1.0839ms)
+✔ background blocks new ad requests (1.3432ms)
+✔ default configuration is off (0.2952ms)
+✔ test configuration uses official sample app IDs (0.9605ms)
+✔ production cannot use test advertising (0.2997ms)
+✔ live configuration requires explicit owner activation (0.1136ms)
+✔ live configuration rejects missing or test unit IDs (0.1088ms)
+✔ invalid ad mode is rejected by the build (0.3164ms)
+✔ free exam 1 is accessible offline (3.3557ms)
+✔ free exam 2 is accessible offline (0.2196ms)
+✔ free exam 3 is accessible offline (1.7763ms)
+✔ free exam 4 is accessible offline (0.1957ms)
+✔ all additional exams are locked by default (1.4956ms)
+✔ unknown IDs are never granted (0.4932ms)
+✔ reward preparation never unlocks (0.2178ms)
+✔ earned event grants only the selected exam (0.2156ms)
+✔ live grants persist with ads off and no expiry (0.2992ms)
+✔ test grants do not open production exams (0.2565ms)
+✔ wrong request ID cannot earn a reward (0.412ms)
+✔ wrong exam ID cannot earn a reward (0.2507ms)
+✔ wrong mode cannot earn a reward (0.4877ms)
+✔ duplicate reward is idempotent (1.5052ms)
+✔ cancelled pending requests do not grant (0.1579ms)
+✔ legacy attempts retain access once (0.943ms)
+✔ malformed wallet is not silently replaced (0.1295ms)
+✔ new wallet state survives core parsing (0.9844ms)
+✔ no banner on lesson (0.1084ms)
+✔ no banner on practice (0.0501ms)
+✔ no banner on review (0.0471ms)
+✔ no banner on exams (0.0498ms)
+✔ no banner on exam (0.0476ms)
+✔ no banner on sheet (0.0522ms)
+✔ no banner on result (0.0503ms)
+✔ no banner on examReview (0.0514ms)
+✔ no banner on setup (0.0618ms)
+✔ no banner on welcome (0.0499ms)
+✔ no banner on help (0.041ms)
+✔ no banner on privacy (0.0472ms)
+✔ only home and stats can display banners (0.1558ms)
+✔ active exam, modal and reward suppress banners globally (0.0863ms)
+✔ direct beginExam is gated, not just the button (2.0642ms)
+✔ cancel opt-in does not load an ad (0.2057ms)
+✔ ad unavailable leaves access unchanged (0.9509ms)
+✔ close without earned callback never grants (0.5ms)
+✔ reward is saved once and repeat attempt needs no additional ad (7.7154ms)
+✔ ad-off configuration never pretends to watch (3.1024ms)
+✔ save failure permits retry without watching again (0.723ms)
+✔ learning-only reset preserves the unlock (1.768ms)
+✔ full reset warns and removes grants (0.6139ms)
+✔ no reward while a timed exam is active (1.1912ms)
+✔ concurrent requests do not show two ads (18.0974ms)
+✔ wallet startup migration preserves earlier records (3.6891ms)
+✔ UI discloses free and rewarded ranges (9.9311ms)
+✔ settings removes obsolete no-ad claim (0.4955ms)
+✔ exam screen contains no banner slot (2.173ms)
+ℹ tests 157
+ℹ suites 0
+ℹ pass 133
+ℹ fail 24
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 798.1078
+
+✖ failing tests:
+
+test at tests\learning-ui.test.cjs:22:1
+✖ authored payload identity is unchanged (4.9862ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  + actual - expected
+  
+  + 'e7f70093bd3070e5317affbb9334889b8e2d441f64cb582dfeb33c690408065a'
+  - '08b6d35d539ed9b7c225befed155b126bf35809c1ec331e1ca12de6576fb0ead'
+  
+      at TestContext.<anonymous> (D:\SQLD-Pass\tests\learning-ui.test.cjs:22:53)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1306:25)
+      at Test.start (node:internal/test_runner/test:1177:17)
+      at startSubtestAfterBootstrap (node:internal/test_runner/harness:385:17) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 'e7f70093bd3070e5317affbb9334889b8e2d441f64cb582dfeb33c690408065a',
+    expected: '08b6d35d539ed9b7c225befed155b126bf35809c1ec331e1ca12de6576fb0ead',
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests\learning-ui.test.cjs:28:1
+✖ body keywords are searchable, not just titles (13.1842ms)
+  TypeError: Cannot read properties of undefined (reading 'id')
+      at D:\SQLD-Pass\tests\learning-ui.test.cjs:28:194
+      at Array.some (<anonymous>)
+      at TestContext.<anonymous> (D:\SQLD-Pass\tests\learning-ui.test.cjs:28:163)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1306:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:897:18)
+      at Test.postRun (node:internal/test_runner/test:1447:19)
+      at Test.run (node:internal/test_runner/test:1372:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:897:7)
+
+test at tests\learning-ui.test.cjs:29:1
+✖ Hangul NULL alias and subject filters both apply (9.5634ms)
+  AssertionError [ERR_ASSERTION]: The expression evaluated to a falsy value:
+  
+    a.ok(all.length)
+  
+      at TestContext.<anonymous> (D:\SQLD-Pass\tests\learning-ui.test.cjs:29:124)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1306:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:897:18)
+      at Test.postRun (node:internal/test_runner/test:1447:19)
+      at Test.run (node:internal/test_runner/test:1372:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:897:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 0,
+    expected: true,
+    operator: '==',
+    diff: 'simple'
+  }
+
+test at tests\learning-ui.test.cjs:30:1
+✖ catalog empty search has reset action (1.2227ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  
+  0 !== 60
+  
+      at TestContext.<anonymous> (D:\SQLD-Pass\tests\learning-ui.test.cjs:30:224)
+      at async Test.run (node:internal/test_runner/test:1313:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:897:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 0,
+    expected: 60,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests\learning-ui.test.cjs:31:1
+✖ bookmark filter shows only selected theory (0.8558ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly deep-equal:
+  + actual - expected
+  
+  + []
+  - [
+  -   'lesson-SQLD-L001'
+  - ]
+  
+      at TestContext.<anonymous> (D:\SQLD-Pass\tests\learning-ui.test.cjs:31:155)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1306:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:897:18)
+      at Test.postRun (node:internal/test_runner/test:1447:19)
+      at Test.run (node:internal/test_runner/test:1372:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:897:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: [],
+    expected: [ 'lesson-SQLD-L001' ],
+    operator: 'deepStrictEqual',
+    diff: 'simple'
+  }
+
+test at tests\learning-ui.test.cjs:33:1
+✖ current day can collapse and reopen (0.3319ms)
+  TypeError: Cannot read properties of undefined (reading 'lessonIds')
+      at TestContext.<anonymous> (D:\SQLD-Pass\tests\learning-ui.test.cjs:33:117)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1306:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:897:18)
+      at Test.postRun (node:internal/test_runner/test:1447:19)
+      at Test.run (node:internal/test_runner/test:1372:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:897:7)
+
+test at tests\learning-ui.test.cjs:35:1
+✖ read status and confirmation progress are separate (2.495ms)
+  TypeError: Cannot read properties of undefined (reading 'id')
+      at TestContext.<anonymous> (D:\SQLD-Pass\tests\learning-ui.test.cjs:35:126)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1306:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:897:18)
+      at Test.postRun (node:internal/test_runner/test:1447:19)
+      at Test.run (node:internal/test_runner/test:1372:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:897:7)
+
+test at tests\learning-ui.test.cjs:37:1
+✖ explicit submission reveals explanation and related theory (0.2994ms)
+  TypeError: Cannot read properties of undefined (reading 'questionIds')
+      at TestContext.<anonymous> (D:\SQLD-Pass\tests\learning-ui.test.cjs:37:136)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1306:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:897:18)
+      at Test.postRun (node:internal/test_runner/test:1447:19)
+      at Test.run (node:internal/test_runner/test:1372:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:897:7)
+
+test at tests\learning-ui.test.cjs:38:1
+✖ practice has only one sticky submit/next primary action (0.3427ms)
+  TypeError: Cannot read properties of undefined (reading 'questionIds')
+      at TestContext.<anonymous> (D:\SQLD-Pass\tests\learning-ui.test.cjs:38:133)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1306:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:897:18)
+      at Test.postRun (node:internal/test_runner/test:1447:19)
+      at Test.run (node:internal/test_runner/test:1372:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:897:7)
+
+test at tests\learning-ui.test.cjs:39:1
+✖ radio semantics include selection and non-color status (0.2291ms)
+  TypeError: Cannot read properties of undefined (reading 'questionIds')
+      at TestContext.<anonymous> (D:\SQLD-Pass\tests\learning-ui.test.cjs:39:132)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1306:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:897:18)
+      at Test.postRun (node:internal/test_runner/test:1447:19)
+      at Test.run (node:internal/test_runner/test:1372:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:897:7)
+
+test at tests\learning-ui.test.cjs:40:1
+✖ unfinished practice resumes without discarding a selection (0.1655ms)
+  TypeError: Cannot read properties of undefined (reading 'questionIds')
+      at TestContext.<anonymous> (D:\SQLD-Pass\tests\learning-ui.test.cjs:40:136)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1306:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:897:18)
+      at Test.postRun (node:internal/test_runner/test:1447:19)
+      at Test.run (node:internal/test_runner/test:1372:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:897:7)
+
+test at tests\learning-ui.test.cjs:41:1
+✖ available exam filter lists exactly the free four in ads-off mode (0.6712ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  
+  0 !== 4
+  
+      at TestContext.<anonymous> (D:\SQLD-Pass\tests\learning-ui.test.cjs:41:160)
+      at async Test.run (node:internal/test_runner/test:1313:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:897:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 0,
+    expected: 4,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests\learning-ui.test.cjs:42:1
+✖ locked exam action opens opt-in dialog, not an attempt (0.3919ms)
+  AssertionError [ERR_ASSERTION]: Missing exam-SQLD-M05
+      at get (D:\SQLD-Pass\tests\learning-ui.test.cjs:17:67)
+      at click (D:\SQLD-Pass\tests\learning-ui.test.cjs:18:36)
+      at TestContext.<anonymous> (D:\SQLD-Pass\tests\learning-ui.test.cjs:42:120)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1306:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:897:18)
+      at Test.postRun (node:internal/test_runner/test:1447:19)
+      at Test.run (node:internal/test_runner/test:1372:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:897:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    expected: true,
+    operator: '==',
+    diff: 'simple'
+  }
+
+test at tests\learning-ui.test.cjs:43:1
+✖ active exam disables starting other sets without touching access policy (0.5021ms)
+  TypeError: Cannot read properties of undefined (reading 'questionIds')
+      at Object.startExam (D:\SQLD-Pass\.build\core\domain\exam.js:39:25)
+      at makeExam (D:\SQLD-Pass\tests\learning-ui.test.cjs:19:40)
+      at TestContext.<anonymous> (D:\SQLD-Pass\tests\learning-ui.test.cjs:43:103)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1306:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:897:18)
+      at Test.postRun (node:internal/test_runner/test:1447:19)
+      at Test.run (node:internal/test_runner/test:1372:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:897:7)
+
+test at tests\learning-ui.test.cjs:44:1
+✖ all 1000 timed exam screens withhold answers and explanations (0.2125ms)
+  TypeError: Cannot read properties of undefined (reading 'questionIds')
+      at Object.startExam (D:\SQLD-Pass\.build\core\domain\exam.js:39:25)
+      at makeExam (D:\SQLD-Pass\tests\learning-ui.test.cjs:19:40)
+      at TestContext.<anonymous> (D:\SQLD-Pass\tests\learning-ui.test.cjs:44:146)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1306:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:897:18)
+      at Test.postRun (node:internal/test_runner/test:1447:19)
+      at Test.run (node:internal/test_runner/test:1372:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:897:7)
+
+test at tests\learning-ui.test.cjs:45:1
+✖ exam scroll key changes on next question but not timer ticks (0.1966ms)
+  TypeError: Cannot read properties of undefined (reading 'questionIds')
+      at Object.startExam (D:\SQLD-Pass\.build\core\domain\exam.js:39:25)
+      at makeExam (D:\SQLD-Pass\tests\learning-ui.test.cjs:19:40)
+      at TestContext.<anonymous> (D:\SQLD-Pass\tests\learning-ui.test.cjs:45:103)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1306:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:897:18)
+      at Test.postRun (node:internal/test_runner/test:1447:19)
+      at Test.run (node:internal/test_runner/test:1372:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:897:7)
+
+test at tests\learning-ui.test.cjs:46:1
+✖ exam clears selected answer without removing independent flag (0.1993ms)
+  TypeError: Cannot read properties of undefined (reading 'questionIds')
+      at Object.startExam (D:\SQLD-Pass\.build\core\domain\exam.js:39:25)
+      at makeExam (D:\SQLD-Pass\tests\learning-ui.test.cjs:19:40)
+      at TestContext.<anonymous> (D:\SQLD-Pass\tests\learning-ui.test.cjs:46:106)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1306:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:897:18)
+      at Test.postRun (node:internal/test_runner/test:1447:19)
+      at Test.run (node:internal/test_runner/test:1372:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:897:7)
+
+test at tests\learning-ui.test.cjs:47:1
+✖ sheet differentiates answered and flagged; jumps to first unanswered (0.2006ms)
+  TypeError: Cannot read properties of undefined (reading 'questionIds')
+      at Object.startExam (D:\SQLD-Pass\.build\core\domain\exam.js:39:25)
+      at makeExam (D:\SQLD-Pass\tests\learning-ui.test.cjs:19:40)
+      at TestContext.<anonymous> (D:\SQLD-Pass\tests\learning-ui.test.cjs:47:113)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1306:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:897:18)
+      at Test.postRun (node:internal/test_runner/test:1447:19)
+      at Test.run (node:internal/test_runner/test:1372:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:897:7)
+
+test at tests\learning-ui.test.cjs:48:1
+✖ submitting from sheet still requires confirmation (0.286ms)
+  TypeError: Cannot read properties of undefined (reading 'questionIds')
+      at Object.startExam (D:\SQLD-Pass\.build\core\domain\exam.js:39:25)
+      at makeExam (D:\SQLD-Pass\tests\learning-ui.test.cjs:19:40)
+      at TestContext.<anonymous> (D:\SQLD-Pass\tests\learning-ui.test.cjs:48:94)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1306:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:897:18)
+      at Test.postRun (node:internal/test_runner/test:1447:19)
+      at Test.run (node:internal/test_runner/test:1372:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:897:7)
+
+test at tests\learning-ui.test.cjs:49:1
+✖ result shows subject minimums and time-trust caveat (0.2027ms)
+  TypeError: Cannot read properties of undefined (reading 'questionIds')
+      at Object.startExam (D:\SQLD-Pass\.build\core\domain\exam.js:39:25)
+      at makeExam (D:\SQLD-Pass\tests\learning-ui.test.cjs:19:40)
+      at result (D:\SQLD-Pass\tests\learning-ui.test.cjs:20:39)
+      at TestContext.<anonymous> (D:\SQLD-Pass\tests\learning-ui.test.cjs:49:91)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1306:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:897:18)
+      at Test.postRun (node:internal/test_runner/test:1447:19)
+      at Test.run (node:internal/test_runner/test:1372:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:897:7)
+
+test at tests\learning-ui.test.cjs:50:1
+✖ wrong-only review uses saved exam snapshots in order (0.5686ms)
+  TypeError: Cannot read properties of undefined (reading 'questionIds')
+      at Object.startExam (D:\SQLD-Pass\.build\core\domain\exam.js:39:25)
+      at makeExam (D:\SQLD-Pass\tests\learning-ui.test.cjs:19:40)
+      at result (D:\SQLD-Pass\tests\learning-ui.test.cjs:20:39)
+      at TestContext.<anonymous> (D:\SQLD-Pass\tests\learning-ui.test.cjs:50:97)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1306:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:897:18)
+      at Test.postRun (node:internal/test_runner/test:1447:19)
+      at Test.run (node:internal/test_runner/test:1372:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:897:7)
+
+test at tests\learning-ui.test.cjs:51:1
+✖ perfect score disables wrong-only action and has an empty filter state (0.3942ms)
+  TypeError: Cannot read properties of undefined (reading 'questionIds')
+      at TestContext.<anonymous> (D:\SQLD-Pass\tests\learning-ui.test.cjs:51:133)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1306:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:897:18)
+      at Test.postRun (node:internal/test_runner/test:1447:19)
+      at Test.run (node:internal/test_runner/test:1372:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:897:7)
+
+test at tests\learning-ui.test.cjs:52:1
+✖ result review does not use a newly changed current question answer (0.8335ms)
+  TypeError: Cannot read properties of undefined (reading 'questionIds')
+      at Object.startExam (D:\SQLD-Pass\.build\core\domain\exam.js:39:25)
+      at makeExam (D:\SQLD-Pass\tests\learning-ui.test.cjs:19:40)
+      at result (D:\SQLD-Pass\tests\learning-ui.test.cjs:20:39)
+      at TestContext.<anonymous> (D:\SQLD-Pass\tests\learning-ui.test.cjs:52:106)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1306:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:897:18)
+      at Test.postRun (node:internal/test_runner/test:1447:19)
+      at Test.run (node:internal/test_runner/test:1372:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:897:7)
+
+test at tests\learning-ui.test.cjs:57:1
+✖ failed practice answer save does not display a new answer key (0.2274ms)
+  TypeError: Cannot read properties of undefined (reading 'questionIds')
+      at TestContext.<anonymous> (D:\SQLD-Pass\tests\learning-ui.test.cjs:57:143)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1306:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:897:18)
+      at Test.postRun (node:internal/test_runner/test:1447:19)
+      at Test.run (node:internal/test_runner/test:1372:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:897:7)
