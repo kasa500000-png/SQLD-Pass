@@ -1,0 +1,20 @@
+
+> sqld-pass@0.1.0 prebuild:android:ads-test
+> node scripts/build-guard.cjs
+
+D:\SQLD-Pass\scripts\materialize-content.cjs:25
+  if (required) throw new Error('CONTENT_MISSING: import the authored pack with node scripts/import-content.cjs <content.json or content.json.gz>. Native build blocked.');
+                ^
+
+Error: CONTENT_MISSING: import the authored pack with node scripts/import-content.cjs <content.json or content.json.gz>. Native build blocked.
+    at materialize (D:\SQLD-Pass\scripts\materialize-content.cjs:25:23)
+    at Object.<anonymous> (D:\SQLD-Pass\scripts\build-guard.cjs:5:1)
+    at Module._compile (node:internal/modules/cjs/loader:1854:14)
+    at Object..js (node:internal/modules/cjs/loader:1985:10)
+    at Module.load (node:internal/modules/cjs/loader:1577:32)
+    at Module._load (node:internal/modules/cjs/loader:1379:12)
+    at wrapModuleLoad (node:internal/modules/cjs/loader:255:19)
+    at Module.executeUserEntryPoint [as runMain] (node:internal/modules/run_main:154:5)
+    at node:internal/main/run_main_module:33:47
+
+Node.js v24.16.0

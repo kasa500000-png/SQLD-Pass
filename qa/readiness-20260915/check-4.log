@@ -1,0 +1,5 @@
+
+> sqld-pass@0.1.0 ads:check
+> node scripts/check-ads.cjs
+
+Ads configuration valid: off. Configuration checks are not device-QA evidence.
