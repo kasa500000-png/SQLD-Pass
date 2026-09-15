@@ -47,8 +47,8 @@ jobs:
           test -n "$EXPO_PUBLIC_EAS_PROJECT_ID" || { echo 'Set this standalone SQLD-Pass EAS project ID.'; exit 1; }
           mkdir -p build-evidence
           case "$BUILD_TARGET" in
-            android) npx --no-install eas build --platform android --profile ads-test --non-interactive --wait --json > build-evidence/build.json ;;
-            ios-simulator) npx --no-install eas build --platform ios --profile ads-test-simulator --non-interactive --wait --json > build-evidence/build.json ;;
+            android) npx --yes eas-cli@24.5.0 build --platform android --profile ads-test --non-interactive --wait --json > build-evidence/build.json ;;
+            ios-simulator) npx --yes eas-cli@24.5.0 build --platform ios --profile ads-test-simulator --non-interactive --wait --json > build-evidence/build.json ;;
             *) echo 'Unsupported internal build target'; exit 1 ;;
           esac
       - uses: actions/upload-artifact@v4
