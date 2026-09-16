@@ -25,6 +25,20 @@ export default ({config}:ConfigContext):ExpoConfig=>{
         ...(ads.mode==='off'?['com.google.android.gms.permission.AD_ID']:[]),'com.android.vending.BILLING'
       ]},
     plugins:['expo-sqlite',
+      ['expo-font',{
+        android:{fonts:[{fontFamily:'Pretendard',fontDefinitions:[
+          {path:'./assets/fonts/pretendard/Pretendard-Regular.otf',weight:400},
+          {path:'./assets/fonts/pretendard/Pretendard-SemiBold.otf',weight:600},
+          {path:'./assets/fonts/pretendard/Pretendard-Bold.otf',weight:700},
+          {path:'./assets/fonts/pretendard/Pretendard-ExtraBold.otf',weight:800}
+        ]}]},
+        ios:{fonts:[
+          './assets/fonts/pretendard/Pretendard-Regular.otf',
+          './assets/fonts/pretendard/Pretendard-SemiBold.otf',
+          './assets/fonts/pretendard/Pretendard-Bold.otf',
+          './assets/fonts/pretendard/Pretendard-ExtraBold.otf'
+        ]}
+      }],
       ['react-native-google-mobile-ads',{androidAppId:ads.androidAppId,iosAppId:ads.iosAppId,delayAppMeasurementInit:true,
         userTrackingUsageDescription:'광고 제공을 위한 기기 식별자 사용 여부를 선택할 수 있습니다. 허용하지 않아도 무료 학습과 열린 회차는 이용할 수 있습니다.'}],
       ['expo-build-properties',{android:{compileSdkVersion:36,targetSdkVersion:36,minSdkVersion:24,useLegacyPackaging:false,

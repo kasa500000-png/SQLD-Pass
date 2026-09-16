@@ -1,5 +1,6 @@
 import React, {Component, useEffect, useMemo, useSyncExternalStore} from 'react';
-import {AppState as NativeAppState, BackHandler, KeyboardAvoidingView, Platform, Text, View} from 'react-native';
+import {AppState as NativeAppState, BackHandler, KeyboardAvoidingView, Platform, View} from 'react-native';
+import {AppText as Text} from './src/platform/Typography';
 import {SafeAreaProvider, SafeAreaView} from 'react-native-safe-area-context';
 import {StatusBar} from 'expo-status-bar';
 import {MonetizedController as Controller} from './src/monetization/controller';

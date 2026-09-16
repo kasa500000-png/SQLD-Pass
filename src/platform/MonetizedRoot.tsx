@@ -1,5 +1,6 @@
 import React,{useEffect,useState,useSyncExternalStore} from 'react';
-import {AppState,Text,View,useWindowDimensions,type ViewStyle} from 'react-native';
+import {AppState,View,useWindowDimensions,type ViewStyle} from 'react-native';
+import {AppText as Text} from './Typography';
 import {NativeView,type NativeViewProps} from './NativeView';
 import {nativeAds} from './ads';
 

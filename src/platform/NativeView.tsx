@@ -1,10 +1,11 @@
 import React from 'react';
 import {
-  Modal, Platform, Pressable, ScrollView, Text, TextInput, View,
+  Modal, Platform, Pressable, ScrollView, View,
   type TextStyle, type ViewStyle
 } from 'react-native';
 import type {Node, Style} from '../ui/nodes';
 import {StudyCode,StudyTable} from './StudyReadables';
+import {AppText as Text, AppTextInput as TextInput} from './Typography';
 
 const textKeys = new Set(['fontSize','fontWeight','lineHeight','color','fontFamily','letterSpacing','textAlign']);
 function styles(source: Style | undefined, scale: number): {view: ViewStyle; text: TextStyle} {
