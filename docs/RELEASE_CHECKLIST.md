@@ -2,7 +2,8 @@
 
 ## 콘텐츠 및 네이티브
 - [x] 전체 60레슨/120확인/20회1000문항 콘텐츠 Git 이관 및 해시 검증 materialize 완료
-- [ ] 독립 콘텐츠 검수, 대상 DBMS 확인, 공식 범위 최종 대조, 실제 소유자 승인
+- [x] 소유자의 콘텐츠 검수 완료 선언 기록 (`release/CONTENT_REVIEW_STATUS.json`, 현재 콘텐츠 해시 기준)
+- [ ] 검수자/검수일·대상 DBMS·공식 범위 대조 근거를 출시 승인 형식에 연결
 - [ ] 의존성 설치/lockfile, TypeScript 6, expo-doctor, Android/iOS 빌드와 실제 기기 QA
 - [ ] SQLite 재시작 복구, 90분 시험, 앱 강제종료, 큰 글자/TalkBack/VoiceOver 확인
 
