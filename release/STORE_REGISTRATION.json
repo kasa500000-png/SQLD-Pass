@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "recordedAt": "2026-09-19T21:44:03.732Z",
+  "recordedAt": "2026-09-19T23:14:26.842Z",
   "android": {
     "appName": "SQLD Pass",
     "packageName": "com.kasa500000.sqldpass",
@@ -31,8 +31,6 @@
     "closedTesting": {
       "status": "draft-not-submitted",
       "blockers": [
-        "tester-list-not-provided",
-        "IARC-terms-approval-pending",
         "full-content-review-access-not-ready",
         "required-store-declarations-and-listing-incomplete"
       ],
@@ -51,9 +49,20 @@
         "Add full store description"
       ],
       "consoleWarnings": [
-        "No testers assigned",
         "No deobfuscation mapping file"
-      ]
+      ],
+      "testerCount": 1,
+      "testerList": "SQLD Pass 내부 테스트",
+      "testerConfigurationStatus": "saved"
+    },
+    "contentRating": {
+      "status": "IARC-completed",
+      "ownerTermsConsentDate": "2026-09-20",
+      "submittedAt": "2026-09-20T08:13:00+09:00",
+      "korea": "3+",
+      "esrb": "Everyone",
+      "pegi": "3",
+      "iarcCertificateId": null
     }
   },
   "ios": {
