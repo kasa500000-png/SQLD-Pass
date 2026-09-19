@@ -5,6 +5,9 @@ export class Controller {
   dialog:Dialog|null=null; search=''; subject='all'; bookmarkedOnly=false; filter='all'; expanded=new Set<string>();
   draftSettings:Settings; supportText=''; private listeners=new Set<()=>void>(); private serial:Promise<void>=Promise.resolve();
   private version=0; private checkpointAt=0; private expiryInFlight=false; private lastExpiryTry=0;
+  private systemAppearance:'light'|'dark'='light';
+  get isDark(){return this.state.settings.theme==='dark'||(this.state.settings.theme==='system'&&this.systemAppearance==='dark');}
+  setSystemAppearance(value:'light'|'dark'){if(this.systemAppearance!==value){this.systemAppearance=value;this.notify();}}
   readonly getSnapshot=()=>this.version;
   readonly subscribe=(fn:()=>void)=>{this.listeners.add(fn);return ()=>{this.listeners.delete(fn);};};
   constructor(readonly content:Content,readonly services:Services){this.state=initialState(content,services.clock().wall);this.draftSettings={...this.state.settings};}
@@ -114,6 +117,14 @@ export class Controller {
   async report(qid?:string){
     const text=`[SQLD Pass 내부 테스트 제보]\n앱: 0.1.0 / 콘텐츠: ${this.content.manifest.version}\n항목: ${qid??'일반 문의'}\n내용: ${this.supportText.trim()||'오류 상황을 작성해 주세요.'}\n학습 답안·진도·개인정보는 자동 첨부하지 않습니다.`;
     try{const outcome=await this.services.share(text);this.notice=outcome==='cancelled'?'공유를 취소했습니다.':outcome==='copied'?'제보 내용을 복사했습니다. 직접 전달해 주세요. 접수는 완료되지 않았습니다.':outcome==='downloaded'?'제보 내용을 텍스트 파일로 저장했습니다. 직접 전달해 주세요. 접수는 완료되지 않았습니다.':'공유 동작을 완료했습니다. 실제 문의 접수 여부는 앱에서 확인하지 않습니다.';}catch(e){this.notice=`공유 실패: ${String(e)}`;}this.notify();
+  }
+  async contactSupport(){
+    const email=this.services.supportEmail;
+    if(!email||!/^[-\w.+]+@[-\w.]+\.[a-z]{2,}$/i.test(email)){this.notice='운영 문의 이메일이 아직 설정되지 않았습니다.';this.notify();return;}
+    const body=`앱: SQLD Pass 0.1.0 / 콘텐츠: ${this.content.manifest.version}\n항목: ${this.route.id??'일반 문의'}\n내용: ${this.supportText.trim()}\n\n답안·진도·개인정보는 자동 첨부하지 않습니다.`;
+    try{await this.services.openURL(`mailto:${email}?subject=${encodeURIComponent('SQLD Pass 문의')}&body=${encodeURIComponent(body)}`);this.notice='메일 작성 화면을 열었습니다. 내용을 확인하고 직접 전송해 주세요.';}
+    catch{this.notice=`메일 앱을 열지 못했습니다. ${email}로 직접 문의하거나 제보 내용을 공유해 주세요.`;}
+    this.notify();
   }
   requestReset(){this.confirm('기기의 학습 기록을 초기화할까요?','읽은 이론, 북마크, 풀이 기록, 진행 중 시험과 설정을 모두 삭제합니다. 복원할 수 없습니다. SQLD Pass의 로컬 학습 기록만 삭제됩니다.','이 앱 기록 삭제',async()=>{
     const task=this.serial.then(async()=>{

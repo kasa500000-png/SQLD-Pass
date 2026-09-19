@@ -42,7 +42,7 @@ export function NativeView({node: n, scale, dark, path = '0'}: NativeViewProps):
   if (n.kind === 'input') return <TextInput testID={n.testId} accessibilityLabel={n.label}
     value={n.value ?? ''} onChangeText={n.onChange} placeholder={n.placeholder}
     placeholderTextColor={dark ? '#B0BFD6' : '#53647F'} autoCorrect={false}
-    autoCapitalize="none" multiline={n.multiline} keyboardType={n.inputMode === 'numeric' ? 'number-pad' : 'default'}
+    autoCapitalize="none" multiline={n.multiline} keyboardAppearance={dark?'dark':'light'} keyboardType={n.inputMode === 'numeric' ? 'number-pad' : 'default'}
     style={[{color: ink}, s.view, s.text]} />;
   if (n.kind === 'code') return <StudyCode key={n.text} node={n} scale={scale} />;
   if (n.kind === 'table') return <StudyTable node={n} scale={scale} dark={dark} />;
@@ -52,7 +52,7 @@ export function NativeView({node: n, scale, dark, path = '0'}: NativeViewProps):
   </View>;
   if (n.kind === 'modal') return <Modal transparent visible animationType="fade" onRequestClose={n.close}>
     <View accessibilityViewIsModal style={{flex:1,backgroundColor:'rgba(10,20,40,0.5)',justifyContent:'center',padding:24}}>
-      <ScrollView style={{maxHeight:'85%',flexGrow:0,width:'100%'}} contentContainerStyle={{flexGrow:0}} keyboardShouldPersistTaps="handled">
+      <ScrollView style={{maxHeight:'85%',flexGrow:0,width:'100%',maxWidth:560,alignSelf:'center'}} contentContainerStyle={{flexGrow:0}} keyboardShouldPersistTaps="handled">
         {children}
       </ScrollView>
     </View>

@@ -1,7 +1,7 @@
 'use strict';
 const fs=require('node:fs'),path=require('node:path'),crypto=require('node:crypto');
 const POLICY='2026-09-12.1';
-const CODE_FILES=['config/ads-config.cjs','src/monetization/policy.ts','src/monetization/controller.ts','src/monetization/views.ts','src/platform/ads.ts','src/platform/MonetizedRoot.tsx','app.config.ts','package.json','App.tsx','src/core/types.ts'];
+const CODE_FILES=['config/ads-config.cjs','src/monetization/policy.ts','src/monetization/controller.ts','src/monetization/views.ts','src/platform/ads.ts','src/platform/MonetizedRoot.tsx','app.config.ts','package.json','package-lock.json','eas.json','scripts/patch-admob-config-plugin.cjs','plugins/withKotlinVersion.cjs','config/public-support.json','App.tsx','src/core/types.ts'];
 function codeHash(root){const h=crypto.createHash('sha256');for(const p of CODE_FILES)h.update(p+'\0').update(fs.readFileSync(path.join(root,p)));return h.digest('hex');}
 function adsBuildConfig(env=process.env){
   const mode=env.EXPO_PUBLIC_ADS_MODE??'off',prod=env.EXPO_PUBLIC_APP_ENV==='production';

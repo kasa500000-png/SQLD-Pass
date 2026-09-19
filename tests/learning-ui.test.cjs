@@ -19,6 +19,14 @@ async function click(c,id){const n=get(c,id);a.equal(!!n.disabled,false,`${id} d
 function makeExam(c,index=0){const e=d.startExam(c.state,content.exams[index],content,c.services.clock(),'attempt-'+index);c.state.exams=[e];c.route={name:'exam',id:e.id};return e;}
 function result(c,answers={}){const e=makeExam(c);e.answers=answers;const done=d.submitExam(e,c.services.clock(),'manual');c.state.exams=[done];c.route={name:'result',id:done.id};return done;}
 
+test('system theme follows OS changes without overwriting the saved preference',()=>{
+ const {c}=setup();c.route={name:'home'};c.state.settings.theme='system';
+ const before=JSON.stringify(c.state);const lightTree=view(c);c.setSystemAppearance('dark');
+ a.notEqual(JSON.stringify(view(c)),JSON.stringify(lightTree));a.equal(JSON.stringify(c.state),before);
+ c.state.settings.theme='light';a.equal(c.isDark,false);
+ c.state.settings.theme='dark';c.setSystemAppearance('light');a.equal(c.isDark,true);
+});
+
 test('authored payload identity is unchanged',()=>a.equal(hash(fs.readFileSync(require.resolve('../generated/content.json'))),'08b6d35d539ed9b7c225befed155b126bf35809c1ec331e1ca12de6576fb0ead'));
 test('Markdown headings and fenced SQL are semantic nodes',()=>{const blocks=fmt.lessonBlocks('### 소제목\n\n설명\n```sql\nSELECT a | b;\n```',light);a.equal(blocks[0].heading,true);a.equal(blocks[0].text,'소제목');a.equal(blocks[2].kind,'code');a.equal(blocks[2].text,'SELECT a | b;');});
 test('pipe table handles escaped pipes without splitting data',()=>{const n=fmt.lessonBlocks('| A | B |\n| --- | --- |\n| a\\|b | 0 |',light)[0];a.equal(n.kind,'table');a.deepEqual(n.rows,[['a|b','0']]);});

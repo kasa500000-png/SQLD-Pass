@@ -5,8 +5,8 @@ import {box,button,code,dark,light,progress,row,table,text,type Node,type Palett
 import {pretendardLicense} from './font-license';
 
 export function render(c:Controller):Node {
-  const p:Palette=c.state.settings.theme==='dark'?dark:light;
-  const onBlue=c.state.settings.theme==='dark'?'#0B1220':'#FFFFFF';
+  const p:Palette=c.isDark?dark:light;
+  const onBlue=c.isDark?'#0B1220':'#FFFFFF';
   const small=(v:string,s:Style={})=>text(v,{fontSize:13,lineHeight:20,color:p.muted,...s});
   const body=(v:string,s:Style={})=>text(v,{fontSize:16,lineHeight:25,color:p.ink,...s});
   const heading=(v:string,n=28)=>({...text(v,{fontSize:n,lineHeight:n+9,fontWeight:'700',color:p.ink}),heading:true});
@@ -40,9 +40,9 @@ export function render(c:Controller):Node {
     case 'examReview':{title='정답·해설';const e=c.examAttempt(c.route.id);if(!e||e.status!=='submitted'){contents=[empty('제출 후 확인할 수 있어요','시험을 먼저 제출해 주세요.')];break;}const i=Math.min(49,Math.max(0,c.route.index??0)),q=e.snapshots[i];contents=[small(`${i+1}/50`),...question(q),...choices(q,e.answers[q.id]??null,true,()=>{}),...explanation(q,e.answers[q.id])];footer=row([secondary('← 이전',()=>{c.route={...c.route,index:Math.max(0,i-1)};c.notify();}),primary(i===49?'결과로':'다음 →',()=>{c.route=i===49?{name:'result',id:e.id}:{...c.route,index:i+1};c.notify();})]);break;}
     case 'stats':{title='내 학습';const a=firstAccuracy(s);contents=[heading('학습 기록'),row([card([small('학습 날짜'),heading(`${s.studyDays.length}일`,22)],{flex:1}),card([small('최초·확신 정답률'),heading(a.percent===null?'—':`${a.percent}%`,22)],{flex:1})]),row([card([small('이론 읽음'),heading(`${s.readLessons.length}/60`,22)],{flex:1}),card([small('모의고사 제출'),heading(`${s.exams.filter(e=>e.status==='submitted').length}회`,22)],{flex:1})]),secondary('설정',()=>c.navigate({name:'settings'})),secondary('고객센터',()=>c.navigate({name:'help'})),secondary('콘텐츠 상태',()=>c.navigate({name:'notices'})),secondary('개인정보 안내',()=>c.navigate({name:'privacy'}))];break;}
     case 'settings': title='설정';contents=[heading('학습 환경'),notice('현재 로그인·광고·원격 분석·결제가 없습니다.'),secondary('라이트 모드',async()=>{c.draftSettings.theme='light';await c.commit(x=>({...x,settings:{...x.settings,theme:'light'}}));}),secondary('다크 모드',async()=>{c.draftSettings.theme='dark';await c.commit(x=>({...x,settings:{...x.settings,theme:'dark'}}));}),secondary('이 앱 학습 데이터 초기화',()=>c.requestReset())];break;
-    case 'help': title='고객센터';contents=[heading('오류·의견 제보'),body('학습 답안이나 개인정보를 자동 전송하지 않습니다.'),{kind:'input',label:'오류 상황',value:c.supportText,onChange:v=>{c.supportText=v;c.notify();},placeholder:'어느 화면에서 어떤 문제가 있었나요?',multiline:true,style:{minHeight:120,borderWidth:1,borderColor:p.line,borderRadius:12,padding:14,color:p.ink}},primary('제보 내용 공유하기',()=>c.report(c.route.id))];break;
+    case 'help': title='고객센터';contents=[heading('오류·의견 제보'),body('학습 답안이나 개인정보를 자동 전송하지 않습니다.'),{kind:'input',label:'오류 상황',value:c.supportText,onChange:v=>{c.supportText=v;c.notify();},placeholder:'어느 화면에서 어떤 문제가 있었나요?',multiline:true,style:{minHeight:120,borderWidth:1,borderColor:p.line,borderRadius:12,padding:14,color:p.ink}},...(c.services.supportEmail?[body(c.services.supportEmail),primary('이메일로 문의하기',()=>c.contactSupport(),'support-email')]:[]),...(c.services.supportUrl?[secondary('고객지원 페이지',()=>c.external(c.services.supportUrl!),'support-page')]:[]),secondary('제보 내용 공유하기',()=>c.report(c.route.id))];break;
     case 'notices': title='콘텐츠 상태';contents=[heading('내장 콘텐츠'),notice(c.content.manifest.note,p.orange,p.orangeSoft),body('이론 60개 · 확인 문제 120개 · 모의고사 20회 · 1,000문항'),heading('오픈소스 글꼴',20),body('Pretendard 1.3.9 · 길형진\nSIL Open Font License 1.1'),secondary(c.expanded.has('font-license')?'글꼴 라이선스 접기':'글꼴 라이선스 전문',()=>c.toggleExpanded('font-license'),'font-license'),...(c.expanded.has('font-license')?[body(pretendardLicense,{fontSize:13,lineHeight:21})]:[])];break;
-    case 'privacy': title='개인정보 안내';contents=[heading('공부 기록은 기기에.'),body('목표, 이론 읽음, 북마크, 문제 선택, 복습 일정과 모의고사 결과는 SQLD Pass 전용 SQLite에 저장합니다.'),notice('정식 배포 전 개인정보처리방침과 운영 연락처를 확정해야 합니다.',p.orange,p.orangeSoft)];break;
+    case 'privacy': title='개인정보 안내';contents=[heading('공부 기록은 기기에.'),body('목표, 이론 읽음, 북마크, 문제 선택, 복습 일정과 모의고사 결과는 SQLD Pass 전용 SQLite에 저장합니다.'),...(c.services.privacyUrl?[primary('개인정보처리방침 전문',()=>c.external(c.services.privacyUrl!),'privacy-policy')]:[notice('정식 배포 전 개인정보처리방침과 운영 연락처를 확정해야 합니다.',p.orange,p.orangeSoft)])];break;
     default: contents=[empty('준비 중인 화면입니다','이전 화면으로 돌아가 주세요.')];
   }
 

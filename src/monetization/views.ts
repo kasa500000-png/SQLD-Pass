@@ -5,7 +5,7 @@ import type {MonetizedController} from './controller';
 import {isFreeExam} from './policy';
 
 export function renderMonetized(c:MonetizedController):Node {
-  const root=render(c),p=c.state.settings.theme==='dark'?dark:light;
+  const root=render(c),p=c.isDark?dark:light;
   const scroll=root.children?.find(n=>n.scroll);
   if(!scroll||!c.ready)return root;
   const body=(v:string)=>text(v,{fontSize:15,lineHeight:24,color:p.ink});

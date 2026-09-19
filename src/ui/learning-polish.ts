@@ -8,14 +8,14 @@ export interface ExamAccessUI {hasAccess(id:string):boolean;offerUnlock(id:strin
 /** Presentation only: does not mutate answer keys, grants, SQLite schema or approval flags. */
 export function polishLearning(c:Controller,root:Node,access?:ExamAccessUI):Node {
   const scroll=root.children?.find(n=>n.scroll);if(!scroll||!c.ready)return root;
-  const p=c.state.settings.theme==='dark'?dark:light,s=c.state,r=c.route.name,active=c.activeExam();
+  const p=c.isDark?dark:light,s=c.state,r=c.route.name,active=c.activeExam();
   const locked=c.busy||!!access?.busy;
   const small=(v:string)=>text(v,{fontSize:13,lineHeight:21,color:p.muted});
   const body=(v:string)=>text(v,{fontSize:16,lineHeight:26,color:p.ink});
   const heading=(v:string,n=24):Node=>({...text(v,{fontSize:n,lineHeight:n+10,fontWeight:'700',color:p.ink}),heading:true});
   const card=(nodes:Node[],style:Style={},key?:string)=>box(nodes,{padding:18,gap:12,borderRadius:18,backgroundColor:p.surface,borderWidth:1,borderColor:p.line,...style},key);
   const badge=(v:string,tone:'blue'|'green'|'orange'='blue')=>box([text(v,{fontSize:12,lineHeight:19,fontWeight:'700',color:p[tone]})],{paddingHorizontal:10,paddingVertical:5,borderRadius:8,backgroundColor:p[`${tone}Soft`],alignSelf:'flex-start'});
-  const action=(v:string,fn:()=>void|Promise<void>,id:string,primary=false,disabled=false)=>button(v,fn,{minHeight:52,paddingHorizontal:16,paddingVertical:12,borderRadius:14,borderWidth:1,borderColor:primary?p.blue:p.line,backgroundColor:primary?p.blue:p.surface,color:primary?(s.settings.theme==='dark'?p.bg:'#FFFFFF'):p.blue,fontSize:15,lineHeight:23,fontWeight:'700'},{testId:id,disabled:disabled||locked});
+  const action=(v:string,fn:()=>void|Promise<void>,id:string,primary=false,disabled=false)=>button(v,fn,{minHeight:52,paddingHorizontal:16,paddingVertical:12,borderRadius:14,borderWidth:1,borderColor:primary?p.blue:p.line,backgroundColor:primary?p.blue:p.surface,color:primary?(c.isDark?p.bg:'#FFFFFF'):p.blue,fontSize:15,lineHeight:23,fontWeight:'700'},{testId:id,disabled:disabled||locked});
   const choiceChip=(v:string,selected:boolean,fn:()=>void,id:string)=>button(v,fn,{minHeight:48,paddingHorizontal:13,borderRadius:12,borderWidth:1,borderColor:selected?p.blue:p.line,backgroundColor:selected?p.blueSoft:p.surface,color:selected?p.blue:p.muted,fontSize:14},{testId:id,selected,disabled:locked});
   const notice=(v:string)=>box([small(v)],{padding:14,borderRadius:12,backgroundColor:p.blueSoft});
   const empty=(v:string,description:string)=>card([heading(v,20),body(description)]);

@@ -53,5 +53,5 @@ export interface Dialog { title:string; body:string; confirmLabel:string; destru
 export interface Repository { load():Promise<unknown|null>; save(state:AppState):Promise<void>; clear():Promise<void>; }
 export interface Services {
   repository:Repository; clock():Clock; uuid():string; openURL(url:string):Promise<void>;
-  share(text:string):Promise<'shared'|'copied'|'downloaded'|'cancelled'>; platform:'native'|'web'; supportEmail?:string;
+  share(text:string):Promise<'shared'|'copied'|'downloaded'|'cancelled'>; platform:'native'|'web'; supportEmail?:string; privacyUrl?:string; supportUrl?:string;
 }

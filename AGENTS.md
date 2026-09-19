@@ -32,7 +32,8 @@ AdMob automatic banner refresh must be disabled to match application request-rat
 Preserve supplied question stems, SQL, answers, rationales and provenance. Original learning
 content remains unapproved until the real human owner completes independent review, target-DBMS
 checks and official syllabus comparison. Never fabricate approval, affiliation or passing claims.
-Keep production gates closed while evidence is missing. Git content migration is still incomplete.
+Keep production gates closed while evidence is missing. The original gzip content pack is tracked
+and hash-verified materialization is complete; this is not human content approval.
 
 Learning and grants are device-local SQLite. No learner backend, account, cloud sync, runtime AI,
 remote learning analytics or payment is introduced. Google Ads/UMP may process device/network/ad

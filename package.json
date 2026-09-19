@@ -32,7 +32,7 @@
     "prebuild:android:ads-test": "node scripts/build-guard.cjs",
     "prebuild:ios:ads-test": "node scripts/build-guard.cjs",
     "build:production": "npm run release:check && npx --yes eas-cli@24.5.0 build --platform all --profile production",
-    "postinstall": "node scripts/materialize-content.cjs",
+    "postinstall": "node scripts/patch-admob-config-plugin.cjs && node scripts/materialize-content.cjs",
     "prestart": "node scripts/materialize-content.cjs",
     "preandroid": "node scripts/build-guard.cjs",
     "preios": "node scripts/build-guard.cjs",
@@ -45,18 +45,24 @@
     "test:monetization": "tsc -p tsconfig.core.json && node --test tests/monetization*.test.cjs"
   },
   "dependencies": {
-    "@expo/config-plugins": "57.0.9",
-    "expo": "57.0.22",
-    "expo-build-properties": "57.0.17",
+    "expo": "57.0.24",
+    "expo-build-properties": "57.0.21",
     "expo-crypto": "57.0.3",
     "expo-dev-client": "57.0.19",
     "expo-font": "57.0.4",
+    "expo-splash-screen": "57.0.9",
     "expo-sqlite": "57.0.3",
     "expo-status-bar": "57.0.1",
+    "expo-system-ui": "57.0.4",
     "react": "19.2.3",
     "react-native": "0.86.3",
     "react-native-google-mobile-ads": "16.4.0",
     "react-native-safe-area-context": "5.7.0"
+  },
+  "overrides": {
+    "xcode": {
+      "uuid": "11.1.1"
+    }
   },
   "devDependencies": {
     "@types/node": "22.20.0",

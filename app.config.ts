@@ -1,30 +1,37 @@
 import type {ConfigContext, ExpoConfig} from 'expo/config';
 import manifest from './generated/manifest.json';
+import project from './config/expo-project.json';
 const {checkAdsRelease}=require('./config/ads-config.cjs');
+const {checkContentRelease}=require('./config/release-config.cjs');
 
 export default ({config}:ConfigContext):ExpoConfig=>{
   const env=process.env.EXPO_PUBLIC_APP_ENV??'development';
   if(!['development','internal','production'].includes(env))throw new Error('Unsupported APP_ENV');
   const production=env==='production';
   if(production&&!manifest.releaseReady)throw new Error('Draft content must not enter a production app.');
+  if(production)checkContentRelease(__dirname);
   if(production&&(!process.env.ANDROID_PACKAGE||!process.env.IOS_BUNDLE_IDENTIFIER))throw new Error('Production app identifiers must be explicitly supplied by the owner.');
-  const ads=checkAdsRelease(__dirname),projectId=process.env.EXPO_PUBLIC_EAS_PROJECT_ID;
+  const ads=checkAdsRelease(__dirname),projectId=process.env.EXPO_PUBLIC_EAS_PROJECT_ID??project.projectId;
   return {
     ...config,name:production?'SQLD Pass':'SQLD Pass 내부검증',slug:'sqld-pass',version:'0.1.0',
-    ...(process.env.EXPO_OWNER?{owner:process.env.EXPO_OWNER}:{}),
-    platforms:['android','ios'],orientation:'default',userInterfaceStyle:'light',
+    icon:'./assets/brand/icon.png',
+    owner:process.env.EXPO_OWNER??project.owner,
+    platforms:['android','ios'],orientation:'default',userInterfaceStyle:'automatic',
     scheme:production?'sqld-pass':'sqld-pass-internal',updates:{enabled:false},
     ios:{bundleIdentifier:process.env.IOS_BUNDLE_IDENTIFIER??'com.sqldpass.app.internal',buildNumber:'1',supportsTablet:true,
       infoPlist:{ITSAppUsesNonExemptEncryption:false}},
     android:{package:process.env.ANDROID_PACKAGE??'com.sqldpass.app.internal',versionCode:1,allowBackup:false,
+      adaptiveIcon:{foregroundImage:'./assets/brand/adaptive-foreground.png',backgroundColor:'#2457D6'},
       permissions:[],softwareKeyboardLayoutMode:'resize',blockedPermissions:[
         'android.permission.CAMERA','android.permission.RECORD_AUDIO','android.permission.READ_CONTACTS','android.permission.WRITE_CONTACTS',
         'android.permission.ACCESS_FINE_LOCATION','android.permission.ACCESS_COARSE_LOCATION','android.permission.ACCESS_BACKGROUND_LOCATION',
         'android.permission.READ_EXTERNAL_STORAGE','android.permission.WRITE_EXTERNAL_STORAGE','android.permission.READ_MEDIA_IMAGES',
         'android.permission.READ_MEDIA_VIDEO','android.permission.READ_MEDIA_AUDIO','android.permission.POST_NOTIFICATIONS',
-        ...(ads.mode==='off'?['com.google.android.gms.permission.AD_ID']:[]),'com.android.vending.BILLING'
+        ...(env!=='development'?['android.permission.SYSTEM_ALERT_WINDOW','android.permission.VIBRATE']:[]),
+        ...(ads.mode==='off'?['com.google.android.gms.permission.AD_ID','android.permission.ACCESS_ADSERVICES_AD_ID','android.permission.ACCESS_ADSERVICES_ATTRIBUTION','android.permission.ACCESS_ADSERVICES_TOPICS']:[]),'com.android.vending.BILLING'
       ]},
-    plugins:['expo-sqlite',
+    plugins:['expo-sqlite','./plugins/withKotlinVersion.cjs',
+      ['expo-splash-screen',{image:'./assets/brand/icon.png',imageWidth:160,backgroundColor:'#2457D6',dark:{backgroundColor:'#2457D6'}}],
       ['expo-font',{
         android:{fonts:[{fontFamily:'Pretendard',fontDefinitions:[
           {path:'./assets/fonts/pretendard/Pretendard-Regular.otf',weight:400},
@@ -41,7 +48,7 @@ export default ({config}:ConfigContext):ExpoConfig=>{
       }],
       ['react-native-google-mobile-ads',{androidAppId:ads.androidAppId,iosAppId:ads.iosAppId,delayAppMeasurementInit:true,
         userTrackingUsageDescription:'광고 제공을 위한 기기 식별자 사용 여부를 선택할 수 있습니다. 허용하지 않아도 무료 학습과 열린 회차는 이용할 수 있습니다.'}],
-      ['expo-build-properties',{android:{compileSdkVersion:36,targetSdkVersion:36,minSdkVersion:24,useLegacyPackaging:false,
+      ['expo-build-properties',{android:{compileSdkVersion:36,targetSdkVersion:36,minSdkVersion:24,kotlinVersion:'2.3.20',useLegacyPackaging:false,
         usesCleartextTraffic:env==='development',extraProguardRules:'-keep class com.google.android.gms.internal.consent_sdk.** { *; }'}}]
     ],
     extra:{appEnvironment:env,contentReleaseReady:manifest.releaseReady,adsRuntimeEnabled:ads.mode!=='off',adsMode:ads.mode,
