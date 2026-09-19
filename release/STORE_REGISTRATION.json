@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "recordedAt": "2026-09-19T23:14:26.842Z",
+  "recordedAt": "2026-09-19T23:32:10.736Z",
   "android": {
     "appName": "SQLD Pass",
     "packageName": "com.kasa500000.sqldpass",
@@ -45,8 +45,7 @@
       "consoleSetupCompleted": 2,
       "consoleSetupTotal": 4,
       "consoleErrors": [
-        "Complete app dashboard setup",
-        "Add full store description"
+        "Complete app dashboard setup"
       ],
       "consoleWarnings": [
         "No deobfuscation mapping file"
@@ -63,6 +62,18 @@
       "esrb": "Everyone",
       "pegi": "3",
       "iarcCertificateId": null
+    },
+    "storeListing": {
+      "status": "saved-ready-for-review-not-submitted",
+      "language": "ko-KR",
+      "icon": "release/assets/play-icon.png",
+      "featureGraphic": "release/assets/feature-graphic.png",
+      "phoneScreenshots": 6,
+      "aiLabeledAssets": [
+        "feature-graphic.png"
+      ],
+      "descriptionScope": "ads-off test build; mocks 1-4 available; 5-20 locked",
+      "tabletScreenshots": 0
     }
   },
   "ios": {
