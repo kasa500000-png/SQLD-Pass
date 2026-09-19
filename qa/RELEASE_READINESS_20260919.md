@@ -113,3 +113,13 @@ UI Automator의 현재 화면 요소를 기준으로 조작하고 다른 앱 화
 
 이전 날짜의 `MONETIZATION_VERIFICATION.md`는 당시 실행 범위를 기록한 역사적 문서다.
 이 문서의 새 빌드 결과가 그 당시 미실행 목록을 일부 갱신하지만 모든 광고 QA를 해결하지는 않는다.
+
+## 전용 지원 사이트 게시 및 앱 연결 — 2026-09-19
+
+- Sites 정적 사이트 게시 성공: https://sqld-pass-support.shk1122.chatgpt.site/
+- 고객지원, 개인정보처리방침, 이용 안내의 익명 HTTPS 200 및 SQLD Pass/문의 이메일 본문 확인.
+- 사이트 소스는 별도 `D:/SQLD-Pass-Support` Git 저장소. 배포 식별자는 `release/SUPPORT_SITE.json`에 기록하며 인증정보는 저장하지 않음.
+- 앱 `config/public-support.json`에 실제 공개 주소 연결. 기존 고객센터와 개인정보 화면이 이 주소를 사용함.
+- `npm run typecheck:native` 통과, `npm test` 164/164 통과, `assert-draft-blocked.cjs`에서 실제 콘텐츠 미승인 차단 확인.
+- 사이트 HTML/로컬 리소스 정적 검증 및 HTTP 접근 검증 범위이며 시각적 브라우저 QA, 법률 검토나 스토어 개인정보 승인 완료를 의미하지 않음.
+- app-ads.txt는 실제 AdMob 게시자 정보 확인 전이므로 만들지 않음. 콘텐츠·광고·실기기 승인 게이트는 유지.

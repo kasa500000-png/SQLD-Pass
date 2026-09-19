@@ -14,8 +14,11 @@
   [출시 앱](https://apps.apple.com/kr/app/spicpass/id6809081974).
 
 운영자명·이메일은 다시 요청하지 않는다. 기존 사이트는 SpicPass 전용 호스팅 주소이며
-별도 소유 커스텀 도메인이 확인된 것은 아니다. SQLD Pass 전용 개인정보/지원 페이지 게시와
-URL 검증이 남아 있어 `privacyUrl`/`supportUrl`은 아직 비워 둔다.
+별도 소유 커스텀 도메인이 확인된 것은 아니다. SQLD Pass 전용 사이트 게시와 익명 HTTPS 200 응답 검증을 완료하고 앱에 연결했다.
+
+- 고객지원: https://sqld-pass-support.shk1122.chatgpt.site/support.html
+- 개인정보: https://sqld-pass-support.shk1122.chatgpt.site/privacy.html
+- 이용 안내: https://sqld-pass-support.shk1122.chatgpt.site/terms.html
 SpicPass의 정책·광고 해제 방식·스토어 개인정보 신고를 SQLD Pass에 그대로 적용하지 않는다.
 
 별도로 확정할 값:
@@ -59,7 +62,7 @@ node scripts/serve-content-review.cjs
 - AdMob의 SQLD Pass 전용 앱/광고 단위, 동의 메시지, 배너 자동 갱신 해제,
   소유 도메인의 app-ads.txt 준비가 필요하다.
 - 에뮬레이터 테스트에서 UMP 요청 오류가 관찰되어 실제 보상 광고 완료는 아직 검증되지 않았다.
-- 개인정보/지원 초안의 빈 운영 정보·처리 조건을 확정하고 공개 HTTPS 페이지로 게시한다.
+- 개인정보/지원 페이지 게시 완료. 실제 광고 SDK·출시 지역의 최종 설정과 스토어 신고를 대조한다.
 - Google Play 개인 계정의 프로덕션 접근 조건은 SQLD Pass 앱 생성 후 콘솔에서 확인한다.
   대상 계정이면 12명/14일 테스트 등 실제 경과 시간이 필요하며 즉시 완료로 처리할 수 없다.
 - 콘텐츠와 광고 증거가 충족된 뒤 최종 소유자 배포 승인 및 스토어 제출을 진행한다.

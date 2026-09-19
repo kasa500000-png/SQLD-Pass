@@ -1,6 +1,6 @@
 # SQLD Pass 스토어 등록 원고
 
-상태: 등록용 초안. 콘텐츠 독립 검수·기기 QA·운영 연락처 확정 후 사용.
+상태: 등록용 초안. 콘텐츠 독립 검수·기기 QA·스토어 신고 대조 후 사용.
 
 ## 공통
 
@@ -48,7 +48,8 @@ SQLD Pass는 독립적으로 제작한 학습 앱이며 시험 주관기관의 �
 
 - 운영자: 김석현 / Seokhyeon Kim
 - 공개 지원 이메일: kasa500000@gmail.com
-- SQLD Pass 전용 개인정보/지원 URL은 게시·검증 후 입력합니다.
+- 개인정보: https://sqld-pass-support.shk1122.chatgpt.site/privacy.html
+- 고객지원: https://sqld-pass-support.shk1122.chatgpt.site/support.html
 
 - 로그인 없이 온보딩을 완료하면 기본 학습을 이용할 수 있습니다.
 - 1~4회 모의고사는 광고 없이 이용 가능합니다.

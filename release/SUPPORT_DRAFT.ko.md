@@ -1,6 +1,10 @@
 # SQLD Pass 고객지원 페이지 원고
 
-운영자: 김석현. SQLD Pass 전용 공개 URL 준비 후 게시합니다.
+운영자: 김석현. 2026-09-19 게시 완료.
+
+공개 최신 원문: https://sqld-pass-support.shk1122.chatgpt.site/support.html
+
+현재 내부 검증 앱은 광고가 꺼져 있으며 아래 광고 안내는 광고 활성화 버전에 적용됩니다.
 
 ## 문의
 
