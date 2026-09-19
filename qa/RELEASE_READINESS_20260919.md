@@ -123,3 +123,26 @@ UI Automator의 현재 화면 요소를 기준으로 조작하고 다른 앱 화
 - `npm run typecheck:native` 통과, `npm test` 164/164 통과, `assert-draft-blocked.cjs`에서 실제 콘텐츠 미승인 차단 확인.
 - 사이트 HTML/로컬 리소스 정적 검증 및 HTTP 접근 검증 범위이며 시각적 브라우저 QA, 법률 검토나 스토어 개인정보 승인 완료를 의미하지 않음.
 - app-ads.txt는 실제 AdMob 게시자 정보 확인 전이므로 만들지 않음. 콘텐츠·광고·실기기 승인 게이트는 유지.
+
+### 지원 링크 반영 Android 설치 파일
+
+- 재번들 후 Android release variant 빌드 성공(1m 53s), 광고 off.
+- `.build/artifacts/SQLD-Pass-internal-off.apk`
+- SHA-256: `7f70ce6afd67123dc2b5a1e1111bf0195661c52b5b2b1fc0420a2af728631a00`
+- API 36 에뮬레이터에 업데이트 설치 성공. 고객센터 이메일/지원 버튼 및 개인정보 전문 버튼 표시 확인.
+- 두 버튼을 직접 눌러 Android ACTION_VIEW가 각각 공개 `/support.html`, `/privacy.html`을 Chrome에 전달함을 확인. 웹 콘텐츠 자체의 기기 내 렌더링 검증과 구분한다.
+- 고객센터 화면 캡처 확인: `.build/android-qa/support-site-help.png`. 개인정보 화면: `support-site-privacy.png`.
+- `zipalign -c -P 16 4` 통과. 이번 변경은 JSON 지원 설정과 문서이며 네이티브 라이브러리 변경 없음.
+- 최초 증분 빌드가 JSON 변경을 감지하지 못해 이전 번들을 재사용한 사실을 발견했다. 생성 번들을 제거한 후 재빌드하여 위 APK와 실제 버튼 확인으로 교체 검증했다. 재현 가능한 절차: `docs/LOCAL_ANDROID_BUILD.md`.
+- 소스 커밋: `0062b5220aa0a3bdc755583269ec8fcfb512f76c`.
+
+### 지원 링크 반영 iOS 시뮬레이터 빌드
+
+- EAS 빌드 `c321d2ab-b337-4bae-8b86-2c8fd6f18e44` FINISHED.
+- https://expo.dev/accounts/kimseokhyeons-team/projects/sqld-pass/builds/c321d2ab-b337-4bae-8b86-2c8fd6f18e44
+- 소스 `0062b5220aa0a3bdc755583269ec8fcfb512f76c`, simulator profile, 광고 off.
+- `.build/artifacts/SQLD-Pass-ios-simulator-current.tar.gz`
+- SHA-256: `a9c926cc706e0b08a1349cc95514093810cdf39055a2107f414d6a32026de053`
+- 아카이브 main.jsbundle에 정확한 공개 개인정보/지원 URL과 문의 이메일 포함 확인.
+- 서명된 실기기 IPA, TestFlight 업로드 또는 iOS 실행 QA가 아님. Windows/계정 시뮬레이터 실행 제한은 그대로이며 실제 iPhone/iPad QA가 필요함.
+- 소스 커밋 GitHub validation 실행 `35439293301` 성공.
