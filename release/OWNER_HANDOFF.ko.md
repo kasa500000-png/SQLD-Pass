@@ -4,12 +4,23 @@
 
 ## 1. 운영 정보
 
-다음 형식으로 답하면 `config/public-support.json`과 스토어 자료에 반영한다.
+2026-09-19 소유자가 기존 출시 SpicPass 정보를 참고하도록 지시했다.
+공개 지원 페이지와 App Store 정보를 대조해 다음 값을 `config/public-support.json`과 문서에 반영했다.
+
+- 운영자: **김석현** (App Store 제공자 표기: Seokhyeon Kim)
+- 공개 문의 이메일: **kasa500000@gmail.com**
+- 기존 운영 사이트: https://spicpass-support.shk1122.chatgpt.site/
+- 근거: [SpicPass 공개 지원 사이트](https://spicpass-support.shk1122.chatgpt.site/),
+  [출시 앱](https://apps.apple.com/kr/app/spicpass/id6809081974).
+
+운영자명·이메일은 다시 요청하지 않는다. 기존 사이트는 SpicPass 전용 호스팅 주소이며
+별도 소유 커스텀 도메인이 확인된 것은 아니다. SQLD Pass 전용 개인정보/지원 페이지 게시와
+URL 검증이 남아 있어 `privacyUrl`/`supportUrl`은 아직 비워 둔다.
+SpicPass의 정책·광고 해제 방식·스토어 개인정보 신고를 SQLD Pass에 그대로 적용하지 않는다.
+
+별도로 확정할 값:
 
 ```text
-운영자 표시명:
-공개 문의 이메일:
-소유 도메인(없으면 없음):
 Android 패키지 / iOS Bundle ID:
 ```
 
