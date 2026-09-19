@@ -53,6 +53,17 @@
       "ios": {
         "simulator": true
       }
+    },
+    "play-test": {
+      "distribution": "store",
+      "env": {
+        "EXPO_PUBLIC_APP_ENV": "internal",
+        "EXPO_PUBLIC_ADS_MODE": "off",
+        "ANDROID_PACKAGE": "com.kasa500000.sqldpass"
+      },
+      "android": {
+        "buildType": "app-bundle"
+      }
     }
   }
 }
