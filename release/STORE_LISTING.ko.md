@@ -9,7 +9,8 @@
 - 분야: 교육
 - 배포: 무료, 광고 포함(실제 광고 활성화 시)
 - 계정·회원가입·유료 결제: 없음
-- Android 패키지명 / iOS Bundle ID: 소유자 지정 대기
+- Android 패키지명: `com.kasa500000.sqldpass` (Play 앱 생성 완료)
+- iOS Bundle ID: Apple 등록 시 확정
 - 문의·개인정보·지원 URL: `config/public-support.json` 확정값 사용
 - 연령등급·대상 연령·출시 국가: 실제 콘텐츠와 광고 설정에 맞춰 콘솔 질문지 작성
 

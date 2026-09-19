@@ -24,10 +24,11 @@ SpicPass의 정책·광고 해제 방식·스토어 개인정보 신고를 SQLD 
 별도로 확정할 값:
 
 ```text
-Android 패키지 / iOS Bundle ID:
+Android 패키지: com.kasa500000.sqldpass (소유자 승인 및 Play 앱 생성 완료)
+iOS Bundle ID: 별도 확정 대기
 ```
 
-식별자 제안: `com.kasa500000.sqldpass`. 영구 식별자는 소유자 확정 후 사용한다.
+Android 식별자 `com.kasa500000.sqldpass`는 2026-09-19 소유자 승인으로 확정했다. iOS 식별자는 Apple 등록 시 확인한다.
 현재 내부 검증 ID는 `com.sqldpass.app.internal`이며 공개 앱 식별자로 자동 전환하지 않는다.
 
 ## 2. Apple 및 실제 기기

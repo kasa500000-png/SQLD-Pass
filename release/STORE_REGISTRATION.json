@@ -1,0 +1,26 @@
+{
+  "schemaVersion": 1,
+  "recordedAt": "2026-09-19T14:07:58.869Z",
+  "android": {
+    "appName": "SQLD Pass",
+    "packageName": "com.kasa500000.sqldpass",
+    "playAppId": "4972123172088629069",
+    "consoleUrl": "https://play.google.com/console/u/0/developers/7871930997193802319/app/4972123172088629069/app-dashboard",
+    "defaultLanguage": "ko-KR",
+    "pricing": "free",
+    "status": "created-not-submitted",
+    "ownerAuthorizedCreation": true,
+    "privacyUrl": "https://sqld-pass-support.shk1122.chatgpt.site/privacy.html",
+    "privacySaved": true,
+    "closedTestingRequirement": {
+      "testers": 12,
+      "consecutiveDays": 14,
+      "observedOptedIn": 0
+    }
+  },
+  "ios": {
+    "status": "account-login-required",
+    "bundleIdentifier": null
+  },
+  "publicReleaseApproved": false
+}
