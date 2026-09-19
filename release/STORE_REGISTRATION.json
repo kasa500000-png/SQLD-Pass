@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "recordedAt": "2026-09-19T14:07:58.869Z",
+  "recordedAt": "2026-09-19T21:44:03.732Z",
   "android": {
     "appName": "SQLD Pass",
     "packageName": "com.kasa500000.sqldpass",
@@ -8,7 +8,7 @@
     "consoleUrl": "https://play.google.com/console/u/0/developers/7871930997193802319/app/4972123172088629069/app-dashboard",
     "defaultLanguage": "ko-KR",
     "pricing": "free",
-    "status": "created-not-submitted",
+    "status": "internal-test-active",
     "ownerAuthorizedCreation": true,
     "privacyUrl": "https://sqld-pass-support.shk1122.chatgpt.site/privacy.html",
     "privacySaved": true,
@@ -16,6 +16,44 @@
       "testers": 12,
       "consecutiveDays": 14,
       "observedOptedIn": 0
+    },
+    "internalTesting": {
+      "versionCode": 1,
+      "versionName": "0.1.0",
+      "trackId": "4701266265039666926",
+      "releaseId": "1",
+      "publishedAt": "2026-09-20T06:37:00+09:00",
+      "optInUrl": "https://play.google.com/apps/internaltest/4701266265039666926",
+      "testerCount": 1,
+      "easBuildId": "87b595a1-4eec-44b6-af6d-9faf0f5df161",
+      "adsMode": "off"
+    },
+    "closedTesting": {
+      "status": "draft-not-submitted",
+      "blockers": [
+        "tester-list-not-provided",
+        "IARC-terms-approval-pending",
+        "full-content-review-access-not-ready",
+        "required-store-declarations-and-listing-incomplete"
+      ],
+      "trackId": "4697731031860022890",
+      "releaseId": "1",
+      "releaseName": "0.1.0 (1) - Alpha 준비",
+      "versionCode": 1,
+      "countries": [
+        "KR"
+      ],
+      "countryChangeStatus": "saved-pending-review",
+      "consoleSetupCompleted": 2,
+      "consoleSetupTotal": 4,
+      "consoleErrors": [
+        "Complete app dashboard setup",
+        "Add full store description"
+      ],
+      "consoleWarnings": [
+        "No testers assigned",
+        "No deobfuscation mapping file"
+      ]
     }
   },
   "ios": {
