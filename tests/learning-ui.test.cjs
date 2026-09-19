@@ -60,6 +60,12 @@ test('perfect score disables wrong-only action and has an empty filter state',as
 test('result review does not use a newly changed current question answer',()=>{const {c}=setup();const e=result(c),q=e.snapshots[0];c.route={name:'examReview',id:e.id,index:0};const before=q.answer;const live=content.questions[q.id],saved=live.answer;try{live.answer='not-a-choice';a.match(strings(view(c)),new RegExp('정답 '+before+'번'));}finally{live.answer=saved;}});
 test('reward processing locks all updated buttons',()=>{const {c}=setup();c.route={name:'exams'};c.rewardBusy=true;a.ok(flat(view(c)).filter(n=>n.kind==='button').every(n=>n.disabled));});
 test('reward save retry control survives screen replacement',()=>{const {c}=setup();c.route={name:'exams'};Object.defineProperty(c,'needsRewardSave',{get:()=>true});a.ok(get(c,'retry-reward-save'));});
+test('reward feedback resets the catalog to its notice without resetting timed questions',()=>{
+ const {c}=setup();c.route={name:'exams'};const key=()=>view(c).children.find(n=>n.scroll).key;
+ const catalog=key();c.notice='광고를 표시하지 못했습니다.';a.notEqual(key(),catalog);
+ a.match(strings(view(c)),/광고를 표시하지 못했습니다/);const settled=key();c.notify();a.equal(key(),settled);
+ makeExam(c);const exam=key();c.notice='저장 상태 안내';a.equal(key(),exam);
+});
 test('font controls only persist supported scale and preserve grants',async()=>{const {c}=setup();c.state.monetization={version:1,grants:{},pending:null};c.route={name:'settings'};await click(c,'font-1.3');a.equal(c.state.settings.fontScale,1.3);a.ok(c.state.monetization);});
 test('rendering is deterministic and has no state persistence side effects',()=>{const {c}=setup();c.route={name:'catalog'};const before=JSON.stringify(c.state);view(c);view(c);a.equal(JSON.stringify(c.state),before);a.equal(JSON.stringify(content),contentBefore);});
 test('failed practice answer save does not display a new answer key',async()=>{const x=setup(),c=x.c;await c.beginPractice(content.lessons[0].questionIds);const q=c.getQuestion(c.state.practice.questionIds[0]);await c.selectPractice(q.answer);x.fail(true);await c.answerPractice();a.equal(c.state.practice.submitted,false);a.equal(strings(view(c)).includes(q.explanation),false);a.match(strings(view(c)),/저장\/처리 실패/);});

@@ -184,6 +184,9 @@ export function polishLearning(c:Controller,root:Node,access?:ExamAccessUI):Node
   // Stable for timer ticks and choice saves; reset only when the actual question/lesson changes.
   const exam=r==='exam'?(c.examAttempt(c.route.id)??active):undefined;
   scroll.key=`${r}:${c.route.id??''}:${r==='exam'?exam?.index??0:r==='practice'?`${s.practice?.id??''}:${s.practice?.index??0}`:c.route.index??''}`;
+  // Reward/privacy feedback must be visible even after opening a lower exam card.
+  // Keep timed questions stable; only these action screens return to the notice.
+  if(['exams','examIntro','settings'].includes(r))scroll.key+=`:notice:${c.notice??''}`;
   scroll.testId='learning-content';
   if(top){const at=root.children!.indexOf(scroll);root.children!.splice(at,0,top);}
   if(footer){root.children=root.children!.filter(n=>n===scroll||n===top||n.kind==='modal'||root.children!.indexOf(n)<root.children!.indexOf(scroll));const modal=root.children.findIndex(n=>n.kind==='modal');root.children.splice(modal<0?root.children.length:modal,0,footer);}
