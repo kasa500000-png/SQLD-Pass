@@ -9,12 +9,14 @@
   `08b6d35d539ed9b7c225befed155b126bf35809c1ec331e1ca12de6576fb0ead`.
   60레슨, 확인 120문항, 모의고사 20회/1,000문항, 총 1,120문항.
   본문·정답·출처·승인 플래그를 변경하지 않았다.
-- 자동 테스트 163/163, 네이티브 TypeScript 검사 통과.
+- 자동 테스트 164/164, 네이티브 TypeScript 검사 통과.
 - Expo Doctor 21/21, 의존성 감사 0건. SDK 57.0.24 기준.
 - `ci:content` 통과. 미승인 콘텐츠의 공개 빌드가 정확한 사유로 차단됨.
 - Android release variant 내부 APK 빌드 성공: Kotlin 2.3.20,
   Android target/compile API 36, arm64-v8a/x86_64.
-  `.build/android-build-ui-20260919.log`: 3분 7초, 585 tasks.
+  `.build/android-build-final-clean-module-20260919.log`: 1분 31초, 586 tasks.
+  중간 재빌드에서는 이전 Kotlin daemon과 Windows 중간 산출물 잠금/충돌이 발생했다.
+  `--no-daemon`과 Gradle의 해당 모듈 clean 후 성공했다. 첫 성공만으로 재현성을 단정하지 않는다.
 - 위 APK의 64비트 네이티브 라이브러리 32개 ELF 정렬 검사 및
   Android SDK `zipalign -c -P 16` 통과. 16KB 페이지 기기 실행 검증은 별도 필요.
 - Android 에뮬레이터 API 36 및 Galaxy Z Flip4(SM-F721N)에 내부 APK 설치 성공.
@@ -26,6 +28,19 @@
   이 빌드는 이후 아이콘·시스템 테마·지원 UI 수정 전의 부트스트랩 스냅샷이다.
   실제 기기용 서명 IPA, TestFlight, iPhone/iPad 화면 검증으로 표현하지 않는다.
 - EAS Simulator 실행 요청은 계정 미개방으로 거부됨. 세션은 시작되지 않았다.
+- 최신 소스 커밋 `a72f0e1b8454cff437ee872f323788f9307ab519`의 iOS 시뮬레이터 빌드도 성공:
+  [EAS 41854389](https://expo.dev/accounts/kimseokhyeons-team/projects/sqld-pass/builds/41854389-c843-4be7-bfa1-45849dd15638).
+  SDK 26.5, iPhone/iPad, Pretendard 4종, 앱 아이콘, `UIUserInterfaceStyle=Automatic` 확인.
+- 같은 소스의 Android 공식 테스트 광고 APK 성공: 5분 11초, 585 tasks.
+  32개 라이브러리 정렬 통과, 에뮬레이터에 설치하고 테스트 모드 안내 확인.
+- GitHub CI `35434646952`: content 및 native-source 모두 통과.
+- 광고 안내 수정 커밋 `6b2ddf2`의 CI `35435273549`도 content/native-source 모두 통과.
+- 최종 앱 소스 `6b2ddf27103a4d74a95f814ca411081c2acee138`의
+  [iOS 시뮬레이터 빌드 332b1ad6](https://expo.dev/accounts/kimseokhyeons-team/projects/sqld-pass/builds/332b1ad6-e2e1-4418-9e86-f0d641a56803) 성공.
+  이후 커밋은 검증 문서만 갱신한다.
+- 최종 off APK 재빌드도 성공: `.build/android-build-final-off-feedback-20260919.log`,
+  5분 18초/585 tasks. 32개 ELF와 zipalign 16KB 재검사 통과.
+  테스트를 마친 에뮬레이터는 off APK로 되돌린다.
 
 ## Android 네이티브 화면에서 확인한 흐름
 
@@ -39,6 +54,35 @@ UI Automator의 현재 화면 요소를 기준으로 조작하고 다른 앱 화
 - 두 번째 문항 의도적 오답 → 선택/정답 구분 → 결과(2문항 중 1정답).
 - 이론 목록 확인 2/2 반영, 전체 복습에 오답 1문항 저장(다음 날 예정).
 - 모의고사 목록의 무료/회차 해제 안내 표시.
+- 시험 시작 → 앱 강제 종료 → 홈의 진행 중 시험 복구와 남은 시간 감소 확인.
+- 1번 문항의 보기 선택 → 저장 후 나가기 → 앱 강제 종료/재실행 → 같은 문항·선택 복구.
+  `mock-answer-restored.png`에서 선택과 감소한 시간을 확인했다.
+  초 단위 타이머 때문에 UI Automator idle 대기가 실패하는 경우가 있어,
+  시험 내 두 번의 탭은 이미 수집한 UI 트리의 좌표와 현재 화면 일치를 확인해 사용했다.
+- 최종 off APK에서 AD_ID/AdServices, 오버레이, 진동 권한 제거 확인.
+  남은 권한: INTERNET, ACCESS_NETWORK_STATE, WAKE_LOCK, FOREGROUND_SERVICE,
+  앱 내부 dynamic receiver 권한. 제거 후에도 32개 라이브러리/zipalign 재검사 통과.
+- 설정의 130% 글자 크기와 다크 테마, 스크롤 및 초기화 확인 대화상자 표시 확인.
+- 이 세션에서 만든 에뮬레이터 테스트 학습 기록만 초기화 → 온보딩 복귀 확인.
+  기존 해제권이 없는 상태였으므로 이 실행을 '기존 광고 해제권 보존'의 실제 증거로 삼지 않는다.
+- 공식 테스트 광고 모드에서 M06/M05 해제 안내 → 명시적 시청 요청 → 제공 실패 안내,
+  잠금 유지 확인. UMP 로그에 `Error making request`, 에뮬레이터에서
+  `fundingchoicesmessages.google.com` 조회에 `unknown host`가 관찰됐다.
+  정상 네트워크에서 재검증해야 하며, 실제 EARNED_REWARD/배너/지역별 동의 확인은 미완료다.
+- 하단 회차 요청 후 안내가 스크롤 밖에 가려지는 문제 수정. `6b2ddf2` 테스트 APK에서
+  M05 요청 실패 후 안내가 자동으로 보이는 것을 `reward-feedback-visible.png`로 확인.
+
+### 보관 산출물
+
+모두 `.build/artifacts/`에 로컬 보관하며 서명 인증서는 Git에 넣지 않는다.
+
+| 파일 | SHA-256 |
+|---|---|
+| SQLD-Pass-internal-off.apk | `04119025af2c1c5c9622b237325370689788d4cf7d059cd0a9eb3e0a143f9a28` |
+| SQLD-Pass-internal-test-ads.apk | `48ac6b0c11503813617bb80732a9998421ef337671effeee4741e7606793dc59` |
+
+`SQLD-Pass-ios-simulator-current.tar.gz`는 위 EAS 최신 빌드의 시뮬레이터 산출물이다.
+스토어 제출용 AAB/서명 IPA는 아직 만들지 않았다.
 
 ## 구현한 출시 준비
 
