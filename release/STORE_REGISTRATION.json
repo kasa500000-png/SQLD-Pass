@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "recordedAt": "2026-09-19T23:32:10.736Z",
+  "recordedAt": "2026-09-20T01:35:08Z",
   "android": {
     "appName": "SQLD Pass",
     "packageName": "com.kasa500000.sqldpass",
@@ -18,15 +18,18 @@
       "observedOptedIn": 0
     },
     "internalTesting": {
-      "versionCode": 1,
+      "versionCode": 2,
       "versionName": "0.1.0",
       "trackId": "4701266265039666926",
-      "releaseId": "1",
-      "publishedAt": "2026-09-20T06:37:00+09:00",
+      "releaseId": "2",
+      "publishedAt": "2026-09-20T10:35:00+09:00",
       "optInUrl": "https://play.google.com/apps/internaltest/4701266265039666926",
       "testerCount": 1,
-      "easBuildId": "87b595a1-4eec-44b6-af6d-9faf0f5df161",
-      "adsMode": "off"
+      "easBuildId": "a6ff54ad-3514-4144-863a-924d873f804b",
+      "adsMode": "off",
+      "releaseName": "0.1.0 (2) - 학습 UI 개선",
+      "sourceCommit": "f031dcf5bbc4069c33096ce7a16f928fff4550c8",
+      "artifactSha256": "216a2dd7e54fb587d2bacc6071807e1e81def58a6161caeb080964b27d55067e"
     },
     "closedTesting": {
       "status": "draft-not-submitted",
