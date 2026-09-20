@@ -20,7 +20,7 @@ export default ({config}:ConfigContext):ExpoConfig=>{
     scheme:production?'sqld-pass':'sqld-pass-internal',updates:{enabled:false},
     ios:{bundleIdentifier:process.env.IOS_BUNDLE_IDENTIFIER??'com.sqldpass.app.internal',buildNumber:'1',supportsTablet:true,
       infoPlist:{ITSAppUsesNonExemptEncryption:false}},
-    android:{package:process.env.ANDROID_PACKAGE??'com.sqldpass.app.internal',versionCode:1,allowBackup:false,
+    android:{package:process.env.ANDROID_PACKAGE??'com.sqldpass.app.internal',versionCode:2,allowBackup:false,
       adaptiveIcon:{foregroundImage:'./assets/brand/adaptive-foreground.png',backgroundColor:'#2457D6'},
       permissions:[],softwareKeyboardLayoutMode:'resize',blockedPermissions:[
         'android.permission.CAMERA','android.permission.RECORD_AUDIO','android.permission.READ_CONTACTS','android.permission.WRITE_CONTACTS',
