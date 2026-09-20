@@ -29,3 +29,16 @@
 - 추가 후 UI 테스트 44/44 통과. 합계 169건 범위(전체 168 + 추가 1).
 - 새 동선, 읽음 후 확인 문제 이어가기, 기록의 결과 진입/복귀, 정답률/확신 비율 분리 검증.
 - 기존 1,000개 시험 문항의 제출 전 정답 비노출, 스냅샷, 시간, 저장 실패 및 광고 보호 테스트 포함.
+
+## Android 실제 실행 확인
+
+- 소스 커밋: ef37535. `:app:assembleRelease` 성공(6분 14초).
+- emulator-5562에 `adb install -r` 성공. 앱 데이터 삭제하지 않음.
+- 홈/학습/학습 내 복습/실전/기록 화면 실행 및 UI Automator 기반 탭 전환 확인.
+- 750×1600 / 320dpi 휴대전화 화면: 4개 탭, 선택 상태, 설정 진입점, 빈 기록 안내 및 광고 off 안내 확인.
+- 1440×1920 / 240dpi 태블릿 크기 에뮬레이션: 이론 2열·본문 폭 제한 확인. 원래 750×1600 / 320dpi로 복원.
+- 실제 iPad 검증이나 큰 글자·스크린리더 종합 검증으로 해석하지 않음. 시험 저장/시간 보존은 이번 자동 테스트로 검증.
+- 캡처: `.build/android-qa/redesign-{home,learning,review,exams,records,tablet}.png`.
+- APK: `.build/artifacts/SQLD-Pass-redesign-internal.apk`, package `com.sqldpass.app.internal`, 광고 off. Play 패키지의 업데이트 파일이 아닌 별도 내부 QA APK.
+- APK SHA256: `5d10dfd6efc306ab219db477fba8d0f92805612b62f41b03bfc205ba86a79f05`.
+- Play 내부 트랙은 기존 versionCode 1 유지. 새 Play AAB 배포 및 스토어 이미지 교체는 아직 미실행.
