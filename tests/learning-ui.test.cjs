@@ -19,6 +19,20 @@ async function click(c,id){const n=get(c,id);a.equal(!!n.disabled,false,`${id} d
 function makeExam(c,index=0){const e=d.startExam(c.state,content.exams[index],content,c.services.clock(),'attempt-'+index);c.state.exams=[e];c.route={name:'exam',id:e.id};return e;}
 function result(c,answers={}){const e=makeExam(c);e.answers=answers;const done=d.submitExam(e,c.services.clock(),'manual');c.state.exams=[done];c.route={name:'result',id:done.id};return done;}
 
+test('collapsed question information keeps error reporting reachable after submission',async()=>{
+ const {c}=setup();await c.beginPractice(content.lessons[0].questionIds);
+ const q=c.getQuestion(c.state.practice.questionIds[0]);await click(c,'option-'+q.answer);await click(c,'submit-practice');
+ a.equal(flat(view(c)).some(n=>n.testId==='report-'+q.id),false);
+ await click(c,'question-info-'+q.id);await click(c,'report-'+q.id);
+ a.equal(c.route.name,'help');a.equal(c.route.id,q.id);
+});
+test('home omits empty review shortcut while learning review stays reachable',async()=>{
+ const {c}=setup();c.route={name:'home'};
+ a.equal(flat(view(c)).some(n=>n.testId==='home-review'),false);
+ c.tab('learn');await click(c,'learn-review');a.equal(c.route.name,'review');
+ await click(c,'review-empty-learn');a.equal(c.route.name,'catalog');
+});
+
 test('system theme follows OS changes without overwriting the saved preference',()=>{
  const {c}=setup();c.route={name:'home'};c.state.settings.theme='system';
  const before=JSON.stringify(c.state);const lightTree=view(c);c.setSystemAppearance('dark');
