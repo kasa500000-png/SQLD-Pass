@@ -1,6 +1,6 @@
 import React from 'react';
 import {
-  Modal, Platform, Pressable, ScrollView, View,
+  Modal, Platform, Pressable, ScrollView, View, useWindowDimensions,
   type TextStyle, type ViewStyle
 } from 'react-native';
 import type {Node, Style} from '../ui/nodes';
@@ -27,6 +27,7 @@ function RichText({value}: {value: string}) {
 export interface NativeViewProps {node: Node; scale: number; dark: boolean; path?: string;}
 /** Maps the shared UI tree to real RN controls; no WebView/HTML rendering. */
 export function NativeView({node: n, scale, dark, path = '0'}: NativeViewProps): React.JSX.Element {
+  const {width,fontScale}=useWindowDimensions();
   const s = styles(n.style, scale), ink = dark ? '#F0F5FF' : '#172033', line = dark ? '#2C3C55' : '#DFE7F1';
   const children = (n.children ?? []).map((child, i) => <NativeView
     key={child.key ?? `${path}.${i}`} node={child} scale={scale} dark={dark} path={`${path}.${i}`} />);
@@ -57,7 +58,8 @@ export function NativeView({node: n, scale, dark, path = '0'}: NativeViewProps):
       </ScrollView>
     </View>
   </Modal>;
+  if(n.key==='lesson-grid')return <View style={{flexDirection:'row',flexWrap:'wrap',gap:12}}>{children.map((child,i)=><View key={n.children?.[i]?.key??i} style={{width:width>=768&&scale*fontScale<=1.3?'48%':'100%'}}>{child}</View>)}</View>;
   if (n.scroll) return <ScrollView key={n.key} testID={n.testId} keyboardShouldPersistTaps="handled"
-    showsVerticalScrollIndicator contentContainerStyle={s.view} style={{flex:1}}>{children}</ScrollView>;
+    showsVerticalScrollIndicator contentContainerStyle={[s.view,{width:'100%',maxWidth:920,alignSelf:'center'}]} style={{flex:1}}>{children}</ScrollView>;
   return <View testID={n.testId} style={s.view}>{children}</View>;
 }

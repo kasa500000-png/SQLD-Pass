@@ -34,7 +34,7 @@ export class Controller {
     });this.serial=task.catch(()=>{});await task;return ok;
   }
   navigate(route:Route){this.stack.push(this.route);this.route=route;this.notice='';if(route.name==='settings'||route.name==='setup')this.draftSettings={...this.state.settings};this.notify();}
-  tab(tab:Tab){this.stack=[];this.route={name:({today:'home',learn:'catalog',review:'review',exams:'exams'} as const)[tab]};this.notice='';this.notify();}
+  tab(tab:Tab){this.stack=[];this.route={name:({today:'home',learn:'catalog',review:'review',exams:'exams',records:'stats'} as const)[tab]};this.notice='';this.notify();}
   back(){
     if(this.dialog){this.dialog=null;this.notify();return;}
     if(this.route.name==='exam'){this.confirm('시험 화면을 나갈까요?','답안은 기기에 저장되며 남은 시간은 계속 흐릅니다. 종료 시각이 지나면 자동 제출합니다.','저장 후 나가기',async()=>{if(await this.checkpoint())this.tab('exams');});return;}

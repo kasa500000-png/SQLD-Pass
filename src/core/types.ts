@@ -47,7 +47,7 @@ export interface AppState {
   responses:PracticeResponse[]; reviews:Record<string,ReviewItem>; practice:PracticeSession|null;
   exams:ExamAttempt[];
 }
-export type Tab = 'today'|'learn'|'review'|'exams';
+export type Tab = 'today'|'learn'|'review'|'exams'|'records';
 export type Route = { name: 'welcome'|'setup'|'home'|'plan'|'catalog'|'lesson'|'practiceSetup'|'practice'|'review'|'exams'|'examIntro'|'exam'|'sheet'|'result'|'examReview'|'stats'|'settings'|'help'|'notices'|'privacy'; id?:string; index?:number; };
 export interface Dialog { title:string; body:string; confirmLabel:string; destructive?:boolean; onConfirm:()=>void|Promise<void>; }
 export interface Repository { load():Promise<unknown|null>; save(state:AppState):Promise<void>; clear():Promise<void>; }
