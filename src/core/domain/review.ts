@@ -16,7 +16,17 @@ export function applyPractice(s:AppState,q:Question,selected:string,uncertain:bo
   return {...s,responses:[...s.responses,response],reviews,studyDays:Array.from(new Set([...s.studyDays,dayKey(now)]))};
 }
 export function dueReviews(s:AppState,c:Content,now:number):string[]{ return Object.values(s.reviews).filter(r=>r.dueDay<=dayKey(now)&&c.questions[r.questionId]&&canStudyQuestion(s,c.questions[r.questionId])).sort((a,b)=>a.dueDay.localeCompare(b.dueDay)).map(r=>r.questionId); }
-export function firstAccuracy(s:AppState):{correct:number;total:number;percent:number|null}{const first=new Map<string,PracticeResponse>();for(const r of s.responses)if(!first.has(r.questionId))first.set(r.questionId,r);const correct=[...first.values()].filter(r=>r.correct&&!r.uncertain).length;return {correct,total:first.size,percent:first.size?Math.round(correct/first.size*100):null};}
+/** First saved answers to lesson confirmation questions, including their review sessions. */
+export function confirmationAccuracy(s:AppState,c:Content){
+  const questionIds=new Set(c.lessons.flatMap(l=>l.questionIds));
+  const first=new Map<string,PracticeResponse>();
+  for(const response of s.responses){
+    if(questionIds.has(response.questionId)&&!first.has(response.questionId))first.set(response.questionId,response);
+  }
+  const answers=[...first.values()],total=answers.length;
+  const correct=answers.filter(r=>r.correct).length,confidentCorrect=answers.filter(r=>r.correct&&!r.uncertain).length;
+  return {total,correct,confidentCorrect,percent:total?Math.round(correct/total*100):null,confidentPercent:total?Math.round(confidentCorrect/total*100):null};
+}
 export function eligibleDay(s:AppState,c:Content,day:number):boolean {
   const d=c.days.find(x=>x.day===day);if(!d)return false;
   if(d.examId)return s.exams.some(e=>e.examId===d.examId&&e.status==='submitted');

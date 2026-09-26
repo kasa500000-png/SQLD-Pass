@@ -1,6 +1,6 @@
 import type {Controller} from '../core/controller';
 import type {ExamAttempt,Lesson,Question} from '../core/types';
-import {dueReviews,firstAccuracy,formatTime,SUBJECTS} from '../core/domain';
+import {dueReviews,confirmationAccuracy,formatTime,SUBJECTS} from '../core/domain';
 import {box,button,code,dark,light,progress,row,table,text,type Node,type Style} from './nodes';
 import {dialectLabel,examReviewIndices,lessonBlocks,lessonStatus,searchLessons} from './learning-format';
 
@@ -175,13 +175,16 @@ export function polishLearning(c:Controller,root:Node,access?:ExamAccessUI):Node
     }
   }
   if(r==='stats'){
-    const a=firstAccuracy(s),first=new Map<string,(typeof s.responses)[number]>();
-    for(const response of s.responses)if(!first.has(response.questionId))first.set(response.questionId,response);
-    const correct=[...first.values()].filter(x=>x.correct).length;
+    const a=confirmationAccuracy(s,c.content);
     const attempts=[...s.exams].filter(e=>e.status==='submitted'&&e.score).sort((a,b)=>(b.submittedAt??b.startedAt)-(a.submittedAt??a.startedAt));
     content=[heading('학습 기록',24),
       row([card([small('공부한 날짜'),heading(`${s.studyDays.length}일`,23)],{flex:1,padding:14}),card([small('읽은 이론'),heading(`${s.readLessons.length}/60`,23)],{flex:1,padding:14})]),
-      card([heading('확인 문제 · 첫 풀이',18),body(first.size?`첫 풀이 정답률 ${Math.round(correct/first.size*100)}%`:'아직 풀이 기록이 없어요'),body(a.percent===null?'확신 정답 비율 —':`확신 있게 맞힌 비율 ${a.percent}%`),...(first.size?[action(c.expanded.has('stats:details')?'계산 기준 접기':'계산 기준',()=>c.toggleExpanded('stats:details'),'stats-details'),...(c.expanded.has('stats:details')?[small(`${first.size}문항의 첫 답안 기준입니다. 확신 부족으로 표시한 정답은 확신 비율에서 제외합니다.`)]:[])]:[])]),
+      card([heading('확인 문제 · 첫 풀이',18),...(a.total?[
+        row([body(`첫 풀이 정답률 ${a.percent}%`),small(`${a.total}문항 기준`)],{flexWrap:'wrap'}),
+        body(`확신 있게 맞힌 비율 ${a.confidentPercent}%`),
+        action(c.expanded.has('stats:details')?'계산 기준 접기':'계산 기준',()=>c.toggleExpanded('stats:details'),'stats-details'),
+        ...(c.expanded.has('stats:details')?[small('확인 문제의 첫 답안만 반영합니다. 확신 부족으로 표시한 정답은 확신 비율에서 제외합니다.')]:[])
+      ]:[body('아직 풀이 기록이 없어요')])]),
       heading('모의고사 응시 이력',20),
       ...(!attempts.length?[small('아직 응시 기록이 없어요'),action('실전 모의고사 보기',()=>c.tab('exams'),'records-start-exam')]:attempts.map(e=>card([row([badge(e.isFirstAttempt?'첫 응시':'재응시'),small(new Date(e.submittedAt??e.startedAt).toLocaleDateString('ko-KR'))],{flexWrap:'wrap'}),heading(e.title,18),body(`${e.score!.points} / 100점`),action('결과·해설 보기',()=>c.navigate({name:'result',id:e.id}),`history-${e.id}`)])))];
   }
@@ -220,6 +223,10 @@ export function polishLearning(c:Controller,root:Node,access?:ExamAccessUI):Node
   if(r==='exams'){
     const context=c.examCatalogContext();
     scroll.catalog={context,position:c.examCatalogPosition(),onRemember:position=>c.rememberExamCatalog(context,position)};
+  }
+  if(r==='stats'){
+    const context=c.recordsContext();
+    scroll.catalog={context,position:c.recordsPosition(),onRemember:position=>c.rememberRecords(context,position)};
   }
   if(r==='lesson'&&c.content.lessons.some(l=>l.id===c.route.id)){
     const id=c.route.id!;
