@@ -17,6 +17,14 @@
 - `npm run release:check`: 기존 콘텐츠 승인 증빙 미완료로 공개 출시 차단을 확인했다. 이번 변경은 승인 플래그를 바꾸지 않는다.
 - React 품질 검토: 잦은 스크롤 값은 ref에 유지하고 멈춘 후 저장한다. 레슨에만 스크롤 복원을 적용하며 타이머/문제 선택에 의해 시험 화면이 재생성되지 않는 기존 키를 유지한다. AppState 리스너와 타이머는 화면 해제 시 정리한다.
 
+### 의존성 호환성 보완
+
+원격 검사의 Expo 호환성 단계에서 SDK 57의 권장 패치가 갱신된 사실을 확인했다. `expo`를 57.0.24 → 57.0.25, `expo-build-properties`를 57.0.21 → 57.0.22로 맞추고 lockfile의 연관 패치도 갱신했다. 기존 검사 단계는 유지했다.
+
+- 갱신 후 `npm test` 183/183, 네이티브 TypeScript, `expo install --check`, Expo Doctor 21/21, ads-off 설정 검사 통과.
+- 설치 시 npm audit: 취약점 0건.
+- [Expo 공식 업그레이드 안내](https://docs.expo.dev/workflow/upgrading-expo-sdk-walkthrough/)의 의존성 호환성·환경 검사 절차를 참고했다. SDK 57 내 패치 갱신이며 주요 SDK 버전 변경은 아니다.
+
 ## Android 검증
 
 - `JAVA_HOME=C:\Program Files\Eclipse Adoptium\jdk-21.0.11.10-hotspot`, `EXPO_PUBLIC_APP_ENV=internal`, `EXPO_PUBLIC_ADS_MODE=off`로 `android/gradlew.bat :app:assembleRelease --console=plain` 성공 (7분 28초).
