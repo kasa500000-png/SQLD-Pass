@@ -6,23 +6,26 @@ import {restoredReadingOffset} from '../core/domain/reading';
 interface Props extends ScrollViewProps {
   context:string;
   position?:ReadingOffset;
+  preserveContentOffset?:boolean;
+  layoutKey?:string;
   onRemember:(position:ReadingOffset)=>void;
 }
 
 /** Keeps list navigation in memory. Filter changes reset without remounting the search input. */
-export function CatalogScrollView({context,position,onRemember,...props}:Props):React.JSX.Element {
+export function CatalogScrollView({context,position,onRemember,preserveContentOffset=false,layoutKey,...props}:Props):React.JSX.Element {
   const scroll=useRef<ScrollView>(null),remember=useRef(onRemember);
   const currentContext=useRef(context),anchor=useRef(position);
+  const currentLayout=useRef(layoutKey),reflowing=useRef(false);
   const geometry=useRef({height:0,viewport:0});
   const frame=useRef<number|undefined>(undefined),restoring=useRef(true);
 
   function cancelFrame(){if(frame.current!==undefined)cancelAnimationFrame(frame.current);frame.current=undefined;}
-  function restore(){
+  function restore(preserveOffset=false){
     restoring.current=true;
     cancelFrame();
     const {height,viewport}=geometry.current;
     if(height<=0||viewport<=0)return;
-    const offset=restoredReadingOffset(anchor.current,height,viewport);
+    const offset=restoredReadingOffset(anchor.current,height,viewport,preserveOffset);
     frame.current=requestAnimationFrame(()=>{
       scroll.current?.scrollTo({y:offset,animated:false});
       // Ignore initial zero-offset events until native scrolling has applied the position.
@@ -34,6 +37,7 @@ export function CatalogScrollView({context,position,onRemember,...props}:Props):
   }
   useLayoutEffect(()=>{
     remember.current=onRemember;
+    if(currentLayout.current!==layoutKey){currentLayout.current=layoutKey;reflowing.current=true;}
     if(currentContext.current!==context){currentContext.current=context;anchor.current=position;restore();}
   });
   useEffect(()=>()=>cancelFrame(),[]);
@@ -52,7 +56,10 @@ export function CatalogScrollView({context,position,onRemember,...props}:Props):
       if(geometry.current.viewport!==viewport){geometry.current.viewport=viewport;restore();}
     }}
     onContentSizeChange={(_width,height)=>{
-      if(geometry.current.height!==height){geometry.current.height=height;restore();}
+      if(geometry.current.height!==height){
+        const preserve=preserveContentOffset&&geometry.current.height>0&&!restoring.current&&!reflowing.current;
+        geometry.current.height=height;reflowing.current=false;restore(preserve);
+      }
     }}
     onScrollBeginDrag={()=>{cancelFrame();restoring.current=false;}}
     onScroll={event=>record(event.nativeEvent)}

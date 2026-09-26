@@ -97,10 +97,28 @@ test('catalog empty search has reset action',async()=>{const {c}=setup();c.route
 test('bookmark filter shows only selected theory',()=>{const {c}=setup();c.route={name:'catalog'};c.bookmarkedOnly=true;c.state.bookmarks=['SQLD-L001'];a.deepEqual(flat(view(c)).filter(n=>n.testId?.startsWith('lesson-SQLD')).map(n=>n.testId),['lesson-SQLD-L001']);});
 test('every day exposes all assigned lessons rather than only first',()=>{const {c}=setup();c.route={name:'plan'};for(let n=1;n<=30;n++)c.expanded.add('day:'+n);const tree=flat(view(c));for(const day of content.days)for(const id of day.lessonIds)a.ok(tree.find(n=>n.key==='day-'+day.day).children.flatMap(flat).some(n=>n.testId==='lesson-'+id));a.doesNotMatch(strings(view(c)),/null분|undefined분|NaN/);});
 test('current day can collapse and reopen',async()=>{const {c}=setup();c.route={name:'plan'};const id=c.currentDay().lessonIds[0];a.ok(flat(view(c)).some(n=>n.testId==='lesson-'+id));await click(c,'day-1-toggle');a.equal(flat(view(c)).some(n=>n.testId==='lesson-'+id),false);await click(c,'day-1-toggle');a.ok(flat(view(c)).some(n=>n.testId==='lesson-'+id));});
+test('collapsed plan days keep only their overview and expose actions when expanded',async()=>{
+ const {c}=setup();c.route={name:'plan'};const day=content.days[1];
+ const card=()=>flat(view(c)).find(n=>n.key==='day-'+day.day);
+ a.equal(flat(card()).filter(n=>n.kind==='button').length,1);a.equal(get(c,'day-2-toggle').expanded,false);
+ await click(c,'day-2-toggle');a.equal(get(c,'day-2-toggle').expanded,true);a.ok(strings(card()).includes(day.task));
+ for(const id of day.lessonIds)a.ok(get(c,'lesson-'+id));a.ok(get(c,'day-2-practice'));
+ await click(c,'day-2-toggle');a.equal(flat(card()).filter(n=>n.kind==='button').length,1);
+});
 test('all 60 lesson bodies and examples render without changing source',()=>{const {c}=setup();for(const l of content.lessons){c.route={name:'lesson',id:l.id};const out=view(c);a.ok(strings(out).includes(l.title));a.ok(get(c,'lesson-practice'));if(l.example?.sql)a.ok(flat(out).some(n=>n.kind==='code'&&n.text===l.example.sql));}a.equal(JSON.stringify(content),contentBefore);});
 test('read status and confirmation progress are separate',()=>{const {c}=setup(),l=content.lessons[0];c.state.readLessons=[l.id];a.match(fmt.lessonStatus(l,c.state),/읽음 · 확인 0\/2/);});
 test('all 120 confirmation screens withhold rationale before submission',()=>{const {c}=setup();for(const l of content.lessons)for(const id of l.questionIds){c.state.practice={id:'p',questionIds:[id],index:0,selected:null,uncertain:false,submitted:false,mode:'lesson',sessionCorrect:0,sessionAnswered:0};c.route={name:'practice'};const q=content.questions[id],out=view(c);a.ok(strings(out).includes(q.stem));a.ok(get(c,'submit-practice').disabled);a.equal(strings(out).includes(q.explanation),false);}});
 test('explicit submission reveals explanation and related theory',async()=>{const {c}=setup();await c.beginPractice(content.lessons[0].questionIds);const q=c.getQuestion(c.state.practice.questionIds[0]);await click(c,'option-'+q.answer);a.equal(strings(view(c)).includes(q.explanation),false);await click(c,'submit-practice');a.ok(strings(view(c)).includes(q.explanation));a.ok(get(c,'related-'+q.lessonIds[0]));});
+test('rationale prioritizes the chosen wrong answer and keeps every other rationale expandable',async()=>{
+ const {c}=setup(),q=content.questions['SQLD-M01-Q02'];
+ const wrong=q.options.find(o=>o.id!==q.answer).id;result(c,{[q.id]:wrong});await click(c,'result-all');c.moveExamReview(1);
+ const cards=()=>flat(view(c)).filter(n=>n.key?.startsWith('option-rationale-'));
+ a.deepEqual(cards().map(n=>n.key),['option-rationale-'+wrong]);a.match(strings(cards()[0]),/내가 선택한 보기/);
+ const nodes=flat(view(c));a.ok(nodes.findIndex(n=>n.testId==='related-'+q.lessonIds[0])<nodes.findIndex(n=>n.testId==='other-options-'+q.id));
+ await click(c,'other-options-'+q.id);a.equal(cards().length,q.options.length-1);
+ for(const o of q.options.filter(o=>o.id!==q.answer))a.ok(strings(cards().find(n=>n.key==='option-rationale-'+o.id)).includes(q.optionExplanations[o.id]));
+ await click(c,'other-options-'+q.id);a.equal(cards().length,1);
+});
 test('practice has only one sticky submit/next primary action',async()=>{const {c}=setup();await c.beginPractice(content.lessons[0].questionIds);const out=view(c),footer=out.children.find(n=>n.key==='learning-footer');a.ok(footer);a.equal(flat(out).filter(n=>n.testId==='submit-practice').length,1);a.equal(flat(out.children.find(n=>n.scroll)).some(n=>n.testId==='submit-practice'),false);});
 test('radio semantics include selection and non-color status',async()=>{const {c}=setup();await c.beginPractice(content.lessons[0].questionIds);const q=c.getQuestion(c.state.practice.questionIds[0]);await click(c,'option-'+q.options[0].id);const n=get(c,'option-'+q.options[0].id);a.equal(n.role,'radio');a.equal(n.checked,true);a.match(n.label,/선택됨/);});
 test('unfinished practice resumes without discarding a selection',async()=>{const {c}=setup();await c.beginPractice(content.lessons[0].questionIds);await c.selectPractice('1');c.route={name:'home'};await click(c,'home-resume-practice');a.equal(c.route.name,'practice');a.equal(c.state.practice.selected,'1');});
@@ -190,6 +208,32 @@ test('result shows subject minimums and time-trust caveat',()=>{const {c}=setup(
 test('wrong-only review uses saved exam snapshots in order',async()=>{const {c}=setup();const e=result(c);e.answers[e.snapshots[0].id]=e.snapshots[0].answer;await click(c,'result-wrong');a.equal(c.route.index,1);a.match(strings(view(c)),/시험 2번/);await click(c,'explain-next');a.equal(c.route.index,2);});
 test('perfect score disables wrong-only action and has an empty filter state',async()=>{const {c}=setup();const qs=content.exams[0].questionIds.map(id=>content.questions[id]);const e=result(c,Object.fromEntries(qs.map(q=>[q.id,q.answer])));a.equal(get(c,'result-wrong').disabled,true);c.route={name:'examReview',id:e.id};await click(c,'review-exam-wrong');a.match(strings(view(c)),/오답·미응답이 없어요/);await click(c,'explain-next');a.equal(c.route.name,'result');});
 test('result review does not use a newly changed current question answer',()=>{const {c}=setup();const e=result(c),q=e.snapshots[0];c.route={name:'examReview',id:e.id,index:0};const before=q.answer;const live=content.questions[q.id],saved=live.answer;try{live.answer='not-a-choice';a.match(strings(view(c)),new RegExp('정답 '+before+'번'));}finally{live.answer=saved;}});
+test('review picker jumps by original number and filters saved snapshots without changing the attempt',async()=>{
+ const {c}=setup(),q=content.questions[content.exams[0].questionIds[0]];const e=result(c,{[q.id]:q.answer});
+ const before=JSON.stringify(c.state);await click(c,'result-all');await click(c,'review-question-picker');
+ a.equal(flat(view(c)).filter(n=>n.testId?.startsWith('review-jump-')).length,50);a.match(get(c,'review-jump-1').label,/정답/);
+ await click(c,'review-jump-50');a.equal(c.route.index,49);a.equal(c.reviewPickerOpen,false);a.equal(get(c,'explain-next').text,'결과로');
+ await click(c,'review-question-picker');c.back();a.equal(c.reviewPickerOpen,false);a.equal(c.route.index,49);
+ await click(c,'review-exam-wrong');await click(c,'review-question-picker');a.equal(flat(view(c)).filter(n=>n.testId?.startsWith('review-jump-')).length,49);
+ a.equal(flat(view(c)).some(n=>n.testId==='review-jump-1'),false);c.moveExamReview(0);a.equal(c.route.index,1);
+ await click(c,'review-jump-40');a.equal(c.route.index,39);a.equal(JSON.stringify(c.state),before);
+ c.route={name:'exam',id:e.id};c.openReviewPicker();a.equal(c.reviewPickerOpen,false);
+});
+
+test('related theory returns to the review filter, original question and reading position',async()=>{
+ const {c}=setup(),e=result(c);await click(c,'result-wrong');c.moveExamReview(1);
+ const memory=get(c,'learning-content').catalog,position={offset:900,contentHeight:2400};memory.onRemember(position);
+ const before=JSON.stringify(c.state);await click(c,'related-'+e.snapshots[1].lessonIds[0]);a.equal(c.route.name,'lesson');c.back();
+ a.equal(c.route.name,'examReview');a.equal(c.route.index,1);a.equal(get(c,'review-exam-wrong').selected,true);
+ a.deepEqual(get(c,'learning-content').catalog.position,position);a.equal(JSON.stringify(c.state),before);
+ c.moveExamReview(2);a.equal(get(c,'learning-content').catalog.position,undefined);
+ memory.onRemember({offset:1000,contentHeight:2400});a.equal(get(c,'learning-content').catalog.position,undefined);
+});
+
+test('leaving the last explanation returns to results once, then back to the original history',async()=>{
+ const {c}=setup(),e=result(c);c.tab('records');await click(c,'history-'+e.id);await click(c,'result-all');
+ c.moveExamReview(49);await click(c,'explain-next');a.equal(c.route.name,'result');c.back();a.equal(c.route.name,'stats');
+});
 test('reward processing locks all updated buttons',()=>{const {c}=setup();c.route={name:'exams'};c.rewardBusy=true;a.ok(flat(view(c)).filter(n=>n.kind==='button').every(n=>n.disabled));});
 test('reward save retry control survives screen replacement',()=>{const {c}=setup();c.route={name:'exams'};Object.defineProperty(c,'needsRewardSave',{get:()=>true});a.ok(get(c,'retry-reward-save'));});
 test('reward feedback resets the catalog to its notice without resetting timed questions',()=>{
@@ -201,6 +245,17 @@ test('reward feedback resets the catalog to its notice without resetting timed q
  makeExam(c);const exam=key();c.notice='저장 상태 안내';a.equal(key(),exam);
 });
 test('font controls only persist supported scale and preserve grants',async()=>{const {c}=setup();c.state.monetization={version:1,grants:{},pending:null};c.route={name:'settings'};await click(c,'font-1.3');a.equal(c.state.settings.fontScale,1.3);a.ok(c.state.monetization);});
+test('goal date uses a calendar, validates inline, supports clearing, and appears on home only after saving',async()=>{
+ const {c,clock}=setup(),before={...c.state.settings},next=d.dayKey(clock.wall+86400000);c.navigate({name:'setup'});
+ a.equal(get(c,'target-date').kind,'date');a.equal(get(c,'target-date').minimumDate,d.dayKey(clock.wall));
+ get(c,'target-date').onChange('2001-01-01');await click(c,'finish-setup');a.equal(c.route.name,'setup');a.deepEqual(c.state.settings,before);
+ a.equal(get(c,'target-date-error').alert,true);a.equal(c.notice,'');
+ get(c,'target-date').onChange(next);a.equal(c.settingsError,'');await click(c,'minutes-60');
+ c.back();a.deepEqual(c.state.settings,before);c.navigate({name:'setup'});a.equal(c.draftSettings.targetDate,before.targetDate);
+ get(c,'target-date').onChange(next);await click(c,'minutes-60');await click(c,'finish-setup');
+ a.equal(c.route.name,'home');a.ok(strings(view(c)).includes(`하루 60분 목표 · 시험일 ${next}`));
+ c.navigate({name:'setup'});get(c,'target-date').onChange('');await click(c,'finish-setup');a.match(strings(view(c)),/하루 60분 목표/);a.doesNotMatch(strings(view(c)),/시험일 \d/);
+});
 test('rendering is deterministic and has no state persistence side effects',()=>{const {c}=setup();c.route={name:'catalog'};const before=JSON.stringify(c.state);view(c);view(c);a.equal(JSON.stringify(c.state),before);a.equal(JSON.stringify(content),contentBefore);});
 test('failed practice answer save does not display a new answer key',async()=>{const x=setup(),c=x.c;await c.beginPractice(content.lessons[0].questionIds);const q=c.getQuestion(c.state.practice.questionIds[0]);await c.selectPractice(q.answer);x.fail(true);await c.answerPractice();a.equal(c.state.practice.submitted,false);a.equal(strings(view(c)).includes(q.explanation),false);a.match(strings(view(c)),/저장\/처리 실패/);});
 test('startup failures are left intact, not hidden by new presentation',()=>{const {c}=setup();c.ready=false;const root={kind:'box',children:[{kind:'box',scroll:true,children:[{kind:'text',text:'CONTENT MISSING'}]}]};a.equal(polishLearning(c,root),root);a.match(strings(root),/CONTENT MISSING/);});
@@ -366,10 +421,12 @@ test('reset clears browsing memory and rejects late callbacks without restoring 
   memory.onRemember({offset:500,contentHeight:2000});
   c.tab('exams');const exams=get(c,'learning-content').catalog;exams.onRemember({offset:900,contentHeight:5000});
   c.tab('records');const records=get(c,'learning-content').catalog;records.onRemember({offset:480,contentHeight:1600});
+  const e=result(c);await click(c,'result-all');const review=get(c,'learning-content').catalog;review.onRemember({offset:750,contentHeight:2200});
   if(full)c.requestReset();else c.requestLearningReset();await c.acceptDialog();
   memory.onRemember({offset:600,contentHeight:2000});a.equal(c.catalogPosition(),undefined);a.equal(c.state.onboarded,false);
   exams.onRemember({offset:1000,contentHeight:5000});a.equal(c.examCatalogPosition(),undefined);
   records.onRemember({offset:500,contentHeight:1600});a.equal(c.recordsPosition(),undefined);
+  review.onRemember({offset:800,contentHeight:2200});a.equal(c.examReviewPosition(),undefined);c.route={name:'examReview',id:e.id,index:0};a.equal(c.examReviewPosition(),undefined);
  }
 });
 test('theory shortcut respects reward processing lock and cannot change filters or navigation',()=>{

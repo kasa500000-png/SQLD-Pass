@@ -4,12 +4,13 @@ import {advanceClock,applyPractice,assertContent,canStudyQuestion,dayKey,dueRevi
 export class Controller {
   state:AppState; ready=false; startupError=''; notice=''; busy=false; route:Route={name:'welcome'}; stack:Route[]=[];
   dialog:Dialog|null=null; search=''; subject='all'; bookmarkedOnly=false; filter='all'; expanded=new Set<string>();
-  draftSettings:Settings; supportText=''; supportNotice=''; reviewLimit=20; private listeners=new Set<()=>void>(); private serial:Promise<void>=Promise.resolve();
+  draftSettings:Settings; settingsError=''; supportText=''; supportNotice=''; reviewLimit=20; reviewPickerOpen=false; private listeners=new Set<()=>void>(); private serial:Promise<void>=Promise.resolve();
   private version=0; private checkpointAt=0; private expiryInFlight=false; private lastExpiryTry=0;
   private systemAppearance:'light'|'dark'='light';
   protected catalogScroll?:{context:string;position:ReadingOffset};
   protected examCatalogScroll?:{context:string;position:ReadingOffset};
   protected recordsScroll?:{context:string;position:ReadingOffset};
+  protected examReviewScroll?:{context:string;position:ReadingOffset};
   get isDark(){return this.state.settings.theme==='dark'||(this.state.settings.theme==='system'&&this.systemAppearance==='dark');}
   setSystemAppearance(value:'light'|'dark'){if(this.systemAppearance!==value){this.systemAppearance=value;this.notify();}}
   readonly getSnapshot=()=>this.version;
@@ -37,10 +38,11 @@ export class Controller {
       finally{this.busy=false;this.notify();}
     });this.serial=task.catch(()=>{});await task;return ok;
   }
-  navigate(route:Route){this.stack.push(this.route);this.route=route;this.notice='';this.supportNotice='';if(route.name==='settings'||route.name==='setup')this.draftSettings={...this.state.settings};this.notify();}
-  tab(tab:Tab){this.stack=[];this.route={name:({today:'home',learn:'catalog',review:'review',exams:'exams',records:'stats'} as const)[tab]};this.notice='';this.supportNotice='';this.notify();}
+  navigate(route:Route){this.stack.push(this.route);this.route=route;this.notice='';this.supportNotice='';this.settingsError='';this.reviewPickerOpen=false;if(route.name==='settings'||route.name==='setup')this.draftSettings={...this.state.settings};this.notify();}
+  tab(tab:Tab){this.stack=[];this.route={name:({today:'home',learn:'catalog',review:'review',exams:'exams',records:'stats'} as const)[tab]};this.notice='';this.supportNotice='';this.reviewPickerOpen=false;this.notify();}
   back(){
     if(this.dialog){this.dialog=null;this.notify();return;}
+    if(this.reviewPickerOpen){this.closeReviewPicker();return;}
     if(this.route.name==='exam'){this.confirm('시험 화면을 나갈까요?','답안은 기기에 저장되며 남은 시간은 계속 흐릅니다. 종료 시각이 지나면 자동 제출합니다.','저장 후 나가기',async()=>{if(await this.checkpoint())this.tab('exams');});return;}
     this.supportNotice='';this.route=this.stack.pop()??{name:this.state.onboarded?'home':'welcome'};this.notify();
   }
@@ -73,10 +75,36 @@ export class Controller {
     if(this.ready&&this.state.onboarded&&context===this.recordsContext()&&validReadingOffset(position))
       this.recordsScroll={context,position:{...position}};
   }
+  examReviewContext(){return JSON.stringify([this.route.id,this.route.index??0,this.expanded.has(`wrong:${this.route.id}`)]);}
+  examReviewPosition(){return this.examReviewScroll?.context===this.examReviewContext()?this.examReviewScroll.position:undefined;}
+  rememberExamReview(context:string,position:ReadingOffset){
+    if(this.ready&&this.state.onboarded&&this.route.name==='examReview'&&context===this.examReviewContext()&&validReadingOffset(position))
+      this.examReviewScroll={context,position:{...position}};
+  }
+  openReviewPicker(){if(this.route.name==='examReview'&&this.examAttempt(this.route.id)?.status==='submitted'){this.reviewPickerOpen=true;this.notify();}}
+  closeReviewPicker(){this.reviewPickerOpen=false;this.notify();}
+  moveExamReview(index:number){
+    const e=this.examAttempt(this.route.id),q=e?.snapshots[index];
+    if(this.route.name!=='examReview'||e?.status!=='submitted'||!Number.isInteger(index)||!q)return;
+    if(this.expanded.has(`wrong:${e.id}`)&&e.answers[q.id]===q.answer)return;
+    this.reviewPickerOpen=false;this.route={...this.route,index};this.notify();
+  }
+  setExamReviewFilter(onlyWrong:boolean){
+    const e=this.examAttempt(this.route.id);if(this.route.name!=='examReview'||e?.status!=='submitted')return;
+    onlyWrong?this.expanded.add(`wrong:${e.id}`):this.expanded.delete(`wrong:${e.id}`);
+    this.reviewPickerOpen=false;this.route={...this.route,index:onlyWrong?Math.max(0,e.snapshots.findIndex(q=>e.answers[q.id]!==q.answer)):0};this.notify();
+  }
+  returnToExamResult(){
+    const e=this.examAttempt(this.route.id);if(this.route.name!=='examReview'||e?.status!=='submitted')return;
+    const previous=this.stack.at(-1);if(previous?.name==='result'&&previous.id===e.id)this.stack.pop();
+    this.reviewPickerOpen=false;this.route={name:'result',id:e.id};this.notify();
+  }
+  setTargetDate(value:string){this.draftSettings.targetDate=value;this.settingsError='';this.notify();}
   async saveSettings(onboard=false){
     const d={...this.draftSettings};
-    if(!validTargetDate(d.targetDate,dayKey(this.services.clock().wall))){this.notice='목표일은 오늘 이후의 실제 날짜를 YYYY-MM-DD로 입력하거나 비워 주세요.';this.notify();return;}
+    if(!validTargetDate(d.targetDate,dayKey(this.services.clock().wall))){this.settingsError='오늘 이후의 실제 날짜를 선택하거나 시험일을 비워 주세요.';this.notify();return;}
     if(![15,30,45,60,90].includes(d.minutes))return;
+    this.settingsError='';
     if(await this.commit(s=>({...s,settings:d,onboarded:onboard||s.onboarded}))){this.stack=[];this.route={name:'home'};this.notice='학습 설정을 저장했습니다. 기존 기록은 유지됩니다.';this.notify();}
   }
   async markLesson(id:string){const ok=await this.commit(s=>({...s,readLessons:Array.from(new Set([...s.readLessons,id])),studyDays:Array.from(new Set([...s.studyDays,dayKey(this.services.clock().wall)]))}));if(ok){this.notice='이론 읽음을 기록했습니다. 확인 문제로 이해를 점검해 보세요.';this.notify();}}
@@ -178,7 +206,7 @@ export class Controller {
   requestReset(){this.confirm('기기의 학습 기록을 초기화할까요?','읽은 이론, 북마크, 풀이 기록, 진행 중 시험과 설정을 모두 삭제합니다. 복원할 수 없습니다. SQLD Pass의 로컬 학습 기록만 삭제됩니다.','이 앱 기록 삭제',async()=>{
     const task=this.serial.then(async()=>{
       this.busy=true;this.notify();
-      try{await this.services.repository.clear();this.state=initialState(this.content,this.services.clock().wall);this.catalogScroll=undefined;this.examCatalogScroll=undefined;this.recordsScroll=undefined;this.draftSettings={...this.state.settings};this.route={name:'welcome'};this.stack=[];this.ready=true;this.startupError='';this.notice='';}
+      try{await this.services.repository.clear();this.state=initialState(this.content,this.services.clock().wall);this.catalogScroll=undefined;this.examCatalogScroll=undefined;this.recordsScroll=undefined;this.examReviewScroll=undefined;this.reviewPickerOpen=false;this.draftSettings={...this.state.settings};this.route={name:'welcome'};this.stack=[];this.ready=true;this.startupError='';this.notice='';}
       catch(e){this.notice=`초기화 실패: ${String(e)}`;}
       finally{this.busy=false;this.notify();}
     });this.serial=task.catch(()=>{});await task;

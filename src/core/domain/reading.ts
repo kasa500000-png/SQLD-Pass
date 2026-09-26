@@ -20,8 +20,8 @@ export function parseReading(raw:unknown,content:Content,sameContent:boolean):Re
   return result;
 }
 
-/** Exact offset for the same layout; proportional fallback when text size/width changes. */
-export function restoredReadingOffset(saved:ReadingOffset|undefined,height:number,viewport:number):number {
+/** Keep offsets for expanding sections; use proportional fallback for text/width reflow. */
+export function restoredReadingOffset(saved:ReadingOffset|undefined,height:number,viewport:number,preserveOffset=false):number {
   if(!saved||!validReadingOffset(saved)||!Number.isFinite(height)||!Number.isFinite(viewport)||height<=0||viewport<=0)return 0;
-  return Math.max(0,Math.min(height-viewport,saved.offset*height/saved.contentHeight));
+  return Math.max(0,Math.min(height-viewport,preserveOffset?saved.offset:saved.offset*height/saved.contentHeight));
 }
