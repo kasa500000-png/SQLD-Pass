@@ -111,8 +111,10 @@ export function polishLearning(c:Controller,root:Node,access?:ExamAccessUI):Node
     const due=dueReviews(s,c.content,c.services.clock().wall),all=Object.keys(s.reviews).filter(id=>{const q=c.getQuestion(id);return q&&(!q.examId||s.exams.some(e=>e.status==='submitted'&&e.snapshots.some(x=>x.id===id)));});
     const showAll=c.expanded.has('review:all'),ids=showAll?all:due;
     content=[...(due.length?[action(`복습 시작 · ${Math.min(due.length,10)}문항`,()=>c.beginDueReview(),'start-review',true)]:[]),
-      row([choiceChip(`오늘 ${due.length}`,!showAll,()=>{c.expanded.delete('review:all');c.notify();},'review-due'),choiceChip(`전체 ${all.length}`,showAll,()=>{c.expanded.add('review:all');c.notify();},'review-all')],{flexWrap:'wrap'}),
-      ...(!ids.length?[heading('복습할 문제가 없어요',20),action('이론 학습하기',()=>c.openTheory(),'review-empty-learn')]:ids.slice(0,20).flatMap(id=>{const q=c.getQuestion(id);return q?[card([small(`${q.subject==='S1'?'1과목':'2과목'} · ${s.reviews[id].dueDay} 예정`),body(q.stem),action('이 문항 복습',()=>c.beginPractice([id],'review'),`review-${id}`)])]:[];})),...(ids.length>20?[small('처음 20문항을 표시합니다. 복습 시작은 예정 순서대로 최대 10문항씩 진행합니다.')]:[])];
+      row([choiceChip(`오늘 ${due.length}`,!showAll,()=>c.setReviewFilter(false),'review-due'),choiceChip(`전체 ${all.length}`,showAll,()=>c.setReviewFilter(true),'review-all')],{flexWrap:'wrap'}),
+      ...(!ids.length?[heading('복습할 문제가 없어요',20),action('이론 학습하기',()=>c.openTheory(),'review-empty-learn')]:ids.slice(0,c.reviewLimit).flatMap(id=>{const q=c.getQuestion(id);return q?[card([small(`${q.subject==='S1'?'1과목':'2과목'} · ${s.reviews[id].dueDay} 예정`),body(q.stem),action('이 문항 복습',()=>c.beginPractice([id],'review'),`review-${id}`)],{},`review-card-${id}`)]:[];})),
+      ...(ids.length?[small(`${Math.min(c.reviewLimit,ids.length)}/${ids.length}문항 표시`)]:[]),
+      ...(ids.length>c.reviewLimit?[action('20문항 더 보기',()=>c.showMoreReviews(),'review-more')]:[])];
   }
   if(r==='exams'&&access){
     const filter=c.expanded.has('exams:available'),available=c.content.exams.filter(e=>access.hasAccess(e.id));
@@ -206,6 +208,7 @@ export function polishLearning(c:Controller,root:Node,access?:ExamAccessUI):Node
     const report=(scroll.children??[]).find(n=>n.text==='제보 내용 공유하기');
     if(report)report.disabled=locked||!c.supportText.trim();
     scroll.children?.unshift(small('공유창을 여는 기능이며 고객센터 접수 완료를 의미하지 않습니다. 개인정보나 광고 식별자는 적지 마세요.'));
+    if(c.supportNotice)scroll.children?.unshift(notice(c.supportNotice));
   }
   if(content&&['catalog','review'].includes(r))content.unshift(learningNavigation());
   if(content){const recovery=(scroll.children??[]).filter(n=>n.testId==='retry-reward-save'||n.text?.startsWith('테스트 광고 모드')||n.text?.startsWith('광고 처리 중'));scroll.children=[...(c.notice?[notice(c.notice)]:[]),...recovery,...content];}

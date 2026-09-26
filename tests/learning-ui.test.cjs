@@ -19,6 +19,34 @@ async function click(c,id){const n=get(c,id);a.equal(!!n.disabled,false,`${id} d
 function makeExam(c,index=0){const e=d.startExam(c.state,content.exams[index],content,c.services.clock(),'attempt-'+index);c.state.exams=[e];c.route={name:'exam',id:e.id};return e;}
 function result(c,answers={}){const e=makeExam(c);e.answers=answers;const done=d.submitExam(e,c.services.clock(),'manual');c.state.exams=[done];c.route={name:'result',id:done.id};return done;}
 
+test('review pagination exposes every saved item and keeps scheduled review ordering',async()=>{
+ const {c,clock}=setup(),ids=content.lessons.flatMap(l=>l.questionIds).slice(0,51);
+ c.state.reviews=Object.fromEntries(ids.map(questionId=>[questionId,{questionId,dueDay:d.dayKey(clock.wall),step:0,lastAnsweredDay:'',lastCorrect:false}]));
+ c.tab('review');await click(c,'review-all');
+ const visible=()=>flat(view(c)).filter(n=>n.testId?.startsWith('review-SQLD-')).map(n=>n.testId.slice(7));
+ a.deepEqual(visible(),ids.slice(0,20));await click(c,'review-more');a.deepEqual(visible(),ids.slice(0,40));
+ await click(c,'review-more');a.deepEqual(visible(),ids);a.match(strings(view(c)),/51\/51문항 표시/);
+ a.equal(flat(view(c)).some(n=>n.testId==='review-more'),false);
+ await click(c,'review-'+ids[50]);a.deepEqual(c.state.practice.questionIds,[ids[50]]);
+ c.back();await click(c,'review-due');a.equal(visible().length,20);
+ c.state.practice=null;await click(c,'start-review');a.deepEqual(c.state.practice.questionIds,d.dueReviews(c.state,content,clock.wall).slice(0,10));
+});
+
+test('support feedback describes the share UI without claiming delivery and stays on help',async()=>{
+ for(const outcome of ['shared','cancelled']){
+  const {c,services}=setup();await c.beginPractice(content.lessons[0].questionIds);c.navigate({name:'help',id:'SQLD-L001-Q01'});
+  services.share=async()=>outcome;c.supportText='test';await c.report(c.route.id);
+  a.match(strings(view(c)),/공유창을 (열었|닫았)습니다/);a.doesNotMatch(strings(view(c)),/공유 동작을 완료/);a.equal(c.notice,'');
+  c.back();a.equal(c.route.name,'practice');a.equal(c.supportNotice,'');a.doesNotMatch(strings(view(c)),/공유창을 (열었|닫았)습니다/);
+ }
+});
+
+test('late share results cannot leak to another screen',async()=>{
+ const {c,services}=setup();let finish;services.share=()=>new Promise(resolve=>finish=resolve);
+ c.tab('learn');c.navigate({name:'help'});const pending=c.report();c.back();finish('shared');await pending;
+ a.equal(c.route.name,'catalog');a.equal(c.notice,'');a.equal(c.supportNotice,'');
+});
+
 test('collapsed question information keeps error reporting reachable after submission',async()=>{
  const {c}=setup();await c.beginPractice(content.lessons[0].questionIds);
  const q=c.getQuestion(c.state.practice.questionIds[0]);await click(c,'option-'+q.answer);await click(c,'submit-practice');

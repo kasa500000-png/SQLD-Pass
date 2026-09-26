@@ -79,8 +79,8 @@ export class MonetizedController extends Controller {
   /** Soft reset preserves grants; explicit full reset deletes them through the existing serialized path. */
   requestLearningReset(){
     if(this.rewardBusy||this.needsRewardSave)return;
-    this.confirm('학습 기록만 초기화할까요?','진도·답안·진행 중 시험을 삭제하지만 이미 열린 회차는 유지합니다.','학습만 초기화',async()=>{
-      const ok=await this.commit(s=>({...initialState(this.content,this.services.clock().wall),monetization:walletOf(s)}));
+    this.confirm('학습 기록만 초기화할까요?','진도·북마크·풀이·복습·진행 중 시험을 삭제합니다. 글자 크기·테마·학습 목표·이미 열린 회차는 유지합니다.','학습만 초기화',async()=>{
+      const ok=await this.commit(s=>({...initialState(this.content,this.services.clock().wall),settings:{...s.settings},monetization:walletOf(s)}));
       if(ok){this.catalogScroll=undefined;this.examCatalogScroll=undefined;this.recordsScroll=undefined;this.route={name:'welcome'};this.stack=[];this.draftSettings={...this.state.settings};this.notify();}
     },true);
   }
