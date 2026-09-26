@@ -190,8 +190,80 @@ test('exam days retain the mock exam action without empty theory counters',async
  a.equal(get(c,'home-study').text,'오늘의 모의고사 안내');a.doesNotMatch(strings(view(c)),/이론 0\/0/);
  await click(c,'home-study');a.deepEqual(c.route,{name:'examIntro',id:day.examId});
 });
-test('record details use saved exam result and retain return path',async()=>{const {c}=setup();const e=result(c);c.tab('records');const before=JSON.stringify(c.state);await click(c,'history-'+e.id);a.equal(c.route.id,e.id);a.equal(c.route.name,'result');c.back();a.equal(c.route.name,'stats');a.equal(JSON.stringify(c.state),before);});
-test('first-answer accuracy separates uncertainty without counting repeats',()=>{const {c}=setup();c.state.responses=[{questionId:'q1',correct:true,uncertain:true},{questionId:'q1',correct:true,uncertain:false},{questionId:'q2',correct:false,uncertain:false}];c.tab('records');a.match(strings(view(c)),/첫 풀이 정답률 50%/);a.match(strings(view(c)),/확신 있게 맞힌 비율 0%/);});
+test('record details restore the list position without changing saved results or learning history',async()=>{
+ const {c,services}=setup(),e=result(c),position={offset:480,contentHeight:1600};
+ c.tab('learn');get(c,'learning-content').catalog.onRemember({offset:700,contentHeight:9000});
+ c.tab('exams');get(c,'learning-content').catalog.onRemember({offset:1200,contentHeight:6000});
+ c.tab('records');const before=JSON.stringify(c.state),revision=c.getSnapshot();
+ get(c,'learning-content').catalog.onRemember(position);
+ a.equal(c.getSnapshot(),revision);a.equal(await services.repository.load(),null);
+ await click(c,'history-'+e.id);a.equal(c.route.id,e.id);a.equal(c.route.name,'result');
+ a.equal(get(c,'learning-content').catalog,undefined);c.back();a.equal(c.route.name,'stats');
+ a.deepEqual(get(c,'learning-content').catalog.position,position);a.equal(JSON.stringify(c.state),before);
+ a.deepEqual(c.catalogPosition(),{offset:700,contentHeight:9000});a.deepEqual(c.examCatalogPosition(),{offset:1200,contentHeight:6000});
+ a.equal(c.lastReadingLesson(),undefined);a.equal(get(c,'learning-content').reading,undefined);
+});
+test('first confirmation accuracy separates uncertainty and ignores repeats and unrelated questions',()=>{
+ const {c}=setup(),[q1,q2]=content.lessons[0].questionIds;
+ c.state.responses=[
+  {questionId:q1,correct:true,uncertain:true,mode:'review'},
+  {questionId:q1,correct:true,uncertain:false,mode:'lesson'},
+  {questionId:q2,correct:false,uncertain:false,mode:'lesson'},
+  {questionId:q2,correct:true,uncertain:false,mode:'review'},
+  {questionId:content.exams[0].questionIds[0],correct:true,uncertain:false,mode:'review'},
+  {questionId:'unknown',correct:true,uncertain:false,mode:'lesson'}
+ ];
+ c.tab('records');a.match(strings(view(c)),/첫 풀이 정답률 50%/);a.match(strings(view(c)),/확신 있게 맞힌 비율 0%/);
+ a.match(strings(view(c)),/2문항 기준/);a.equal(c.expanded.has('stats:details'),false);
+ a.deepEqual(d.confirmationAccuracy(c.state,content),{total:2,correct:1,confidentCorrect:0,percent:50,confidentPercent:0});
+});
+test('reviewing a submitted mock does not create confirmation statistics or alter stored answers',async()=>{
+ const {c}=setup();await c.beginExam('SQLD-M01');await c.finishExam('manual');
+ const examBefore=JSON.stringify(c.state.exams),q=c.state.exams[0].snapshots[0];
+ await c.beginPractice([q.id],'review');await c.selectPractice(q.answer);await c.answerPractice();await c.nextPractice();
+ a.equal(c.state.responses.length,1);a.equal(c.state.responses[0].correct,true);a.equal(c.state.responses[0].mode,'review');
+ c.tab('records');const before=JSON.stringify(c.state);a.match(strings(view(c)),/아직 풀이 기록이 없어요/);
+ a.doesNotMatch(strings(view(c)),/첫 풀이 정답률|확신.*비율|계산 기준|문항 기준/);
+ a.ok(get(c,'history-'+c.state.exams[0].id));a.equal(JSON.stringify(c.state),before);a.equal(JSON.stringify(c.state.exams),examBefore);
+});
+test('confirmation statistics distinguish no answers from zero correct and use saved correctness',()=>{
+ const {c}=setup(),q=content.questions[content.lessons[0].questionIds[0]];c.tab('records');
+ a.deepEqual(d.confirmationAccuracy(c.state,content),{total:0,correct:0,confidentCorrect:0,percent:null,confidentPercent:null});
+ a.doesNotMatch(strings(view(c)),/NaN|확신.*비율|계산 기준|문항 기준/);
+ // Even if an answer key changed, records must reflect the result saved when answered.
+ c.state.responses=[{questionId:q.id,selected:q.answer,correct:false,uncertain:false,mode:'lesson'}];
+ a.match(strings(view(c)),/첫 풀이 정답률 0%/);a.match(strings(view(c)),/확신 있게 맞힌 비율 0%/);a.match(strings(view(c)),/1문항 기준/);
+});
+test('confirmation sample size counts every lesson question once across repeated reviews',()=>{
+ const {c}=setup(),ids=content.lessons.flatMap(l=>l.questionIds);
+ c.state.responses=ids.map((questionId,i)=>({questionId,correct:i%2===0,uncertain:false,mode:i%2?'review':'lesson'}));
+ c.state.responses.push(...ids.map(questionId=>({questionId,correct:true,uncertain:false,mode:'review'})));
+ c.state.responses.push(...content.exams.flatMap(e=>e.questionIds).map(questionId=>({questionId,correct:true,uncertain:false,mode:'review'})));
+ const before=JSON.stringify(c.state);a.equal(ids.length,120);
+ a.deepEqual(d.confirmationAccuracy(c.state,content),{total:120,correct:60,confidentCorrect:60,percent:50,confidentPercent:50});
+ c.tab('records');a.match(strings(view(c)),/120문항 기준/);a.equal(JSON.stringify(c.state),before);
+});
+test('records return to the top after new learning, submitted results or a notice and reject stale callbacks',()=>{
+ for(const change of [
+  c=>c.state.responses.push({questionId:content.lessons[0].questionIds[0],correct:true,uncertain:false}),
+  c=>c.state.readLessons.push(content.lessons[0].id),
+  c=>c.state.studyDays.push('2026-09-26'),
+  c=>result(c),
+  c=>{c.notice='저장 상태를 확인해 주세요.';}
+ ]){
+  const {c}=setup();c.tab('records');const memory=get(c,'learning-content').catalog;
+  memory.onRemember({offset:480,contentHeight:1600});a.ok(c.recordsPosition());change(c);
+  a.equal(c.recordsPosition(),undefined);memory.onRemember({offset:500,contentHeight:1600});a.equal(c.recordsPosition(),undefined);
+ }
+});
+test('active exam ticks and answers preserve records browsing memory and cannot be changed by it',async()=>{
+ const {c,clock}=setup(),e=makeExam(c);c.tab('records');const memory=get(c,'learning-content').catalog,position={offset:480,contentHeight:1600};
+ memory.onRemember(position);await c.updateExamAnswer(e.snapshots[0].options[0].id);
+ clock.wall+=5000;clock.mono+=5000;await c.checkpoint();
+ a.deepEqual(c.recordsPosition(),position);a.equal(c.recordsContext(),memory.context);
+ const before=JSON.stringify(c.state),revision=c.getSnapshot();memory.onRemember({offset:NaN,contentHeight:1600});
+ a.deepEqual(c.recordsPosition(),position);a.equal(JSON.stringify(c.state),before);a.equal(c.getSnapshot(),revision);
+});
 
 test('switching the new main tabs preserves timed answers and suppresses ads',async()=>{const {c,clock}=setup();const e=makeExam(c);await c.updateExamAnswer(e.snapshots[0].options[0].id);const answers=JSON.stringify(c.activeExam().answers);const remaining=c.remaining();for(const tab of ['today','learn','records','exams']){c.tab(tab);a.equal(c.showBanner,false);a.equal(JSON.stringify(c.activeExam().answers),answers);}clock.wall+=5000;clock.mono+=5000;await c.checkpoint();a.ok(c.remaining()<=remaining-5000);});
 
@@ -249,9 +321,11 @@ test('reset clears browsing memory and rejects late callbacks without restoring 
   const {c}=setup();c.tab('learn');const memory=get(c,'learning-content').catalog;
   memory.onRemember({offset:500,contentHeight:2000});
   c.tab('exams');const exams=get(c,'learning-content').catalog;exams.onRemember({offset:900,contentHeight:5000});
+  c.tab('records');const records=get(c,'learning-content').catalog;records.onRemember({offset:480,contentHeight:1600});
   if(full)c.requestReset();else c.requestLearningReset();await c.acceptDialog();
   memory.onRemember({offset:600,contentHeight:2000});a.equal(c.catalogPosition(),undefined);a.equal(c.state.onboarded,false);
   exams.onRemember({offset:1000,contentHeight:5000});a.equal(c.examCatalogPosition(),undefined);
+  records.onRemember({offset:500,contentHeight:1600});a.equal(c.recordsPosition(),undefined);
  }
 });
 test('theory shortcut respects reward processing lock and cannot change filters or navigation',()=>{
