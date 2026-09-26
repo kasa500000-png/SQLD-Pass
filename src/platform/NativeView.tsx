@@ -6,6 +6,7 @@ import {
 import type {Node, Style} from '../ui/nodes';
 import {StudyCode,StudyTable} from './StudyReadables';
 import {AppText as Text, AppTextInput as TextInput} from './Typography';
+import {ReadingScrollView} from './ReadingScrollView';
 
 const textKeys = new Set(['fontSize','fontWeight','lineHeight','color','fontFamily','letterSpacing','textAlign']);
 function styles(source: Style | undefined, scale: number): {view: ViewStyle; text: TextStyle} {
@@ -47,7 +48,7 @@ export function NativeView({node: n, scale, dark, path = '0'}: NativeViewProps):
     style={[{color: ink}, s.view, s.text]} />;
   if (n.kind === 'code') return <StudyCode key={n.text} node={n} scale={scale} />;
   if (n.kind === 'table') return <StudyTable node={n} scale={scale} dark={dark} />;
-  if (n.kind === 'progress') return <View accessibilityRole="progressbar" accessibilityLabel="진행률"
+  if (n.kind === 'progress') return <View accessibilityRole="progressbar" accessibilityLabel={n.label??'진행률'}
     accessibilityValue={{min: 0, max: 100, now: Math.round((n.progress ?? 0) * 100)}} style={{height: 8, backgroundColor: line, borderRadius: 8, overflow: 'hidden'}}>
     <View style={{height:8,width:`${Math.round((n.progress??0)*100)}%`,backgroundColor:String(n.style?.backgroundColor??'#2457D6')}} />
   </View>;
@@ -59,6 +60,9 @@ export function NativeView({node: n, scale, dark, path = '0'}: NativeViewProps):
     </View>
   </Modal>;
   if(n.key==='lesson-grid')return <View style={{flexDirection:'row',flexWrap:'wrap',gap:12}}>{children.map((child,i)=><View key={n.children?.[i]?.key??i} style={{width:width>=768&&scale*fontScale<=1.3?'48%':'100%'}}>{child}</View>)}</View>;
+  if(n.scroll&&n.reading)return <ReadingScrollView key={n.key} testID={n.testId} {...n.reading}
+    keyboardShouldPersistTaps="handled" showsVerticalScrollIndicator
+    contentContainerStyle={[s.view,{width:'100%',maxWidth:920,alignSelf:'center'}]} style={{flex:1}}>{children}</ReadingScrollView>;
   if (n.scroll) return <ScrollView key={n.key} testID={n.testId} keyboardShouldPersistTaps="handled"
     showsVerticalScrollIndicator contentContainerStyle={[s.view,{width:'100%',maxWidth:920,alignSelf:'center'}]} style={{flex:1}}>{children}</ScrollView>;
   return <View testID={n.testId} style={s.view}>{children}</View>;

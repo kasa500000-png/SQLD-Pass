@@ -87,6 +87,33 @@ test('startup failures are left intact, not hidden by new presentation',()=>{con
 
 test('four tabs retain learning access and review belongs to Learning',async()=>{const {c}=setup();c.route={name:'home'};a.deepEqual(flat(view(c)).filter(n=>n.role==='tab').map(n=>n.label),['홈','학습','실전','기록']);await click(c,'tab-learn');await click(c,'learn-review');a.equal(c.route.name,'review');a.equal(get(c,'tab-learn').selected,true);await click(c,'bookmarked-only');a.equal(c.route.name,'catalog');a.equal(c.bookmarkedOnly,true);await click(c,'learn-theory');a.equal(c.bookmarkedOnly,false);await click(c,'tab-records');a.equal(c.route.name,'stats');});
 test('home continues unanswered confirmation questions after reading theory',async()=>{const {c}=setup();const day=c.currentDay();c.state.readLessons=[...day.lessonIds];c.route={name:'home'};a.equal(get(c,'home-study').text,'확인 문제 이어하기');await click(c,'home-study');a.equal(c.route.name,'practice');a.deepEqual(c.state.practice.questionIds,content.lessons.find(l=>l.id===day.lessonIds[0]).questionIds);});
+test('first home starts learning, then resumes the most recently visited unfinished lesson',async()=>{
+ const {c}=setup();c.route={name:'home'};a.equal(get(c,'home-study').text,'학습 시작');
+ a.match(strings(view(c)),/이론 0\/3 · 확인 0\/6/);a.match(strings(view(c)),/이번 이론 약 9분/);
+ await click(c,'home-study');a.equal(c.route.id,content.lessons[0].id);
+ const later=content.lessons[4];await c.rememberReading(later.id,{offset:780,contentHeight:3000});c.tab('today');
+ a.equal(get(c,'home-study').text,'이어서 읽기');a.match(strings(view(c)),new RegExp(later.title));a.match(strings(view(c)),/읽던 이론 · Day 2/);
+ await click(c,'home-study');a.equal(c.route.id,later.id);
+ const reading=get(c,'learning-content').reading;a.equal(reading.position.offset,780);
+});
+test('today progress counts unique submitted confirmation questions and explicit read marks',async()=>{
+ const {c}=setup(),l=content.lessons[0],q=content.questions[l.questionIds[0]];
+ await c.markLesson(l.id);await c.beginPractice([q.id]);await c.selectPractice(q.answer);await c.answerPractice();await c.nextPractice();
+ await c.beginPractice([q.id]);await c.selectPractice(q.answer);await c.answerPractice();c.tab('today');
+ a.match(strings(view(c)),/이론 1\/3 · 확인 1\/6/);a.match(strings(view(c)),/전체 과정 · 0\/30일 완료/);
+ a.equal(c.state.responses.length,2);
+});
+test('reading restoration is limited to lessons and does not change exam or practice scrolling',async()=>{
+ const {c}=setup();c.route={name:'lesson',id:content.lessons[0].id};
+ a.ok(get(c,'learning-content').reading);
+ await c.beginPractice(content.lessons[0].questionIds);a.equal(get(c,'learning-content').reading,undefined);
+ makeExam(c);a.equal(get(c,'learning-content').reading,undefined);
+});
+test('exam days retain the mock exam action without empty theory counters',async()=>{
+ const {c}=setup(),day=content.days.find(d=>d.examId);c.state.completedDays=content.days.filter(d=>d.day<day.day).map(d=>d.day);c.tab('today');
+ a.equal(get(c,'home-study').text,'오늘의 모의고사 안내');a.doesNotMatch(strings(view(c)),/이론 0\/0/);
+ await click(c,'home-study');a.deepEqual(c.route,{name:'examIntro',id:day.examId});
+});
 test('record details use saved exam result and retain return path',async()=>{const {c}=setup();const e=result(c);c.tab('records');const before=JSON.stringify(c.state);await click(c,'history-'+e.id);a.equal(c.route.id,e.id);a.equal(c.route.name,'result');c.back();a.equal(c.route.name,'stats');a.equal(JSON.stringify(c.state),before);});
 test('first-answer accuracy separates uncertainty without counting repeats',()=>{const {c}=setup();c.state.responses=[{questionId:'q1',correct:true,uncertain:true},{questionId:'q1',correct:true,uncertain:false},{questionId:'q2',correct:false,uncertain:false}];c.tab('records');a.match(strings(view(c)),/첫 풀이 정답률 50%/);a.match(strings(view(c)),/확신 있게 맞힌 비율 0%/);});
 

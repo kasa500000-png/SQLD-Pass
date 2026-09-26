@@ -44,13 +44,22 @@ export function polishLearning(c:Controller,root:Node,access?:ExamAccessUI):Node
 
   if(r==='home'){
     const d=c.currentDay(),due=dueReviews(s,c.content,c.services.clock().wall);
-    const next=d.lessonIds.map(id=>c.content.lessons.find(l=>l.id===id)).find(l=>l&&(!s.readLessons.includes(l.id)||l.questionIds.some(id=>!s.responses.some(a=>a.questionId===id))));
+    const lessons=d.lessonIds.flatMap(id=>{const l=c.content.lessons.find(l=>l.id===id);return l?[l]:[];});
+    const answered=new Set(s.responses.map(a=>a.questionId)),questions=new Set(lessons.flatMap(l=>l.questionIds));
+    const next=lessons.find(l=>!s.readLessons.includes(l.id)||l.questionIds.some(id=>!answered.has(id)));
+    const target=c.lastReadingLesson()??next;
+    const targetDay=target?c.content.days.find(day=>day.lessonIds.includes(target.id)):undefined;
     const complete=s.completedDays.length===30;
     content=[heading(complete?'30일 과정 완료':`오늘의 학습 · Day ${d.day}`,24),
       ...(active?[card([badge('시험 진행 중','orange'),heading(active.title,20),small(`남은 시간 ${formatTime(c.remaining())} · 화면을 나가도 계속 흐릅니다.`),action('진행 중 시험 이어하기',()=>resume(active),'home-resume-exam',true)])]:[]),
       ...(!active&&s.practice?[card([badge('중단한 연습'),body(`${s.practice.index+1}/${s.practice.questionIds.length}문항`),action('문제풀이 이어하기',()=>c.resumePractice(),'home-resume-practice',true)])]:[]),
-      card([row([heading(`${s.completedDays.length} / 30일`,24),badge(`${Math.round(s.completedDays.length/30*100)}%`)]),progress(s.completedDays.length/30,p.blue),body(complete?'다음 모의고사에 도전해 보세요.':d.examId?'모의고사':next?.title??'오늘 학습 완료'),
-        action(complete?'모의고사 선택':d.examId?'오늘의 모의고사 안내':next?(s.readLessons.includes(next.id)?'확인 문제 이어하기':'학습 이어하기'):'오늘 계획 확인',()=>complete?c.tab('exams'):d.examId?c.navigate({name:'examIntro',id:d.examId}):next?(s.readLessons.includes(next.id)?c.beginPractice(next.questionIds):openLesson(next)):c.navigate({name:'plan'}),'home-study',!active&&!s.practice)]),
+      card([
+        ...(!complete&&!d.examId?[heading(`이론 ${lessons.filter(l=>s.readLessons.includes(l.id)).length}/${lessons.length} · 확인 ${[...questions].filter(id=>answered.has(id)).length}/${questions.size}`,20)]:[]),
+        ...(!complete&&!d.examId&&targetDay&&targetDay.day!==d.day?[small(`읽던 이론 · Day ${targetDay.day}`)]:[]),
+        body(complete?'다음 모의고사에 도전해 보세요.':d.examId?'모의고사':target?.title??'오늘 학습 완료'),
+        ...(!complete&&!d.examId&&target&&!s.readLessons.includes(target.id)?[small(`이번 이론 약 ${target.minutes}분`)]:[]),
+        action(complete?'모의고사 선택':d.examId?'오늘의 모의고사 안내':target?(s.readLessons.includes(target.id)?'확인 문제 이어하기':c.readingPosition(target.id)?'이어서 읽기':'학습 시작'):'오늘 계획 확인',()=>complete?c.tab('exams'):d.examId?c.navigate({name:'examIntro',id:d.examId}):target?(s.readLessons.includes(target.id)?c.beginPractice(target.questionIds):openLesson(target)):c.navigate({name:'plan'}),'home-study',!active&&!s.practice),
+        small(`전체 과정 · ${s.completedDays.length}/30일 완료`),{...progress(s.completedDays.length/30,p.blue),label:'전체 30일 과정 진행률'}]),
       ...(due.length?[action(`오늘 복습 · ${Math.min(due.length,10)}문항`,()=>c.beginDueReview(),'home-review')]:[]),action('30일 학습 계획',()=>c.navigate({name:'plan'}),'home-plan')];
   }
   if(r==='catalog'){
@@ -199,6 +208,10 @@ export function polishLearning(c:Controller,root:Node,access?:ExamAccessUI):Node
   // Keep timed questions stable; only these action screens return to the notice.
   if(['exams','examIntro','settings'].includes(r))scroll.key+=`:notice:${c.notice??''}`;
   scroll.testId='learning-content';
+  if(r==='lesson'&&c.content.lessons.some(l=>l.id===c.route.id)){
+    const id=c.route.id!;
+    scroll.reading={position:c.readingPosition(id),onSave:position=>c.rememberReading(id,position)};
+  }
   if(top){const at=root.children!.indexOf(scroll);root.children!.splice(at,0,top);}
   if(footer){root.children=root.children!.filter(n=>n===scroll||n===top||n.kind==='modal'||root.children!.indexOf(n)<root.children!.indexOf(scroll));const modal=root.children.findIndex(n=>n.kind==='modal');root.children.splice(modal<0?root.children.length:modal,0,footer);}
   return root;

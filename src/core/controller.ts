@@ -1,4 +1,5 @@
-import type {AppState,Content,Dialog,ExamAttempt,Question,Route,Services,Settings,Tab} from './types';
+import type {AppState,Content,Dialog,ExamAttempt,Question,ReadingOffset,Route,Services,Settings,Tab} from './types';
+import {validReadingOffset} from './domain/reading';
 import {advanceClock,applyPractice,assertContent,canStudyQuestion,dayKey,dueReviews,eligibleDay,initialState,parseState,startExam,submitExam,validTargetDate} from './domain';
 export class Controller {
   state:AppState; ready=false; startupError=''; notice=''; busy=false; route:Route={name:'welcome'}; stack:Route[]=[];
@@ -55,6 +56,26 @@ export class Controller {
   async markLesson(id:string){const ok=await this.commit(s=>({...s,readLessons:Array.from(new Set([...s.readLessons,id])),studyDays:Array.from(new Set([...s.studyDays,dayKey(this.services.clock().wall)]))}));if(ok){this.notice='이론 읽음을 기록했습니다. 확인 문제로 이해를 점검해 보세요.';this.notify();}}
   async bookmark(id:string){await this.commit(s=>({...s,bookmarks:s.bookmarks.includes(id)?s.bookmarks.filter(x=>x!==id):[...s.bookmarks,id]}));}
   currentDay(){return this.content.days.find(d=>!this.state.completedDays.includes(d.day))??this.content.days[29];}
+  readingPosition(id:string){
+    const position=this.state.reading?.positions[id],lesson=this.content.lessons.find(l=>l.id===id);
+    return lesson&&position?.lessonVersion===lesson.version&&validReadingOffset(position)?position:undefined;
+  }
+  lastReadingLesson(){
+    const id=this.state.reading?.lastLessonId;
+    return id&&this.readingPosition(id)?this.content.lessons.find(l=>l.id===id&&!this.state.readLessons.includes(id)):undefined;
+  }
+  async rememberReading(id:string,position:ReadingOffset):Promise<boolean>{
+    const lesson=this.content.lessons.find(l=>l.id===id);
+    if(!this.ready||!lesson||!validReadingOffset(position))return false;
+    const next={offset:Math.round(position.offset),contentHeight:Math.max(1,Math.round(position.contentHeight)),lessonVersion:lesson.version};
+    return this.commit(s=>{
+      // A late unmount callback must not recreate reading history after a reset.
+      if(!s.onboarded)return s;
+      const old=s.reading?.positions[id];
+      if(s.reading?.lastLessonId===id&&old?.offset===next.offset&&old.contentHeight===next.contentHeight&&old.lessonVersion===next.lessonVersion)return s;
+      return {...s,reading:{lastLessonId:id,positions:{...s.reading?.positions,[id]:next}}};
+    });
+  }
   async markDay(day:number){if(!eligibleDay(this.state,this.content,day)){this.notice='해당 학습일의 이론과 확인 문제 또는 모의고사를 먼저 완료해 주세요.';this.notify();return;}
     await this.commit(s=>({...s,completedDays:Array.from(new Set([...s.completedDays,day]))}));}
   getQuestion(id:string):Question|undefined {

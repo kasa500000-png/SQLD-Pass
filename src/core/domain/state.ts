@@ -1,5 +1,6 @@
 import type {AppState,Content,Subject} from '../types';
 import {canStudyQuestion,scoreExam} from './exam';
+import {parseReading} from './reading';
 
 export const SUBJECTS:Record<Subject,string>={S1:'데이터 모델링의 이해',S2:'SQL 기본 및 활용'};
 export function dayKey(time=Date.now()):string { const d=new Date(time); return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`; }
@@ -22,7 +23,7 @@ export function parseState(raw:unknown,content:Content):AppState {
   for(const e of s.exams){if(!Number.isInteger(e.index)||e.index<0||e.index>=50||e.remainingMs<0||!e.answers||!Array.isArray(e.flagged)||!Array.isArray(e.timeIssues)||typeof e.timeTrusted!=='boolean')throw new Error('시험 상태가 손상되었습니다.');scoreExam(e.snapshots,e.answers);if(e.status==='submitted'&&!e.score)throw new Error('제출된 시험에 채점 기록이 없습니다.');}
   const checked=s as AppState;
   if(s.practice){const p=s.practice;if(!Array.isArray(p.questionIds)||!p.questionIds.length||!Number.isInteger(p.index)||p.index<0||p.index>=p.questionIds.length||p.questionIds.some(id=>!content.questions[id]||!canStudyQuestion(checked,content.questions[id])))throw new Error('진행 중 연습의 문항 상태가 올바르지 않습니다.');if(p.selected!==null&&!content.questions[p.questionIds[p.index]].options.some(o=>o.id===p.selected))throw new Error('진행 중 연습의 선택지가 올바르지 않습니다.');}
-  return checked;
+  return {...checked,reading:parseReading(s.reading,content,s.contentVersion===content.manifest.version)};
 }
 export function assertContent(c:Content):void {
   if(c.lessons.length!==60||c.exams.length!==20||Object.keys(c.questions).length!==1120)throw new Error('콘텐츠 수량 불일치');const lessonIds=new Set(c.lessons.map(x=>x.id));

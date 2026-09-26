@@ -33,7 +33,11 @@ if(action==='scroll'){
   const out=path.resolve(__dirname,'../.build/android-qa');fs.mkdirSync(out,{recursive:true});
   const file=label.replace(/[^a-zA-Z0-9_-]/g,'_');
   fs.writeFileSync(path.join(out,file+'.xml'),xml);
-  fs.writeFileSync(path.join(out,file+'.png'),adb('exec-out','screencap','-p'));
+  const capture=adb('exec-out','screencap','-p');
+  // Some multi-display Samsung devices prefix screencap with a textual warning.
+  const pngStart=capture.indexOf(Buffer.from('89504e470d0a1a0a','hex'));
+  if(pngStart<0)throw new Error('screencap did not return a PNG');
+  fs.writeFileSync(path.join(out,file+'.png'),capture.subarray(pngStart));
   console.log(nodes.filter(n=>n.text||n['content-desc']).map(n=>`${n.clickable==='true'?'[button]':'[text]'} ${n['content-desc']||n.text} ${n.bounds}`).join('\n'));
   console.log(path.join(out,file+'.png'));
 }
