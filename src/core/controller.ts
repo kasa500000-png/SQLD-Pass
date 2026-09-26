@@ -7,6 +7,7 @@ export class Controller {
   draftSettings:Settings; supportText=''; private listeners=new Set<()=>void>(); private serial:Promise<void>=Promise.resolve();
   private version=0; private checkpointAt=0; private expiryInFlight=false; private lastExpiryTry=0;
   private systemAppearance:'light'|'dark'='light';
+  protected catalogScroll?:{context:string;position:ReadingOffset};
   get isDark(){return this.state.settings.theme==='dark'||(this.state.settings.theme==='system'&&this.systemAppearance==='dark');}
   setSystemAppearance(value:'light'|'dark'){if(this.systemAppearance!==value){this.systemAppearance=value;this.notify();}}
   readonly getSnapshot=()=>this.version;
@@ -45,8 +46,17 @@ export class Controller {
   cancelDialog(){this.dialog=null;this.notify();}
   async acceptDialog(){const d=this.dialog;this.dialog=null;this.notify();if(d)await d.onConfirm();}
   toggleExpanded(id:string){this.expanded.has(id)?this.expanded.delete(id):this.expanded.add(id);this.notify();}
-  setSearch(text:string){this.search=text;this.notify();}
-  setSubject(v:string){this.subject=v;this.notify();}
+  setSearch(text:string){if(this.search!==text)this.catalogScroll=undefined;this.search=text;this.notify();}
+  setSubject(v:string){if(this.subject!==v)this.catalogScroll=undefined;this.subject=v;this.notify();}
+  resetLessonSearch(){this.search='';this.subject='all';this.catalogScroll=undefined;this.notify();}
+  openTheory(){this.search='';this.subject='all';this.bookmarkedOnly=false;this.catalogScroll=undefined;this.tab('learn');}
+  catalogContext(){return JSON.stringify([this.bookmarkedOnly,this.subject,this.search,this.bookmarkedOnly?[...this.state.bookmarks].sort():null]);}
+  catalogPosition(){return this.catalogScroll?.context===this.catalogContext()?this.catalogScroll.position:undefined;}
+  /** Session-only browsing history: never saves learning progress or changes the last lesson. */
+  rememberCatalog(context:string,position:ReadingOffset){
+    if(this.ready&&this.state.onboarded&&context===this.catalogContext()&&validReadingOffset(position))
+      this.catalogScroll={context,position:{...position}};
+  }
   async saveSettings(onboard=false){
     const d={...this.draftSettings};
     if(!validTargetDate(d.targetDate,dayKey(this.services.clock().wall))){this.notice='목표일은 오늘 이후의 실제 날짜를 YYYY-MM-DD로 입력하거나 비워 주세요.';this.notify();return;}
@@ -150,7 +160,7 @@ export class Controller {
   requestReset(){this.confirm('기기의 학습 기록을 초기화할까요?','읽은 이론, 북마크, 풀이 기록, 진행 중 시험과 설정을 모두 삭제합니다. 복원할 수 없습니다. SQLD Pass의 로컬 학습 기록만 삭제됩니다.','이 앱 기록 삭제',async()=>{
     const task=this.serial.then(async()=>{
       this.busy=true;this.notify();
-      try{await this.services.repository.clear();this.state=initialState(this.content,this.services.clock().wall);this.draftSettings={...this.state.settings};this.route={name:'welcome'};this.stack=[];this.ready=true;this.startupError='';this.notice='';}
+      try{await this.services.repository.clear();this.state=initialState(this.content,this.services.clock().wall);this.catalogScroll=undefined;this.draftSettings={...this.state.settings};this.route={name:'welcome'};this.stack=[];this.ready=true;this.startupError='';this.notice='';}
       catch(e){this.notice=`초기화 실패: ${String(e)}`;}
       finally{this.busy=false;this.notify();}
     });this.serial=task.catch(()=>{});await task;

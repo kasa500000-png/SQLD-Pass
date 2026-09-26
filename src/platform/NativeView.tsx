@@ -7,6 +7,7 @@ import type {Node, Style} from '../ui/nodes';
 import {StudyCode,StudyTable} from './StudyReadables';
 import {AppText as Text, AppTextInput as TextInput} from './Typography';
 import {ReadingScrollView} from './ReadingScrollView';
+import {CatalogScrollView} from './CatalogScrollView';
 
 const textKeys = new Set(['fontSize','fontWeight','lineHeight','color','fontFamily','letterSpacing','textAlign']);
 function styles(source: Style | undefined, scale: number): {view: ViewStyle; text: TextStyle} {
@@ -63,6 +64,9 @@ export function NativeView({node: n, scale, dark, path = '0'}: NativeViewProps):
   if(n.scroll&&n.reading)return <ReadingScrollView key={n.key} testID={n.testId} {...n.reading}
     keyboardShouldPersistTaps="handled" showsVerticalScrollIndicator
     contentContainerStyle={[s.view,{width:'100%',maxWidth:920,alignSelf:'center'}]} style={{flex:1}}>{children}</ReadingScrollView>;
+  if(n.scroll&&n.catalog)return <CatalogScrollView key={n.key} testID={n.testId} {...n.catalog}
+    keyboardShouldPersistTaps="handled" showsVerticalScrollIndicator
+    contentContainerStyle={[s.view,{width:'100%',maxWidth:920,alignSelf:'center'}]} style={{flex:1}}>{children}</CatalogScrollView>;
   if (n.scroll) return <ScrollView key={n.key} testID={n.testId} keyboardShouldPersistTaps="handled"
     showsVerticalScrollIndicator contentContainerStyle={[s.view,{width:'100%',maxWidth:920,alignSelf:'center'}]} style={{flex:1}}>{children}</ScrollView>;
   return <View testID={n.testId} style={s.view}>{children}</View>;

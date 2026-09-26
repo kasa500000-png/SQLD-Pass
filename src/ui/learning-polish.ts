@@ -64,11 +64,14 @@ export function polishLearning(c:Controller,root:Node,access?:ExamAccessUI):Node
   }
   if(r==='catalog'){
     const list=searchLessons(c.content.lessons,c.search,c.subject,c.bookmarkedOnly?s.bookmarks:null);
+    const noBookmarks=c.bookmarkedOnly&&!s.bookmarks.length;
     content=[
       {kind:'input',testId:'lesson-search',label:'이론 제목과 본문 검색',value:c.search,onChange:v=>c.setSearch(v),placeholder:'조인, NULL, 정규화',style:{minHeight:52,padding:14,borderRadius:14,borderWidth:1,borderColor:p.line,color:p.ink,backgroundColor:p.surface,fontSize:16}},
       row([choiceChip('전체',c.subject==='all',()=>c.setSubject('all'),'subject-all'),choiceChip('1과목',c.subject==='S1',()=>c.setSubject('S1'),'subject-S1'),choiceChip('2과목',c.subject==='S2',()=>c.setSubject('S2'),'subject-S2')],{flexWrap:'wrap'}),
       small(`${list.length}개 이론`),box(list.map(item),{},'lesson-grid'),
-      ...(!list.length?[empty(c.bookmarkedOnly?'조건에 맞는 북마크가 없어요':'검색 결과가 없어요','다른 용어로 검색하거나 필터를 초기화해 보세요.'),action('검색·필터 초기화',()=>{c.search='';c.subject='all';c.bookmarkedOnly=false;c.notify();},'reset-lesson-search')]:[])];
+      ...(!list.length?noBookmarks?
+        [empty('저장한 북마크가 없어요','이론에서 ‘북마크에 저장’을 눌러 모아 보세요.'),action('이론 학습하기',()=>c.openTheory(),'bookmarks-empty-learn')]:
+        [empty(c.bookmarkedOnly?'조건에 맞는 북마크가 없어요':'검색 결과가 없어요','다른 용어로 검색하거나 필터를 초기화해 보세요.'),action('검색·필터 초기화',()=>c.resetLessonSearch(),'reset-lesson-search')]:[])];
   }
   const learningNavigation=()=>row([
     choiceChip('이론',r==='catalog'&&!c.bookmarkedOnly,()=>{c.bookmarkedOnly=false;c.tab('learn');},'learn-theory'),
@@ -109,7 +112,7 @@ export function polishLearning(c:Controller,root:Node,access?:ExamAccessUI):Node
     const showAll=c.expanded.has('review:all'),ids=showAll?all:due;
     content=[...(due.length?[action(`복습 시작 · ${Math.min(due.length,10)}문항`,()=>c.beginDueReview(),'start-review',true)]:[]),
       row([choiceChip(`오늘 ${due.length}`,!showAll,()=>{c.expanded.delete('review:all');c.notify();},'review-due'),choiceChip(`전체 ${all.length}`,showAll,()=>{c.expanded.add('review:all');c.notify();},'review-all')],{flexWrap:'wrap'}),
-      ...(!ids.length?[heading('복습할 문제가 없어요',20),action('이론 학습하기',()=>c.tab('learn'),'review-empty-learn')]:ids.slice(0,20).flatMap(id=>{const q=c.getQuestion(id);return q?[card([small(`${q.subject==='S1'?'1과목':'2과목'} · ${s.reviews[id].dueDay} 예정`),body(q.stem),action('이 문항 복습',()=>c.beginPractice([id],'review'),`review-${id}`)])]:[];})),...(ids.length>20?[small('처음 20문항을 표시합니다. 복습 시작은 예정 순서대로 최대 10문항씩 진행합니다.')]:[])];
+      ...(!ids.length?[heading('복습할 문제가 없어요',20),action('이론 학습하기',()=>c.openTheory(),'review-empty-learn')]:ids.slice(0,20).flatMap(id=>{const q=c.getQuestion(id);return q?[card([small(`${q.subject==='S1'?'1과목':'2과목'} · ${s.reviews[id].dueDay} 예정`),body(q.stem),action('이 문항 복습',()=>c.beginPractice([id],'review'),`review-${id}`)])]:[];})),...(ids.length>20?[small('처음 20문항을 표시합니다. 복습 시작은 예정 순서대로 최대 10문항씩 진행합니다.')]:[])];
   }
   if(r==='exams'&&access){
     const filter=c.expanded.has('exams:available');const es=c.content.exams.filter(e=>!filter||access.hasAccess(e.id));
@@ -208,6 +211,10 @@ export function polishLearning(c:Controller,root:Node,access?:ExamAccessUI):Node
   // Keep timed questions stable; only these action screens return to the notice.
   if(['exams','examIntro','settings'].includes(r))scroll.key+=`:notice:${c.notice??''}`;
   scroll.testId='learning-content';
+  if(r==='catalog'){
+    const context=c.catalogContext();
+    scroll.catalog={context,position:c.catalogPosition(),onRemember:position=>c.rememberCatalog(context,position)};
+  }
   if(r==='lesson'&&c.content.lessons.some(l=>l.id===c.route.id)){
     const id=c.route.id!;
     scroll.reading={position:c.readingPosition(id),onSave:position=>c.rememberReading(id,position)};

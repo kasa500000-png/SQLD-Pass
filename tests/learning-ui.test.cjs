@@ -118,3 +118,66 @@ test('record details use saved exam result and retain return path',async()=>{con
 test('first-answer accuracy separates uncertainty without counting repeats',()=>{const {c}=setup();c.state.responses=[{questionId:'q1',correct:true,uncertain:true},{questionId:'q1',correct:true,uncertain:false},{questionId:'q2',correct:false,uncertain:false}];c.tab('records');a.match(strings(view(c)),/첫 풀이 정답률 50%/);a.match(strings(view(c)),/확신 있게 맞힌 비율 0%/);});
 
 test('switching the new main tabs preserves timed answers and suppresses ads',async()=>{const {c,clock}=setup();const e=makeExam(c);await c.updateExamAnswer(e.snapshots[0].options[0].id);const answers=JSON.stringify(c.activeExam().answers);const remaining=c.remaining();for(const tab of ['today','learn','records','exams']){c.tab(tab);a.equal(c.showBanner,false);a.equal(JSON.stringify(c.activeExam().answers),answers);}clock.wall+=5000;clock.mono+=5000;await c.checkpoint();a.ok(c.remaining()<=remaining-5000);});
+
+test('returning from theory restores catalog browsing without saving learning progress',async()=>{
+ const {c,services}=setup();c.tab('learn');const before=JSON.stringify(c.state),revision=c.getSnapshot();
+ const position={offset:2400,contentHeight:10000};get(c,'learning-content').catalog.onRemember(position);
+ a.equal(JSON.stringify(c.state),before);a.equal(c.getSnapshot(),revision);a.equal(await services.repository.load(),null);
+ await click(c,'lesson-SQLD-L007');a.equal(get(c,'learning-content').catalog,undefined);
+ c.back();a.equal(c.route.name,'catalog');a.deepEqual(get(c,'learning-content').catalog.position,position);
+ a.equal(get(c,'learning-content').reading,undefined);a.equal(c.lastReadingLesson(),undefined);
+});
+test('search, subject and bookmark changes do not reuse a different result list position',async()=>{
+ const {c}=setup();c.tab('learn');const first=get(c,'learning-content'),key=first.key;
+ first.catalog.onRemember({offset:2400,contentHeight:10000});
+ c.setSearch('NULL');a.equal(get(c,'learning-content').catalog.position,undefined);
+ first.catalog.onRemember({offset:2500,contentHeight:10000});a.equal(c.catalogPosition(),undefined);
+ a.equal(get(c,'learning-content').key,key,'typing must not remount the search input');
+ get(c,'learning-content').catalog.onRemember({offset:500,contentHeight:6000});
+ c.setSubject('S2');a.equal(c.catalogPosition(),undefined);
+ get(c,'learning-content').catalog.onRemember({offset:600,contentHeight:6000});
+ await click(c,'bookmarked-only');a.equal(c.catalogPosition(),undefined);
+ c.state.bookmarks=['SQLD-L015','SQLD-L016'];const bookmarked=get(c,'learning-content').catalog;
+ bookmarked.onRemember({offset:100,contentHeight:1000});await c.bookmark('SQLD-L015');
+ a.equal(c.catalogPosition(),undefined);bookmarked.onRemember({offset:200,contentHeight:1000});a.equal(c.catalogPosition(),undefined);
+});
+test('review empty action opens unfiltered theory after visiting bookmarks',async()=>{
+ const {c}=setup();c.tab('learn');await click(c,'bookmarked-only');c.setSubject('S2');c.setSearch('missing-term');
+ await click(c,'learn-review');await click(c,'review-empty-learn');
+ a.equal(c.route.name,'catalog');a.equal(get(c,'learn-theory').selected,true);
+ a.equal(c.search,'');a.equal(c.subject,'all');a.match(strings(view(c)),/60개 이론/);
+});
+test('empty bookmarks explain saving and offer a direct route to theory',async()=>{
+ const {c}=setup();c.tab('learn');await click(c,'bookmarked-only');c.setSearch('missing-term');
+ a.match(strings(view(c)),/저장한 북마크가 없어요/);a.match(strings(view(c)),/북마크에 저장/);
+ a.doesNotMatch(strings(view(c)),/조건에 맞는 북마크|검색·필터 초기화/);
+ await click(c,'bookmarks-empty-learn');a.equal(get(c,'learn-theory').selected,true);a.equal(c.search,'');
+});
+test('filtered bookmarks reset query and subject while keeping the saved collection selected',async()=>{
+ const {c}=setup();await c.bookmark('SQLD-L001');c.tab('learn');await click(c,'bookmarked-only');
+ c.setSubject('S2');c.setSearch('missing-term');a.match(strings(view(c)),/조건에 맞는 북마크가 없어요/);
+ await click(c,'reset-lesson-search');a.equal(get(c,'bookmarked-only').selected,true);
+ a.equal(c.search,'');a.equal(c.subject,'all');a.match(strings(view(c)),/1개 이론/);a.ok(get(c,'lesson-SQLD-L001'));
+});
+test('valid reading history shows reading in progress without marking completion',async()=>{
+ const {c}=setup(),lesson=content.lessons[0];c.tab('learn');a.match(get(c,'lesson-'+lesson.id).label,/읽기 전/);
+ await c.rememberReading(lesson.id,{offset:0,contentHeight:2000});
+ a.match(get(c,'lesson-'+lesson.id).label,/읽는 중/);a.deepEqual(c.state.readLessons,[]);a.deepEqual(c.state.completedDays,[]);
+ c.state.reading.positions[lesson.id].lessonVersion='stale';a.match(get(c,'lesson-'+lesson.id).label,/읽기 전/);
+ c.state.reading.positions[lesson.id]={offset:NaN,contentHeight:2000,lessonVersion:lesson.version};a.match(get(c,'lesson-'+lesson.id).label,/읽기 전/);
+ await c.rememberReading(lesson.id,{offset:500,contentHeight:2000});await c.markLesson(lesson.id);
+ a.match(get(c,'lesson-'+lesson.id).label,/읽음 · 확인 0\/2/);
+});
+test('reset clears browsing memory and rejects late callbacks without restoring learning history',async()=>{
+ for(const full of [false,true]){
+  const {c}=setup();c.tab('learn');const memory=get(c,'learning-content').catalog;
+  memory.onRemember({offset:500,contentHeight:2000});
+  if(full)c.requestReset();else c.requestLearningReset();await c.acceptDialog();
+  memory.onRemember({offset:600,contentHeight:2000});a.equal(c.catalogPosition(),undefined);a.equal(c.state.onboarded,false);
+ }
+});
+test('theory shortcut respects reward processing lock and cannot change filters or navigation',()=>{
+ const {c}=setup();c.route={name:'review'};c.bookmarkedOnly=true;c.search='NULL';c.subject='S2';c.rewardBusy=true;
+ a.equal(get(c,'review-empty-learn').disabled,true);c.openTheory();
+ a.equal(c.route.name,'review');a.equal(c.bookmarkedOnly,true);a.equal(c.search,'NULL');a.equal(c.subject,'S2');
+});
