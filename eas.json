@@ -1,6 +1,6 @@
 {
   "cli": {
-    "version": ">= 22.2.0",
+    "version": ">= 24.5.0",
     "appVersionSource": "local"
   },
   "build": {
@@ -8,7 +8,8 @@
       "developmentClient": true,
       "distribution": "internal",
       "env": {
-        "EXPO_PUBLIC_APP_ENV": "development"
+        "EXPO_PUBLIC_APP_ENV": "development",
+        "EXPO_PUBLIC_ADS_MODE": "off"
       },
       "android": {
         "buildType": "apk"
@@ -17,7 +18,8 @@
     "internal": {
       "distribution": "internal",
       "env": {
-        "EXPO_PUBLIC_APP_ENV": "internal"
+        "EXPO_PUBLIC_APP_ENV": "internal",
+        "EXPO_PUBLIC_ADS_MODE": "off"
       },
       "android": {
         "buildType": "apk"
@@ -50,6 +52,17 @@
       "extends": "ads-test",
       "ios": {
         "simulator": true
+      }
+    },
+    "play-test": {
+      "distribution": "store",
+      "env": {
+        "EXPO_PUBLIC_APP_ENV": "internal",
+        "EXPO_PUBLIC_ADS_MODE": "off",
+        "ANDROID_PACKAGE": "com.kasa500000.sqldpass"
+      },
+      "android": {
+        "buildType": "app-bundle"
       }
     }
   }

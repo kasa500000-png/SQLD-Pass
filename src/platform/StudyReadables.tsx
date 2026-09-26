@@ -1,5 +1,6 @@
 import React,{useState} from 'react';
-import {Platform,Pressable,ScrollView,Text,View} from 'react-native';
+import {Platform,Pressable,ScrollView,View} from 'react-native';
+import {AppText as Text} from './Typography';
 import type {Node} from '../ui/nodes';
 import {displayCell} from '../ui/learning-format';
 const mono=Platform.select({ios:'Menlo',default:'monospace'});

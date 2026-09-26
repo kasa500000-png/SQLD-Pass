@@ -1,10 +1,13 @@
 import React from 'react';
 import {
-  Modal, Platform, Pressable, ScrollView, Text, TextInput, View,
+  Modal, Platform, Pressable, ScrollView, View, useWindowDimensions,
   type TextStyle, type ViewStyle
 } from 'react-native';
 import type {Node, Style} from '../ui/nodes';
 import {StudyCode,StudyTable} from './StudyReadables';
+import {AppText as Text, AppTextInput as TextInput} from './Typography';
+import {ReadingScrollView} from './ReadingScrollView';
+import {CatalogScrollView} from './CatalogScrollView';
 
 const textKeys = new Set(['fontSize','fontWeight','lineHeight','color','fontFamily','letterSpacing','textAlign']);
 function styles(source: Style | undefined, scale: number): {view: ViewStyle; text: TextStyle} {
@@ -26,6 +29,7 @@ function RichText({value}: {value: string}) {
 export interface NativeViewProps {node: Node; scale: number; dark: boolean; path?: string;}
 /** Maps the shared UI tree to real RN controls; no WebView/HTML rendering. */
 export function NativeView({node: n, scale, dark, path = '0'}: NativeViewProps): React.JSX.Element {
+  const {width,fontScale}=useWindowDimensions();
   const s = styles(n.style, scale), ink = dark ? '#F0F5FF' : '#172033', line = dark ? '#2C3C55' : '#DFE7F1';
   const children = (n.children ?? []).map((child, i) => <NativeView
     key={child.key ?? `${path}.${i}`} node={child} scale={scale} dark={dark} path={`${path}.${i}`} />);
@@ -41,22 +45,29 @@ export function NativeView({node: n, scale, dark, path = '0'}: NativeViewProps):
   if (n.kind === 'input') return <TextInput testID={n.testId} accessibilityLabel={n.label}
     value={n.value ?? ''} onChangeText={n.onChange} placeholder={n.placeholder}
     placeholderTextColor={dark ? '#B0BFD6' : '#53647F'} autoCorrect={false}
-    autoCapitalize="none" multiline={n.multiline} keyboardType={n.inputMode === 'numeric' ? 'number-pad' : 'default'}
+    autoCapitalize="none" multiline={n.multiline} keyboardAppearance={dark?'dark':'light'} keyboardType={n.inputMode === 'numeric' ? 'number-pad' : 'default'}
     style={[{color: ink}, s.view, s.text]} />;
   if (n.kind === 'code') return <StudyCode key={n.text} node={n} scale={scale} />;
   if (n.kind === 'table') return <StudyTable node={n} scale={scale} dark={dark} />;
-  if (n.kind === 'progress') return <View accessibilityRole="progressbar" accessibilityLabel="진행률"
+  if (n.kind === 'progress') return <View accessibilityRole="progressbar" accessibilityLabel={n.label??'진행률'}
     accessibilityValue={{min: 0, max: 100, now: Math.round((n.progress ?? 0) * 100)}} style={{height: 8, backgroundColor: line, borderRadius: 8, overflow: 'hidden'}}>
     <View style={{height:8,width:`${Math.round((n.progress??0)*100)}%`,backgroundColor:String(n.style?.backgroundColor??'#2457D6')}} />
   </View>;
   if (n.kind === 'modal') return <Modal transparent visible animationType="fade" onRequestClose={n.close}>
     <View accessibilityViewIsModal style={{flex:1,backgroundColor:'rgba(10,20,40,0.5)',justifyContent:'center',padding:24}}>
-      <ScrollView style={{maxHeight:'85%',flexGrow:0,width:'100%'}} contentContainerStyle={{flexGrow:0}} keyboardShouldPersistTaps="handled">
+      <ScrollView style={{maxHeight:'85%',flexGrow:0,width:'100%',maxWidth:560,alignSelf:'center'}} contentContainerStyle={{flexGrow:0}} keyboardShouldPersistTaps="handled">
         {children}
       </ScrollView>
     </View>
   </Modal>;
+  if(n.key==='lesson-grid')return <View style={{flexDirection:'row',flexWrap:'wrap',gap:12}}>{children.map((child,i)=><View key={n.children?.[i]?.key??i} style={{width:width>=768&&scale*fontScale<=1.3?'48%':'100%'}}>{child}</View>)}</View>;
+  if(n.scroll&&n.reading)return <ReadingScrollView key={n.key} testID={n.testId} {...n.reading}
+    keyboardShouldPersistTaps="handled" showsVerticalScrollIndicator
+    contentContainerStyle={[s.view,{width:'100%',maxWidth:920,alignSelf:'center'}]} style={{flex:1}}>{children}</ReadingScrollView>;
+  if(n.scroll&&n.catalog)return <CatalogScrollView key={n.key} testID={n.testId} {...n.catalog}
+    keyboardShouldPersistTaps="handled" showsVerticalScrollIndicator
+    contentContainerStyle={[s.view,{width:'100%',maxWidth:920,alignSelf:'center'}]} style={{flex:1}}>{children}</CatalogScrollView>;
   if (n.scroll) return <ScrollView key={n.key} testID={n.testId} keyboardShouldPersistTaps="handled"
-    showsVerticalScrollIndicator contentContainerStyle={s.view} style={{flex:1}}>{children}</ScrollView>;
+    showsVerticalScrollIndicator contentContainerStyle={[s.view,{width:'100%',maxWidth:920,alignSelf:'center'}]} style={{flex:1}}>{children}</ScrollView>;
   return <View testID={n.testId} style={s.view}>{children}</View>;
 }

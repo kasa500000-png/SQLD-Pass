@@ -1,0 +1,9 @@
+
+> sqld-pass@0.1.0 pretypecheck:native
+> node scripts/materialize-content.cjs
+
+{"status":"pending","message":"Content pack is absent. Placeholder is retained for source editing only; native builds and content checks remain blocked."}
+
+> sqld-pass@0.1.0 typecheck:native
+> tsc -p tsconfig.json --noEmit
+

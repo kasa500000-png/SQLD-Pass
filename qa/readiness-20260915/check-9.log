@@ -1,0 +1,17 @@
+D:\SQLD-Pass\scripts\content-integrity.cjs:9
+function insist(ok, message) { if (!ok) throw new Error(`CONTENT_INVALID: ${message}`); }
+                                        ^
+
+Error: CONTENT_INVALID: full authored pack is required; placeholder is not content
+    at insist (D:\SQLD-Pass\scripts\content-integrity.cjs:9:47)
+    at validateContent (D:\SQLD-Pass\scripts\content-integrity.cjs:26:3)
+    at validateBuffer (D:\SQLD-Pass\scripts\content-integrity.cjs:103:55)
+    at Object.<anonymous> (D:\SQLD-Pass\scripts\assert-draft-blocked.cjs:9:19)
+    at Module._compile (node:internal/modules/cjs/loader:1854:14)
+    at Object..js (node:internal/modules/cjs/loader:1985:10)
+    at Module.load (node:internal/modules/cjs/loader:1577:32)
+    at Module._load (node:internal/modules/cjs/loader:1379:12)
+    at wrapModuleLoad (node:internal/modules/cjs/loader:255:19)
+    at Module.executeUserEntryPoint [as runMain] (node:internal/modules/run_main:154:5)
+
+Node.js v24.16.0

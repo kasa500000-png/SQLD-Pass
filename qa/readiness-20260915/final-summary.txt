@@ -1,0 +1,8 @@
+npm run typecheck : exit 0 (qa/readiness-20260915/final-0.log)
+npm run typecheck:native : exit 0 (qa/readiness-20260915/final-1.log)
+npx expo install --check : exit 0 (qa/readiness-20260915/final-2.log)
+npm run ads:check : exit 0 (qa/readiness-20260915/final-3.log)
+npm test : exit 1 (qa/readiness-20260915/final-4.log)
+npm run test:monetization : exit 0 (qa/readiness-20260915/final-5.log)
+npm run test:content-pipeline : exit 0 (qa/readiness-20260915/final-6.log)
+npx expo config --type public --json : exit 1 (qa/readiness-20260915/final-7.log)

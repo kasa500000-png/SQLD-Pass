@@ -1,0 +1,87 @@
+{
+  "schemaVersion": 1,
+  "recordedAt": "2026-09-20T01:35:08Z",
+  "android": {
+    "appName": "SQLD Pass",
+    "packageName": "com.kasa500000.sqldpass",
+    "playAppId": "4972123172088629069",
+    "consoleUrl": "https://play.google.com/console/u/0/developers/7871930997193802319/app/4972123172088629069/app-dashboard",
+    "defaultLanguage": "ko-KR",
+    "pricing": "free",
+    "status": "internal-test-active",
+    "ownerAuthorizedCreation": true,
+    "privacyUrl": "https://sqld-pass-support.shk1122.chatgpt.site/privacy.html",
+    "privacySaved": true,
+    "closedTestingRequirement": {
+      "testers": 12,
+      "consecutiveDays": 14,
+      "observedOptedIn": 0
+    },
+    "internalTesting": {
+      "versionCode": 2,
+      "versionName": "0.1.0",
+      "trackId": "4701266265039666926",
+      "releaseId": "2",
+      "publishedAt": "2026-09-20T10:35:00+09:00",
+      "optInUrl": "https://play.google.com/apps/internaltest/4701266265039666926",
+      "testerCount": 1,
+      "easBuildId": "a6ff54ad-3514-4144-863a-924d873f804b",
+      "adsMode": "off",
+      "releaseName": "0.1.0 (2) - 학습 UI 개선",
+      "sourceCommit": "f031dcf5bbc4069c33096ce7a16f928fff4550c8",
+      "artifactSha256": "216a2dd7e54fb587d2bacc6071807e1e81def58a6161caeb080964b27d55067e"
+    },
+    "closedTesting": {
+      "status": "draft-not-submitted",
+      "blockers": [
+        "full-content-review-access-not-ready",
+        "required-store-declarations-and-listing-incomplete"
+      ],
+      "trackId": "4697731031860022890",
+      "releaseId": "1",
+      "releaseName": "0.1.0 (1) - Alpha 준비",
+      "versionCode": 1,
+      "countries": [
+        "KR"
+      ],
+      "countryChangeStatus": "saved-pending-review",
+      "consoleSetupCompleted": 2,
+      "consoleSetupTotal": 4,
+      "consoleErrors": [
+        "Complete app dashboard setup"
+      ],
+      "consoleWarnings": [
+        "No deobfuscation mapping file"
+      ],
+      "testerCount": 1,
+      "testerList": "SQLD Pass 내부 테스트",
+      "testerConfigurationStatus": "saved"
+    },
+    "contentRating": {
+      "status": "IARC-completed",
+      "ownerTermsConsentDate": "2026-09-20",
+      "submittedAt": "2026-09-20T08:13:00+09:00",
+      "korea": "3+",
+      "esrb": "Everyone",
+      "pegi": "3",
+      "iarcCertificateId": null
+    },
+    "storeListing": {
+      "status": "saved-ready-for-review-not-submitted",
+      "language": "ko-KR",
+      "icon": "release/assets/play-icon.png",
+      "featureGraphic": "release/assets/feature-graphic.png",
+      "phoneScreenshots": 6,
+      "aiLabeledAssets": [
+        "feature-graphic.png"
+      ],
+      "descriptionScope": "ads-off test build; mocks 1-4 available; 5-20 locked",
+      "tabletScreenshots": 0
+    }
+  },
+  "ios": {
+    "status": "account-login-required",
+    "bundleIdentifier": null
+  },
+  "publicReleaseApproved": false
+}

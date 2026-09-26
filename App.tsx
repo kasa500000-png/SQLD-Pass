@@ -1,5 +1,6 @@
 import React, {Component, useEffect, useMemo, useSyncExternalStore} from 'react';
-import {AppState as NativeAppState, BackHandler, KeyboardAvoidingView, Platform, Text, View} from 'react-native';
+import {AppState as NativeAppState, BackHandler, KeyboardAvoidingView, Platform, View, useColorScheme} from 'react-native';
+import {AppText as Text} from './src/platform/Typography';
 import {SafeAreaProvider, SafeAreaView} from 'react-native-safe-area-context';
 import {StatusBar} from 'expo-status-bar';
 import {MonetizedController as Controller} from './src/monetization/controller';
@@ -23,6 +24,8 @@ class RenderBoundary extends Component<React.PropsWithChildren, {failed: boolean
 }
 function LearnerApp(){
   const c = useMemo(()=>new Controller(content,createNativeServices(),nativeAds),[]);
+  const systemAppearance=useColorScheme();
+  useEffect(()=>c.setSystemAppearance(systemAppearance==='dark'?'dark':'light'),[c,systemAppearance]);
   useSyncExternalStore(c.subscribe,c.getSnapshot,c.getSnapshot);
   useEffect(()=>{
     void c.initialize();
@@ -34,11 +37,13 @@ function LearnerApp(){
     });
     return ()=>{clearInterval(timer);appSub.remove();backSub.remove();};
   },[c]);
-  const isDark=c.state.settings.theme==='dark';
+  const isDark=c.isDark;
   return <SafeAreaView style={{flex:1,backgroundColor:isDark?'#0B1220':'#F6F8FC'}} edges={['top','bottom','left','right']}>
     <StatusBar style={isDark?'light':'dark'} />
     <KeyboardAvoidingView style={{flex:1}} behavior={Platform.OS==='ios'?'padding':undefined}>
-      <NativeView node={render(c)} scale={c.state.settings.fontScale} dark={isDark} />
+      <View style={{flex:1,width:'100%',maxWidth:920,alignSelf:'center'}}>
+        <NativeView node={render(c)} scale={c.state.settings.fontScale} dark={isDark} />
+      </View>
     </KeyboardAvoidingView>
   </SafeAreaView>;
 }

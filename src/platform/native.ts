@@ -2,6 +2,7 @@ import * as SQLite from 'expo-sqlite';
 import * as Crypto from 'expo-crypto';
 import {Linking, Share} from 'react-native';
 import type {AppState, Repository, Services} from '../core/types';
+import support from '../../config/public-support.json';
 
 export class NativeRepository implements Repository {
   private readonly db: Promise<SQLite.SQLiteDatabase>;
@@ -72,6 +73,7 @@ export function createNativeServices(): Services {
   const runtimeId = Crypto.randomUUID();
   return {
     repository: new NativeRepository(), platform: 'native',
+    supportEmail:support.supportEmail,privacyUrl:support.privacyUrl,supportUrl:support.supportUrl,
     clock: () => ({wall: Date.now(), mono: performance.now(), runtimeId}), uuid: () => Crypto.randomUUID(),
     async openURL(url) { await Linking.openURL(url); },
     async share(message) { const result = await Share.share({message, title: 'SQLD Pass 오류 제보'}); return result.action === Share.dismissedAction ? 'cancelled' : 'shared'; }

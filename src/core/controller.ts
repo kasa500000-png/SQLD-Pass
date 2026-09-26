@@ -1,10 +1,15 @@
-import type {AppState,Content,Dialog,ExamAttempt,Question,Route,Services,Settings,Tab} from './types';
+import type {AppState,Content,Dialog,ExamAttempt,Question,ReadingOffset,Route,Services,Settings,Tab} from './types';
+import {validReadingOffset} from './domain/reading';
 import {advanceClock,applyPractice,assertContent,canStudyQuestion,dayKey,dueReviews,eligibleDay,initialState,parseState,startExam,submitExam,validTargetDate} from './domain';
 export class Controller {
   state:AppState; ready=false; startupError=''; notice=''; busy=false; route:Route={name:'welcome'}; stack:Route[]=[];
   dialog:Dialog|null=null; search=''; subject='all'; bookmarkedOnly=false; filter='all'; expanded=new Set<string>();
   draftSettings:Settings; supportText=''; private listeners=new Set<()=>void>(); private serial:Promise<void>=Promise.resolve();
   private version=0; private checkpointAt=0; private expiryInFlight=false; private lastExpiryTry=0;
+  private systemAppearance:'light'|'dark'='light';
+  protected catalogScroll?:{context:string;position:ReadingOffset};
+  get isDark(){return this.state.settings.theme==='dark'||(this.state.settings.theme==='system'&&this.systemAppearance==='dark');}
+  setSystemAppearance(value:'light'|'dark'){if(this.systemAppearance!==value){this.systemAppearance=value;this.notify();}}
   readonly getSnapshot=()=>this.version;
   readonly subscribe=(fn:()=>void)=>{this.listeners.add(fn);return ()=>{this.listeners.delete(fn);};};
   constructor(readonly content:Content,readonly services:Services){this.state=initialState(content,services.clock().wall);this.draftSettings={...this.state.settings};}
@@ -31,7 +36,7 @@ export class Controller {
     });this.serial=task.catch(()=>{});await task;return ok;
   }
   navigate(route:Route){this.stack.push(this.route);this.route=route;this.notice='';if(route.name==='settings'||route.name==='setup')this.draftSettings={...this.state.settings};this.notify();}
-  tab(tab:Tab){this.stack=[];this.route={name:({today:'home',learn:'catalog',review:'review',exams:'exams'} as const)[tab]};this.notice='';this.notify();}
+  tab(tab:Tab){this.stack=[];this.route={name:({today:'home',learn:'catalog',review:'review',exams:'exams',records:'stats'} as const)[tab]};this.notice='';this.notify();}
   back(){
     if(this.dialog){this.dialog=null;this.notify();return;}
     if(this.route.name==='exam'){this.confirm('시험 화면을 나갈까요?','답안은 기기에 저장되며 남은 시간은 계속 흐릅니다. 종료 시각이 지나면 자동 제출합니다.','저장 후 나가기',async()=>{if(await this.checkpoint())this.tab('exams');});return;}
@@ -41,8 +46,17 @@ export class Controller {
   cancelDialog(){this.dialog=null;this.notify();}
   async acceptDialog(){const d=this.dialog;this.dialog=null;this.notify();if(d)await d.onConfirm();}
   toggleExpanded(id:string){this.expanded.has(id)?this.expanded.delete(id):this.expanded.add(id);this.notify();}
-  setSearch(text:string){this.search=text;this.notify();}
-  setSubject(v:string){this.subject=v;this.notify();}
+  setSearch(text:string){if(this.search!==text)this.catalogScroll=undefined;this.search=text;this.notify();}
+  setSubject(v:string){if(this.subject!==v)this.catalogScroll=undefined;this.subject=v;this.notify();}
+  resetLessonSearch(){this.search='';this.subject='all';this.catalogScroll=undefined;this.notify();}
+  openTheory(){this.search='';this.subject='all';this.bookmarkedOnly=false;this.catalogScroll=undefined;this.tab('learn');}
+  catalogContext(){return JSON.stringify([this.bookmarkedOnly,this.subject,this.search,this.bookmarkedOnly?[...this.state.bookmarks].sort():null]);}
+  catalogPosition(){return this.catalogScroll?.context===this.catalogContext()?this.catalogScroll.position:undefined;}
+  /** Session-only browsing history: never saves learning progress or changes the last lesson. */
+  rememberCatalog(context:string,position:ReadingOffset){
+    if(this.ready&&this.state.onboarded&&context===this.catalogContext()&&validReadingOffset(position))
+      this.catalogScroll={context,position:{...position}};
+  }
   async saveSettings(onboard=false){
     const d={...this.draftSettings};
     if(!validTargetDate(d.targetDate,dayKey(this.services.clock().wall))){this.notice='목표일은 오늘 이후의 실제 날짜를 YYYY-MM-DD로 입력하거나 비워 주세요.';this.notify();return;}
@@ -52,6 +66,26 @@ export class Controller {
   async markLesson(id:string){const ok=await this.commit(s=>({...s,readLessons:Array.from(new Set([...s.readLessons,id])),studyDays:Array.from(new Set([...s.studyDays,dayKey(this.services.clock().wall)]))}));if(ok){this.notice='이론 읽음을 기록했습니다. 확인 문제로 이해를 점검해 보세요.';this.notify();}}
   async bookmark(id:string){await this.commit(s=>({...s,bookmarks:s.bookmarks.includes(id)?s.bookmarks.filter(x=>x!==id):[...s.bookmarks,id]}));}
   currentDay(){return this.content.days.find(d=>!this.state.completedDays.includes(d.day))??this.content.days[29];}
+  readingPosition(id:string){
+    const position=this.state.reading?.positions[id],lesson=this.content.lessons.find(l=>l.id===id);
+    return lesson&&position?.lessonVersion===lesson.version&&validReadingOffset(position)?position:undefined;
+  }
+  lastReadingLesson(){
+    const id=this.state.reading?.lastLessonId;
+    return id&&this.readingPosition(id)?this.content.lessons.find(l=>l.id===id&&!this.state.readLessons.includes(id)):undefined;
+  }
+  async rememberReading(id:string,position:ReadingOffset):Promise<boolean>{
+    const lesson=this.content.lessons.find(l=>l.id===id);
+    if(!this.ready||!lesson||!validReadingOffset(position))return false;
+    const next={offset:Math.round(position.offset),contentHeight:Math.max(1,Math.round(position.contentHeight)),lessonVersion:lesson.version};
+    return this.commit(s=>{
+      // A late unmount callback must not recreate reading history after a reset.
+      if(!s.onboarded)return s;
+      const old=s.reading?.positions[id];
+      if(s.reading?.lastLessonId===id&&old?.offset===next.offset&&old.contentHeight===next.contentHeight&&old.lessonVersion===next.lessonVersion)return s;
+      return {...s,reading:{lastLessonId:id,positions:{...s.reading?.positions,[id]:next}}};
+    });
+  }
   async markDay(day:number){if(!eligibleDay(this.state,this.content,day)){this.notice='해당 학습일의 이론과 확인 문제 또는 모의고사를 먼저 완료해 주세요.';this.notify();return;}
     await this.commit(s=>({...s,completedDays:Array.from(new Set([...s.completedDays,day]))}));}
   getQuestion(id:string):Question|undefined {
@@ -115,10 +149,18 @@ export class Controller {
     const text=`[SQLD Pass 내부 테스트 제보]\n앱: 0.1.0 / 콘텐츠: ${this.content.manifest.version}\n항목: ${qid??'일반 문의'}\n내용: ${this.supportText.trim()||'오류 상황을 작성해 주세요.'}\n학습 답안·진도·개인정보는 자동 첨부하지 않습니다.`;
     try{const outcome=await this.services.share(text);this.notice=outcome==='cancelled'?'공유를 취소했습니다.':outcome==='copied'?'제보 내용을 복사했습니다. 직접 전달해 주세요. 접수는 완료되지 않았습니다.':outcome==='downloaded'?'제보 내용을 텍스트 파일로 저장했습니다. 직접 전달해 주세요. 접수는 완료되지 않았습니다.':'공유 동작을 완료했습니다. 실제 문의 접수 여부는 앱에서 확인하지 않습니다.';}catch(e){this.notice=`공유 실패: ${String(e)}`;}this.notify();
   }
+  async contactSupport(){
+    const email=this.services.supportEmail;
+    if(!email||!/^[-\w.+]+@[-\w.]+\.[a-z]{2,}$/i.test(email)){this.notice='운영 문의 이메일이 아직 설정되지 않았습니다.';this.notify();return;}
+    const body=`앱: SQLD Pass 0.1.0 / 콘텐츠: ${this.content.manifest.version}\n항목: ${this.route.id??'일반 문의'}\n내용: ${this.supportText.trim()}\n\n답안·진도·개인정보는 자동 첨부하지 않습니다.`;
+    try{await this.services.openURL(`mailto:${email}?subject=${encodeURIComponent('SQLD Pass 문의')}&body=${encodeURIComponent(body)}`);this.notice='메일 작성 화면을 열었습니다. 내용을 확인하고 직접 전송해 주세요.';}
+    catch{this.notice=`메일 앱을 열지 못했습니다. ${email}로 직접 문의하거나 제보 내용을 공유해 주세요.`;}
+    this.notify();
+  }
   requestReset(){this.confirm('기기의 학습 기록을 초기화할까요?','읽은 이론, 북마크, 풀이 기록, 진행 중 시험과 설정을 모두 삭제합니다. 복원할 수 없습니다. SQLD Pass의 로컬 학습 기록만 삭제됩니다.','이 앱 기록 삭제',async()=>{
     const task=this.serial.then(async()=>{
       this.busy=true;this.notify();
-      try{await this.services.repository.clear();this.state=initialState(this.content,this.services.clock().wall);this.draftSettings={...this.state.settings};this.route={name:'welcome'};this.stack=[];this.ready=true;this.startupError='';this.notice='';}
+      try{await this.services.repository.clear();this.state=initialState(this.content,this.services.clock().wall);this.catalogScroll=undefined;this.draftSettings={...this.state.settings};this.route={name:'welcome'};this.stack=[];this.ready=true;this.startupError='';this.notice='';}
       catch(e){this.notice=`초기화 실패: ${String(e)}`;}
       finally{this.busy=false;this.notify();}
     });this.serial=task.catch(()=>{});await task;

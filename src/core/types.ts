@@ -41,17 +41,20 @@ export interface PracticeSession {
   submitted:boolean; mode:'lesson'|'review'; sessionCorrect:number; sessionAnswered:number;
 }
 export interface Settings { minutes:number; targetDate:string; theme:'light'|'dark'|'system'; fontScale:number; }
+export interface ReadingOffset { offset:number; contentHeight:number; }
+export interface ReadingPosition extends ReadingOffset { lessonVersion:string; }
+export interface ReadingState { lastLessonId:string|null; positions:Record<string,ReadingPosition>; }
 export interface AppState {
   schema:1; contentVersion:string; revision:number; onboarded:boolean; startedDay:string;
   settings:Settings; readLessons:string[]; bookmarks:string[]; completedDays:number[]; studyDays:string[];
   responses:PracticeResponse[]; reviews:Record<string,ReviewItem>; practice:PracticeSession|null;
-  exams:ExamAttempt[];
+  exams:ExamAttempt[]; reading?:ReadingState;
 }
-export type Tab = 'today'|'learn'|'review'|'exams';
+export type Tab = 'today'|'learn'|'review'|'exams'|'records';
 export type Route = { name: 'welcome'|'setup'|'home'|'plan'|'catalog'|'lesson'|'practiceSetup'|'practice'|'review'|'exams'|'examIntro'|'exam'|'sheet'|'result'|'examReview'|'stats'|'settings'|'help'|'notices'|'privacy'; id?:string; index?:number; };
 export interface Dialog { title:string; body:string; confirmLabel:string; destructive?:boolean; onConfirm:()=>void|Promise<void>; }
 export interface Repository { load():Promise<unknown|null>; save(state:AppState):Promise<void>; clear():Promise<void>; }
 export interface Services {
   repository:Repository; clock():Clock; uuid():string; openURL(url:string):Promise<void>;
-  share(text:string):Promise<'shared'|'copied'|'downloaded'|'cancelled'>; platform:'native'|'web'; supportEmail?:string;
+  share(text:string):Promise<'shared'|'copied'|'downloaded'|'cancelled'>; platform:'native'|'web'; supportEmail?:string; privacyUrl?:string; supportUrl?:string;
 }

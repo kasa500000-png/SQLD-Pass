@@ -1,4 +1,5 @@
 import type {AppState, ExamAttempt, Lesson} from '../core/types';
+import {validReadingOffset} from '../core/domain/reading';
 import {box,code,table,text,type Node,type Palette} from './nodes';
 
 export function dialectLabel(value:string):string {
@@ -18,7 +19,9 @@ export function searchLessons(lessons:Lesson[],query:string,subject:string,bookm
 export function lessonStatus(l:Lesson,s:AppState):string {
   const done=new Set(s.responses.filter(r=>r.mode==='lesson').map(r=>r.questionId));
   const n=l.questionIds.filter(id=>done.has(id)).length;
-  return `${s.readLessons.includes(l.id)?'읽음':'읽기 전'} · 확인 ${n}/${l.questionIds.length}`;
+  const position=s.reading?.positions[l.id];
+  const started=position?.lessonVersion===l.version&&validReadingOffset(position);
+  return `${s.readLessons.includes(l.id)?'읽음':started?'읽는 중':'읽기 전'} · 확인 ${n}/${l.questionIds.length}`;
 }
 export function examReviewIndices(e:ExamAttempt,onlyWrong:boolean):number[]{
   if(e.status!=='submitted')return [];
