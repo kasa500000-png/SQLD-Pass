@@ -110,9 +110,10 @@ export function polishLearning(c:Controller,root:Node,access?:ExamAccessUI):Node
   if(r==='review'){
     const due=dueReviews(s,c.content,c.services.clock().wall),all=Object.keys(s.reviews).filter(id=>{const q=c.getQuestion(id);return q&&(!q.examId||s.exams.some(e=>e.status==='submitted'&&e.snapshots.some(x=>x.id===id)));});
     const showAll=c.expanded.has('review:all'),ids=showAll?all:due;
+    const nextDay=all.map(id=>s.reviews[id].dueDay).sort()[0];
     content=[...(due.length?[action(`복습 시작 · ${Math.min(due.length,10)}문항`,()=>c.beginDueReview(),'start-review',true)]:[]),
       row([choiceChip(`오늘 ${due.length}`,!showAll,()=>c.setReviewFilter(false),'review-due'),choiceChip(`전체 ${all.length}`,showAll,()=>c.setReviewFilter(true),'review-all')],{flexWrap:'wrap'}),
-      ...(!ids.length?[heading('복습할 문제가 없어요',20),action('이론 학습하기',()=>c.openTheory(),'review-empty-learn')]:ids.slice(0,c.reviewLimit).flatMap(id=>{const q=c.getQuestion(id);return q?[card([small(`${q.subject==='S1'?'1과목':'2과목'} · ${s.reviews[id].dueDay} 예정`),body(q.stem),action('이 문항 복습',()=>c.beginPractice([id],'review'),`review-${id}`)],{},`review-card-${id}`)]:[];})),
+      ...(!ids.length?all.length?[heading('오늘 예정된 복습이 없어요',20),small(`다음 복습 · ${nextDay} · ${all.filter(id=>s.reviews[id].dueDay===nextDay).length}문항`),action(`전체 복습 보기 · ${all.length}문항`,()=>c.setReviewFilter(true),'review-show-all')]:[heading('복습할 문제가 없어요',20),action('이론 학습하기',()=>c.openTheory(),'review-empty-learn')]:ids.slice(0,c.reviewLimit).flatMap(id=>{const q=c.getQuestion(id);return q?[card([small(`${q.subject==='S1'?'1과목':'2과목'} · ${s.reviews[id].dueDay} 예정`),body(q.stem),action('이 문항 복습',()=>c.beginPractice([id],'review'),`review-${id}`)],{},`review-card-${id}`)]:[];})),
       ...(ids.length?[small(`${Math.min(c.reviewLimit,ids.length)}/${ids.length}문항 표시`)]:[]),
       ...(ids.length>c.reviewLimit?[action('20문항 더 보기',()=>c.showMoreReviews(),'review-more')]:[])];
   }

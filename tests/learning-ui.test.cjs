@@ -61,6 +61,22 @@ test('home omits empty review shortcut while learning review stays reachable',as
  await click(c,'review-empty-learn');a.equal(c.route.name,'catalog');
 });
 
+test('review distinguishes future scheduled items from a truly empty collection',async()=>{
+ const {c,clock}=setup(),ids=content.lessons[0].questionIds;
+ const next=d.dayKey(clock.wall+86400000);
+ c.state.reviews=Object.fromEntries(ids.map(questionId=>[questionId,{questionId,dueDay:next,step:1,lastAnsweredDay:d.dayKey(clock.wall),lastCorrect:true}]));
+ c.tab('review');a.match(strings(view(c)),/오늘 예정된 복습이 없어요/);a.ok(strings(view(c)).includes(`다음 복습 · ${next} · 2문항`));
+ a.equal(flat(view(c)).some(n=>n.testId==='start-review'),false);
+ await click(c,'review-show-all');for(const id of ids)a.ok(get(c,'review-'+id));
+ a.deepEqual(d.dueReviews(c.state,content,clock.wall),[]);
+});
+
+test('ads-off settings and privacy explain unavailability without offering a failing action',async()=>{
+ let opens=0;const {c}=setup({mode:'off',privacyOptions:async()=>{opens++;},showReward:async()=>{throw Error('must not load');}});
+ for(const name of ['settings','privacy']){c.navigate({name});const out=view(c);a.match(strings(out),/설정할 광고 개인정보 항목이 없습니다/);a.equal(flat(out).some(n=>n.testId?.startsWith('ad-privacy')),false);}
+ await c.openAdPrivacy();a.equal(opens,0);a.doesNotMatch(c.notice,/열지 못했습니다/);
+});
+
 test('system theme follows OS changes without overwriting the saved preference',()=>{
  const {c}=setup();c.route={name:'home'};c.state.settings.theme='system';
  const before=JSON.stringify(c.state);const lightTree=view(c);c.setSystemAppearance('dark');
