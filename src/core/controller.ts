@@ -8,6 +8,7 @@ export class Controller {
   private version=0; private checkpointAt=0; private expiryInFlight=false; private lastExpiryTry=0;
   private systemAppearance:'light'|'dark'='light';
   protected catalogScroll?:{context:string;position:ReadingOffset};
+  protected examCatalogScroll?:{context:string;position:ReadingOffset};
   get isDark(){return this.state.settings.theme==='dark'||(this.state.settings.theme==='system'&&this.systemAppearance==='dark');}
   setSystemAppearance(value:'light'|'dark'){if(this.systemAppearance!==value){this.systemAppearance=value;this.notify();}}
   readonly getSnapshot=()=>this.version;
@@ -56,6 +57,12 @@ export class Controller {
   rememberCatalog(context:string,position:ReadingOffset){
     if(this.ready&&this.state.onboarded&&context===this.catalogContext()&&validReadingOffset(position))
       this.catalogScroll={context,position:{...position}};
+  }
+  examCatalogContext(){return JSON.stringify([this.expanded.has('exams:available'),this.notice,this.activeExam()?.id??null]);}
+  examCatalogPosition(){return this.examCatalogScroll?.context===this.examCatalogContext()?this.examCatalogScroll.position:undefined;}
+  rememberExamCatalog(context:string,position:ReadingOffset){
+    if(this.ready&&this.state.onboarded&&context===this.examCatalogContext()&&validReadingOffset(position))
+      this.examCatalogScroll={context,position:{...position}};
   }
   async saveSettings(onboard=false){
     const d={...this.draftSettings};
@@ -160,7 +167,7 @@ export class Controller {
   requestReset(){this.confirm('기기의 학습 기록을 초기화할까요?','읽은 이론, 북마크, 풀이 기록, 진행 중 시험과 설정을 모두 삭제합니다. 복원할 수 없습니다. SQLD Pass의 로컬 학습 기록만 삭제됩니다.','이 앱 기록 삭제',async()=>{
     const task=this.serial.then(async()=>{
       this.busy=true;this.notify();
-      try{await this.services.repository.clear();this.state=initialState(this.content,this.services.clock().wall);this.catalogScroll=undefined;this.draftSettings={...this.state.settings};this.route={name:'welcome'};this.stack=[];this.ready=true;this.startupError='';this.notice='';}
+      try{await this.services.repository.clear();this.state=initialState(this.content,this.services.clock().wall);this.catalogScroll=undefined;this.examCatalogScroll=undefined;this.draftSettings={...this.state.settings};this.route={name:'welcome'};this.stack=[];this.ready=true;this.startupError='';this.notice='';}
       catch(e){this.notice=`초기화 실패: ${String(e)}`;}
       finally{this.busy=false;this.notify();}
     });this.serial=task.catch(()=>{});await task;

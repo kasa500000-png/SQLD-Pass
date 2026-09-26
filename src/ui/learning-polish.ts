@@ -115,15 +115,17 @@ export function polishLearning(c:Controller,root:Node,access?:ExamAccessUI):Node
       ...(!ids.length?[heading('복습할 문제가 없어요',20),action('이론 학습하기',()=>c.openTheory(),'review-empty-learn')]:ids.slice(0,20).flatMap(id=>{const q=c.getQuestion(id);return q?[card([small(`${q.subject==='S1'?'1과목':'2과목'} · ${s.reviews[id].dueDay} 예정`),body(q.stem),action('이 문항 복습',()=>c.beginPractice([id],'review'),`review-${id}`)])]:[];})),...(ids.length>20?[small('처음 20문항을 표시합니다. 복습 시작은 예정 순서대로 최대 10문항씩 진행합니다.')]:[])];
   }
   if(r==='exams'&&access){
-    const filter=c.expanded.has('exams:available');const es=c.content.exams.filter(e=>!filter||access.hasAccess(e.id));
+    const filter=c.expanded.has('exams:available'),available=c.content.exams.filter(e=>access.hasAccess(e.id));
+    const es=filter?available:c.content.exams;
     content=[heading('실전 모의고사',28),small('20회 · 회당 50문항 · 제한시간 90분'),notice(access.mode==='off'?'현재 테스트에서는 1~4회를 이용할 수 있습니다. 광고가 꺼져 있어 5~20회는 새로 해제할 수 없습니다.':'1~4회 무료. 5~20회는 선택한 회차의 광고를 완료하면 이 기기에서 계속 이용합니다.'),
       ...(active?[action(`${active.title} 이어하기`,()=>resume(active),'catalog-resume',true)]:[]),
-      row([choiceChip('전체 20회',!filter,()=>{c.expanded.delete('exams:available');c.notify();},'exams-all'),choiceChip('지금 응시 가능',filter,()=>{c.expanded.add('exams:available');c.notify();},'exams-available')],{flexWrap:'wrap'}),
+      row([choiceChip('전체 20회',!filter,()=>{c.expanded.delete('exams:available');c.notify();},'exams-all'),choiceChip(`응시 가능 ${available.length}회`,filter,()=>{c.expanded.add('exams:available');c.notify();},'exams-available')],{flexWrap:'wrap'}),
       ...es.map(e=>{const attempts=s.exams.filter(a=>a.examId===e.id),latest=[...attempts].reverse().find(a=>a.status==='submitted'),first=attempts.find(a=>a.status==='submitted'&&a.isFirstAttempt),running=attempts.find(a=>a.status==='active'),open=access.hasAccess(e.id);
-        return card([row([badge(e.order<=4?'무료':open?'열림':access.mode==='off'?'이용 불가':'광고 해제',open?'green':'blue'),small(running?'진행 중':latest?'응시 기록 있음':'미응시')],{flexWrap:'wrap'}),heading(`제${String(e.order).padStart(2,'0')}회 모의고사`,21),small('1과목 10문항 · 2과목 40문항'),
+        const title=`제${String(e.order).padStart(2,'0')}회 모의고사`,label=running?'시험 이어하기':open?(latest?'다시 응시하기':'응시 안내 보기'):'광고 1회로 이 회차 열기';
+        return {...card([row([badge(e.order<=4?'무료':open?'열림':access.mode==='off'?'이용 불가':'광고 해제',open?'green':'blue'),small(running?'진행 중':latest?'응시 기록 있음':'미응시')],{flexWrap:'wrap'}),heading(title,21),
           ...(first?[small(`첫 응시 ${first.score?.points??0}점${latest&&latest.id!==first.id?` · 최근 ${latest.score?.points??0}점`:''}`)]:[]),
-          action(running?'시험 이어하기':open?(latest?'다시 응시하기':'응시 안내 보기'):access.mode==='off'?'현재 테스트에서 이용 불가':'광고 1회로 이 회차 열기',()=>running?resume(running):open?c.navigate({name:'examIntro',id:e.id}):access.offerUnlock(e.id),`exam-${e.id}`,open&&!latest,(!running&&!!active)||(!open&&access.mode==='off')),
-          ...(latest?[action('결과·해설 보기',()=>c.navigate({name:'result',id:latest.id}),`result-${e.id}`,false,!!active)]:[])],{},e.id);
+          ...(running||open||access.mode!=='off'?[{...action(label,()=>running?resume(running):open?c.navigate({name:'examIntro',id:e.id}):access.offerUnlock(e.id),`exam-${e.id}`,open&&!latest,!running&&!!active),label:`${title}, ${label}`}]:[]),
+          ...(latest?[{...action('결과·해설 보기',()=>c.navigate({name:'result',id:latest.id}),`result-${e.id}`,false,!!active),label:`${title}, 결과·해설 보기`}]:[])],{},e.id),testId:`exam-card-${e.id}`};
       })];
   }
   if(r==='examIntro'){
@@ -214,6 +216,10 @@ export function polishLearning(c:Controller,root:Node,access?:ExamAccessUI):Node
   if(r==='catalog'){
     const context=c.catalogContext();
     scroll.catalog={context,position:c.catalogPosition(),onRemember:position=>c.rememberCatalog(context,position)};
+  }
+  if(r==='exams'){
+    const context=c.examCatalogContext();
+    scroll.catalog={context,position:c.examCatalogPosition(),onRemember:position=>c.rememberExamCatalog(context,position)};
   }
   if(r==='lesson'&&c.content.lessons.some(l=>l.id===c.route.id)){
     const id=c.route.id!;
