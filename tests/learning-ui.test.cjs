@@ -7,9 +7,9 @@ const {light}=require('../.build/ui/nodes'),d=require('../.build/core/domain');
 const content=require('../generated/content.json');
 const hash=x=>crypto.createHash('sha256').update(x).digest('hex');
 const contentBefore=JSON.stringify(content);
-function setup(){let value=null,n=0,fail=false;const clock={wall:Date.now(),mono:10,runtimeId:'ui-test'};
+function setup(ads){let value=null,n=0,fail=false;const clock={wall:Date.now(),mono:10,runtimeId:'ui-test'};
  const services={repository:{load:async()=>value?structuredClone(value):null,save:async s=>{if(fail)throw Error('write failure');value=structuredClone(s);},clear:async()=>{value=null;}},clock:()=>({...clock}),uuid:()=>`test-${++n}`,platform:'web',share:async()=>'shared',openURL:async()=>{}};
- const c=new MonetizedController(content,services);c.ready=true;c.state.onboarded=true;
+ const c=new MonetizedController(content,services,ads);c.ready=true;c.state.onboarded=true;
  return {c,clock,fail(v){fail=v;},services};}
 function flat(n){return [n,...(n.children??[]).flatMap(flat)];}
 function strings(n){return flat(n).flatMap(x=>[x.text??'',x.label??'']).join('\n');}
@@ -60,9 +60,83 @@ test('explicit submission reveals explanation and related theory',async()=>{cons
 test('practice has only one sticky submit/next primary action',async()=>{const {c}=setup();await c.beginPractice(content.lessons[0].questionIds);const out=view(c),footer=out.children.find(n=>n.key==='learning-footer');a.ok(footer);a.equal(flat(out).filter(n=>n.testId==='submit-practice').length,1);a.equal(flat(out.children.find(n=>n.scroll)).some(n=>n.testId==='submit-practice'),false);});
 test('radio semantics include selection and non-color status',async()=>{const {c}=setup();await c.beginPractice(content.lessons[0].questionIds);const q=c.getQuestion(c.state.practice.questionIds[0]);await click(c,'option-'+q.options[0].id);const n=get(c,'option-'+q.options[0].id);a.equal(n.role,'radio');a.equal(n.checked,true);a.match(n.label,/선택됨/);});
 test('unfinished practice resumes without discarding a selection',async()=>{const {c}=setup();await c.beginPractice(content.lessons[0].questionIds);await c.selectPractice('1');c.route={name:'home'};await click(c,'home-resume-practice');a.equal(c.route.name,'practice');a.equal(c.state.practice.selected,'1');});
-test('available exam filter lists exactly the free four in ads-off mode',async()=>{const {c}=setup();c.route={name:'exams'};await click(c,'exams-available');a.equal(flat(view(c)).filter(n=>n.testId?.match(/^exam-SQLD-M/)).length,4);});
-test('ads-off locked exam clearly stays unavailable without offering an ad',()=>{const {c}=setup();c.route={name:'exams'};a.equal(get(c,'exam-SQLD-M05').disabled,true);a.match(get(c,'exam-SQLD-M05').text,/현재 테스트에서 이용 불가/);a.equal(c.dialog,null);a.equal(c.hasAccess('SQLD-M05'),false);});
-test('active exam disables starting other sets without touching access policy',()=>{const {c}=setup();makeExam(c);c.route={name:'exams'};a.equal(get(c,'exam-SQLD-M02').disabled,true);a.equal(get(c,'exam-SQLD-M05').disabled,true);});
+test('available exam filter lists exactly the free four in ads-off mode',async()=>{const {c}=setup();c.route={name:'exams'};a.equal(get(c,'exams-available').text,'응시 가능 4회');await click(c,'exams-available');a.equal(flat(view(c)).filter(n=>n.testId?.match(/^exam-SQLD-M/)).length,4);});
+test('ads-off catalog keeps all 20 sets and marks locked sets without dead actions',()=>{
+ const {c}=setup();c.route={name:'exams'};
+ a.equal(flat(view(c)).filter(n=>n.testId?.startsWith('exam-card-')).length,20);
+ for(const exam of content.exams.slice(4)){
+  const card=get(c,'exam-card-'+exam.id);a.match(strings(card),/이용 불가/);
+  a.equal(flat(card).some(n=>n.kind==='button'),false);a.equal(c.hasAccess(exam.id),false);
+ }
+ a.equal(c.dialog,null);
+});
+test('active exam disables starting other sets without touching access policy',()=>{const {c}=setup();makeExam(c);c.route={name:'exams'};a.equal(get(c,'exam-SQLD-M02').disabled,true);a.equal(flat(view(c)).some(n=>n.testId==='exam-SQLD-M05'),false);a.equal(get(c,'exam-SQLD-M01').disabled,false);});
+test('both intro return paths restore each exam filter without persisting learning data',async()=>{
+ for(const filtered of [false,true])for(const headerBack of [false,true]){
+  const {c,services}=setup();c.tab('learn');const theoryPosition={offset:800,contentHeight:5000};
+  get(c,'learning-content').catalog.onRemember(theoryPosition);c.tab('exams');
+  if(filtered)await click(c,'exams-available');
+  const before=JSON.stringify(c.state),revision=c.getSnapshot(),position={offset:1200,contentHeight:5000};
+  get(c,'learning-content').catalog.onRemember(position);
+  a.equal(c.getSnapshot(),revision);a.equal(await services.repository.load(),null);
+  await click(c,'exam-SQLD-M04');a.equal(c.route.name,'examIntro');
+  a.equal(get(c,'learning-content').catalog,undefined);a.match(strings(view(c)),/1과목 10문항/);a.match(strings(view(c)),/2과목 40문항/);
+  if(headerBack)c.back();else await click(c,'back-exams');
+  a.equal(c.route.name,'exams');a.equal(get(c,'exams-available').selected,filtered);
+  a.deepEqual(get(c,'learning-content').catalog.position,position);a.deepEqual(c.catalogPosition(),theoryPosition);
+  a.equal(get(c,'learning-content').reading,undefined);a.equal(c.lastReadingLesson(),undefined);
+  a.equal(JSON.stringify(c.state),before);a.equal(await services.repository.load(),null);
+ }
+});
+test('exam filter and active attempt changes reject stale positions while timer ticks preserve browsing',async()=>{
+ const {c,clock,services}=setup();c.tab('exams');const all=get(c,'learning-content').catalog;
+ all.onRemember({offset:2000,contentHeight:9000});await click(c,'exams-available');
+ a.equal(c.examCatalogPosition(),undefined);all.onRemember({offset:2200,contentHeight:9000});a.equal(c.examCatalogPosition(),undefined);
+ const filtered=get(c,'learning-content').catalog;filtered.onRemember({offset:300,contentHeight:3000});
+ const attempt=makeExam(c);a.equal(get(c,'learning-content').catalog,undefined);
+ c.tab('exams');a.equal(c.examCatalogPosition(),undefined);
+ filtered.onRemember({offset:400,contentHeight:3000});a.equal(c.examCatalogPosition(),undefined);
+ const before=JSON.stringify(attempt),position={offset:400,contentHeight:3200},scroll=get(c,'learning-content');
+ scroll.catalog.onRemember(position);clock.wall+=5000;clock.mono+=5000;
+ a.equal(get(c,'learning-content').key,scroll.key);a.deepEqual(c.examCatalogPosition(),position);
+ a.equal(JSON.stringify(attempt),before);a.equal(await services.repository.load(),null);
+ await c.beginPractice(content.lessons[0].questionIds);a.equal(get(c,'learning-content').catalog,undefined);
+});
+test('available count follows grant mode and invalidates positions when access changes',async()=>{
+ // Synthetic wallet and driver only: no device grants or advertising calls.
+ const ads={mode:'off',privacyOptions:async()=>{},showReward:async()=>{throw Error('unexpected ad request');}};
+ const {c}=setup(ads);c.tab('exams');await click(c,'exams-available');
+ const prior=get(c,'learning-content').catalog;prior.onRemember({offset:200,contentHeight:2000});
+ const grant=(id,mode)=>({examId:id,requestId:'fixture-'+id,grantedAt:1,source:'reward',mode});
+ c.state.monetization={version:1,pending:null,grants:{'SQLD-M05':grant('SQLD-M05','live'),'SQLD-M06':grant('SQLD-M06','test')}};
+ a.equal(c.examCatalogPosition(),undefined);prior.onRemember({offset:300,contentHeight:2000});a.equal(c.examCatalogPosition(),undefined);
+ for(const [mode,count] of [['off',5],['test',6],['live',5]]){
+  ads.mode=mode;const list=get(c,'learning-content');a.equal(list.catalog.position,undefined);
+  a.equal(get(c,'exams-available').text,`응시 가능 ${count}회`);
+  a.equal(flat(view(c)).filter(n=>n.testId?.startsWith('exam-card-')).length,count);
+  a.equal(flat(view(c)).some(n=>n.testId==='exam-SQLD-M06'),mode==='test');
+  list.catalog.onRemember({offset:200,contentHeight:2000});
+ }
+});
+test('test and live catalog actions request opt-in for the selected set without auto-showing ads',async()=>{
+ for(const mode of ['test','live']){
+  let shows=0;const {c}=setup({mode,privacyOptions:async()=>{},showReward:async()=>{shows++;return 'unavailable';}});
+  c.tab('exams');a.match(get(c,'exam-SQLD-M05').label,/제05회 모의고사, 광고 1회/);
+  await click(c,'exam-SQLD-M05');a.ok(c.dialog.title.includes(content.exams[4].title));
+  a.equal(shows,0);c.cancelDialog();a.equal(c.hasAccess('SQLD-M05'),false);
+  makeExam(c);c.tab('exams');a.equal(get(c,'exam-SQLD-M05').disabled,true);
+ }
+});
+test('exam cards retain scores, results and list position with contextual action labels',async()=>{
+ const {c}=setup();const first=result(c),retry=d.startExam(c.state,content.exams[0],content,c.services.clock(),'retry');
+ const latest=d.submitExam(retry,c.services.clock(),'manual');c.state.exams.push(latest);c.tab('exams');
+ a.match(strings(get(c,'exam-card-SQLD-M01')),/첫 응시 0점 · 최근 0점/);
+ a.equal(get(c,'exam-SQLD-M01').label,'제01회 모의고사, 다시 응시하기');
+ a.equal(get(c,'result-SQLD-M01').label,'제01회 모의고사, 결과·해설 보기');
+ const position={offset:200,contentHeight:5000};get(c,'learning-content').catalog.onRemember(position);
+ await click(c,'result-SQLD-M01');a.equal(c.route.id,latest.id);a.notEqual(c.route.id,first.id);
+ c.back();a.deepEqual(c.examCatalogPosition(),position);
+});
 test('all 1000 timed exam screens withhold answers and explanations',()=>{const {c}=setup();for(let e=0;e<20;e++){c.state.exams=[];const attempt=makeExam(c,e);for(let i=0;i<50;i++){attempt.index=i;const q=attempt.snapshots[i],out=view(c);a.ok(strings(out).includes(q.stem));a.equal(strings(out).includes(q.explanation),false);a.ok(out.children.find(n=>n.key==='exam-status'));a.equal(out.children.some(n=>n.key==='monetization-banner'),false);}}});
 test('exam scroll key changes on next question but not timer ticks',async()=>{const {c,clock}=setup();makeExam(c);const key=()=>view(c).children.find(n=>n.scroll).key;const before=key();clock.wall+=1000;clock.mono+=1000;a.equal(key(),before);await click(c,'exam-next');a.notEqual(key(),before);});
 test('exam clears selected answer without removing independent flag',async()=>{const {c}=setup();const e=makeExam(c);await c.updateExamAnswer(e.snapshots[0].options[0].id);await c.flagExam();await click(c,'exam-clear');a.equal(Object.keys(c.activeExam().answers).length,0);a.equal(c.activeExam().flagged.length,1);});
@@ -76,7 +150,9 @@ test('reward processing locks all updated buttons',()=>{const {c}=setup();c.rout
 test('reward save retry control survives screen replacement',()=>{const {c}=setup();c.route={name:'exams'};Object.defineProperty(c,'needsRewardSave',{get:()=>true});a.ok(get(c,'retry-reward-save'));});
 test('reward feedback resets the catalog to its notice without resetting timed questions',()=>{
  const {c}=setup();c.route={name:'exams'};const key=()=>view(c).children.find(n=>n.scroll).key;
+ const prior=get(c,'learning-content').catalog;prior.onRemember({offset:2000,contentHeight:10000});
  const catalog=key();c.notice='광고를 표시하지 못했습니다.';a.notEqual(key(),catalog);
+ a.equal(c.examCatalogPosition(),undefined);prior.onRemember({offset:2100,contentHeight:10000});a.equal(c.examCatalogPosition(),undefined);
  a.match(strings(view(c)),/광고를 표시하지 못했습니다/);const settled=key();c.notify();a.equal(key(),settled);
  makeExam(c);const exam=key();c.notice='저장 상태 안내';a.equal(key(),exam);
 });
@@ -172,8 +248,10 @@ test('reset clears browsing memory and rejects late callbacks without restoring 
  for(const full of [false,true]){
   const {c}=setup();c.tab('learn');const memory=get(c,'learning-content').catalog;
   memory.onRemember({offset:500,contentHeight:2000});
+  c.tab('exams');const exams=get(c,'learning-content').catalog;exams.onRemember({offset:900,contentHeight:5000});
   if(full)c.requestReset();else c.requestLearningReset();await c.acceptDialog();
   memory.onRemember({offset:600,contentHeight:2000});a.equal(c.catalogPosition(),undefined);a.equal(c.state.onboarded,false);
+  exams.onRemember({offset:1000,contentHeight:5000});a.equal(c.examCatalogPosition(),undefined);
  }
 });
 test('theory shortcut respects reward processing lock and cannot change filters or navigation',()=>{
