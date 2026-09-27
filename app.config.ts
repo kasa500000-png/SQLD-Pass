@@ -13,14 +13,14 @@ export default ({config}:ConfigContext):ExpoConfig=>{
   if(production&&(!process.env.ANDROID_PACKAGE||!process.env.IOS_BUNDLE_IDENTIFIER))throw new Error('Production app identifiers must be explicitly supplied by the owner.');
   const ads=checkAdsRelease(__dirname),projectId=process.env.EXPO_PUBLIC_EAS_PROJECT_ID??project.projectId;
   return {
-    ...config,name:production?'SQLD Pass':'SQLD Pass 내부검증',slug:'sqld-pass',version:'0.1.0',
+    ...config,name:'SQLD Pass',slug:'sqld-pass',version:'0.1.0',
     icon:'./assets/brand/icon.png',
     owner:process.env.EXPO_OWNER??project.owner,
     platforms:['android','ios'],orientation:'default',userInterfaceStyle:'automatic',
     scheme:production?'sqld-pass':'sqld-pass-internal',updates:{enabled:false},
     ios:{bundleIdentifier:process.env.IOS_BUNDLE_IDENTIFIER??'com.sqldpass.app.internal',buildNumber:'1',supportsTablet:true,
       infoPlist:{ITSAppUsesNonExemptEncryption:false}},
-    android:{package:process.env.ANDROID_PACKAGE??'com.sqldpass.app.internal',versionCode:3,allowBackup:false,
+    android:{package:process.env.ANDROID_PACKAGE??'com.sqldpass.app.internal',versionCode:4,allowBackup:false,
       adaptiveIcon:{foregroundImage:'./assets/brand/adaptive-foreground.png',backgroundColor:'#2457D6'},
       permissions:[],softwareKeyboardLayoutMode:'resize',blockedPermissions:[
         'android.permission.CAMERA','android.permission.RECORD_AUDIO','android.permission.READ_CONTACTS','android.permission.WRITE_CONTACTS',

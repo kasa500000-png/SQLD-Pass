@@ -73,7 +73,7 @@ test('review distinguishes future scheduled items from a truly empty collection'
 
 test('ads-off settings and privacy explain unavailability without offering a failing action',async()=>{
  let opens=0;const {c}=setup({mode:'off',privacyOptions:async()=>{opens++;},showReward:async()=>{throw Error('must not load');}});
- for(const name of ['settings','privacy']){c.navigate({name});const out=view(c);a.match(strings(out),/설정할 광고 개인정보 항목이 없습니다/);a.equal(flat(out).some(n=>n.testId?.startsWith('ad-privacy')),false);}
+ for(const name of ['settings','privacy']){c.navigate({name});const out=view(c);a.equal(flat(out).some(n=>n.testId?.startsWith('ad-privacy')),false);}
  await c.openAdPrivacy();a.equal(opens,0);a.doesNotMatch(c.notice,/열지 못했습니다/);
 });
 

@@ -35,7 +35,7 @@ export class MonetizedController extends Controller {
     const e=this.content.exams.find(x=>x.id===id);if(!e)return;
     if(this.hasAccess(id)){this.navigate({name:'examIntro',id});return;}
     this.confirm(`${e.title} 열기`,
-      '보상형 광고 1회를 끝까지 시청하면 이 회차 50문항과 제출 후 해설을 이 기기에 계속 열어 둡니다. 클릭·설치·추적 허용은 필요하지 않습니다. 반복 응시는 추가 시청이 없습니다. 앱 삭제·데이터 삭제·기기 변경 시 복원되지 않습니다. 취소해도 무료 1~4회와 열린 회차는 유지됩니다.',
+      '보상형 광고 1회를 끝까지 시청하면 이 회차 50문항과 제출 후 해설을 이 기기에 계속 열어 둡니다. 클릭·설치·추적 허용은 필요하지 않습니다. 반복 응시는 추가 시청이 없습니다. 앱 삭제·데이터 삭제·기기 변경 시 복원되지 않습니다. 취소해도 무료 1~4회와 열린 회차는 유지됩니다.'+(this.ads.mode==='test'?'\n테스트 광고로 열린 회차는 운영 광고 버전으로 이전되지 않습니다.':''),
       '광고 1회 시청하고 열기',()=>this.unlockAfterOptIn(id));
   }
   private async saveEarned(p:PendingReward):Promise<void>{

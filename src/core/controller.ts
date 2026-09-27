@@ -191,7 +191,7 @@ export class Controller {
   async external(url:string){try{if(!/^https:\/\//i.test(url))throw new Error('HTTPS 주소만 열 수 있습니다');await this.services.openURL(url);}catch(e){this.notice=`외부 페이지를 열지 못했습니다: ${String(e)}`;this.notify();}}
   async report(qid?:string){
     const origin=this.route;
-    const text=`[SQLD Pass 내부 테스트 제보]\n앱: 0.1.0 / 콘텐츠: ${this.content.manifest.version}\n항목: ${qid??'일반 문의'}\n내용: ${this.supportText.trim()||'오류 상황을 작성해 주세요.'}\n학습 답안·진도·개인정보는 자동 첨부하지 않습니다.`;
+    const text=`[SQLD Pass 오류·의견 제보]\n앱: 0.1.0 / 콘텐츠: ${this.content.manifest.version}\n항목: ${qid??'일반 문의'}\n내용: ${this.supportText.trim()||'오류 상황을 작성해 주세요.'}\n학습 답안·진도·개인정보는 자동 첨부하지 않습니다.`;
     try{const outcome=await this.services.share(text);if(this.route===origin&&origin.name==='help')this.supportNotice=outcome==='cancelled'?'공유창을 닫았습니다.':outcome==='copied'?'제보 내용을 복사했습니다. 직접 전달해 주세요. 접수는 완료되지 않았습니다.':outcome==='downloaded'?'제보 내용을 텍스트 파일로 저장했습니다. 직접 전달해 주세요. 접수는 완료되지 않았습니다.':'공유창을 열었습니다. 전송·접수 여부는 앱에서 확인할 수 없습니다.';}catch(e){if(this.route===origin&&origin.name==='help')this.supportNotice=`공유창을 열지 못했습니다: ${String(e)}`;}this.notify();
   }
   async contactSupport(){
