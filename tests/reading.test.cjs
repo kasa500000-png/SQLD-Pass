@@ -82,3 +82,11 @@ test('restoration preserves a stable offset, scales reflowed text and clamps sho
   a.equal(restoredReadingOffset(saved,400,600),0);
   a.equal(restoredReadingOffset(undefined,3000,600),0);
 });
+
+test('expanding a rationale keeps its reading offset while collapsing clamps to the remaining content',()=>{
+  const saved={offset:900,contentHeight:3000};
+  a.equal(restoredReadingOffset(saved,4500,600,true),900);
+  a.equal(restoredReadingOffset(saved,1200,600,true),600);
+  a.equal(restoredReadingOffset(saved,400,600,true),0);
+  a.equal(restoredReadingOffset(saved,4500,600),1350);
+});

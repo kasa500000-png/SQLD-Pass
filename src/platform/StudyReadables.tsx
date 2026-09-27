@@ -1,5 +1,5 @@
 import React,{useState} from 'react';
-import {Platform,Pressable,ScrollView,View} from 'react-native';
+import {Platform,Pressable,ScrollView,View,useWindowDimensions} from 'react-native';
 import {AppText as Text} from './Typography';
 import type {Node} from '../ui/nodes';
 import {displayCell} from '../ui/learning-format';
@@ -19,13 +19,21 @@ export function StudyCode({node,scale}:{node:Node;scale:number}){
   </View>;
 }
 export function StudyTable({node,scale,dark}:{node:Node;scale:number;dark:boolean}){
+  const [availableWidth,setAvailableWidth]=useState(0);
+  const {fontScale}=useWindowDimensions();
   const cols=node.columns??[],rows=node.rows??[],ink=dark?'#F0F5FF':'#172033',line=dark?'#2C3C55':'#DFE7F1';
-  const widths=cols.map((col,i)=>Math.min(280,Math.max(112,Math.max(col.length,...rows.map(r=>displayCell(r[i]).length))*8+28))*scale);
+  // Leave room for bold headers and wide Korean glyphs at both app and system text scales.
+  const textWidth=(value:string)=>Array.from(value).reduce((sum,char)=>sum+(/[\u1100-\u11ff\u2e80-\ua4cf\uac00-\ud7af]/u.test(char)?14:9.5),0)*scale*fontScale;
+  const natural=cols.map((col,i)=>Math.min(280*scale*fontScale,Math.max(112,textWidth(col)+32,...rows.map(r=>textWidth(displayCell(r[i]))+32))));
+  const total=natural.reduce((sum,width)=>sum+width,0);
+  const extra=cols.length?Math.max(0,availableWidth-total)/cols.length:0;
+  const widths=natural.map(width=>width+extra);
+  const overflow=availableWidth>0&&total>availableWidth+1;
   const cell=(v:string|number|null|undefined,i:number,header:boolean,key:string)=><View key={key} style={{width:widths[i],padding:12,minHeight:48,borderRightWidth:1,borderColor:line,justifyContent:'center'}}>
     <Text selectable allowFontScaling accessibilityLabel={`${header?'':cols[i]+': '}${displayCell(v)}`} style={{fontSize:14*scale,lineHeight:23*scale,color:ink,fontWeight:header?'700':'400'}}>{displayCell(v)}</Text>
   </View>;
-  return <View style={{gap:6}}>
-    <Text allowFontScaling style={{fontSize:12*scale,color:dark?'#B0BFD6':'#53647F'}}>{node.label??'데이터 표'} · {rows.length}행 · 좌우로 이동</Text>
+  return <View style={{gap:6}} onLayout={e=>setAvailableWidth(Math.max(0,e.nativeEvent.layout.width-2))}>
+    <Text allowFontScaling style={{fontSize:12*scale,color:dark?'#B0BFD6':'#53647F'}}>{node.label??'데이터 표'} · {rows.length}행{overflow?' · 좌우로 이동':''}</Text>
     <ScrollView horizontal showsHorizontalScrollIndicator accessibilityLabel={node.label} style={{borderWidth:1,borderColor:line,borderRadius:12,flexGrow:0}}>
       <View><View style={{flexDirection:'row',backgroundColor:dark?'#20365D':'#EAF0FF'}}>{cols.map((v,i)=>cell(v,i,true,`h${i}`))}</View>
       {rows.map((r,i)=><View key={i} style={{flexDirection:'row',borderTopWidth:1,borderColor:line}}>{cols.map((_,j)=>cell(r[j],j,false,`${i}:${j}`))}</View>)}</View>

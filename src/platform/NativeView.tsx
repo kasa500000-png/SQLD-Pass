@@ -8,6 +8,7 @@ import {StudyCode,StudyTable} from './StudyReadables';
 import {AppText as Text, AppTextInput as TextInput} from './Typography';
 import {ReadingScrollView} from './ReadingScrollView';
 import {CatalogScrollView} from './CatalogScrollView';
+import {DateField} from './DateField';
 
 const textKeys = new Set(['fontSize','fontWeight','lineHeight','color','fontFamily','letterSpacing','textAlign']);
 function styles(source: Style | undefined, scale: number): {view: ViewStyle; text: TextStyle} {
@@ -33,10 +34,10 @@ export function NativeView({node: n, scale, dark, path = '0'}: NativeViewProps):
   const s = styles(n.style, scale), ink = dark ? '#F0F5FF' : '#172033', line = dark ? '#2C3C55' : '#DFE7F1';
   const children = (n.children ?? []).map((child, i) => <NativeView
     key={child.key ?? `${path}.${i}`} node={child} scale={scale} dark={dark} path={`${path}.${i}`} />);
-  if (n.kind === 'text') return <Text accessibilityRole={n.heading ? 'header' : undefined}
+  if (n.kind === 'text') return <Text accessibilityRole={n.heading ? 'header' : n.alert?'alert':undefined} accessibilityLiveRegion={n.alert?'polite':undefined}
     testID={n.testId} style={[s.view, {color: ink, flexShrink: 1}, s.text]}><RichText value={n.text ?? ''} /></Text>;
   if (n.kind === 'button') return <Pressable testID={n.testId} accessibilityRole={n.role ?? 'button'}
-    accessibilityLabel={n.label ?? n.text} accessibilityState={{disabled: !!n.disabled, selected: !!n.selected, checked: n.checked}}
+    accessibilityLabel={n.label ?? n.text} accessibilityState={{disabled: !!n.disabled, selected: !!n.selected, checked: n.checked, expanded:n.expanded}}
     disabled={n.disabled} onPress={() => {void n.action?.();}}
     style={({pressed}) => [{minHeight: 48, justifyContent: 'center', paddingHorizontal: 12, paddingVertical: 10}, s.view, {opacity: pressed ? 0.78 : n.disabled ? 0.78 : 1}]}>
     {n.text ? <Text style={[{color: ink, textAlign: 'center', fontSize: 15 * scale, fontWeight: '600', flexShrink: 1}, s.text]}><RichText value={n.text} /></Text> : null}
@@ -47,6 +48,7 @@ export function NativeView({node: n, scale, dark, path = '0'}: NativeViewProps):
     placeholderTextColor={dark ? '#B0BFD6' : '#53647F'} autoCorrect={false}
     autoCapitalize="none" multiline={n.multiline} keyboardAppearance={dark?'dark':'light'} keyboardType={n.inputMode === 'numeric' ? 'number-pad' : 'default'}
     style={[{color: ink}, s.view, s.text]} />;
+  if (n.kind === 'date') return <DateField node={n} scale={scale} dark={dark} />;
   if (n.kind === 'code') return <StudyCode key={n.text} node={n} scale={scale} />;
   if (n.kind === 'table') return <StudyTable node={n} scale={scale} dark={dark} />;
   if (n.kind === 'progress') return <View accessibilityRole="progressbar" accessibilityLabel={n.label??'진행률'}
@@ -64,7 +66,7 @@ export function NativeView({node: n, scale, dark, path = '0'}: NativeViewProps):
   if(n.scroll&&n.reading)return <ReadingScrollView key={n.key} testID={n.testId} {...n.reading}
     keyboardShouldPersistTaps="handled" showsVerticalScrollIndicator
     contentContainerStyle={[s.view,{width:'100%',maxWidth:920,alignSelf:'center'}]} style={{flex:1}}>{children}</ReadingScrollView>;
-  if(n.scroll&&n.catalog)return <CatalogScrollView key={n.key} testID={n.testId} {...n.catalog}
+  if(n.scroll&&n.catalog)return <CatalogScrollView key={n.key} testID={n.testId} {...n.catalog} layoutKey={`${width}:${fontScale}:${scale}`}
     keyboardShouldPersistTaps="handled" showsVerticalScrollIndicator
     contentContainerStyle={[s.view,{width:'100%',maxWidth:920,alignSelf:'center'}]} style={{flex:1}}>{children}</CatalogScrollView>;
   if (n.scroll) return <ScrollView key={n.key} testID={n.testId} keyboardShouldPersistTaps="handled"

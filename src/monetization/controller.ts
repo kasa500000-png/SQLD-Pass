@@ -72,6 +72,7 @@ export class MonetizedController extends Controller {
   }
   async openAdPrivacy(){
     if(this.rewardBusy||this.activeExam())return;
+    if(this.ads.mode==='off'){this.notice='현재 광고가 미활성 상태여서 설정할 광고 개인정보 항목이 없습니다.';this.notify();return;}
     try{await this.ads.privacyOptions();this.notice='광고 개인정보 선택을 확인했습니다. 학습/해제 기록은 바꾸지 않았습니다.';}
     catch{this.notice='개인정보 선택 화면을 열지 못했습니다. 광고 없는 무료 학습은 계속 이용할 수 있습니다.';}
     this.notify();
@@ -79,9 +80,9 @@ export class MonetizedController extends Controller {
   /** Soft reset preserves grants; explicit full reset deletes them through the existing serialized path. */
   requestLearningReset(){
     if(this.rewardBusy||this.needsRewardSave)return;
-    this.confirm('학습 기록만 초기화할까요?','진도·답안·진행 중 시험을 삭제하지만 이미 열린 회차는 유지합니다.','학습만 초기화',async()=>{
-      const ok=await this.commit(s=>({...initialState(this.content,this.services.clock().wall),monetization:walletOf(s)}));
-      if(ok){this.catalogScroll=undefined;this.examCatalogScroll=undefined;this.recordsScroll=undefined;this.route={name:'welcome'};this.stack=[];this.draftSettings={...this.state.settings};this.notify();}
+    this.confirm('학습 기록만 초기화할까요?','진도·북마크·풀이·복습·진행 중 시험을 삭제합니다. 글자 크기·테마·학습 목표·이미 열린 회차는 유지합니다.','학습만 초기화',async()=>{
+      const ok=await this.commit(s=>({...initialState(this.content,this.services.clock().wall),settings:{...s.settings},monetization:walletOf(s)}));
+      if(ok){this.catalogScroll=undefined;this.examCatalogScroll=undefined;this.recordsScroll=undefined;this.examReviewScroll=undefined;this.reviewPickerOpen=false;this.route={name:'welcome'};this.stack=[];this.draftSettings={...this.state.settings};this.notify();}
     },true);
   }
   override requestReset(){

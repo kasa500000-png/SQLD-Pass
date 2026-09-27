@@ -1,6 +1,6 @@
 import type {Controller} from '../core/controller';
 import type {ExamAttempt,Lesson,Question} from '../core/types';
-import {dueReviews,confirmationAccuracy,formatTime,SUBJECTS} from '../core/domain';
+import {dayKey,dueReviews,confirmationAccuracy,formatTime,SUBJECTS} from '../core/domain';
 import {box,button,code,dark,light,progress,row,table,text,type Node,type Style} from './nodes';
 import {dialectLabel,examReviewIndices,lessonBlocks,lessonStatus,searchLessons} from './learning-format';
 
@@ -25,7 +25,7 @@ export function polishLearning(c:Controller,root:Node,access?:ExamAccessUI):Node
       button('설정',()=>c.navigate({name:'settings'}),{minHeight:48,minWidth:64,maxWidth:100,padding:10,borderRadius:12,backgroundColor:p.blueSoft,color:p.blue,fontSize:13,lineHeight:21},{label:'설정',testId:'app-settings',disabled:locked})],
       {paddingHorizontal:16,paddingVertical:8,borderBottomWidth:1,borderColor:p.line,backgroundColor:p.surface});
   }
-  let content:Node[]|null=null,footer:Node|undefined,top:Node|undefined;
+  let content:Node[]|null=null,footer:Node|undefined,top:Node|undefined,reviewPicker:Node|undefined;
   const openLesson=(l:Lesson)=>c.navigate({name:'lesson',id:l.id});
   const item=(l:Lesson)=>button('',()=>openLesson(l),{padding:16,borderRadius:16,borderWidth:1,borderColor:p.line,backgroundColor:p.surface,alignItems:'stretch'},{key:l.id,testId:`lesson-${l.id}`,label:`${l.title}, ${lessonStatus(l,s)}`,disabled:locked,children:[row([badge(String(l.order).padStart(2,'0')),box([text(l.title,{fontSize:16,lineHeight:25,fontWeight:'700',color:p.ink}),small(`${l.subject==='S1'?'1과목':'2과목'} · 약 ${l.minutes}분 · ${lessonStatus(l,s)}`)],{flex:1,gap:5})])]});
   const question=(q:Question):Node[]=>[row([badge(q.subject==='S1'?'1과목':'2과목'),small(dialectLabel(q.dialect))],{flexWrap:'wrap'}),heading(q.stem,19),...q.tables.flatMap(t=>[small(`입력 · ${t.name}`),table(t.columns,t.rows,t.name)]),...(q.sql?[code(q.sql)]:[])];
@@ -35,10 +35,17 @@ export function polishLearning(c:Controller,root:Node,access?:ExamAccessUI):Node
     return button('',()=>fn(o.id),{padding:14,minHeight:56,borderRadius:14,borderWidth:1.5,borderColor:yes?p.green:no?p.red:sel?p.blue:p.line,backgroundColor:yes?p.greenSoft:no?p.redSoft:sel?p.blueSoft:p.surface,alignItems:'stretch'},
       {testId:`option-${o.id}`,label:`${o.id}번 ${o.text}${status?`, ${status}`:''}`,selected:sel,disabled:submitted||locked,role:'radio',checked:sel,children:[row([text(yes?'✓':no?'×':o.id,{fontSize:17,fontWeight:'700',color:yes?p.green:no?p.red:p.blue}),box([...(status?[small(status)]:[]),o.format==='sql'?code(o.text):body(o.text)],{flex:1,gap:5})],{alignItems:'flex-start'})]});
   });
-  const explanation=(q:Question,selected?:string):Node[]=>[badge(`정답 ${q.answer}번 · ${selected===q.answer?'정답':selected?'오답':'미응답'}`,selected===q.answer?'green':'orange'),heading('정답의 이유',20),...lessonBlocks(q.explanation,p),
-    ...q.options.filter(o=>o.id!==q.answer&&q.optionExplanations?.[o.id]).map(o=>card([small(`${o.id}번${o.id===selected?' · 내가 선택한 보기':''}`),...lessonBlocks(q.optionExplanations[o.id],p)],{padding:14})),
-    ...q.lessonIds.flatMap(id=>{const l=c.content.lessons.find(l=>l.id===id);return l?[action(`관련 이론 · ${l.title}`,()=>openLesson(l),`related-${id}`)]:[];}),
-    action(c.expanded.has(`question-info:${q.id}`)?'문항 정보 접기':'문항 정보·오류 제보',()=>c.toggleExpanded(`question-info:${q.id}`),`question-info-${q.id}`),...(c.expanded.has(`question-info:${q.id}`)?[small(`${q.id} · 콘텐츠 ${q.version} · ${dialectLabel(q.dialect)}`),action('오류 제보',()=>c.navigate({name:'help',id:q.id}),`report-${q.id}`)]:[])];
+  const explanation=(q:Question,selected?:string):Node[]=>{
+    const wrong=q.options.filter(o=>o.id!==q.answer&&q.optionExplanations?.[o.id]);
+    const selectedWrong=wrong.filter(o=>o.id===selected),others=wrong.filter(o=>o.id!==selected);
+    const unfolded=c.expanded.has(`other-options:${q.id}`);
+    const rationale=(id:string,mine=false)=>card([small(`${id}번${mine?' · 내가 선택한 보기':''}`),...lessonBlocks(q.optionExplanations[id],p)],{padding:14},`option-rationale-${id}`);
+    return [badge(`정답 ${q.answer}번 · ${selected===q.answer?'정답':selected?'오답':'미응답'}`,selected===q.answer?'green':'orange'),heading('정답의 이유',20),...lessonBlocks(q.explanation,p),
+      ...selectedWrong.map(o=>rationale(o.id,true)),
+      ...q.lessonIds.flatMap(id=>{const l=c.content.lessons.find(l=>l.id===id);return l?[action(`관련 이론 · ${l.title}`,()=>openLesson(l),`related-${id}`)]:[];}),
+      ...(others.length?[{...action(unfolded?'다른 보기 해설 접기':`다른 보기 해설 · ${others.length}개`,()=>c.toggleExpanded(`other-options:${q.id}`),`other-options-${q.id}`),expanded:unfolded},...(unfolded?others.map(o=>rationale(o.id)):[])]:[]),
+      action(c.expanded.has(`question-info:${q.id}`)?'문항 정보 접기':'문항 정보·오류 제보',()=>c.toggleExpanded(`question-info:${q.id}`),`question-info-${q.id}`),...(c.expanded.has(`question-info:${q.id}`)?[small(`${q.id} · 콘텐츠 ${q.version} · ${dialectLabel(q.dialect)}`),action('오류 제보',()=>c.navigate({name:'help',id:q.id}),`report-${q.id}`)]:[])];
+  };
   const resume=(e:ExamAttempt)=>{c.stack=[];c.navigate({name:'exam',id:e.id});};
   const framedFooter=(nodes:Node[])=>box(nodes,{paddingHorizontal:16,paddingVertical:12,gap:8,borderTopWidth:1,borderColor:p.line,backgroundColor:p.surface},'learning-footer');
 
@@ -50,7 +57,7 @@ export function polishLearning(c:Controller,root:Node,access?:ExamAccessUI):Node
     const target=c.lastReadingLesson()??next;
     const targetDay=target?c.content.days.find(day=>day.lessonIds.includes(target.id)):undefined;
     const complete=s.completedDays.length===30;
-    content=[heading(complete?'30일 과정 완료':`오늘의 학습 · Day ${d.day}`,24),
+    content=[heading(complete?'30일 과정 완료':`오늘의 학습 · Day ${d.day}`,24),small(`하루 ${s.settings.minutes}분 목표${s.settings.targetDate?` · 시험일 ${s.settings.targetDate}`:''}`),
       ...(active?[card([badge('시험 진행 중','orange'),heading(active.title,20),small(`남은 시간 ${formatTime(c.remaining())} · 화면을 나가도 계속 흐릅니다.`),action('진행 중 시험 이어하기',()=>resume(active),'home-resume-exam',true)])]:[]),
       ...(!active&&s.practice?[card([badge('중단한 연습'),body(`${s.practice.index+1}/${s.practice.questionIds.length}문항`),action('문제풀이 이어하기',()=>c.resumePractice(),'home-resume-practice',true)])]:[]),
       card([
@@ -81,10 +88,12 @@ export function polishLearning(c:Controller,root:Node,access?:ExamAccessUI):Node
   if(r==='plan'){
     content=[heading('30일 학습 계획',28),
       ...c.content.days.map(d=>{const ls=d.lessonIds.flatMap(id=>{const l=c.content.lessons.find(l=>l.id===id);return l?[l]:[];});const expanded=c.expanded.has(`day:${d.day}`)||(c.currentDay().day===d.day&&!c.expanded.has(`day-closed:${d.day}`));
-        return card([row([badge(`DAY ${d.day}`,s.completedDays.includes(d.day)?'green':'blue'),small(s.completedDays.includes(d.day)?'계획 완료':'학습 예정')]),body(d.examId?'실전 모의고사 응시 후 관련 개념 복습':d.task),small(`${ls.length}개 레슨 · ${d.examId?'시험 90분 + 해설 검토':Number.isFinite(d.minutes)&&d.minutes>0?`권장 ${d.minutes}분`:'복습 시간은 직접 조절'}`),
-          action(expanded?'레슨 목록 접기':'모든 레슨 보기',()=>{if(expanded){c.expanded.delete(`day:${d.day}`);c.expanded.add(`day-closed:${d.day}`);}else{c.expanded.add(`day:${d.day}`);c.expanded.delete(`day-closed:${d.day}`);}c.notify();},`day-${d.day}-toggle`),
-          ...(expanded?ls.map(item):[]),...(d.examId?[action('무료 모의고사 안내',()=>c.navigate({name:'examIntro',id:d.examId!}),`day-${d.day}-exam`,true)]:[]),
-          ...(!d.examId&&ls.length?[action('확인 문제 풀기',()=>c.beginPractice(ls.flatMap(l=>l.questionIds)),`day-${d.day}-practice`)]:[])],{},`day-${d.day}`);
+        const status=s.completedDays.includes(d.day)?'완료':c.currentDay().day===d.day?'현재 학습':'예정';
+        const topic=d.examId?(c.content.exams.find(e=>e.id===d.examId)?.title??'실전 모의고사'):ls.map(l=>l.title.split(':')[0]).join(' · ')||'복습';
+        const duration=d.examId?'시험 90분 + 해설 검토':`${ls.length}개 이론 · ${Number.isFinite(d.minutes)&&d.minutes>0?`권장 ${d.minutes}분`:'복습 시간 직접 조절'}`;
+        return card([button('',()=>{if(expanded){c.expanded.delete(`day:${d.day}`);c.expanded.add(`day-closed:${d.day}`);}else{c.expanded.add(`day:${d.day}`);c.expanded.delete(`day-closed:${d.day}`);}c.notify();},
+          {padding:0,minHeight:48,alignItems:'stretch',gap:8},{testId:`day-${d.day}-toggle`,label:`Day ${d.day}, ${status}, ${topic}, ${expanded?'접기':'펼치기'}`,expanded,disabled:locked,children:[row([badge(`DAY ${d.day}`,status==='완료'?'green':'blue'),small(status),box([],{flex:1}),small(expanded?'접기 ▴':'펼치기 ▾')],{flexWrap:'wrap'}),heading(topic,17),small(duration)]}),
+          ...(expanded?[small(d.task),...ls.map(item),...(d.examId?[action('무료 모의고사 안내',()=>c.navigate({name:'examIntro',id:d.examId!}),`day-${d.day}-exam`,true)]:[]),...(!d.examId&&ls.length?[action('확인 문제 풀기',()=>c.beginPractice(ls.flatMap(l=>l.questionIds)),`day-${d.day}-practice`)]:[])]:[])],{},`day-${d.day}`);
       })];
   }
   if(r==='lesson'){
@@ -110,9 +119,12 @@ export function polishLearning(c:Controller,root:Node,access?:ExamAccessUI):Node
   if(r==='review'){
     const due=dueReviews(s,c.content,c.services.clock().wall),all=Object.keys(s.reviews).filter(id=>{const q=c.getQuestion(id);return q&&(!q.examId||s.exams.some(e=>e.status==='submitted'&&e.snapshots.some(x=>x.id===id)));});
     const showAll=c.expanded.has('review:all'),ids=showAll?all:due;
+    const nextDay=all.map(id=>s.reviews[id].dueDay).sort()[0];
     content=[...(due.length?[action(`복습 시작 · ${Math.min(due.length,10)}문항`,()=>c.beginDueReview(),'start-review',true)]:[]),
-      row([choiceChip(`오늘 ${due.length}`,!showAll,()=>{c.expanded.delete('review:all');c.notify();},'review-due'),choiceChip(`전체 ${all.length}`,showAll,()=>{c.expanded.add('review:all');c.notify();},'review-all')],{flexWrap:'wrap'}),
-      ...(!ids.length?[heading('복습할 문제가 없어요',20),action('이론 학습하기',()=>c.openTheory(),'review-empty-learn')]:ids.slice(0,20).flatMap(id=>{const q=c.getQuestion(id);return q?[card([small(`${q.subject==='S1'?'1과목':'2과목'} · ${s.reviews[id].dueDay} 예정`),body(q.stem),action('이 문항 복습',()=>c.beginPractice([id],'review'),`review-${id}`)])]:[];})),...(ids.length>20?[small('처음 20문항을 표시합니다. 복습 시작은 예정 순서대로 최대 10문항씩 진행합니다.')]:[])];
+      row([choiceChip(`오늘 ${due.length}`,!showAll,()=>c.setReviewFilter(false),'review-due'),choiceChip(`전체 ${all.length}`,showAll,()=>c.setReviewFilter(true),'review-all')],{flexWrap:'wrap'}),
+      ...(!ids.length?all.length?[heading('오늘 예정된 복습이 없어요',20),small(`다음 복습 · ${nextDay} · ${all.filter(id=>s.reviews[id].dueDay===nextDay).length}문항`),action(`전체 복습 보기 · ${all.length}문항`,()=>c.setReviewFilter(true),'review-show-all')]:[heading('복습할 문제가 없어요',20),action('이론 학습하기',()=>c.openTheory(),'review-empty-learn')]:ids.slice(0,c.reviewLimit).flatMap(id=>{const q=c.getQuestion(id);return q?[card([small(`${q.subject==='S1'?'1과목':'2과목'} · ${s.reviews[id].dueDay} 예정`),body(q.stem),action('이 문항 복습',()=>c.beginPractice([id],'review'),`review-${id}`)],{},`review-card-${id}`)]:[];})),
+      ...(ids.length?[small(`${Math.min(c.reviewLimit,ids.length)}/${ids.length}문항 표시`)]:[]),
+      ...(ids.length>c.reviewLimit?[action('20문항 더 보기',()=>c.showMoreReviews(),'review-more')]:[])];
   }
   if(r==='exams'&&access){
     const filter=c.expanded.has('exams:available'),available=c.content.exams.filter(e=>access.hasAccess(e.id));
@@ -168,10 +180,17 @@ export function polishLearning(c:Controller,root:Node,access?:ExamAccessUI):Node
   if(r==='examReview'){
     const e=c.examAttempt(c.route.id);if(e?.status==='submitted'){
       const only=c.expanded.has(`wrong:${e.id}`),ids=examReviewIndices(e,only),target=c.route.index??0,i=ids.includes(target)?target:ids[0],pos=ids.indexOf(i);
-      const filters=row([choiceChip('전체',!only,()=>{c.expanded.delete(`wrong:${e.id}`);c.route={...c.route,index:0};c.notify();},'review-exam-all'),choiceChip('오답·미응답',only,()=>{c.expanded.add(`wrong:${e.id}`);c.route={...c.route,index:examReviewIndices(e,true)[0]??0};c.notify();},'review-exam-wrong')],{flexWrap:'wrap'});
+      const filters=row([choiceChip('전체',!only,()=>c.setExamReviewFilter(false),'review-exam-all'),choiceChip('오답·미응답',only,()=>c.setExamReviewFilter(true),'review-exam-wrong')],{flexWrap:'wrap'});
       if(i===undefined){content=[filters,empty('오답·미응답이 없어요','전체 해설에서 풀이 과정을 다시 확인할 수 있습니다.')];}
       else {const q=e.snapshots[i];content=[filters,small(`${pos+1}/${ids.length} · 시험 ${i+1}번`),...question(q),...options(q,e.answers[q.id]??null,true,()=>{}),...explanation(q,e.answers[q.id])];}
-      footer=framedFooter([row([action('이전 해설',()=>{c.route={...c.route,index:ids[pos-1]};c.notify();},'explain-prev',false,pos<=0),action(pos>=ids.length-1?'결과로':'다음 해설',()=>{c.route=pos>=ids.length-1?{name:'result',id:e.id}:{...c.route,index:ids[pos+1]};c.notify();},'explain-next',true)],{flexWrap:'wrap',justifyContent:'space-between'})]);
+      footer=framedFooter([...(ids.length?[action(`문항 선택 · 시험 ${i+1}번`,()=>c.openReviewPicker(),'review-question-picker')]:[]),row([action('이전 해설',()=>c.moveExamReview(ids[pos-1]),'explain-prev',false,pos<=0),action(pos>=ids.length-1?'결과로':'다음 해설',()=>pos>=ids.length-1?c.returnToExamResult():c.moveExamReview(ids[pos+1]),'explain-next',true)],{flexWrap:'wrap',justifyContent:'space-between'})]);
+      if(c.reviewPickerOpen&&ids.length)reviewPicker={kind:'modal',label:'해설 문항 선택',close:()=>c.closeReviewPicker(),children:[card([
+        row([box([heading('해설 문항 선택',22)],{flex:1}),action('닫기',()=>c.closeReviewPicker(),'review-picker-close')]),small(`${only?'오답·미응답':'전체'} ${ids.length}문항 · 원래 시험 번호`),
+        ...(['S1','S2'] as const).flatMap(subject=>{const group=ids.filter(index=>e.snapshots[index].subject===subject);return group.length?[heading(SUBJECTS[subject],18),row(group.map(index=>{
+          const q=e.snapshots[index],answer=e.answers[q.id],status=answer===q.answer?'정답':answer?'오답':'미응답';
+          return button(`${index+1}\n${status}`,()=>c.moveExamReview(index),{width:76,minHeight:68,padding:8,borderRadius:12,borderWidth:index===i?2:1,borderColor:index===i?p.blue:p.line,backgroundColor:index===i?p.blueSoft:p.surface,color:status==='정답'?p.green:p.ink,fontSize:13,lineHeight:20},{testId:`review-jump-${index+1}`,label:`시험 ${index+1}번, ${status}${index===i?', 현재 문항':''}`,selected:index===i,disabled:locked});
+        }),{flexWrap:'wrap',gap:8})]:[];}),action('닫기',()=>c.closeReviewPicker(),'review-picker-close-bottom')
+      ])]};
     }
   }
   if(r==='stats'){
@@ -198,7 +217,8 @@ export function polishLearning(c:Controller,root:Node,access?:ExamAccessUI):Node
   }
   if(r==='setup'){
     content=[heading('목표와 학습 시간을 정해요',26),small('시험일을 모르면 비워두고 시작할 수 있습니다.'),heading('하루 학습 시간',18),row([15,30,45,60,90].map(n=>choiceChip(`${n}분`,c.draftSettings.minutes===n,()=>{c.draftSettings.minutes=n;c.notify();},`minutes-${n}`)),{flexWrap:'wrap'}),
-      small('목표 시험일 · 선택 입력'),{kind:'input',testId:'target-date',label:'목표 시험일, YYYY-MM-DD, 선택 입력',value:c.draftSettings.targetDate,onChange:v=>{c.draftSettings.targetDate=v;c.notify();},placeholder:'YYYY-MM-DD 또는 비워두기',style:{minHeight:52,padding:14,fontSize:16,borderWidth:1,borderColor:p.line,borderRadius:12,color:p.ink,backgroundColor:p.surface}},
+      small('목표 시험일 · 선택 입력'),{kind:'date',testId:'target-date',label:'목표 시험일 선택',value:c.draftSettings.targetDate,minimumDate:dayKey(c.services.clock().wall),onChange:v=>c.setTargetDate(v),disabled:locked},
+      ...(c.settingsError?[{...text(c.settingsError,{fontSize:14,lineHeight:22,color:p.red},'target-date-error'),testId:'target-date-error',alert:true}]:[]),
       notice('30개 학습일의 순서는 유지됩니다. 하루 학습 시간을 바꿔도 학습량을 자동 압축하거나 합격을 보장하지 않습니다. 모의고사는 90분을 따로 확보하세요.'),
       action(s.onboarded?'변경 사항 저장':'학습 시작',()=>c.saveSettings(!s.onboarded),'finish-setup',true)];
   }
@@ -206,6 +226,7 @@ export function polishLearning(c:Controller,root:Node,access?:ExamAccessUI):Node
     const report=(scroll.children??[]).find(n=>n.text==='제보 내용 공유하기');
     if(report)report.disabled=locked||!c.supportText.trim();
     scroll.children?.unshift(small('공유창을 여는 기능이며 고객센터 접수 완료를 의미하지 않습니다. 개인정보나 광고 식별자는 적지 마세요.'));
+    if(c.supportNotice)scroll.children?.unshift(notice(c.supportNotice));
   }
   if(content&&['catalog','review'].includes(r))content.unshift(learningNavigation());
   if(content){const recovery=(scroll.children??[]).filter(n=>n.testId==='retry-reward-save'||n.text?.startsWith('테스트 광고 모드')||n.text?.startsWith('광고 처리 중'));scroll.children=[...(c.notice?[notice(c.notice)]:[]),...recovery,...content];}
@@ -228,11 +249,16 @@ export function polishLearning(c:Controller,root:Node,access?:ExamAccessUI):Node
     const context=c.recordsContext();
     scroll.catalog={context,position:c.recordsPosition(),onRemember:position=>c.rememberRecords(context,position)};
   }
+  if(r==='examReview'){
+    const context=c.examReviewContext();
+    scroll.catalog={context,position:c.examReviewPosition(),preserveContentOffset:true,onRemember:position=>c.rememberExamReview(context,position)};
+  }
   if(r==='lesson'&&c.content.lessons.some(l=>l.id===c.route.id)){
     const id=c.route.id!;
     scroll.reading={position:c.readingPosition(id),onSave:position=>c.rememberReading(id,position)};
   }
   if(top){const at=root.children!.indexOf(scroll);root.children!.splice(at,0,top);}
   if(footer){root.children=root.children!.filter(n=>n===scroll||n===top||n.kind==='modal'||root.children!.indexOf(n)<root.children!.indexOf(scroll));const modal=root.children.findIndex(n=>n.kind==='modal');root.children.splice(modal<0?root.children.length:modal,0,footer);}
+  if(reviewPicker)root.children!.push(reviewPicker);
   return root;
 }

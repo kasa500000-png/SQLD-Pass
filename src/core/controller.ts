@@ -4,12 +4,13 @@ import {advanceClock,applyPractice,assertContent,canStudyQuestion,dayKey,dueRevi
 export class Controller {
   state:AppState; ready=false; startupError=''; notice=''; busy=false; route:Route={name:'welcome'}; stack:Route[]=[];
   dialog:Dialog|null=null; search=''; subject='all'; bookmarkedOnly=false; filter='all'; expanded=new Set<string>();
-  draftSettings:Settings; supportText=''; private listeners=new Set<()=>void>(); private serial:Promise<void>=Promise.resolve();
+  draftSettings:Settings; settingsError=''; supportText=''; supportNotice=''; reviewLimit=20; reviewPickerOpen=false; private listeners=new Set<()=>void>(); private serial:Promise<void>=Promise.resolve();
   private version=0; private checkpointAt=0; private expiryInFlight=false; private lastExpiryTry=0;
   private systemAppearance:'light'|'dark'='light';
   protected catalogScroll?:{context:string;position:ReadingOffset};
   protected examCatalogScroll?:{context:string;position:ReadingOffset};
   protected recordsScroll?:{context:string;position:ReadingOffset};
+  protected examReviewScroll?:{context:string;position:ReadingOffset};
   get isDark(){return this.state.settings.theme==='dark'||(this.state.settings.theme==='system'&&this.systemAppearance==='dark');}
   setSystemAppearance(value:'light'|'dark'){if(this.systemAppearance!==value){this.systemAppearance=value;this.notify();}}
   readonly getSnapshot=()=>this.version;
@@ -37,17 +38,20 @@ export class Controller {
       finally{this.busy=false;this.notify();}
     });this.serial=task.catch(()=>{});await task;return ok;
   }
-  navigate(route:Route){this.stack.push(this.route);this.route=route;this.notice='';if(route.name==='settings'||route.name==='setup')this.draftSettings={...this.state.settings};this.notify();}
-  tab(tab:Tab){this.stack=[];this.route={name:({today:'home',learn:'catalog',review:'review',exams:'exams',records:'stats'} as const)[tab]};this.notice='';this.notify();}
+  navigate(route:Route){this.stack.push(this.route);this.route=route;this.notice='';this.supportNotice='';this.settingsError='';this.reviewPickerOpen=false;if(route.name==='settings'||route.name==='setup')this.draftSettings={...this.state.settings};this.notify();}
+  tab(tab:Tab){this.stack=[];this.route={name:({today:'home',learn:'catalog',review:'review',exams:'exams',records:'stats'} as const)[tab]};this.notice='';this.supportNotice='';this.reviewPickerOpen=false;this.notify();}
   back(){
     if(this.dialog){this.dialog=null;this.notify();return;}
+    if(this.reviewPickerOpen){this.closeReviewPicker();return;}
     if(this.route.name==='exam'){this.confirm('시험 화면을 나갈까요?','답안은 기기에 저장되며 남은 시간은 계속 흐릅니다. 종료 시각이 지나면 자동 제출합니다.','저장 후 나가기',async()=>{if(await this.checkpoint())this.tab('exams');});return;}
-    this.route=this.stack.pop()??{name:this.state.onboarded?'home':'welcome'};this.notify();
+    this.supportNotice='';this.route=this.stack.pop()??{name:this.state.onboarded?'home':'welcome'};this.notify();
   }
   confirm(title:string,body:string,confirmLabel:string,onConfirm:()=>void|Promise<void>,destructive=false){this.dialog={title,body,confirmLabel,onConfirm,destructive};this.notify();}
   cancelDialog(){this.dialog=null;this.notify();}
   async acceptDialog(){const d=this.dialog;this.dialog=null;this.notify();if(d)await d.onConfirm();}
   toggleExpanded(id:string){this.expanded.has(id)?this.expanded.delete(id):this.expanded.add(id);this.notify();}
+  setReviewFilter(all:boolean){all?this.expanded.add('review:all'):this.expanded.delete('review:all');this.reviewLimit=20;this.notify();}
+  showMoreReviews(){this.reviewLimit+=20;this.notify();}
   setSearch(text:string){if(this.search!==text)this.catalogScroll=undefined;this.search=text;this.notify();}
   setSubject(v:string){if(this.subject!==v)this.catalogScroll=undefined;this.subject=v;this.notify();}
   resetLessonSearch(){this.search='';this.subject='all';this.catalogScroll=undefined;this.notify();}
@@ -71,10 +75,36 @@ export class Controller {
     if(this.ready&&this.state.onboarded&&context===this.recordsContext()&&validReadingOffset(position))
       this.recordsScroll={context,position:{...position}};
   }
+  examReviewContext(){return JSON.stringify([this.route.id,this.route.index??0,this.expanded.has(`wrong:${this.route.id}`)]);}
+  examReviewPosition(){return this.examReviewScroll?.context===this.examReviewContext()?this.examReviewScroll.position:undefined;}
+  rememberExamReview(context:string,position:ReadingOffset){
+    if(this.ready&&this.state.onboarded&&this.route.name==='examReview'&&context===this.examReviewContext()&&validReadingOffset(position))
+      this.examReviewScroll={context,position:{...position}};
+  }
+  openReviewPicker(){if(this.route.name==='examReview'&&this.examAttempt(this.route.id)?.status==='submitted'){this.reviewPickerOpen=true;this.notify();}}
+  closeReviewPicker(){this.reviewPickerOpen=false;this.notify();}
+  moveExamReview(index:number){
+    const e=this.examAttempt(this.route.id),q=e?.snapshots[index];
+    if(this.route.name!=='examReview'||e?.status!=='submitted'||!Number.isInteger(index)||!q)return;
+    if(this.expanded.has(`wrong:${e.id}`)&&e.answers[q.id]===q.answer)return;
+    this.reviewPickerOpen=false;this.route={...this.route,index};this.notify();
+  }
+  setExamReviewFilter(onlyWrong:boolean){
+    const e=this.examAttempt(this.route.id);if(this.route.name!=='examReview'||e?.status!=='submitted')return;
+    onlyWrong?this.expanded.add(`wrong:${e.id}`):this.expanded.delete(`wrong:${e.id}`);
+    this.reviewPickerOpen=false;this.route={...this.route,index:onlyWrong?Math.max(0,e.snapshots.findIndex(q=>e.answers[q.id]!==q.answer)):0};this.notify();
+  }
+  returnToExamResult(){
+    const e=this.examAttempt(this.route.id);if(this.route.name!=='examReview'||e?.status!=='submitted')return;
+    const previous=this.stack.at(-1);if(previous?.name==='result'&&previous.id===e.id)this.stack.pop();
+    this.reviewPickerOpen=false;this.route={name:'result',id:e.id};this.notify();
+  }
+  setTargetDate(value:string){this.draftSettings.targetDate=value;this.settingsError='';this.notify();}
   async saveSettings(onboard=false){
     const d={...this.draftSettings};
-    if(!validTargetDate(d.targetDate,dayKey(this.services.clock().wall))){this.notice='목표일은 오늘 이후의 실제 날짜를 YYYY-MM-DD로 입력하거나 비워 주세요.';this.notify();return;}
+    if(!validTargetDate(d.targetDate,dayKey(this.services.clock().wall))){this.settingsError='오늘 이후의 실제 날짜를 선택하거나 시험일을 비워 주세요.';this.notify();return;}
     if(![15,30,45,60,90].includes(d.minutes))return;
+    this.settingsError='';
     if(await this.commit(s=>({...s,settings:d,onboarded:onboard||s.onboarded}))){this.stack=[];this.route={name:'home'};this.notice='학습 설정을 저장했습니다. 기존 기록은 유지됩니다.';this.notify();}
   }
   async markLesson(id:string){const ok=await this.commit(s=>({...s,readLessons:Array.from(new Set([...s.readLessons,id])),studyDays:Array.from(new Set([...s.studyDays,dayKey(this.services.clock().wall)]))}));if(ok){this.notice='이론 읽음을 기록했습니다. 확인 문제로 이해를 점검해 보세요.';this.notify();}}
@@ -160,21 +190,23 @@ export class Controller {
   }
   async external(url:string){try{if(!/^https:\/\//i.test(url))throw new Error('HTTPS 주소만 열 수 있습니다');await this.services.openURL(url);}catch(e){this.notice=`외부 페이지를 열지 못했습니다: ${String(e)}`;this.notify();}}
   async report(qid?:string){
+    const origin=this.route;
     const text=`[SQLD Pass 내부 테스트 제보]\n앱: 0.1.0 / 콘텐츠: ${this.content.manifest.version}\n항목: ${qid??'일반 문의'}\n내용: ${this.supportText.trim()||'오류 상황을 작성해 주세요.'}\n학습 답안·진도·개인정보는 자동 첨부하지 않습니다.`;
-    try{const outcome=await this.services.share(text);this.notice=outcome==='cancelled'?'공유를 취소했습니다.':outcome==='copied'?'제보 내용을 복사했습니다. 직접 전달해 주세요. 접수는 완료되지 않았습니다.':outcome==='downloaded'?'제보 내용을 텍스트 파일로 저장했습니다. 직접 전달해 주세요. 접수는 완료되지 않았습니다.':'공유 동작을 완료했습니다. 실제 문의 접수 여부는 앱에서 확인하지 않습니다.';}catch(e){this.notice=`공유 실패: ${String(e)}`;}this.notify();
+    try{const outcome=await this.services.share(text);if(this.route===origin&&origin.name==='help')this.supportNotice=outcome==='cancelled'?'공유창을 닫았습니다.':outcome==='copied'?'제보 내용을 복사했습니다. 직접 전달해 주세요. 접수는 완료되지 않았습니다.':outcome==='downloaded'?'제보 내용을 텍스트 파일로 저장했습니다. 직접 전달해 주세요. 접수는 완료되지 않았습니다.':'공유창을 열었습니다. 전송·접수 여부는 앱에서 확인할 수 없습니다.';}catch(e){if(this.route===origin&&origin.name==='help')this.supportNotice=`공유창을 열지 못했습니다: ${String(e)}`;}this.notify();
   }
   async contactSupport(){
+    const origin=this.route;
     const email=this.services.supportEmail;
-    if(!email||!/^[-\w.+]+@[-\w.]+\.[a-z]{2,}$/i.test(email)){this.notice='운영 문의 이메일이 아직 설정되지 않았습니다.';this.notify();return;}
+    if(!email||!/^[-\w.+]+@[-\w.]+\.[a-z]{2,}$/i.test(email)){this.supportNotice='운영 문의 이메일이 아직 설정되지 않았습니다.';this.notify();return;}
     const body=`앱: SQLD Pass 0.1.0 / 콘텐츠: ${this.content.manifest.version}\n항목: ${this.route.id??'일반 문의'}\n내용: ${this.supportText.trim()}\n\n답안·진도·개인정보는 자동 첨부하지 않습니다.`;
-    try{await this.services.openURL(`mailto:${email}?subject=${encodeURIComponent('SQLD Pass 문의')}&body=${encodeURIComponent(body)}`);this.notice='메일 작성 화면을 열었습니다. 내용을 확인하고 직접 전송해 주세요.';}
-    catch{this.notice=`메일 앱을 열지 못했습니다. ${email}로 직접 문의하거나 제보 내용을 공유해 주세요.`;}
+    try{await this.services.openURL(`mailto:${email}?subject=${encodeURIComponent('SQLD Pass 문의')}&body=${encodeURIComponent(body)}`);if(this.route===origin&&origin.name==='help')this.supportNotice='메일 작성 화면을 열었습니다. 내용을 확인하고 직접 전송해 주세요.';}
+    catch{if(this.route===origin&&origin.name==='help')this.supportNotice=`메일 앱을 열지 못했습니다. ${email}로 직접 문의하거나 제보 내용을 공유해 주세요.`;}
     this.notify();
   }
   requestReset(){this.confirm('기기의 학습 기록을 초기화할까요?','읽은 이론, 북마크, 풀이 기록, 진행 중 시험과 설정을 모두 삭제합니다. 복원할 수 없습니다. SQLD Pass의 로컬 학습 기록만 삭제됩니다.','이 앱 기록 삭제',async()=>{
     const task=this.serial.then(async()=>{
       this.busy=true;this.notify();
-      try{await this.services.repository.clear();this.state=initialState(this.content,this.services.clock().wall);this.catalogScroll=undefined;this.examCatalogScroll=undefined;this.recordsScroll=undefined;this.draftSettings={...this.state.settings};this.route={name:'welcome'};this.stack=[];this.ready=true;this.startupError='';this.notice='';}
+      try{await this.services.repository.clear();this.state=initialState(this.content,this.services.clock().wall);this.catalogScroll=undefined;this.examCatalogScroll=undefined;this.recordsScroll=undefined;this.examReviewScroll=undefined;this.reviewPickerOpen=false;this.draftSettings={...this.state.settings};this.route={name:'welcome'};this.stack=[];this.ready=true;this.startupError='';this.notice='';}
       catch(e){this.notice=`초기화 실패: ${String(e)}`;}
       finally{this.busy=false;this.notify();}
     });this.serial=task.catch(()=>{});await task;

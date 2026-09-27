@@ -47,7 +47,15 @@ test('close without earned callback never grants',async()=>{const h=harness({ear
 test('reward is saved once and repeat attempt needs no additional ad',async()=>{const h=harness({duplicate:true});h.controller.offerUnlock('SQLD-M05');await h.controller.acceptDialog();assert.equal(h.controller.hasAccess('SQLD-M05'),true);assert.equal(Object.keys(p.walletOf(h.controller.state).grants).length,1);await h.controller.beginExam('SQLD-M05');assert.equal(h.controller.state.exams.length,1);assert.equal(h.shows,1);});
 test('ad-off configuration never pretends to watch',async()=>{const h=harness({mode:'off'});h.controller.offerUnlock('SQLD-M05');await h.controller.acceptDialog();assert.equal(h.shows,0);assert.equal(h.controller.hasAccess('SQLD-M05'),false);});
 test('save failure permits retry without watching again',async()=>{const h=harness({failEarn:true});h.controller.offerUnlock('SQLD-M05');await h.controller.acceptDialog();assert.equal(h.controller.needsRewardSave,true);assert.equal(h.controller.hasAccess('SQLD-M05'),false);h.allowSave();await h.controller.retryRewardSave();assert.equal(h.controller.hasAccess('SQLD-M05'),true);assert.equal(h.shows,1);});
-test('learning-only reset preserves the unlock',async()=>{const h=harness();h.controller.offerUnlock('SQLD-M05');await h.controller.acceptDialog();h.controller.requestLearningReset();await h.controller.acceptDialog();assert.equal(h.controller.hasAccess('SQLD-M05'),true);assert.equal(h.controller.state.onboarded,false);});
+test('learning-only reset preserves settings, goals and unlocks while clearing study data',async()=>{
+ const h=harness();h.controller.offerUnlock('SQLD-M05');await h.controller.acceptDialog();
+ const settings={minutes:60,targetDate:'2030-11-01',theme:'dark',fontScale:1.3};
+ await h.controller.commit(s=>({...s,settings,readLessons:['L0'],bookmarks:['L0']}));
+ h.controller.requestLearningReset();assert.match(h.controller.dialog.body,/글자 크기·테마·학습 목표/);
+ await h.controller.acceptDialog();assert.equal(h.controller.hasAccess('SQLD-M05'),true);assert.equal(h.controller.state.onboarded,false);
+ assert.deepEqual(h.controller.state.settings,settings);assert.deepEqual(h.stored.settings,settings);
+ assert.deepEqual(h.controller.state.readLessons,[]);assert.deepEqual(h.controller.state.bookmarks,[]);
+});
 test('full reset warns and removes grants',async()=>{const h=harness();h.controller.offerUnlock('SQLD-M05');await h.controller.acceptDialog();h.controller.requestReset();assert.match(h.controller.dialog.body,/광고 시청/);await h.controller.acceptDialog();assert.equal(h.controller.hasAccess('SQLD-M05'),false);});
 test('no reward while a timed exam is active',async()=>{const h=harness();await h.controller.beginExam('SQLD-M01');h.controller.offerUnlock('SQLD-M05');assert.equal(h.shows,0);assert.equal(h.controller.dialog,null);});
 test('concurrent requests do not show two ads',async()=>{const h=harness({held:true});h.controller.offerUnlock('SQLD-M05');const run=h.controller.acceptDialog();await new Promise(r=>setImmediate(r));h.controller.offerUnlock('SQLD-M06');assert.equal(h.controller.dialog,null);assert.equal(h.shows,1);h.release();await run;assert.equal(h.controller.hasAccess('SQLD-M06'),false);});

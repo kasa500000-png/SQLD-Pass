@@ -39,13 +39,13 @@ export function renderMonetized(c:MonetizedController):Node {
   if(c.route.name==='settings')scroll.children?.push(card([
     title('광고와 회차 해제'),body(`광고 모드: ${c.ads.mode==='off'?'미활성':c.ads.mode==='test'?'테스트 광고 · 수익 없음':'운영 광고'}`),
     body('무료 1~4회. 추가 회차는 각각 시청 완료 후 기기 내 유지. 앱 삭제·전체 데이터 삭제·기기 변경 시 복원하지 않습니다.'),
-    action('광고 개인정보 선택',()=>c.openAdPrivacy(),'ad-privacy'),
+    ...(c.ads.mode==='off'?[body('현재 광고가 미활성 상태여서 설정할 광고 개인정보 항목이 없습니다.')]:[action('광고 개인정보 선택',()=>c.openAdPrivacy(),'ad-privacy')]),
     action('전체 데이터 삭제 · 열린 회차도 삭제',()=>c.requestReset(),'reset-all')
   ]));
   if(c.route.name==='privacy')scroll.children?.push(card([
     title('광고 데이터 안내'),body('배너 및 보상형 광고가 활성화되면 Google SDK가 광고 제공을 위해 기기·네트워크·광고 상호작용 정보를 처리할 수 있습니다. 이 앱은 답안·진도·메모를 광고 타기팅으로 전달하지 않습니다. 비개인화 요청도 개인정보 처리가 전혀 없다는 뜻은 아닙니다.'),
     body('광고를 건너뛰거나 개인정보 선택을 거부해도 무료 학습과 이미 열린 회차는 유지됩니다. 추가 광고가 제공되지 않으면 무료 1~4회를 이용해 주세요.'),
-    action('광고 개인정보 선택',()=>c.openAdPrivacy(),'ad-privacy-detail')
+    ...(c.ads.mode==='off'?[body('현재 광고가 미활성 상태여서 설정할 광고 개인정보 항목이 없습니다.')]:[action('광고 개인정보 선택',()=>c.openAdPrivacy(),'ad-privacy-detail')])
   ]));
   if(c.route.name==='help')scroll.children?.push(action('부적절한 광고 신고 내용 작성',()=>{
     c.supportText='[광고 신고]\n표시된 화면/날짜:\n광고 내용과 문제점:\n개인정보나 광고 식별자는 적지 마세요.';c.notify();
