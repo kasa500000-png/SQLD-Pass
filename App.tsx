@@ -19,7 +19,7 @@ class RenderBoundary extends Component<React.PropsWithChildren, {failed: boolean
   static getDerivedStateFromError(){return {failed: true};}
   render(){return this.state.failed ? <View style={{flex:1,padding:28,justifyContent:'center',backgroundColor:'#F6F8FC'}}>
     <Text style={{fontSize:22,fontWeight:'700',color:'#172033'}}>화면을 표시하지 못했습니다.</Text>
-    <Text style={{fontSize:16,lineHeight:26,color:'#53647F',marginTop:12}}>기록을 삭제하지 않았습니다. 앱을 완전히 닫은 뒤 다시 열어 주세요. 문제가 계속되면 오류 상황을 기록해 개발 담당자에게 알려 주세요.</Text>
+    <Text style={{fontSize:16,lineHeight:26,color:'#53647F',marginTop:12}}>기록을 삭제하지 않았습니다. 앱을 완전히 닫은 뒤 다시 열어 주세요. 문제가 계속되면 오류 상황을 고객센터에 알려 주세요.</Text>
   </View> : this.props.children;}
 }
 function LearnerApp(){

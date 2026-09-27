@@ -109,7 +109,7 @@ export function polishLearning(c:Controller,root:Node,access?:ExamAccessUI):Node
       action(s.readLessons.includes(l.id)?'읽음 기록됨':'이론 읽음 기록',()=>c.markLesson(l.id),'lesson-read',false,s.readLessons.includes(l.id)),
       action('확인 문제 풀기',()=>c.beginPractice(l.questionIds),'lesson-practice',true),
       action(fold?'참고자료 접기':'참고자료·버전 보기',()=>c.toggleExpanded(`sources:${l.id}`),'lesson-sources'),
-      ...(fold?[small(`${l.id} · 콘텐츠 ${l.version} · 독립 감수 전 원고`),...l.sourceIds.flatMap(id=>{const source=c.content.sources[id];return source?[action(source.title,()=>c.external(source.url),`source-${id}`)]:[];}),action('이론 오류 제보',()=>c.navigate({name:'help',id:l.id}),'report-lesson')]:[])];}
+      ...(fold?[small(`${l.id} · 콘텐츠 ${l.version}`),...l.sourceIds.flatMap(id=>{const source=c.content.sources[id];return source?[action(source.title,()=>c.external(source.url),`source-${id}`)]:[];}),action('이론 오류 제보',()=>c.navigate({name:'help',id:l.id}),'report-lesson')]:[])];}
   }
   if(r==='practice'&&s.practice){
     const pr=s.practice,q=c.getQuestion(pr.questionIds[pr.index]);if(q){content=[small(`${pr.mode==='review'?'오답 복습':'이론 확인'} · ${pr.index+1}/${pr.questionIds.length}문항`),progress(pr.sessionAnswered/pr.questionIds.length,p.blue),...question(q),...options(q,pr.selected,pr.submitted,id=>c.selectPractice(id)),
@@ -129,7 +129,7 @@ export function polishLearning(c:Controller,root:Node,access?:ExamAccessUI):Node
   if(r==='exams'&&access){
     const filter=c.expanded.has('exams:available'),available=c.content.exams.filter(e=>access.hasAccess(e.id));
     const es=filter?available:c.content.exams;
-    content=[heading('실전 모의고사',28),small('20회 · 회당 50문항 · 제한시간 90분'),notice(access.mode==='off'?'현재 테스트에서는 1~4회를 이용할 수 있습니다. 광고가 꺼져 있어 5~20회는 새로 해제할 수 없습니다.':'1~4회 무료. 5~20회는 선택한 회차의 광고를 완료하면 이 기기에서 계속 이용합니다.'),
+    content=[heading('실전 모의고사',28),small('20회 · 회당 50문항 · 제한시간 90분'),notice(access.mode==='off'?'1~4회는 무료입니다. 5~20회 신규 이용은 현재 제공하지 않으며, 이미 열린 회차는 계속 이용할 수 있습니다.':'1~4회 무료. 5~20회는 선택한 회차의 광고를 완료하면 이 기기에서 계속 이용합니다.'),
       ...(active?[action(`${active.title} 이어하기`,()=>resume(active),'catalog-resume',true)]:[]),
       row([choiceChip('전체 20회',!filter,()=>{c.expanded.delete('exams:available');c.notify();},'exams-all'),choiceChip(`응시 가능 ${available.length}회`,filter,()=>{c.expanded.add('exams:available');c.notify();},'exams-available')],{flexWrap:'wrap'}),
       ...es.map(e=>{const attempts=s.exams.filter(a=>a.examId===e.id),latest=[...attempts].reverse().find(a=>a.status==='submitted'),first=attempts.find(a=>a.status==='submitted'&&a.isFirstAttempt),running=attempts.find(a=>a.status==='active'),open=access.hasAccess(e.id);
@@ -147,7 +147,7 @@ export function polishLearning(c:Controller,root:Node,access?:ExamAccessUI):Node
         body('시험 중에는 광고와 정답·해설을 표시하지 않습니다. 보기 선택 후 자동 저장하며, 답안표에서 미응답·보류 문항을 확인할 수 있습니다.'),
         small(open?'열린 회차는 재응시와 제출 후 해설에 추가 광고가 없습니다.':'시청은 선택입니다. 취소해도 무료 1~4회와 이미 열린 회차는 그대로 이용할 수 있습니다.'),
         ...(active?[action('진행 중 시험 이어하기',()=>resume(active),'intro-resume',true)]:[action(open?'90분 실전 시작':'광고 해제 안내 보기',()=>open?c.beginExam(e.id):access?.offerUnlock(e.id),'start-exam',true,!open&&!access)]),
-        action('모의고사 목록',()=>c.tab('exams'),'back-exams'),small('내부 학습용 자체 제작 문제이며 공식 시험·합격을 보장하지 않습니다.')];}
+        action('모의고사 목록',()=>c.tab('exams'),'back-exams'),small('학습용 자체 제작 문제이며 공식 시험·합격을 보장하지 않습니다.')];}
   }
   if(r==='exam'){
     const e=c.examAttempt(c.route.id)??active;if(e?.status==='active'){
@@ -169,7 +169,7 @@ export function polishLearning(c:Controller,root:Node,access?:ExamAccessUI):Node
   }
   if(r==='result'){
     const e=c.examAttempt(c.route.id);if(e?.status==='submitted'&&e.score){const score=e.score,wrong=examReviewIndices(e,true);
-      content=[badge(e.isFirstAttempt?'첫 응시':'재응시'),heading(e.title,26),card([small('앱 내부 연습 결과'),heading(`${score.points} / 100점`,36),body(`정답 ${score.correct} · 오답 ${50-score.correct-score.unanswered} · 미응답 ${score.unanswered}`),badge(score.practiceThresholdMet?'연습 합격 기준 충족':'연습 기준 보완 필요',score.practiceThresholdMet?'green':'orange')]),
+      content=[badge(e.isFirstAttempt?'첫 응시':'재응시'),heading(e.title,26),card([small('모의고사 결과'),heading(`${score.points} / 100점`,36),body(`정답 ${score.correct} · 오답 ${50-score.correct-score.unanswered} · 미응답 ${score.unanswered}`),badge(score.practiceThresholdMet?'연습 합격 기준 충족':'연습 기준 보완 필요',score.practiceThresholdMet?'green':'orange')]),
         ...(['S1','S2'] as const).map(id=>{const sub=score.bySubject[id];return card([heading(SUBJECTS[id],18),body(`${sub.points} / ${sub.max}점 · ${sub.correct}/${sub.total}문항`),progress(sub.points/sub.max,sub.meetsMinimum?p.green:p.orange),small(sub.meetsMinimum?'과목 최소 기준 충족':'과락 기준 미달 · 우선 복습이 필요합니다.')]);}),
         ...(!e.timeTrusted?[notice('시간 변경·앱 재시작 등으로 시간 검증이 끊겨 참고용으로 표시하는 결과입니다.')]:[]),
         ...(e.exposedFamilyCount?[small(`이전에 노출된 문항군 ${e.exposedFamilyCount}개가 포함되어 점수를 다른 시험과 단순 비교하지 않습니다.`)]:[]),
@@ -208,12 +208,12 @@ export function polishLearning(c:Controller,root:Node,access?:ExamAccessUI):Node
       ...(!attempts.length?[small('아직 응시 기록이 없어요'),action('실전 모의고사 보기',()=>c.tab('exams'),'records-start-exam')]:attempts.map(e=>card([row([badge(e.isFirstAttempt?'첫 응시':'재응시'),small(new Date(e.submittedAt??e.startedAt).toLocaleDateString('ko-KR'))],{flexWrap:'wrap'}),heading(e.title,18),body(`${e.score!.points} / 100점`),action('결과·해설 보기',()=>c.navigate({name:'result',id:e.id}),`history-${e.id}`)])))];
   }
   if(r==='settings'){
-    const adCards=(scroll.children??[]).filter(n=>n.children?.some(ch=>ch.text==='광고와 회차 해제'));
+    const adCards=(scroll.children??[]).filter(n=>n.children?.some(ch=>ch.text==='모의고사 이용 안내'));
     content=[heading('설정',26),heading('글자 크기',20),small('시스템 글자 크기에 아래 추가 배율을 함께 적용합니다.'),row([1,1.15,1.3].map(n=>choiceChip(`${Math.round(n*100)}%`,s.settings.fontScale===n,()=>{void c.commit(s=>({...s,settings:{...s.settings,fontScale:n}}));},`font-${n}`)),{flexWrap:'wrap'}),body('이 크기로 이론과 해설이 표시됩니다.'),
       heading('화면 테마',20),row((['light','dark'] as const).map(theme=>choiceChip(theme==='light'?'라이트':'다크',s.settings.theme===theme,()=>{void c.commit(s=>({...s,settings:{...s.settings,theme}}));},`theme-${theme}`)),{flexWrap:'wrap'}),
       action('시험일·하루 학습 시간 변경',()=>c.navigate({name:'setup'}),'change-goal'),
       ...(access?.resetLearning?[action('학습 기록만 초기화 · 열린 회차 유지',()=>access.resetLearning!(),'reset-learning')]:[]),
-      action('오류 제보·고객센터',()=>c.navigate({name:'help'}),'stats-help'),action('콘텐츠 버전·상태',()=>c.navigate({name:'notices'}),'stats-notices'),action('개인정보 안내',()=>c.navigate({name:'privacy'}),'stats-privacy'),...adCards,notice('알림·계정·클라우드 복원은 아직 제공하지 않습니다. 앱 삭제·전체 초기화·기기 변경 시 기기 기록을 복원할 수 없습니다.')];
+      action('오류 제보·고객센터',()=>c.navigate({name:'help'}),'stats-help'),action('앱·콘텐츠 정보',()=>c.navigate({name:'notices'}),'stats-notices'),action('개인정보 안내',()=>c.navigate({name:'privacy'}),'stats-privacy'),...adCards,notice('학습 기록은 이 기기에 저장됩니다. 앱 삭제·전체 데이터 삭제·기기 변경 시 기록을 복원할 수 없습니다.')];
   }
   if(r==='setup'){
     content=[heading('목표와 학습 시간을 정해요',26),small('시험일을 모르면 비워두고 시작할 수 있습니다.'),heading('하루 학습 시간',18),row([15,30,45,60,90].map(n=>choiceChip(`${n}분`,c.draftSettings.minutes===n,()=>{c.draftSettings.minutes=n;c.notify();},`minutes-${n}`)),{flexWrap:'wrap'}),
@@ -229,7 +229,7 @@ export function polishLearning(c:Controller,root:Node,access?:ExamAccessUI):Node
     if(c.supportNotice)scroll.children?.unshift(notice(c.supportNotice));
   }
   if(content&&['catalog','review'].includes(r))content.unshift(learningNavigation());
-  if(content){const recovery=(scroll.children??[]).filter(n=>n.testId==='retry-reward-save'||n.text?.startsWith('테스트 광고 모드')||n.text?.startsWith('광고 처리 중'));scroll.children=[...(c.notice?[notice(c.notice)]:[]),...recovery,...content];}
+  if(content){const recovery=(scroll.children??[]).filter(n=>n.testId==='retry-reward-save'||n.text?.startsWith('광고 처리 중'));scroll.children=[...(c.notice?[notice(c.notice)]:[]),...recovery,...content];}
   // Stable for timer ticks and choice saves; reset only when the actual question/lesson changes.
   const exam=r==='exam'?(c.examAttempt(c.route.id)??active):undefined;
   scroll.key=`${r}:${c.route.id??''}:${r==='exam'?exam?.index??0:r==='practice'?`${s.practice?.id??''}:${s.practice?.index??0}`:c.route.index??''}`;
