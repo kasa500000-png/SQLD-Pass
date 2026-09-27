@@ -20,7 +20,7 @@ export default ({config}:ConfigContext):ExpoConfig=>{
     scheme:production?'sqld-pass':'sqld-pass-internal',updates:{enabled:false},
     ios:{bundleIdentifier:process.env.IOS_BUNDLE_IDENTIFIER??'com.sqldpass.app.internal',buildNumber:'1',supportsTablet:true,
       infoPlist:{ITSAppUsesNonExemptEncryption:false}},
-    android:{package:process.env.ANDROID_PACKAGE??'com.sqldpass.app.internal',versionCode:4,allowBackup:false,
+    android:{package:process.env.ANDROID_PACKAGE??'com.sqldpass.app.internal',versionCode:5,allowBackup:false,
       adaptiveIcon:{foregroundImage:'./assets/brand/adaptive-foreground.png',backgroundColor:'#2457D6'},
       permissions:[],softwareKeyboardLayoutMode:'resize',blockedPermissions:[
         'android.permission.CAMERA','android.permission.RECORD_AUDIO','android.permission.READ_CONTACTS','android.permission.WRITE_CONTACTS',
@@ -28,7 +28,8 @@ export default ({config}:ConfigContext):ExpoConfig=>{
         'android.permission.READ_EXTERNAL_STORAGE','android.permission.WRITE_EXTERNAL_STORAGE','android.permission.READ_MEDIA_IMAGES',
         'android.permission.READ_MEDIA_VIDEO','android.permission.READ_MEDIA_AUDIO','android.permission.POST_NOTIFICATIONS',
         ...(env!=='development'?['android.permission.SYSTEM_ALERT_WINDOW','android.permission.VIBRATE']:[]),
-        ...(ads.mode==='off'?['com.google.android.gms.permission.AD_ID','android.permission.ACCESS_ADSERVICES_AD_ID','android.permission.ACCESS_ADSERVICES_ATTRIBUTION','android.permission.ACCESS_ADSERVICES_TOPICS']:[]),'com.android.vending.BILLING'
+        'com.google.android.gms.permission.AD_ID','android.permission.ACCESS_ADSERVICES_AD_ID',
+        'android.permission.ACCESS_ADSERVICES_ATTRIBUTION','android.permission.ACCESS_ADSERVICES_TOPICS','com.android.vending.BILLING'
       ]},
     plugins:['expo-sqlite','./plugins/withKotlinVersion.cjs',
       ['expo-splash-screen',{image:'./assets/brand/icon.png',imageWidth:160,backgroundColor:'#2457D6',dark:{backgroundColor:'#2457D6'}}],

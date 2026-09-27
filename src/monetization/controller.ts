@@ -73,7 +73,7 @@ export class MonetizedController extends Controller {
   async openAdPrivacy(){
     if(this.rewardBusy||this.activeExam())return;
     if(this.ads.mode==='off'){this.notice='현재 광고가 미활성 상태여서 설정할 광고 개인정보 항목이 없습니다.';this.notify();return;}
-    try{await this.ads.privacyOptions();this.notice='광고 개인정보 선택을 확인했습니다. 학습/해제 기록은 바꾸지 않았습니다.';}
+    try{await this.ads.privacyOptions();this.notice='광고 개인정보 상태를 확인했습니다. 지역과 보호 설정에 따라 선택 화면이 제공되지 않을 수 있습니다. 학습 기록과 열린 회차는 그대로 유지됩니다.';}
     catch{this.notice='개인정보 선택 화면을 열지 못했습니다. 광고 없는 무료 학습은 계속 이용할 수 있습니다.';}
     this.notify();
   }

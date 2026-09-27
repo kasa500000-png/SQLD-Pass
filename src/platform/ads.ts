@@ -7,6 +7,8 @@ const appEnv=process.env.EXPO_PUBLIC_APP_ENV ?? 'development';
 const mode:AdMode=requested==='test'&&appEnv!=='production'?'test':requested==='live'&&appEnv==='production'?'live':'off';
 const UNIT=/^ca-app-pub-\d{16}\/\d{10}$/;
 const NON_PERSONALIZED={requestNonPersonalizedAdsOnly:true};
+// Apply the same conservative privacy treatment to every user; no age is collected.
+const CONSENT_OPTIONS={tagForUnderAgeOfConsent:true};
 
 export class NativeAds implements RewardDriver {
   readonly mode=mode;
@@ -24,6 +26,12 @@ export class NativeAds implements RewardDriver {
   readonly snapshot=()=>this.revision;
   private changed(){this.revision++;for(const fn of this.listeners)fn();}
   sdk():SDK {if(!this.module)this.module=require('react-native-google-mobile-ads') as SDK;return this.module;}
+  private configure(sdk:SDK){
+    return sdk.default().setRequestConfiguration({
+      maxAdContentRating:sdk.MaxAdContentRating.G,
+      tagForChildDirectedTreatment:true,
+    });
+  }
   get bannersReady(){return this.ready&&!this.rewardActive&&this.mode!=='off';}
   unit(kind:'banner'|'rewarded'):string {
     const sdk=this.sdk();if(this.mode==='test')return kind==='banner'?sdk.TestIds.BANNER:sdk.TestIds.REWARDED;
@@ -39,13 +47,14 @@ export class NativeAds implements RewardDriver {
     this.preparation=(async()=>{
       try{
         const sdk=this.sdk();
+        // Configure before UMP or Mobile Ads initialization, including retries.
+        await this.configure(sdk);
         if(!this.gathered){
-          await sdk.AdsConsent.gatherConsent();this.gathered=true;
+          await sdk.AdsConsent.gatherConsent(CONSENT_OPTIONS);this.gathered=true;
         }
         const info=await sdk.AdsConsent.getConsentInfo();
         if(!info.canRequestAds){this.ready=false;this.changed();return false;}
         if(!this.ready){
-          await sdk.default().setRequestConfiguration({maxAdContentRating:sdk.MaxAdContentRating.G});
           await sdk.default().initialize();
           this.ready=true;this.changed();
         }
@@ -66,13 +75,15 @@ export class NativeAds implements RewardDriver {
     if(this.mode==='off')throw new Error('광고 미활성');
     this.ready=false;this.changed();
     if(this.preparation)await this.preparation;
-    this.ready=false;this.changed();
+    this.ready=false;this.gathered=false;this.changed();
     try{
-      const sdk=this.sdk();const info=await sdk.AdsConsent.requestInfoUpdate();
+      const sdk=this.sdk();await this.configure(sdk);
+      const info=await sdk.AdsConsent.requestInfoUpdate(CONSENT_OPTIONS);
+      this.gathered=true;
       if(info.privacyOptionsRequirementStatus===sdk.AdsConsentPrivacyOptionsRequirementStatus.REQUIRED)
         await sdk.AdsConsent.showPrivacyOptionsForm();
       else await sdk.AdsConsent.loadAndShowConsentFormIfRequired();
-    }finally{this.gathered=true;this.ready=false;this.changed();}
+    }finally{this.ready=false;this.changed();}
   }
   async showReward(onEarned:()=>Promise<void>):Promise<'closed'|'unavailable'|'cancelled'>{
     if(this.rewardActive||this.mode==='off')return 'unavailable';
