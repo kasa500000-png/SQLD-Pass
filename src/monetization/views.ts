@@ -48,6 +48,7 @@ export function renderMonetized(c:MonetizedController):Node {
     title('광고와 개인정보'),
     ...(c.ads.mode==='off'?[body('이 버전에서는 광고를 요청하지 않으며, 학습 기록을 광고 서비스로 전송하지 않습니다.')]:[
       body('Google 광고 SDK가 광고 제공을 위해 기기·네트워크·광고 상호작용 정보를 처리할 수 있습니다. 답안·진도·메모는 광고 타기팅으로 전달하지 않습니다. 비개인화 광고도 개인정보가 처리될 수 있습니다.'),
+      body('모든 이용자에게 아동 보호 광고 설정을 적용합니다. 생년월일을 수집하지 않으며, Android 광고 ID 권한을 요청하지 않습니다.'),
       body('광고를 건너뛰거나 개인정보 선택을 거부해도 무료 학습과 이미 열린 회차는 유지됩니다.'),
       action('광고 개인정보 선택',()=>c.openAdPrivacy(),'ad-privacy-detail')])
   ]));
