@@ -109,7 +109,14 @@ test('launch-free navigation, support and settings have no ad or testing UI',()=
  }
  c.route={name:'settings'};a.match(strings(view(c)),/모의고사 20회를 무료/);
  a.equal(get(c,'reset-learning').text,'학습 기록만 초기화');a.equal(get(c,'reset-all').text,'전체 데이터 삭제');
- c.route={name:'privacy'};a.match(strings(view(c)),/앱 삭제·전체 데이터 삭제·기기 변경 시 학습 기록과 모의고사 이용 권한을 복원할 수 없습니다/);
+ for(const name of ['settings','privacy']){
+  c.route={name};const out=strings(view(c));
+  a.match(out,/앱 자체 기록 복원·기기 간 동기화는 제공하지 않습니다/);a.match(out,/기록 유지나 복원은 보장하지 않습니다/);a.match(out,/이 버전의 모의고사 20회는 계속 무료/);
+  a.doesNotMatch(out,/복원할 수 없습니다|이용 권한.*복원|열린 회차/);
+ }
+ c.requestLearningReset();a.match(c.dialog.body,/20회는 계속 무료/);a.doesNotMatch(c.dialog.body,/열린 회차/);c.dialog=null;
+ c.requestReset();a.match(c.dialog.body,/앱 자체 기록 복원 기능은 제공하지/);a.match(c.dialog.body,/기록의 유지·복원을 보장하지/);a.match(c.dialog.body,/20회는 계속 무료/);a.doesNotMatch(c.dialog.body,/복원할 수 없습니다|열린 회차/);
+ const rewarded=setup(undefined,'rewarded').c;rewarded.requestReset();a.match(rewarded.dialog.body,/광고 시청으로 열린 회차도 모두 삭제되며 복원할 수 없습니다/);
 });
 
 test('launch-free active exam disables starting every other set and preserves resume',()=>{

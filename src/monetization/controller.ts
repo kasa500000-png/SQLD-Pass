@@ -84,7 +84,7 @@ export class MonetizedController extends Controller {
   /** Soft reset preserves grants; explicit full reset deletes them through the existing serialized path. */
   requestLearningReset(){
     if(this.rewardBusy||this.needsRewardSave)return;
-    this.confirm('학습 기록만 초기화할까요?','진도·북마크·풀이·복습·진행 중 시험을 삭제합니다. 글자 크기·테마·학습 목표·이미 열린 회차는 유지합니다.','학습만 초기화',async()=>{
+    this.confirm('학습 기록만 초기화할까요?',this.isLaunchFree?'진도·북마크·풀이·복습·진행 중 시험을 삭제합니다. 글자 크기·테마·학습 목표는 유지합니다. 이 버전의 모의고사 20회는 계속 무료로 이용할 수 있습니다.':'진도·북마크·풀이·복습·진행 중 시험을 삭제합니다. 글자 크기·테마·학습 목표·이미 열린 회차는 유지합니다.','학습만 초기화',async()=>{
       const ok=await this.commit(s=>({...initialState(this.content,this.services.clock().wall),settings:{...s.settings},monetization:walletOf(s)}));
       if(ok){this.catalogScroll=undefined;this.examCatalogScroll=undefined;this.recordsScroll=undefined;this.examReviewScroll=undefined;this.reviewPickerOpen=false;this.route={name:'welcome'};this.stack=[];this.draftSettings={...this.state.settings};this.notify();}
     },true);
@@ -92,7 +92,10 @@ export class MonetizedController extends Controller {
   override requestReset(){
     if(this.rewardBusy||this.needsRewardSave){this.notice='광고 처리와 보상 저장을 먼저 마쳐 주세요.';this.notify();return;}
     super.requestReset();
-    if(this.dialog&&!this.isLaunchFree)this.dialog.body+=' 광고 시청으로 열린 회차도 모두 삭제되며 복원할 수 없습니다.';
+    if(this.dialog){
+      if(this.isLaunchFree)this.dialog.body='읽은 이론, 북마크, 풀이 기록, 진행 중 시험과 설정을 이 앱에서 삭제합니다. 앱 자체 기록 복원 기능은 제공하지 않으며, 기록의 유지·복원을 보장하지 않습니다. 이 버전의 모의고사 20회는 계속 무료로 이용할 수 있습니다.';
+      else this.dialog.body+=' 광고 시청으로 열린 회차도 모두 삭제되며 복원할 수 없습니다.';
+    }
     this.notify();
   }
 }
