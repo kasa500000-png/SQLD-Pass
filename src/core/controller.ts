@@ -17,9 +17,11 @@ export class Controller {
   readonly subscribe=(fn:()=>void)=>{this.listeners.add(fn);return ()=>{this.listeners.delete(fn);};};
   constructor(readonly content:Content,readonly services:Services){this.state=initialState(content,services.clock().wall);this.draftSettings={...this.state.settings};}
   notify(){this.version++;for(const fn of this.listeners)fn();}
+  protected async prepareStartup():Promise<void>{}
   async initialize(){
     this.startupError='';this.ready=false;this.notify();
     try{assertContent(this.content);this.state=parseState(await this.services.repository.load(),this.content);this.draftSettings={...this.state.settings};
+      await this.prepareStartup();
       this.route={name:this.state.onboarded?'home':'welcome'};this.ready=true;const active=this.activeExam();
       if(active)await this.checkpoint();this.notify();await this.pulse();
     }catch(e){this.startupError=e instanceof Error?e.message:String(e);this.ready=false;this.notify();}
@@ -181,7 +183,9 @@ export class Controller {
       const submitted=submitExam(e,this.services.clock(),reason);const reviews={...s.reviews};
       for(const q of submitted.snapshots)if(submitted.answers[q.id]!==q.answer)reviews[q.id]={questionId:q.id,dueDay:dayKey(this.services.clock().wall),step:0,lastAnsweredDay:'',lastCorrect:false};
       return {...s,exams:s.exams.map(x=>x.id===e.id?submitted:x),reviews,studyDays:Array.from(new Set([...s.studyDays,dayKey(this.services.clock().wall)]))};
-    });this.expiryInFlight=false;if(ok){this.dialog=null;this.stack=[];this.route={name:'result',id:active.id};this.notify();}
+    });this.expiryInFlight=false;
+    // A queued submission may become a no-op if a reset removed its attempt.
+    if(ok&&this.state.exams.some(e=>e.id===active.id&&e.status==='submitted')){this.dialog=null;this.stack=[];this.route={name:'result',id:active.id};this.notify();}
   }
   async pulse(){
     const active=this.activeExam();if(!active)return;const now=this.services.clock();
@@ -204,11 +208,17 @@ export class Controller {
     this.notify();
   }
   requestReset(){this.confirm('기기의 학습 기록을 초기화할까요?','읽은 이론, 북마크, 풀이 기록, 진행 중 시험과 설정을 모두 삭제합니다. 복원할 수 없습니다. SQLD Pass의 로컬 학습 기록만 삭제됩니다.','이 앱 기록 삭제',async()=>{
+    let cleared=false;
     const task=this.serial.then(async()=>{
       this.busy=true;this.notify();
-      try{await this.services.repository.clear();this.state=initialState(this.content,this.services.clock().wall);this.catalogScroll=undefined;this.examCatalogScroll=undefined;this.recordsScroll=undefined;this.examReviewScroll=undefined;this.reviewPickerOpen=false;this.draftSettings={...this.state.settings};this.route={name:'welcome'};this.stack=[];this.ready=true;this.startupError='';this.notice='';}
+      try{await this.services.repository.clear();this.state=initialState(this.content,this.services.clock().wall);this.catalogScroll=undefined;this.examCatalogScroll=undefined;this.recordsScroll=undefined;this.examReviewScroll=undefined;this.reviewPickerOpen=false;this.draftSettings={...this.state.settings};this.route={name:'welcome'};this.stack=[];this.ready=false;this.startupError='';this.notice='';cleared=true;}
       catch(e){this.notice=`초기화 실패: ${String(e)}`;}
       finally{this.busy=false;this.notify();}
     });this.serial=task.catch(()=>{});await task;
+    if(cleared){
+      try{await this.prepareStartup();this.ready=true;}
+      catch(e){this.startupError=e instanceof Error?e.message:String(e);this.ready=false;}
+      this.notify();
+    }
   },true);}
 }

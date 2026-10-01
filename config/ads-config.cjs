@@ -1,17 +1,20 @@
 'use strict';
 const fs=require('node:fs'),path=require('node:path'),crypto=require('node:crypto');
-const POLICY='2026-09-12.1';
-const CODE_FILES=['config/ads-config.cjs','src/monetization/policy.ts','src/monetization/controller.ts','src/monetization/views.ts','src/platform/ads.ts','src/platform/MonetizedRoot.tsx','app.config.ts','package.json','package-lock.json','eas.json','scripts/patch-admob-config-plugin.cjs','plugins/withKotlinVersion.cjs','config/public-support.json','App.tsx','src/core/types.ts'];
+const POLICY='2026-09-30.1';
+const CODE_FILES=['config/ads-config.cjs','src/monetization/policy.ts','src/monetization/controller.ts','src/monetization/views.ts','src/platform/ads.ts','src/platform/MonetizedRoot.tsx','app.config.ts','react-native.config.js','package.json','package-lock.json','eas.json','scripts/patch-admob-config-plugin.cjs','plugins/withKotlinVersion.cjs','config/public-support.json','App.tsx','src/core/types.ts','src/core/controller.ts','src/ui/learning-polish.ts','src/ui/question-context.ts'];
 function codeHash(root){const h=crypto.createHash('sha256');for(const p of CODE_FILES)h.update(p+'\0').update(fs.readFileSync(path.join(root,p)));return h.digest('hex');}
 function adsBuildConfig(env=process.env){
   const mode=env.EXPO_PUBLIC_ADS_MODE??'off',prod=env.EXPO_PUBLIC_APP_ENV==='production';
+  const examAccessPolicy=env.EXPO_PUBLIC_EXAM_ACCESS_POLICY??'launch-free';
   if(!['off','test','live'].includes(mode))throw new Error('EXPO_PUBLIC_ADS_MODE must be off, test or live.');
+  if(!['launch-free','rewarded'].includes(examAccessPolicy))throw new Error('EXPO_PUBLIC_EXAM_ACCESS_POLICY must be launch-free or rewarded.');
+  if(examAccessPolicy==='launch-free'&&mode!=='off')throw new Error('Launch-free builds must disable advertising.');
   if(prod&&mode==='test')throw new Error('Test advertising may not be published as production.');
   if(mode==='live'&&(!prod||env.ADS_LIVE_APPROVED!=='true'))throw new Error('Live ads require production and explicit owner activation.');
   const test={androidAppId:'ca-app-pub-3940256099942544~3347511713',iosAppId:'ca-app-pub-3940256099942544~1458002511'};
-  if(mode!=='live')return {mode,...test};
+  if(mode!=='live')return {mode,examAccessPolicy,...test};
   const fields={androidAppId:'ADMOB_ANDROID_APP_ID',iosAppId:'ADMOB_IOS_APP_ID'};
-  const result={mode};
+  const result={mode,examAccessPolicy};
   for(const [key,name] of Object.entries(fields)){
     const value=env[name];if(!value||!/^ca-app-pub-\d{16}~\d{10}$/.test(value)||value.includes('3940256099942544'))throw new Error(`${name}: real app ID required.`);
     result[key]=value;

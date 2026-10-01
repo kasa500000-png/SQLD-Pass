@@ -30,7 +30,7 @@ function SmallBanner(){
 /** Keep the existing native renderer; only the named root slot is replaced, never a WebView. */
 export function MonetizedRoot({node,scale,dark}:NativeViewProps){
   return <View style={node.style as ViewStyle}>{node.children?.map((n,i)=>
-    n.key==='monetization-banner'?<SmallBanner key="small-banner"/>:
+    n.key==='monetization-banner'?(nativeAds.mode==='off'?null:<SmallBanner key="small-banner"/>):
       <NativeView key={n.key??`root-${i}`} node={n} scale={scale} dark={dark}/>
   )}</View>;
 }
