@@ -37,12 +37,29 @@ test('future rewarded test config retains official SDK configuration',()=>{
   assert.match(plugin[1].androidAppId,/3940256099942544/);assert.equal(plugin[1].delayAppMeasurementInit,true);
 });
 test('free build profiles explicitly disable ads and select launch-free access',()=>{
-  for(const name of ['development','internal','simulator','production','play-free']){
+  for(const name of ['development','internal','simulator','production','play-free','ios-free']){
     const c=adsBuildConfig(profileEnvironment(name));assert.equal(c.mode,'off',name);assert.equal(c.examAccessPolicy,'launch-free',name);
   }
   for(const name of ['ads-test','ads-test-simulator','play-test']){
     const c=adsBuildConfig(profileEnvironment(name));assert.equal(c.mode,'test',name);assert.equal(c.examAccessPolicy,'rewarded',name);
   }
+});
+test('iOS TestFlight QA uses the confirmed bundle while internal and simulator identifiers remain distinct',()=>{
+  const profile=require('../eas.json').build['ios-free'],env=profileEnvironment('ios-free');
+  const c=appConfig(env);
+  assert.equal(profile.distribution,'store');assert.notEqual(profile.ios?.simulator,true);
+  assert.equal(c.ios.bundleIdentifier,'com.kasa500000.sqldpass');assert.equal(c.ios.supportsTablet,true);
+  assert.equal(require('../eas.json').submit['ios-free'].ios.ascAppId,'6818046749');
+  assert.equal(c.extra.appEnvironment,'internal');assert.equal(c.extra.adsRuntimeEnabled,false);
+  assert.equal(c.extra.examAccessPolicy,'launch-free');
+  for(const name of ['internal','simulator'])assert.equal(appConfig(profileEnvironment(name)).ios.bundleIdentifier,'com.sqldpass.app.internal',name);
+  for(const mode of ['test','live'])assert.throws(()=>adsBuildConfig({...env,EXPO_PUBLIC_ADS_MODE:mode}),/Launch-free/);
+});
+test('production profile supplies both confirmed app identifiers and retains production checks',()=>{
+  const env=profileEnvironment('production');
+  assert.equal(env.ANDROID_PACKAGE,'com.kasa500000.sqldpass');
+  assert.equal(env.IOS_BUNDLE_IDENTIFIER,'com.kasa500000.sqldpass');
+  assert.equal(env.EXPO_PUBLIC_APP_ENV,'production');
 });
 test('actual Expo autolinking excludes ads in free builds and restores them only in rewarded test builds',()=>{
   const cli=require.resolve('expo-modules-autolinking/bin/expo-modules-autolinking');

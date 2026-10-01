@@ -39,7 +39,9 @@
       "env": {
         "EXPO_PUBLIC_APP_ENV": "production",
         "EXPO_PUBLIC_ADS_MODE": "off",
-        "EXPO_PUBLIC_EXAM_ACCESS_POLICY": "launch-free"
+        "EXPO_PUBLIC_EXAM_ACCESS_POLICY": "launch-free",
+        "ANDROID_PACKAGE": "com.kasa500000.sqldpass",
+        "IOS_BUNDLE_IDENTIFIER": "com.kasa500000.sqldpass"
       },
       "android": {
         "buildType": "app-bundle"
@@ -81,6 +83,22 @@
       },
       "android": {
         "buildType": "app-bundle"
+      }
+    },
+    "ios-free": {
+      "distribution": "store",
+      "env": {
+        "EXPO_PUBLIC_APP_ENV": "internal",
+        "EXPO_PUBLIC_ADS_MODE": "off",
+        "EXPO_PUBLIC_EXAM_ACCESS_POLICY": "launch-free",
+        "IOS_BUNDLE_IDENTIFIER": "com.kasa500000.sqldpass"
+      }
+    }
+  },
+  "submit": {
+    "ios-free": {
+      "ios": {
+        "ascAppId": "6818046749"
       }
     }
   }
