@@ -1,5 +1,5 @@
 import {render} from '../ui/views';
-import {polishLearning} from '../ui/learning-polish';
+import {launchFreeLocalDataNotice,polishLearning} from '../ui/learning-polish';
 import {box,button,dark,light,text,type Node} from '../ui/nodes';
 import type {MonetizedController} from './controller';
 import {isFreeExam} from './policy';
@@ -40,14 +40,14 @@ export function renderMonetized(c:MonetizedController):Node {
   if(c.route.name==='settings')scroll.children?.push(card([
     title('모의고사 이용 안내'),
     body(launchFree?'모든 이론·확인 문제·복습과 모의고사 20회를 무료로 이용할 수 있습니다.':c.ads.mode==='off'?'1~4회는 무료입니다. 5~20회 신규 이용은 현재 제공하지 않으며, 이미 열린 회차는 계속 이용할 수 있습니다.':'1~4회는 무료입니다. 5~20회는 선택한 회차의 보상형 광고 1회 완료 후 이 기기에서 계속 이용할 수 있습니다.'),
-    body(launchFree?'모의고사 이용 권한은 이 기기에 저장되며, 앱 삭제·전체 데이터 삭제·기기 변경 시 복원할 수 없습니다.':'열린 회차는 앱 삭제·전체 데이터 삭제·기기 변경 시 복원할 수 없습니다.'),
+    ...(!launchFree?[body('열린 회차는 앱 삭제·전체 데이터 삭제·기기 변경 시 복원할 수 없습니다.')]:[]),
     ...(!launchFree&&c.ads.mode==='test'?[body('공식 테스트 광고를 사용합니다. 테스트 광고로 열린 회차는 운영 광고 버전으로 이전되지 않습니다.')]:[]),
     ...(launchFree||c.ads.mode==='off'?[]:[action('광고 개인정보 선택',()=>c.openAdPrivacy(),'ad-privacy')]),
     action(launchFree?'전체 데이터 삭제':'전체 데이터 삭제 · 열린 회차도 삭제',()=>c.requestReset(),'reset-all')
   ]));
   if(c.route.name==='privacy')scroll.children?.push(card([
     title(launchFree?'기기 저장 안내':'광고와 개인정보'),
-    ...(launchFree?[body('회원가입 없이 사용할 수 있으며, 학습 기록은 이 기기에 저장됩니다.'),body('앱 삭제·전체 데이터 삭제·기기 변경 시 학습 기록과 모의고사 이용 권한을 복원할 수 없습니다.')]:c.ads.mode==='off'?[body('이 버전에서는 광고를 요청하지 않으며, 학습 기록을 광고 서비스로 전송하지 않습니다.')]:[
+    ...(launchFree?[body('회원가입 없이 사용할 수 있으며, 학습 기록은 이 기기에 저장됩니다.'),body(launchFreeLocalDataNotice)]:c.ads.mode==='off'?[body('이 버전에서는 광고를 요청하지 않으며, 학습 기록을 광고 서비스로 전송하지 않습니다.')]:[
       body('Google 광고 SDK가 광고 제공을 위해 기기·네트워크·광고 상호작용 정보를 처리할 수 있습니다. 답안·진도·메모는 광고 타기팅으로 전달하지 않습니다. 비개인화 광고도 개인정보가 처리될 수 있습니다.'),
       body('모든 이용자에게 아동 보호 광고 설정을 적용합니다. 생년월일을 수집하지 않으며, Android 광고 ID 권한을 요청하지 않습니다.'),
       body('광고를 건너뛰거나 개인정보 선택을 거부해도 무료 학습과 이미 열린 회차는 유지됩니다.'),

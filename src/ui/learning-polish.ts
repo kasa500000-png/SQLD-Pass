@@ -5,6 +5,8 @@ import {box,button,code,dark,light,progress,row,table,text,type Node,type Style}
 import {dialectLabel,examReviewIndices,lessonBlocks,lessonStatus,searchLessons} from './learning-format';
 import {questionContext} from './question-context';
 
+export const launchFreeLocalDataNotice='앱 자체 기록 복원·기기 간 동기화는 제공하지 않습니다. 앱 삭제·전체 데이터 삭제·재설치·기기 변경 후 기록 유지나 복원은 보장하지 않습니다. 이 버전의 모의고사 20회는 계속 무료로 이용할 수 있습니다.';
+
 export interface ExamAccessUI {hasAccess(id:string):boolean;offerUnlock(id:string):void;mode:'off'|'test'|'live';launchFree?:boolean;busy:boolean;resetLearning?():void;}
 /** Presentation only: does not mutate answer keys, grants, SQLite schema or approval flags. */
 export function polishLearning(c:Controller,root:Node,access?:ExamAccessUI):Node {
@@ -220,7 +222,7 @@ export function polishLearning(c:Controller,root:Node,access?:ExamAccessUI):Node
       heading('화면 테마',20),row((['light','dark'] as const).map(theme=>choiceChip(theme==='light'?'라이트':'다크',s.settings.theme===theme,()=>{void c.commit(s=>({...s,settings:{...s.settings,theme}}));},`theme-${theme}`)),{flexWrap:'wrap'}),
       action('시험일·하루 학습 시간 변경',()=>c.navigate({name:'setup'}),'change-goal'),
       ...(access?.resetLearning?[action(access.launchFree?'학습 기록만 초기화':'학습 기록만 초기화 · 열린 회차 유지',()=>access.resetLearning!(),'reset-learning')]:[]),
-      action('오류 제보·고객센터',()=>c.navigate({name:'help'}),'stats-help'),action('앱·콘텐츠 정보',()=>c.navigate({name:'notices'}),'stats-notices'),action('개인정보 안내',()=>c.navigate({name:'privacy'}),'stats-privacy'),...accessCards,notice('학습 기록은 이 기기에 저장됩니다. 앱 삭제·전체 데이터 삭제·기기 변경 시 기록을 복원할 수 없습니다.')];
+      action('오류 제보·고객센터',()=>c.navigate({name:'help'}),'stats-help'),action('앱·콘텐츠 정보',()=>c.navigate({name:'notices'}),'stats-notices'),action('개인정보 안내',()=>c.navigate({name:'privacy'}),'stats-privacy'),...accessCards,notice(access?.launchFree?launchFreeLocalDataNotice:'학습 기록은 이 기기에 저장됩니다. 앱 삭제·전체 데이터 삭제·기기 변경 시 기록을 복원할 수 없습니다.')];
   }
   if(r==='setup'){
     content=[heading('목표와 학습 시간을 정해요',26),small('시험일을 모르면 비워두고 시작할 수 있습니다.'),heading('하루 학습 시간',18),row([15,30,45,60,90].map(n=>choiceChip(`${n}분`,c.draftSettings.minutes===n,()=>{c.draftSettings.minutes=n;c.notify();},`minutes-${n}`)),{flexWrap:'wrap'}),
