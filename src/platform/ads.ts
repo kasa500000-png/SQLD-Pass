@@ -1,10 +1,11 @@
 import {AppState} from 'react-native';
-import type {AdMode,RewardDriver} from '../monetization/policy';
+import type {AdMode,ExamAccessPolicy,RewardDriver} from '../monetization/policy';
 
 type SDK = typeof import('react-native-google-mobile-ads');
 const requested=process.env.EXPO_PUBLIC_ADS_MODE;
 const appEnv=process.env.EXPO_PUBLIC_APP_ENV ?? 'development';
-const mode:AdMode=requested==='test'&&appEnv!=='production'?'test':requested==='live'&&appEnv==='production'?'live':'off';
+export const nativeExamAccessPolicy:ExamAccessPolicy=process.env.EXPO_PUBLIC_EXAM_ACCESS_POLICY==='rewarded'?'rewarded':'launch-free';
+const mode:AdMode=nativeExamAccessPolicy!=='rewarded'?'off':requested==='test'&&appEnv!=='production'?'test':requested==='live'&&appEnv==='production'?'live':'off';
 const UNIT=/^ca-app-pub-\d{16}\/\d{10}$/;
 const NON_PERSONALIZED={requestNonPersonalizedAdsOnly:true};
 // Apply the same conservative privacy treatment to every user; no age is collected.
@@ -25,7 +26,11 @@ export class NativeAds implements RewardDriver {
   readonly subscribe=(fn:()=>void)=>{this.listeners.add(fn);return ()=>{this.listeners.delete(fn);};};
   readonly snapshot=()=>this.revision;
   private changed(){this.revision++;for(const fn of this.listeners)fn();}
-  sdk():SDK {if(!this.module)this.module=require('react-native-google-mobile-ads') as SDK;return this.module;}
+  sdk():SDK {
+    if(this.mode==='off')throw new Error('이 앱 버전에는 광고가 없습니다.');
+    if(!this.module)this.module=require('react-native-google-mobile-ads') as SDK;
+    return this.module;
+  }
   private configure(sdk:SDK){
     return sdk.default().setRequestConfiguration({
       maxAdContentRating:sdk.MaxAdContentRating.G,

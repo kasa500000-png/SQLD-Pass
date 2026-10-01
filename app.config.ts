@@ -18,9 +18,9 @@ export default ({config}:ConfigContext):ExpoConfig=>{
     owner:process.env.EXPO_OWNER??project.owner,
     platforms:['android','ios'],orientation:'default',userInterfaceStyle:'automatic',
     scheme:production?'sqld-pass':'sqld-pass-internal',updates:{enabled:false},
-    ios:{bundleIdentifier:process.env.IOS_BUNDLE_IDENTIFIER??'com.sqldpass.app.internal',buildNumber:'1',supportsTablet:true,
+    ios:{bundleIdentifier:process.env.IOS_BUNDLE_IDENTIFIER??'com.sqldpass.app.internal',buildNumber:'2',supportsTablet:true,
       infoPlist:{ITSAppUsesNonExemptEncryption:false}},
-    android:{package:process.env.ANDROID_PACKAGE??'com.sqldpass.app.internal',versionCode:5,allowBackup:false,
+    android:{package:process.env.ANDROID_PACKAGE??'com.sqldpass.app.internal',versionCode:6,allowBackup:false,
       adaptiveIcon:{foregroundImage:'./assets/brand/adaptive-foreground.png',backgroundColor:'#2457D6'},
       permissions:[],softwareKeyboardLayoutMode:'resize',blockedPermissions:[
         'android.permission.CAMERA','android.permission.RECORD_AUDIO','android.permission.READ_CONTACTS','android.permission.WRITE_CONTACTS',
@@ -47,12 +47,12 @@ export default ({config}:ConfigContext):ExpoConfig=>{
           './assets/fonts/pretendard/Pretendard-ExtraBold.otf'
         ]}
       }],
-      ['react-native-google-mobile-ads',{androidAppId:ads.androidAppId,iosAppId:ads.iosAppId,delayAppMeasurementInit:true,
-        userTrackingUsageDescription:'광고 제공을 위한 기기 식별자 사용 여부를 선택할 수 있습니다. 허용하지 않아도 무료 학습과 열린 회차는 이용할 수 있습니다.'}],
+      ...(ads.mode==='off'?[]:[['react-native-google-mobile-ads',{androidAppId:ads.androidAppId,iosAppId:ads.iosAppId,delayAppMeasurementInit:true,
+        userTrackingUsageDescription:'광고 제공을 위한 기기 식별자 사용 여부를 선택할 수 있습니다. 허용하지 않아도 무료 학습과 열린 회차는 이용할 수 있습니다.'}] as [string,Record<string,unknown>]]),
       ['expo-build-properties',{android:{compileSdkVersion:36,targetSdkVersion:36,minSdkVersion:24,kotlinVersion:'2.3.20',useLegacyPackaging:false,
-        usesCleartextTraffic:env==='development',extraProguardRules:'-keep class com.google.android.gms.internal.consent_sdk.** { *; }'}}]
+        usesCleartextTraffic:env==='development',...(ads.mode==='off'?{}:{extraProguardRules:'-keep class com.google.android.gms.internal.consent_sdk.** { *; }'})}}]
     ],
-    extra:{appEnvironment:env,contentReleaseReady:manifest.releaseReady,adsRuntimeEnabled:ads.mode!=='off',adsMode:ads.mode,
+    extra:{appEnvironment:env,contentReleaseReady:manifest.releaseReady,adsRuntimeEnabled:ads.mode!=='off',adsMode:ads.mode,examAccessPolicy:ads.examAccessPolicy,
       remoteAnalyticsEnabled:false,...(projectId?{eas:{projectId}}:{})}
   };
 };

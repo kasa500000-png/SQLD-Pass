@@ -1,30 +1,34 @@
 import {Controller} from '../core/controller';
 import type {Content, Services, Route, Tab} from '../core/types';
 import {initialState} from '../core/domain';
-import {bannerAllowed,canAccessExam,clearPending,disabledAds,earnReward,isFreeExam,migrateWallet,prepareReward,walletOf,type PendingReward,type RewardDriver} from './policy';
+import {bannerAllowed,canAccessExam,clearPending,disabledAds,earnReward,grantLaunchFreeAccess,isFreeExam,migrateWallet,prepareReward,validExamId,walletOf,type ExamAccessPolicy,type PendingReward,type RewardDriver} from './policy';
 
 export class MonetizedController extends Controller {
   rewardBusy=false;
   private unsavedReward:PendingReward|null=null;
-  constructor(content:Content,services:Services,readonly ads:RewardDriver=disabledAds){super(content,services);}
-  override async initialize(){
-    await super.initialize();if(!this.ready)return;
-    const pending=walletOf(this.state).pending;
-    const ok=await this.commit(s=>clearPending(migrateWallet(s)));
-    if(!ok){this.startupError='해제 기록을 준비하지 못했습니다. 저장 상태를 확인 후 다시 시도해 주세요.';this.ready=false;}
-    else if(pending)this.notice='이전 광고의 완료 보상을 확인하지 못했습니다. 무료 회차와 이미 열린 회차는 그대로 이용할 수 있습니다.';
-    this.notify();
+  constructor(content:Content,services:Services,readonly ads:RewardDriver=disabledAds,
+    readonly accessPolicy:ExamAccessPolicy=ads.mode==='off'?'launch-free':'rewarded'){
+    super(content,services);
+    if(accessPolicy!=='launch-free'&&accessPolicy!=='rewarded')throw new Error('잘못된 모의고사 이용 정책입니다.');
+    if(accessPolicy==='launch-free'&&ads.mode!=='off')throw new Error('무료 출시 버전에서는 광고를 사용할 수 없습니다.');
   }
-  hasAccess(id:string){return canAccessExam(this.state,id,this.ads.mode);}
-  override examCatalogContext(){return JSON.stringify([super.examCatalogContext(),this.ads.mode,this.content.exams.filter(e=>this.hasAccess(e.id)).map(e=>e.id)]);}
+  get isLaunchFree(){return this.accessPolicy==='launch-free';}
+  protected override async prepareStartup(){
+    const pending=walletOf(this.state).pending;
+    const ok=await this.commit(s=>this.isLaunchFree?grantLaunchFreeAccess(s,this.content,this.services.clock().wall):clearPending(migrateWallet(s)));
+    if(!ok)throw new Error('이용 권한을 저장하지 못했습니다. 저장 상태를 확인 후 다시 시도해 주세요.');
+    if(pending&&!this.isLaunchFree)this.notice='이전 광고의 완료 보상을 확인하지 못했습니다. 무료 회차와 이미 열린 회차는 그대로 이용할 수 있습니다.';
+  }
+  hasAccess(id:string){return validExamId(id)&&this.content.exams.some(e=>e.id===id)&&(this.isLaunchFree||canAccessExam(this.state,id,this.ads.mode));}
+  override examCatalogContext(){return JSON.stringify([super.examCatalogContext(),this.accessPolicy,this.ads.mode,this.content.exams.filter(e=>this.hasAccess(e.id)).map(e=>e.id)]);}
   get needsRewardSave(){return this.unsavedReward!==null;}
-  get showBanner(){return this.ready&&this.state.onboarded&&bannerAllowed(this.route.name,!!this.activeExam(),!!this.dialog,this.rewardBusy);}
+  get showBanner(){return !this.isLaunchFree&&this.ads.mode!=='off'&&this.ready&&this.state.onboarded&&bannerAllowed(this.route.name,!!this.activeExam(),!!this.dialog,this.rewardBusy);}
   override navigate(route:Route){if(!this.rewardBusy)super.navigate(route);}
   override tab(tab:Tab){if(!this.rewardBusy)super.tab(tab);}
   override openTheory(){if(!this.rewardBusy)super.openTheory();}
   override back(){if(!this.rewardBusy)super.back();}
   override async beginExam(id:string){
-    if(this.rewardBusy)return;
+    if(!this.ready||this.rewardBusy)return;
     if(!this.hasAccess(id)){this.offerUnlock(id);return;}
     await super.beginExam(id);
   }
@@ -88,7 +92,7 @@ export class MonetizedController extends Controller {
   override requestReset(){
     if(this.rewardBusy||this.needsRewardSave){this.notice='광고 처리와 보상 저장을 먼저 마쳐 주세요.';this.notify();return;}
     super.requestReset();
-    if(this.dialog)this.dialog.body+=' 광고 시청으로 열린 회차도 모두 삭제되며 복원할 수 없습니다.';
+    if(this.dialog&&!this.isLaunchFree)this.dialog.body+=' 광고 시청으로 열린 회차도 모두 삭제되며 복원할 수 없습니다.';
     this.notify();
   }
 }

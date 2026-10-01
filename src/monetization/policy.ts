@@ -1,10 +1,11 @@
 import type {AppState, Content} from '../core/types';
 
 export type AdMode = 'off' | 'test' | 'live';
+export type ExamAccessPolicy = 'launch-free' | 'rewarded';
 export const FREE_EXAM_IDS = ['SQLD-M01','SQLD-M02','SQLD-M03','SQLD-M04'] as const;
-export const POLICY_VERSION = '2026-09-12.1';
+export const POLICY_VERSION = '2026-09-30.1';
 export interface Grant {
-  examId:string; requestId:string; grantedAt:number; source:'reward'|'legacy'; mode:'test'|'live';
+  examId:string; requestId:string; grantedAt:number; source:'reward'|'legacy'|'launch-free'; mode:AdMode;
 }
 export interface PendingReward {examId:string; requestId:string; createdAt:number; mode:'test'|'live';}
 export interface Wallet {version:1; grants:Record<string,Grant>; pending:PendingReward|null;}
@@ -29,8 +30,8 @@ export function validateWallet(value:unknown):value is Wallet {
   const w=value as Wallet;
   if(w.version!==1 || !w.grants || typeof w.grants!=='object' || Array.isArray(w.grants))return false;
   for(const [id,g] of Object.entries(w.grants)){
-    if(!g || !validExamId(id) || g.examId!==id || !['reward','legacy'].includes(g.source) ||
-       !['test','live'].includes(g.mode) || typeof g.requestId!=='string' || !g.requestId ||
+    if(!g || !validExamId(id) || g.examId!==id || !['reward','legacy','launch-free'].includes(g.source) ||
+       !(g.source==='launch-free'?g.mode==='off':['test','live'].includes(g.mode)) || typeof g.requestId!=='string' || !g.requestId ||
        !Number.isFinite(g.grantedAt) || g.grantedAt<0)return false;
   }
   const p=w.pending;
@@ -39,7 +40,7 @@ export function validateWallet(value:unknown):value is Wallet {
 }
 export function migrateWallet(s:AppState):AppState {
   const old=(s as MonetizedState).monetization;
-  if(old!==undefined){if(!validateWallet(old))throw new Error('광고 해제 기록이 손상되었습니다. 기존 학습 기록은 삭제하지 않습니다.');return s;}
+  if(old!==undefined){if(!validateWallet(old))throw new Error('모의고사 이용 권한이 손상되었습니다. 기존 학습 기록은 삭제하지 않습니다.');return s;}
   // Existing attempts from the earlier all-free version retain their access.
   const grants:Record<string,Grant>={};
   for(const e of s.exams){if(validExamId(e.examId)&&!isFreeExam(e.examId))grants[e.examId]={
@@ -51,7 +52,21 @@ export function canAccessExam(s:AppState,id:string,mode:AdMode):boolean {
   if(!validExamId(id))return false;
   if(isFreeExam(id))return true;
   const g=walletOf(s).grants[id];
-  return !!g && (g.source==='legacy'||g.mode==='live'||mode==='test');
+  return !!g && (g.source==='legacy'||g.source==='launch-free'||g.mode==='live'||mode==='test');
+}
+/** An owner-authorized free launch entitlement, independent of ad reward events. */
+export function grantLaunchFreeAccess(s:AppState,c:Content,now:number):AppState {
+  if(!Number.isFinite(now)||now<0)throw new Error('무료 이용 권한의 저장 시간을 확인할 수 없습니다.');
+  const migrated=migrateWallet(s),w=walletOf(migrated),grants={...w.grants};
+  let changed=false;
+  for(const e of c.exams){
+    if(!validExamId(e.id))continue;
+    const existing=grants[e.id];
+    if(existing&&(existing.source==='legacy'||existing.source==='launch-free'||existing.mode==='live'))continue;
+    grants[e.id]={examId:e.id,requestId:`launch-free:${POLICY_VERSION}:${e.id}`,grantedAt:now,source:'launch-free',mode:'off'};
+    changed=true;
+  }
+  return changed?{...migrated,monetization:{...w,grants,pending:null}} as MonetizedState:clearPending(migrated);
 }
 export function prepareReward(s:AppState,p:PendingReward,c:Content):AppState {
   if(!validExamId(p.examId) || isFreeExam(p.examId) || !c.exams.some(e=>e.id===p.examId))throw new Error('광고 해제 대상 회차가 아닙니다.');

@@ -3,13 +3,14 @@ const {test}=require('node:test'),a=require('node:assert/strict'),crypto=require
 const {MonetizedController}=require('../.build/monetization/controller');
 const {renderMonetized}=require('../.build/monetization/views');
 const fmt=require('../.build/ui/learning-format'),{polishLearning}=require('../.build/ui/learning-polish');
+const {questionContext}=require('../.build/ui/question-context');
 const {light}=require('../.build/ui/nodes'),d=require('../.build/core/domain');
 const content=require('../generated/content.json');
 const hash=x=>crypto.createHash('sha256').update(x).digest('hex');
 const contentBefore=JSON.stringify(content);
-function setup(ads){let value=null,n=0,fail=false;const clock={wall:Date.now(),mono:10,runtimeId:'ui-test'};
+function setup(ads,accessPolicy){let value=null,n=0,fail=false;const clock={wall:Date.now(),mono:10,runtimeId:'ui-test'};
  const services={repository:{load:async()=>value?structuredClone(value):null,save:async s=>{if(fail)throw Error('write failure');value=structuredClone(s);},clear:async()=>{value=null;}},clock:()=>({...clock}),uuid:()=>`test-${++n}`,platform:'web',share:async()=>'shared',openURL:async()=>{}};
- const c=new MonetizedController(content,services,ads);c.ready=true;c.state.onboarded=true;
+ const c=new MonetizedController(content,services,ads,accessPolicy);c.ready=true;c.state.onboarded=true;
  return {c,clock,fail(v){fail=v;},services};}
 function flat(n){return [n,...(n.children??[]).flatMap(flat)];}
 function strings(n){return flat(n).flatMap(x=>[x.text??'',x.label??'']).join('\n');}
@@ -71,10 +72,51 @@ test('review distinguishes future scheduled items from a truly empty collection'
  a.deepEqual(d.dueReviews(c.state,content,clock.wall),[]);
 });
 
-test('ads-off settings and privacy explain unavailability without offering a failing action',async()=>{
+test('launch-free settings and privacy omit advertising choices',async()=>{
  let opens=0;const {c}=setup({mode:'off',privacyOptions:async()=>{opens++;},showReward:async()=>{throw Error('must not load');}});
  for(const name of ['settings','privacy']){c.navigate({name});const out=view(c);a.equal(flat(out).some(n=>n.testId?.startsWith('ad-privacy')),false);}
  await c.openAdPrivacy();a.equal(opens,0);a.doesNotMatch(c.notice,/열지 못했습니다/);
+});
+
+test('launch-free catalog exposes every exam directly without redundant access filters',async()=>{
+ const {c}=setup();c.expanded.add('exams:available');c.tab('exams');
+ const out=view(c);a.equal(flat(out).filter(n=>n.testId?.startsWith('exam-card-')).length,20);
+ a.equal(flat(out).some(n=>['exams-all','exams-available'].includes(n.testId)),false);
+ a.doesNotMatch(strings(out),/광고|보상|시청|열림|이용 불가|1~4회|5~20회/);
+ for(const exam of content.exams){
+  a.equal(get(c,'exam-'+exam.id).disabled,false);await click(c,'exam-'+exam.id);
+  a.equal(c.route.name,'examIntro');a.equal(c.route.id,exam.id);a.equal(c.dialog,null);
+  a.doesNotMatch(strings(view(c)),/광고|보상|시청|해제 필요/);await click(c,'back-exams');
+ }
+});
+
+test('all 20 launch-free intros start the selected exam without requesting advertising',async()=>{
+ let requests=0;const ads={mode:'off',privacyOptions:async()=>{requests++;},showReward:async()=>{requests++;throw Error('unexpected advertisement');}};
+ for(const exam of content.exams){
+  const {c}=setup(ads);c.navigate({name:'examIntro',id:exam.id});await click(c,'start-exam');
+  a.equal(c.route.name,'exam');a.equal(c.state.exams.length,1);a.equal(c.state.exams[0].examId,exam.id);
+  a.deepEqual(c.state.exams[0].snapshots.map(q=>q.id),exam.questionIds);a.equal(c.dialog,null);
+ }
+ a.equal(requests,0);
+});
+
+test('launch-free navigation, support and settings have no ad or testing UI',()=>{
+ const {c}=setup();
+ for(const name of ['welcome','setup','home','catalog','review','exams','stats','settings','privacy','help','notices']){
+  c.route={name};const out=view(c);
+  a.doesNotMatch(strings(out),/광고|보상|시청|테스트|열린 회차|이용 불가|1~4회|5~20회/,name);
+  a.equal(flat(out).some(n=>n.testId?.startsWith('ad-privacy')||n.testId==='report-ad'||n.testId==='retry-reward-save'||n.key==='monetization-banner'),false,name);
+ }
+ c.route={name:'settings'};a.match(strings(view(c)),/모의고사 20회를 무료/);
+ a.equal(get(c,'reset-learning').text,'학습 기록만 초기화');a.equal(get(c,'reset-all').text,'전체 데이터 삭제');
+ c.route={name:'privacy'};a.match(strings(view(c)),/앱 삭제·전체 데이터 삭제·기기 변경 시 학습 기록과 모의고사 이용 권한을 복원할 수 없습니다/);
+});
+
+test('launch-free active exam disables starting every other set and preserves resume',()=>{
+ const {c}=setup();makeExam(c,19);c.tab('exams');
+ for(const exam of content.exams)a.equal(get(c,'exam-'+exam.id).disabled,exam.id!=='SQLD-M20');
+ a.equal(get(c,'exam-SQLD-M20').label,'제20회 모의고사, 시험 이어하기');
+ a.equal(get(c,'catalog-resume').disabled,false);
 });
 
 test('system theme follows OS changes without overwriting the saved preference',()=>{
@@ -109,6 +151,52 @@ test('all 60 lesson bodies and examples render without changing source',()=>{con
 test('read status and confirmation progress are separate',()=>{const {c}=setup(),l=content.lessons[0];c.state.readLessons=[l.id];a.match(fmt.lessonStatus(l,c.state),/읽음 · 확인 0\/2/);});
 test('all 120 confirmation screens withhold rationale before submission',()=>{const {c}=setup();for(const l of content.lessons)for(const id of l.questionIds){c.state.practice={id:'p',questionIds:[id],index:0,selected:null,uncertain:false,submitted:false,mode:'lesson',sessionCorrect:0,sessionAnswered:0};c.route={name:'practice'};const q=content.questions[id],out=view(c);a.ok(strings(out).includes(q.stem));a.ok(get(c,'submit-practice').disabled);a.equal(strings(out).includes(q.explanation),false);}});
 test('explicit submission reveals explanation and related theory',async()=>{const {c}=setup();await c.beginPractice(content.lessons[0].questionIds);const q=c.getQuestion(c.state.practice.questionIds[0]);await click(c,'option-'+q.answer);a.equal(strings(view(c)).includes(q.explanation),false);await click(c,'submit-practice');a.ok(strings(view(c)).includes(q.explanation));a.ok(get(c,'related-'+q.lessonIds[0]));});
+
+test('three contextual practice questions remain independently solvable in learning and standalone review',async()=>{
+ for(const id of ['SQLD-L025-Q02','SQLD-L027-Q02','SQLD-L034-Q02'])for(const mode of ['lesson','review']){
+  const {c}=setup(),q=content.questions[id],l=content.lessons.find(l=>l.id===q.lessonIds[0]);
+  await c.beginPractice([id],mode);a.deepEqual(c.state.practice.questionIds,[id]);a.equal(c.state.responses.length,0);
+  const out=view(c),nodes=flat(out),inputs=l.example.tables.map(t=>({name:t.name,columns:t.columns,rows:t.rows}));
+  a.deepEqual(nodes.filter(n=>n.kind==='table').map(n=>({name:n.label,columns:n.columns,rows:n.rows})),inputs);
+  a.ok(strings(out).includes(q.stem));a.equal(strings(out).includes(q.explanation),false);
+  a.equal(nodes.some(n=>n.kind==='text'&&n.text?.startsWith('정답 ')),false);
+  const sql=nodes.filter(n=>n.kind==='code');
+  a.deepEqual(sql.map(n=>n.text),id==='SQLD-L034-Q02'?[l.example.sql]:[]);
+  if(sql.length)a.equal(sql[0].label,'기준 SQL');
+  await click(c,'option-'+q.answer);await click(c,'submit-practice');
+  a.ok(strings(view(c)).includes(q.explanation));
+ }
+ a.equal(JSON.stringify(content),contentBefore);
+});
+
+test('question-owned input tables and SQL take precedence over supplemental practice inputs',()=>{
+ for(const id of ['SQLD-L025-Q02','SQLD-L027-Q02','SQLD-L034-Q02']){
+  const tables=[{name:'own_input',columns:['n'],rows:[[7]]}],q={...content.questions[id],tables,sql:'SELECT n FROM own_input;'};
+  const before=JSON.stringify(q),ctx=questionContext(q,content);
+  a.equal(ctx.tables,tables);a.equal(ctx.sql,q.sql);a.equal(ctx.sqlLabel,undefined);a.equal(JSON.stringify(q),before);
+ }
+ const original=content.questions['SQLD-L034-Q02'],example=content.lessons.find(l=>l.id==='SQLD-L034').example;
+ const ownTables=[{name:'own_input',columns:['n'],rows:[[7]]}];
+ const tablesOnly=questionContext({...original,tables:ownTables},content);a.equal(tablesOnly.tables,ownTables);a.equal(tablesOnly.sql,example.sql);
+ const sqlOnly=questionContext({...original,sql:'SELECT 1;'},content);a.equal(sqlOnly.tables,example.tables);a.equal(sqlOnly.sql,'SELECT 1;');a.equal(sqlOnly.sqlLabel,undefined);
+});
+
+test('supplemental context never copies example output rows or changes other questions and exam snapshots',()=>{
+ const local=structuredClone(content),sentinel='ANSWER_OUTPUT_MUST_STAY_HIDDEN';
+ for(const l of local.lessons)if(l.example)l.example.rows=[[sentinel]];
+ for(const q of Object.values(local.questions)){
+  const ctx=questionContext(q,local),target=['SQLD-L025-Q02','SQLD-L027-Q02','SQLD-L034-Q02'].includes(q.id);
+  a.equal(JSON.stringify(ctx).includes(sentinel),false,q.id);
+  if(!target){a.equal(ctx.tables,q.tables,q.id);a.equal(ctx.sql,q.sql,q.id);a.equal(ctx.sqlLabel,undefined,q.id);}
+  if(target){
+   const snapshot={...q,examId:'SQLD-M01'},before=JSON.stringify(snapshot),saved=questionContext(snapshot,local);
+   a.equal(saved.tables,snapshot.tables);a.equal(saved.sql,snapshot.sql);a.equal(saved.sqlLabel,undefined);a.equal(JSON.stringify(snapshot),before);
+  }
+ }
+ const wrongLesson={...local.questions['SQLD-L034-Q02'],lessonIds:['SQLD-L001']};
+ a.deepEqual(questionContext(wrongLesson,local),{tables:wrongLesson.tables,sql:wrongLesson.sql});
+ a.equal(JSON.stringify(content),contentBefore);
+});
 test('rationale prioritizes the chosen wrong answer and keeps every other rationale expandable',async()=>{
  const {c}=setup(),q=content.questions['SQLD-M01-Q02'];
  const wrong=q.options.find(o=>o.id!==q.answer).id;result(c,{[q.id]:wrong});await click(c,'result-all');c.moveExamReview(1);
@@ -122,9 +210,9 @@ test('rationale prioritizes the chosen wrong answer and keeps every other ration
 test('practice has only one sticky submit/next primary action',async()=>{const {c}=setup();await c.beginPractice(content.lessons[0].questionIds);const out=view(c),footer=out.children.find(n=>n.key==='learning-footer');a.ok(footer);a.equal(flat(out).filter(n=>n.testId==='submit-practice').length,1);a.equal(flat(out.children.find(n=>n.scroll)).some(n=>n.testId==='submit-practice'),false);});
 test('radio semantics include selection and non-color status',async()=>{const {c}=setup();await c.beginPractice(content.lessons[0].questionIds);const q=c.getQuestion(c.state.practice.questionIds[0]);await click(c,'option-'+q.options[0].id);const n=get(c,'option-'+q.options[0].id);a.equal(n.role,'radio');a.equal(n.checked,true);a.match(n.label,/선택됨/);});
 test('unfinished practice resumes without discarding a selection',async()=>{const {c}=setup();await c.beginPractice(content.lessons[0].questionIds);await c.selectPractice('1');c.route={name:'home'};await click(c,'home-resume-practice');a.equal(c.route.name,'practice');a.equal(c.state.practice.selected,'1');});
-test('available exam filter lists exactly the free four in ads-off mode',async()=>{const {c}=setup();c.route={name:'exams'};a.equal(get(c,'exams-available').text,'응시 가능 4회');await click(c,'exams-available');a.equal(flat(view(c)).filter(n=>n.testId?.match(/^exam-SQLD-M/)).length,4);});
-test('ads-off catalog keeps all 20 sets and marks locked sets without dead actions',()=>{
- const {c}=setup();c.route={name:'exams'};
+test('rewarded policy filter lists exactly the free four with ads off',async()=>{const {c}=setup(undefined,'rewarded');c.route={name:'exams'};a.equal(get(c,'exams-available').text,'응시 가능 4회');await click(c,'exams-available');a.equal(flat(view(c)).filter(n=>n.testId?.match(/^exam-SQLD-M/)).length,4);});
+test('rewarded policy with ads off keeps all 20 sets and marks locked sets without dead actions',()=>{
+ const {c}=setup(undefined,'rewarded');c.route={name:'exams'};
  a.equal(flat(view(c)).filter(n=>n.testId?.startsWith('exam-card-')).length,20);
  for(const exam of content.exams.slice(4)){
   const card=get(c,'exam-card-'+exam.id);a.match(strings(card),/이용 불가/);
@@ -132,10 +220,10 @@ test('ads-off catalog keeps all 20 sets and marks locked sets without dead actio
  }
  a.equal(c.dialog,null);
 });
-test('active exam disables starting other sets without touching access policy',()=>{const {c}=setup();makeExam(c);c.route={name:'exams'};a.equal(get(c,'exam-SQLD-M02').disabled,true);a.equal(flat(view(c)).some(n=>n.testId==='exam-SQLD-M05'),false);a.equal(get(c,'exam-SQLD-M01').disabled,false);});
+test('active exam disables starting other sets without touching rewarded access policy',()=>{const {c}=setup(undefined,'rewarded');makeExam(c);c.route={name:'exams'};a.equal(get(c,'exam-SQLD-M02').disabled,true);a.equal(flat(view(c)).some(n=>n.testId==='exam-SQLD-M05'),false);a.equal(get(c,'exam-SQLD-M01').disabled,false);});
 test('both intro return paths restore each exam filter without persisting learning data',async()=>{
  for(const filtered of [false,true])for(const headerBack of [false,true]){
-  const {c,services}=setup();c.tab('learn');const theoryPosition={offset:800,contentHeight:5000};
+  const {c,services}=setup(undefined,'rewarded');c.tab('learn');const theoryPosition={offset:800,contentHeight:5000};
   get(c,'learning-content').catalog.onRemember(theoryPosition);c.tab('exams');
   if(filtered)await click(c,'exams-available');
   const before=JSON.stringify(c.state),revision=c.getSnapshot(),position={offset:1200,contentHeight:5000};
@@ -151,7 +239,7 @@ test('both intro return paths restore each exam filter without persisting learni
  }
 });
 test('exam filter and active attempt changes reject stale positions while timer ticks preserve browsing',async()=>{
- const {c,clock,services}=setup();c.tab('exams');const all=get(c,'learning-content').catalog;
+ const {c,clock,services}=setup(undefined,'rewarded');c.tab('exams');const all=get(c,'learning-content').catalog;
  all.onRemember({offset:2000,contentHeight:9000});await click(c,'exams-available');
  a.equal(c.examCatalogPosition(),undefined);all.onRemember({offset:2200,contentHeight:9000});a.equal(c.examCatalogPosition(),undefined);
  const filtered=get(c,'learning-content').catalog;filtered.onRemember({offset:300,contentHeight:3000});
@@ -167,7 +255,7 @@ test('exam filter and active attempt changes reject stale positions while timer 
 test('available count follows grant mode and invalidates positions when access changes',async()=>{
  // Synthetic wallet and driver only: no device grants or advertising calls.
  const ads={mode:'off',privacyOptions:async()=>{},showReward:async()=>{throw Error('unexpected ad request');}};
- const {c}=setup(ads);c.tab('exams');await click(c,'exams-available');
+ const {c}=setup(ads,'rewarded');c.tab('exams');await click(c,'exams-available');
  const prior=get(c,'learning-content').catalog;prior.onRemember({offset:200,contentHeight:2000});
  const grant=(id,mode)=>({examId:id,requestId:'fixture-'+id,grantedAt:1,source:'reward',mode});
  c.state.monetization={version:1,pending:null,grants:{'SQLD-M05':grant('SQLD-M05','live'),'SQLD-M06':grant('SQLD-M06','test')}};
@@ -234,10 +322,10 @@ test('leaving the last explanation returns to results once, then back to the ori
  const {c}=setup(),e=result(c);c.tab('records');await click(c,'history-'+e.id);await click(c,'result-all');
  c.moveExamReview(49);await click(c,'explain-next');a.equal(c.route.name,'result');c.back();a.equal(c.route.name,'stats');
 });
-test('reward processing locks all updated buttons',()=>{const {c}=setup();c.route={name:'exams'};c.rewardBusy=true;a.ok(flat(view(c)).filter(n=>n.kind==='button').every(n=>n.disabled));});
-test('reward save retry control survives screen replacement',()=>{const {c}=setup();c.route={name:'exams'};Object.defineProperty(c,'needsRewardSave',{get:()=>true});a.ok(get(c,'retry-reward-save'));});
+test('reward processing locks all updated buttons',()=>{const {c}=setup(undefined,'rewarded');c.route={name:'exams'};c.rewardBusy=true;a.ok(flat(view(c)).filter(n=>n.kind==='button').every(n=>n.disabled));});
+test('reward save retry control survives screen replacement',()=>{const {c}=setup(undefined,'rewarded');c.route={name:'exams'};Object.defineProperty(c,'needsRewardSave',{get:()=>true});a.ok(get(c,'retry-reward-save'));});
 test('reward feedback resets the catalog to its notice without resetting timed questions',()=>{
- const {c}=setup();c.route={name:'exams'};const key=()=>view(c).children.find(n=>n.scroll).key;
+ const {c}=setup(undefined,'rewarded');c.route={name:'exams'};const key=()=>view(c).children.find(n=>n.scroll).key;
  const prior=get(c,'learning-content').catalog;prior.onRemember({offset:2000,contentHeight:10000});
  const catalog=key();c.notice='광고를 표시하지 못했습니다.';a.notEqual(key(),catalog);
  a.equal(c.examCatalogPosition(),undefined);prior.onRemember({offset:2100,contentHeight:10000});a.equal(c.examCatalogPosition(),undefined);

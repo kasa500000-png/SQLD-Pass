@@ -4,7 +4,7 @@ import {AppText as Text} from './src/platform/Typography';
 import {SafeAreaProvider, SafeAreaView} from 'react-native-safe-area-context';
 import {StatusBar} from 'expo-status-bar';
 import {MonetizedController as Controller} from './src/monetization/controller';
-import {nativeAds} from './src/platform/ads';
+import {nativeAds,nativeExamAccessPolicy} from './src/platform/ads';
 import {canRelease} from './src/core/domain';
 import type {Content} from './src/core/types';
 import {renderMonetized as render} from './src/monetization/views';
@@ -23,7 +23,7 @@ class RenderBoundary extends Component<React.PropsWithChildren, {failed: boolean
   </View> : this.props.children;}
 }
 function LearnerApp(){
-  const c = useMemo(()=>new Controller(content,createNativeServices(),nativeAds),[]);
+  const c = useMemo(()=>new Controller(content,createNativeServices(),nativeAds,nativeExamAccessPolicy),[]);
   const systemAppearance=useColorScheme();
   useEffect(()=>c.setSystemAppearance(systemAppearance==='dark'?'dark':'light'),[c,systemAppearance]);
   useSyncExternalStore(c.subscribe,c.getSnapshot,c.getSnapshot);

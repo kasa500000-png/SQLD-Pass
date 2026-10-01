@@ -37,6 +37,7 @@ jobs:
       CI: '1'
       EXPO_PUBLIC_APP_ENV: internal
       EXPO_PUBLIC_ADS_MODE: 'off'
+      EXPO_PUBLIC_EXAM_ACCESS_POLICY: 'launch-free'
     steps:
       - uses: actions/checkout@v4
         with:
@@ -53,7 +54,5 @@ jobs:
       - run: npx --no-install expo install --check
       - run: npx --no-install expo-doctor
       - run: npm run ads:check
-      - name: Generate Android and iOS projects using test ads only
-        env:
-          EXPO_PUBLIC_ADS_MODE: test
+      - name: Generate ad-free Android and iOS projects
         run: npx --no-install expo prebuild --platform all --no-install

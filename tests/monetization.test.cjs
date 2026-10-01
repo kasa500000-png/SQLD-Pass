@@ -13,12 +13,12 @@ function content(){
 }
 const c=content(),state=()=>d.initialState(c,1);
 const req=(id='r1',examId='SQLD-M05',mode='live')=>({requestId:id,examId,mode,createdAt:1});
-function harness({mode='test',result='closed',earn=true,failEarn=false,duplicate=false,held=false}={}){
-  let stored=null,count=0,shows=0,release;
-  const services={repository:{load:async()=>stored,save:async s=>{count++;if(failEarn&&p.walletOf(s).grants['SQLD-M05'])throw Error('disk');stored=structuredClone(s);},clear:async()=>{stored=null;}},clock:()=>({wall:1000,mono:1000,runtimeId:'test'}),uuid:()=>`uuid${++count}`,platform:'web',openURL:async()=>{},share:async()=>'cancelled'};
+function harness({mode='test',accessPolicy,initial=null,result='closed',earn=true,failEarn=false,failClear=false,duplicate=false,held=false}={}){
+  let stored=initial?structuredClone(initial):null,count=0,shows=0,release;
+  const services={repository:{load:async()=>stored?structuredClone(stored):null,save:async s=>{count++;if(failEarn&&p.walletOf(s).grants['SQLD-M05'])throw Error('disk');stored=structuredClone(s);},clear:async()=>{if(failClear)throw Error('clear failed');stored=null;}},clock:()=>({wall:1000,mono:1000,runtimeId:'test'}),uuid:()=>`uuid${++count}`,platform:'web',openURL:async()=>{},share:async()=>'cancelled'};
   const ads={mode,privacyOptions:async()=>{},showReward:async callback=>{shows++;if(held)await new Promise(r=>release=r);if(earn)await callback();if(duplicate)await callback();return result;}};
-  const controller=new MonetizedController(c,services,ads);controller.ready=true;controller.state=d.initialState(c,1);controller.state.onboarded=true;controller.route={name:'exams'};
-  return {controller,services,ads,get stored(){return stored;},get shows(){return shows;},release:()=>release?.(),allowSave:()=>{failEarn=false;}};
+  const controller=new MonetizedController(c,services,ads,accessPolicy);controller.ready=true;controller.state=d.initialState(c,1);controller.state.onboarded=true;controller.route={name:'exams'};
+  return {controller,services,ads,get stored(){return stored;},get shows(){return shows;},release:()=>release?.(),allowSave:()=>{failEarn=false;},failSave:()=>{failEarn=true;}};
 }
 function strings(n){return [n.text??'',...(n.children??[]).flatMap(strings)];}
 function keys(n){return [n.key??'',...(n.children??[]).flatMap(keys)];}
@@ -45,7 +45,7 @@ test('cancel opt-in does not load an ad',()=>{const h=harness();h.controller.off
 test('ad unavailable leaves access unchanged',async()=>{const h=harness({result:'unavailable',earn:false});h.controller.offerUnlock('SQLD-M05');await h.controller.acceptDialog();assert.equal(h.controller.hasAccess('SQLD-M05'),false);assert.equal(p.walletOf(h.controller.state).pending,null);});
 test('close without earned callback never grants',async()=>{const h=harness({earn:false});h.controller.offerUnlock('SQLD-M05');await h.controller.acceptDialog();assert.equal(h.controller.hasAccess('SQLD-M05'),false);});
 test('reward is saved once and repeat attempt needs no additional ad',async()=>{const h=harness({duplicate:true});h.controller.offerUnlock('SQLD-M05');await h.controller.acceptDialog();assert.equal(h.controller.hasAccess('SQLD-M05'),true);assert.equal(Object.keys(p.walletOf(h.controller.state).grants).length,1);await h.controller.beginExam('SQLD-M05');assert.equal(h.controller.state.exams.length,1);assert.equal(h.shows,1);});
-test('ad-off configuration never pretends to watch',async()=>{const h=harness({mode:'off'});h.controller.offerUnlock('SQLD-M05');await h.controller.acceptDialog();assert.equal(h.shows,0);assert.equal(h.controller.hasAccess('SQLD-M05'),false);});
+test('rewarded policy with ads off never pretends to watch',async()=>{const h=harness({mode:'off',accessPolicy:'rewarded'});h.controller.offerUnlock('SQLD-M05');await h.controller.acceptDialog();assert.equal(h.shows,0);assert.equal(h.controller.hasAccess('SQLD-M05'),false);});
 test('save failure permits retry without watching again',async()=>{const h=harness({failEarn:true});h.controller.offerUnlock('SQLD-M05');await h.controller.acceptDialog();assert.equal(h.controller.needsRewardSave,true);assert.equal(h.controller.hasAccess('SQLD-M05'),false);h.allowSave();await h.controller.retryRewardSave();assert.equal(h.controller.hasAccess('SQLD-M05'),true);assert.equal(h.shows,1);});
 test('learning-only reset preserves settings, goals and unlocks while clearing study data',async()=>{
  const h=harness();h.controller.offerUnlock('SQLD-M05');await h.controller.acceptDialog();
@@ -63,3 +63,102 @@ test('wallet startup migration preserves earlier records',async()=>{const h=harn
 test('UI discloses free and rewarded ranges',()=>{const h=harness();const all=strings(renderMonetized(h.controller)).join(' ');assert.match(all,/1~4회/);assert.match(all,/5~20회/);assert.match(all,/기기/);});
 test('settings removes obsolete no-ad claim',()=>{const h=harness();h.controller.route={name:'settings'};const all=strings(renderMonetized(h.controller)).join(' ');assert.doesNotMatch(all,/현재 로그인·광고·원격 분석·결제가 없습니다/);assert.match(all,/광고 개인정보/);});
 test('exam screen contains no banner slot',async()=>{const h=harness();await h.controller.beginExam('SQLD-M01');assert.equal(keys(renderMonetized(h.controller)).includes('monetization-banner'),false);});
+
+test('free launch persists all twenty exams before becoming ready without ad calls',async()=>{
+  const h=harness({mode:'off'}),observations=[];
+  h.controller.ready=false;
+  h.controller.subscribe(()=>{if(h.controller.ready)observations.push(p.validateWallet(h.stored?.monetization));});
+  await h.controller.initialize();
+  assert.equal(h.controller.ready,true);assert.ok(observations.length);assert.ok(observations.every(Boolean));
+  assert.equal(Object.keys(p.walletOf(h.stored).grants).length,20);
+  for(const e of c.exams){assert.equal(h.controller.hasAccess(e.id),true);assert.equal(p.walletOf(h.stored).grants[e.id].source,'launch-free');}
+  await h.controller.beginExam('SQLD-M20');assert.equal(h.controller.state.exams[0].examId,'SQLD-M20');assert.equal(h.shows,0);
+  assert.equal(h.controller.dialog,null);assert.equal(h.controller.showBanner,false);
+});
+test('unattempted free-launch exams remain open after restart and future rewarded update',async()=>{
+  const free=harness({mode:'off'});await free.controller.initialize();
+  const original=JSON.stringify(p.walletOf(free.stored));
+  await free.controller.initialize();assert.equal(JSON.stringify(p.walletOf(free.stored)),original);
+  const updated=harness({mode:'live',accessPolicy:'rewarded',initial:free.stored});await updated.controller.initialize();
+  for(const e of c.exams)assert.equal(updated.controller.hasAccess(e.id),true);
+  assert.equal(updated.controller.state.exams.length,0);assert.equal(updated.shows,0);
+  await updated.controller.beginExam('SQLD-M20');assert.equal(updated.controller.state.exams[0].examId,'SQLD-M20');assert.equal(updated.shows,0);
+});
+test('free launch preserves existing real rewards and learning records while replacing test-only access',async()=>{
+  const live=req('real','SQLD-M05','live'),testOnly=req('test','SQLD-M06','test');
+  let old=p.earnReward(p.prepareReward(state(),live,c),live,11);
+  old=p.earnReward(p.prepareReward(old,testOnly,c),testOnly,12);
+  old.readLessons=['L0'];old.bookmarks=['L0'];old.settings.theme='dark';
+  const h=harness({mode:'off',initial:old});await h.controller.initialize();
+  assert.deepEqual(p.walletOf(h.stored).grants['SQLD-M05'],p.walletOf(old).grants['SQLD-M05']);
+  assert.equal(p.walletOf(h.stored).grants['SQLD-M06'].source,'launch-free');
+  assert.deepEqual(h.stored.readLessons,['L0']);assert.deepEqual(h.stored.bookmarks,['L0']);assert.equal(h.stored.settings.theme,'dark');
+  assert.ok(p.validateWallet(d.parseState(JSON.parse(JSON.stringify(h.stored)),c).monetization));
+});
+test('free-launch startup save failure blocks ready state and supports a successful retry',async()=>{
+  const h=harness({mode:'off',failEarn:true});h.controller.ready=false;await h.controller.initialize();
+  assert.equal(h.controller.ready,false);assert.equal(h.stored,null);assert.match(h.controller.startupError,/이용 권한|저장/);
+  h.allowSave();await h.controller.initialize();assert.equal(h.controller.ready,true);assert.equal(Object.keys(p.walletOf(h.stored).grants).length,20);
+});
+test('free launch clears stale pending rewards without advertising warnings or reward events',async()=>{
+  const old=p.prepareReward(state(),req('stale','SQLD-M07','test'),c);
+  const h=harness({mode:'off',initial:old});await h.controller.initialize();
+  assert.equal(p.walletOf(h.stored).pending,null);assert.equal(h.controller.notice,'');assert.equal(h.shows,0);
+  assert.equal(p.walletOf(h.stored).grants['SQLD-M07'].source,'launch-free');
+});
+test('free-launch learning reset preserves launch grants and full reset creates a fresh free entitlement',async()=>{
+  const h=harness({mode:'off'});await h.controller.initialize();
+  await h.controller.commit(s=>({...s,readLessons:['L0']}));
+  const before=JSON.stringify(p.walletOf(h.stored));h.controller.requestLearningReset();await h.controller.acceptDialog();
+  assert.equal(JSON.stringify(p.walletOf(h.stored)),before);assert.deepEqual(h.stored.readLessons,[]);
+  const observations=[];h.controller.subscribe(()=>{if(h.controller.ready)observations.push(p.validateWallet(h.stored?.monetization));});
+  h.controller.requestReset();assert.doesNotMatch(h.controller.dialog.body,/광고/);await h.controller.acceptDialog();
+  assert.equal(h.controller.ready,true);assert.equal(h.controller.state.onboarded,false);
+  assert.equal(Object.keys(p.walletOf(h.stored).grants).length,20);assert.equal(h.controller.hasAccess('SQLD-M20'),true);assert.equal(h.shows,0);assert.ok(observations.every(Boolean));
+});
+test('launch grants are limited to supplied exams and invalid IDs stay inaccessible',()=>{
+  const h=harness({mode:'off'});assert.equal(h.controller.hasAccess('SQLD-M21'),false);
+  const smaller={...c,exams:c.exams.slice(0,5)},s=p.grantLaunchFreeAccess(state(),smaller,10);
+  assert.equal(Object.keys(p.walletOf(s).grants).length,5);assert.equal(p.canAccessExam(s,'SQLD-M20','live'),false);
+});
+test('failed free-launch full deletion preserves the existing wallet and study records',async()=>{
+  const h=harness({mode:'off',failClear:true});await h.controller.initialize();
+  await h.controller.commit(s=>({...s,readLessons:['L0']}));const original=JSON.stringify(h.stored);
+  h.controller.requestReset();await h.controller.acceptDialog();
+  assert.equal(h.controller.ready,true);assert.equal(JSON.stringify(h.stored),original);assert.deepEqual(h.controller.state.readLessons,['L0']);assert.match(h.controller.notice,/초기화 실패/);
+});
+test('exam expiry queued during full deletion cannot reopen the removed result or study records',async()=>{
+  const h=harness({mode:'off'}),clock={wall:100000,mono:100000,runtimeId:'reset-expiry'};
+  h.services.clock=()=>({...clock});await h.controller.initialize();
+  await h.controller.commit(s=>({...s,onboarded:true}));await h.controller.beginExam('SQLD-M20');
+  const oldAttempt=h.controller.activeExam().id;
+  let releaseClear,enteredClear;
+  const clearStarted=new Promise(resolve=>{enteredClear=resolve;});
+  const clearGate=new Promise(resolve=>{releaseClear=resolve;}),clear=h.services.repository.clear;
+  h.services.repository.clear=async()=>{enteredClear();await clearGate;await clear();};
+  h.controller.requestReset();const resetting=h.controller.acceptDialog();await clearStarted;
+  clock.wall+=5400001;clock.mono+=5400001;
+  const expiring=h.controller.pulse();assert.equal(h.controller.activeExam().id,oldAttempt);
+  releaseClear();await Promise.all([resetting,expiring]);
+  assert.equal(h.controller.ready,true);assert.equal(h.controller.state.onboarded,false);
+  assert.deepEqual(h.controller.route,{name:'welcome'});assert.equal(h.controller.examAttempt(oldAttempt),undefined);
+  assert.deepEqual(h.controller.state.exams,[]);assert.deepEqual(h.stored.exams,[]);
+  assert.deepEqual(h.controller.state.reviews,{});assert.deepEqual(h.controller.state.studyDays,[]);
+  assert.equal(Object.keys(p.walletOf(h.stored).grants).length,20);
+  await h.controller.pulse();assert.deepEqual(h.controller.route,{name:'welcome'});assert.deepEqual(h.stored.exams,[]);
+});
+test('grant-save failure after full deletion blocks use and retry restores a new free-launch wallet',async()=>{
+  const h=harness({mode:'off'});await h.controller.initialize();h.failSave();
+  h.controller.requestReset();await h.controller.acceptDialog();
+  assert.equal(h.controller.ready,false);assert.equal(h.stored,null);assert.match(h.controller.startupError,/이용 권한/);
+  h.allowSave();await h.controller.initialize();assert.equal(h.controller.ready,true);assert.equal(Object.keys(p.walletOf(h.stored).grants).length,20);
+});
+test('launch-free grants validate independently of rewarded test/live grants',()=>{
+  const s=p.grantLaunchFreeAccess(state(),c,10),w=p.walletOf(s);assert.ok(p.validateWallet(w));
+  const bad=structuredClone(w);bad.grants['SQLD-M05'].mode='live';assert.equal(p.validateWallet(bad),false);
+  assert.throws(()=>p.grantLaunchFreeAccess({...state(),monetization:{version:99}},c,10));
+  assert.throws(()=>p.grantLaunchFreeAccess(state(),c,NaN));
+});
+test('free launch cannot run with an advertising driver',()=>{
+  const h=harness();assert.throws(()=>new MonetizedController(c,h.services,h.ads,'launch-free'),/무료 출시/);
+});

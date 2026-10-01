@@ -3,7 +3,7 @@ on:
   workflow_dispatch:
     inputs:
       target:
-        description: Internal testing only; official test ads, no store submission
+        description: Ad-free internal testing only; no store submission
         required: true
         type: choice
         options: [android, ios-simulator]
@@ -16,7 +16,8 @@ jobs:
     env:
       CI: '1'
       EXPO_PUBLIC_APP_ENV: internal
-      EXPO_PUBLIC_ADS_MODE: test
+      EXPO_PUBLIC_ADS_MODE: 'off'
+      EXPO_PUBLIC_EXAM_ACCESS_POLICY: 'launch-free'
       BUILD_TARGET: ${{ inputs.target }}
     steps:
       - uses: actions/checkout@v4
@@ -47,8 +48,8 @@ jobs:
           test -n "$EXPO_PUBLIC_EAS_PROJECT_ID" || { echo 'Set this standalone SQLD-Pass EAS project ID.'; exit 1; }
           mkdir -p build-evidence
           case "$BUILD_TARGET" in
-            android) npx --yes eas-cli@24.5.0 build --platform android --profile ads-test --non-interactive --wait --json > build-evidence/build.json ;;
-            ios-simulator) npx --yes eas-cli@24.5.0 build --platform ios --profile ads-test-simulator --non-interactive --wait --json > build-evidence/build.json ;;
+            android) npx --yes eas-cli@24.5.0 build --platform android --profile internal --non-interactive --wait --json > build-evidence/build.json ;;
+            ios-simulator) npx --yes eas-cli@24.5.0 build --platform ios --profile simulator --non-interactive --wait --json > build-evidence/build.json ;;
             *) echo 'Unsupported internal build target'; exit 1 ;;
           esac
       - uses: actions/upload-artifact@v4
