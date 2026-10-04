@@ -3,6 +3,7 @@ import {AppState as NativeAppState, BackHandler, KeyboardAvoidingView, Platform,
 import {AppText as Text} from './src/platform/Typography';
 import {SafeAreaProvider, SafeAreaView} from 'react-native-safe-area-context';
 import {StatusBar} from 'expo-status-bar';
+import Constants from 'expo-constants';
 import {MonetizedController as Controller} from './src/monetization/controller';
 import {nativeAds,nativeExamAccessPolicy} from './src/platform/ads';
 import {canRelease} from './src/core/domain';
@@ -14,6 +15,7 @@ import {createNativeReminders} from './src/platform/reminders';
 import {ReminderSettings} from './src/platform/ReminderSettings';
 import {ResponsiveLayoutProvider} from './src/platform/ResponsiveLayout';
 import contentData from './generated/content.json';
+import contentSourceLock from './content-pack/content.lock.json';
 
 const content = contentData as unknown as Content;
 const migrationIncomplete=Boolean((contentData as unknown as {migrationIncomplete?:boolean}).migrationIncomplete);
@@ -76,7 +78,9 @@ function MigrationNotice(){return <View style={{flex:1,padding:28,justifyContent
   <Text style={{fontSize:16,lineHeight:26,marginTop:16}}>전체 콘텐츠 팩을 materialize해야 학습과 광고 기능을 검증할 수 있습니다. QueryPass와는 별도 프로젝트입니다. 광고 수익이나 운영 배포가 활성화된 상태가 아닙니다.</Text>
 </View>;}
 export default function App(){
-  const blocked=process.env.EXPO_PUBLIC_APP_ENV==='production'&&!canRelease(content);
+  const extra=Constants.expoConfig?.extra;
+  const production=process.env.EXPO_PUBLIC_APP_ENV==='production'||extra?.appEnvironment==='production';
+  const blocked=production&&!canRelease(content,extra?.productionContentApproval,contentSourceLock);
   return <SafeAreaProvider><RenderBoundary>{migrationIncomplete?<MigrationNotice/>:blocked?
     <View style={{flex:1,padding:28,justifyContent:'center'}}><Text>콘텐츠 운영 승인이 완료되지 않았습니다. 공개 배포를 중단합니다.</Text></View>:
     <LearnerApp />}</RenderBoundary></SafeAreaProvider>;

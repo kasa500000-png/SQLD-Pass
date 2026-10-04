@@ -2,6 +2,7 @@ import type {AppState,Content,Subject} from '../types';
 import {canStudyQuestion,scoreExam} from './exam';
 import {parseReading} from './reading';
 import {isReviewStudyDay,migrateLearningState} from './learning';
+import {matchesProductionContentApproval} from './release';
 
 export const SUBJECTS:Record<Subject,string>={S1:'데이터 모델링의 이해',S2:'SQL 기본 및 활용'};
 export function dayKey(time=Date.now()):string { const d=new Date(time); return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`; }
@@ -38,4 +39,6 @@ export function assertContent(c:Content):void {
   const exposed=new Set<string>();for(const e of c.exams){const qs=e.questionIds.map(id=>c.questions[id]);if(qs.length!==50||qs.some(q=>!q)||qs.filter(q=>q.subject==='S1').length!==10||qs.filter(q=>q.subject==='S2').length!==40)throw new Error(`시험 구성 실패: ${e.id}`);for(const q of qs){if(exposed.has(q.id)||q.examId!==e.id)throw new Error('시험 문항 ID 중복');exposed.add(q.id);}}
   for(const l of c.lessons)if(l.questionIds.some(id=>!c.questions[id]||c.questions[id].examId!==null))throw new Error('학습·평가 풀 분리 실패');
 }
-export function canRelease(c:Content):boolean {return c.manifest.releaseReady&&c.manifest.humanReviewed&&c.manifest.officialSyllabusVerified&&c.lessons.every(l=>l.releaseReady&&l.humanReviewed)&&Object.values(c.questions).every(q=>q.releaseReady&&q.humanReviewed);}
+export function canRelease(c:Content,approval?:unknown,sourceLock?:unknown):boolean {
+  return matchesProductionContentApproval(c,approval,sourceLock);
+}

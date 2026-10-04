@@ -1,5 +1,4 @@
 import type {ConfigContext, ExpoConfig} from 'expo/config';
-import manifest from './generated/manifest.json';
 import project from './config/expo-project.json';
 const {checkAdsRelease}=require('./config/ads-config.cjs');
 const {checkContentRelease}=require('./config/release-config.cjs');
@@ -8,8 +7,7 @@ export default ({config}:ConfigContext):ExpoConfig=>{
   const env=process.env.EXPO_PUBLIC_APP_ENV??'development';
   if(!['development','internal','production'].includes(env))throw new Error('Unsupported APP_ENV');
   const production=env==='production';
-  if(production&&!manifest.releaseReady)throw new Error('Draft content must not enter a production app.');
-  if(production)checkContentRelease(__dirname);
+  const productionContentApproval=production?checkContentRelease(__dirname):undefined;
   if(production&&(!process.env.ANDROID_PACKAGE||!process.env.IOS_BUNDLE_IDENTIFIER))throw new Error('Production app identifiers must be explicitly supplied by the owner.');
   const ads=checkAdsRelease(__dirname),projectId=process.env.EXPO_PUBLIC_EAS_PROJECT_ID??project.projectId;
   return {
@@ -18,7 +16,7 @@ export default ({config}:ConfigContext):ExpoConfig=>{
     owner:process.env.EXPO_OWNER??project.owner,
     platforms:['android','ios'],orientation:'default',userInterfaceStyle:'automatic',
     scheme:production?'sqld-pass':'sqld-pass-internal',updates:{enabled:false},
-    ios:{bundleIdentifier:process.env.IOS_BUNDLE_IDENTIFIER??'com.sqldpass.app.internal',buildNumber:'4',supportsTablet:true,
+    ios:{bundleIdentifier:process.env.IOS_BUNDLE_IDENTIFIER??'com.sqldpass.app.internal',buildNumber:'5',supportsTablet:true,
       infoPlist:{ITSAppUsesNonExemptEncryption:false}},
     android:{package:process.env.ANDROID_PACKAGE??'com.sqldpass.app.internal',versionCode:10,allowBackup:false,
       adaptiveIcon:{foregroundImage:'./assets/brand/adaptive-foreground.png',backgroundColor:'#2457D6'},
@@ -53,7 +51,8 @@ export default ({config}:ConfigContext):ExpoConfig=>{
       ['expo-build-properties',{android:{compileSdkVersion:36,targetSdkVersion:36,minSdkVersion:24,kotlinVersion:'2.3.20',useLegacyPackaging:false,
         usesCleartextTraffic:env==='development',...(ads.mode==='off'?{}:{extraProguardRules:'-keep class com.google.android.gms.internal.consent_sdk.** { *; }'})}}]
     ],
-    extra:{appEnvironment:env,contentReleaseReady:manifest.releaseReady,adsRuntimeEnabled:ads.mode!=='off',adsMode:ads.mode,examAccessPolicy:ads.examAccessPolicy,
+    extra:{appEnvironment:env,contentReleaseReady:productionContentApproval?.approved===true,
+      ...(productionContentApproval?{productionContentApproval}:{}),adsRuntimeEnabled:ads.mode!=='off',adsMode:ads.mode,examAccessPolicy:ads.examAccessPolicy,
       remoteAnalyticsEnabled:false,...(projectId?{eas:{projectId}}:{})}
   };
 };
