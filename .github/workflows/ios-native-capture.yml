@@ -80,7 +80,14 @@ jobs:
           npm run ads:check
           npx --no-install expo prebuild --platform ios --no-install
           pod install --project-directory=ios --silent
+      - name: Restore the same-source native capture app
+        id: native-app-cache
+        uses: actions/cache/restore@v4
+        with:
+          path: ${{ runner.temp }}/sqld-native-capture/native-app
+          key: sqld-capture-xcode26.6-arm64-v1-${{ hashFiles('package.json', 'package-lock.json', 'app.config.ts', 'react-native.config.js', 'index.ts', 'App.tsx', 'src/**', 'assets/**', 'config/**', 'plugins/**', 'scripts/**', 'content-pack/content.json.gz', 'content-pack/content.lock.json') }}
       - name: Compile the actual app for Simulator without signing credentials
+        if: steps.native-app-cache.outputs.cache-hit != 'true'
         shell: bash
         run: |
           set -euo pipefail
@@ -96,14 +103,28 @@ jobs:
             ARCHS=arm64 ONLY_ACTIVE_ARCH=YES CODE_SIGNING_ALLOWED=NO
           app="$(find "$CAPTURE_ROOT/app-build/Build/Products/Release-iphonesimulator" -maxdepth 1 -type d -name '*.app' -print -quit)"
           test -n "$app"
+          mkdir -p "$CAPTURE_ROOT/native-app"
+          cp -R "$app" "$CAPTURE_ROOT/native-app/"
+      - name: Validate the actual Simulator app
+        shell: bash
+        run: |
+          set -euo pipefail
+          app="$(find "$CAPTURE_ROOT/native-app" -maxdepth 1 -type d -name '*.app' -print -quit)"
+          test -n "$app"
           test "$(/usr/libexec/PlistBuddy -c 'Print CFBundleIdentifier' "$app/Info.plist")" = "$IOS_BUNDLE_IDENTIFIER"
           test -f "$app/main.jsbundle"
           executable="$(/usr/libexec/PlistBuddy -c 'Print CFBundleExecutable' "$app/Info.plist")"
-          xcrun lipo -verify_arch arm64 "$app/$executable"
+          xcrun lipo "$app/$executable" -verify_arch arm64
           xcrun vtool -show-build "$app/$executable" | grep -q 'platform IOSSIMULATOR'
           echo "CAPTURE_APP=$app" >> "$GITHUB_ENV"
           echo "CAPTURE_APP_VERSION=$(/usr/libexec/PlistBuddy -c 'Print CFBundleShortVersionString' "$app/Info.plist")" >> "$GITHUB_ENV"
           echo "CAPTURE_APP_BUILD=$(/usr/libexec/PlistBuddy -c 'Print CFBundleVersion' "$app/Info.plist")" >> "$GITHUB_ENV"
+      - name: Cache the verified Simulator app for capture retries
+        if: steps.native-app-cache.outputs.cache-hit != 'true'
+        uses: actions/cache/save@v4
+        with:
+          path: ${{ runner.temp }}/sqld-native-capture/native-app
+          key: ${{ steps.native-app-cache.outputs.cache-primary-key }}
       - name: Create a temporary native UI test runner
         shell: bash
         run: |
