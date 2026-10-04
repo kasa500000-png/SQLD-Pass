@@ -10,6 +10,8 @@ import type {Content} from './src/core/types';
 import {renderMonetized as render} from './src/monetization/views';
 import {MonetizedRoot as NativeView} from './src/platform/MonetizedRoot';
 import {createNativeServices} from './src/platform/native';
+import {createNativeReminders} from './src/platform/reminders';
+import {ReminderSettings} from './src/platform/ReminderSettings';
 import contentData from './generated/content.json';
 
 const content = contentData as unknown as Content;
@@ -23,26 +25,47 @@ class RenderBoundary extends Component<React.PropsWithChildren, {failed: boolean
   </View> : this.props.children;}
 }
 function LearnerApp(){
-  const c = useMemo(()=>new Controller(content,createNativeServices(),nativeAds,nativeExamAccessPolicy),[]);
+  const {c,reminders}=useMemo(()=>{
+    const services=createNativeServices();
+    const c=new Controller(content,services,nativeAds,nativeExamAccessPolicy);
+    const reminders=createNativeReminders({
+      isExamActive:()=>!!c.activeExam(),
+      onReview:()=>{
+        if(!c.ready||!c.state.onboarded||c.busy||c.dialog||c.activeExam()||c.isExamSubmitting||['exam','sheet','result','practiceResult'].includes(c.route.name))return false;
+        c.tab('review');return true;
+      }
+    });
+    services.beforeFullReset=()=>reminders.reset();
+    return {c,reminders};
+  },[]);
   const systemAppearance=useColorScheme();
   useEffect(()=>c.setSystemAppearance(systemAppearance==='dark'?'dark':'light'),[c,systemAppearance]);
   useSyncExternalStore(c.subscribe,c.getSnapshot,c.getSnapshot);
   useEffect(()=>{
+    let remindersStarted=false;
+    const stop=c.subscribe(()=>{
+      if(c.ready&&!remindersStarted){remindersStarted=true;void reminders.initialize();}
+      void reminders.syncExamState(!!c.activeExam());
+    });
     void c.initialize();
     const timer=setInterval(()=>{void c.pulse();},1000);
-    const appSub=NativeAppState.addEventListener('change',()=>{void c.checkpoint();void c.pulse();});
+    const appSub=NativeAppState.addEventListener('change',state=>{
+      void c.checkpoint();void c.pulse();
+      if(state==='active'&&c.ready)void reminders.refresh();
+    });
     const backSub=BackHandler.addEventListener('hardwareBackPress',()=>{
       if(c.rewardBusy||c.dialog||!['home','welcome'].includes(c.route.name)){c.back();return true;}
       void c.checkpoint();return false;
     });
-    return ()=>{clearInterval(timer);appSub.remove();backSub.remove();};
-  },[c]);
+    return ()=>{clearInterval(timer);appSub.remove();backSub.remove();stop();reminders.dispose();};
+  },[c,reminders]);
   const isDark=c.isDark;
   return <SafeAreaView style={{flex:1,backgroundColor:isDark?'#0B1220':'#F6F8FC'}} edges={['top','bottom','left','right']}>
     <StatusBar style={isDark?'light':'dark'} />
     <KeyboardAvoidingView style={{flex:1}} behavior={Platform.OS==='ios'?'padding':undefined}>
       <View style={{flex:1,width:'100%',maxWidth:920,alignSelf:'center'}}>
-        <NativeView node={render(c)} scale={c.state.settings.fontScale} dark={isDark} />
+        {c.ready&&c.route.name==='reminderSettings'?<ReminderSettings c={c} reminders={reminders}/>:
+          <NativeView node={render(c)} scale={c.state.settings.fontScale} dark={isDark} />}
       </View>
     </KeyboardAvoidingView>
   </SafeAreaView>;

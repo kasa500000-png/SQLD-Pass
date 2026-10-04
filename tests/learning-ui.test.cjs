@@ -78,7 +78,7 @@ test('launch-free settings and privacy omit advertising choices',async()=>{
  await c.openAdPrivacy();a.equal(opens,0);a.doesNotMatch(c.notice,/열지 못했습니다/);
 });
 
-test('launch-free catalog exposes every exam directly without redundant access filters',async()=>{
+test('launch-free catalog exposes every exam directly without rewarded access filters',async()=>{
  const {c}=setup();c.expanded.add('exams:available');c.tab('exams');
  const out=view(c);a.equal(flat(out).filter(n=>n.testId?.startsWith('exam-card-')).length,20);
  a.equal(flat(out).some(n=>['exams-all','exams-available'].includes(n.testId)),false);
@@ -143,6 +143,27 @@ test('all dialect names remain explicit',()=>{for(const q of Object.values(conte
 test('body keywords are searchable, not just titles',()=>{const {c}=setup(),l=content.lessons[24];c.route={name:'catalog'};c.search='COALESCE';a.ok(flat(view(c)).some(n=>n.testId==='lesson-'+l.id));});
 test('Hangul NULL alias and subject filters both apply',()=>{const all=fmt.searchLessons(content.lessons,'널','all',null);a.ok(all.length);a.ok(fmt.searchLessons(content.lessons,'널','S2',null).every(l=>l.subject==='S2'));});
 test('catalog empty search has reset action',async()=>{const {c}=setup();c.route={name:'catalog'};c.search='no-match-98765';a.match(strings(view(c)),/검색 결과가 없어요/);await click(c,'reset-lesson-search');a.equal(c.search,'');a.equal(flat(view(c)).filter(n=>n.testId?.startsWith('lesson-SQLD')).length,60);});
+
+test('catalog continuation uses valid incomplete reading and preserves search input identity and filters',async()=>{
+ const {c}=setup(),first=content.lessons[0],later=content.lessons[4];c.tab('learn');a.ok(get(c,'catalog-continue').label.includes(first.title));
+ await c.rememberReading(later.id,{offset:640,contentHeight:2400});const before=JSON.stringify(c.state),contentKey=get(c,'learning-content').key,inputKey=get(c,'lesson-search').key;
+ a.match(get(c,'catalog-continue').label,/이어서 읽기/);a.ok(get(c,'catalog-continue').label.includes(later.title));view(c);a.equal(JSON.stringify(c.state),before);
+ await click(c,'catalog-continue');a.equal(c.route.id,later.id);a.equal(get(c,'learning-content').reading.position.offset,640);c.back();
+ c.setSearch('NULL');a.equal(flat(view(c)).some(n=>n.testId==='catalog-continue'),false);a.equal(get(c,'lesson-search').key,inputKey);a.equal(get(c,'learning-content').key,contentKey);a.equal(get(c,'lesson-search').value,'NULL');
+ c.setSearch('');c.setSubject('S2');a.equal(flat(view(c)).some(n=>n.testId==='catalog-continue'),false);a.equal(get(c,'lesson-search').key,inputKey);
+ c.setSubject('all');await click(c,'bookmarked-only');a.equal(flat(view(c)).some(n=>n.testId==='catalog-continue'),false);a.equal(get(c,'lesson-search').key,inputKey);await click(c,'bookmarked-only');
+ c.state.reading.positions[later.id].lessonVersion='stale';a.ok(get(c,'catalog-continue').label.includes(first.title));a.doesNotMatch(get(c,'catalog-continue').label,/이어서 읽기/);
+ c.state.reading.positions[later.id].lessonVersion=later.version;
+ c.state.responses=later.questionIds.map((id,i)=>{const q=content.questions[id];return {id:'confirmed-'+i,questionId:id,version:q.version,selected:q.answer,correct:true,uncertain:false,answeredAt:c.services.clock().wall,mode:'review'};});
+ a.ok(get(c,'catalog-continue').label.includes(first.title));a.deepEqual(c.state.readLessons,[]);
+ await c.markLesson(first.id);a.match(get(c,'catalog-continue').label,/확인 문제 이어하기/);await click(c,'catalog-continue');a.equal(c.route.name,'practice');a.deepEqual(c.state.practice.questionIds,first.questionIds);
+});
+
+test('catalog has no continuation when all confirmation questions are complete',()=>{
+ const {c}=setup();c.state.responses=content.lessons.flatMap(l=>l.questionIds).map((id,i)=>{const q=content.questions[id];return {id:'done-'+i,questionId:id,version:q.version,selected:q.answer,correct:true,uncertain:false,answeredAt:c.services.clock().wall,mode:'review'};});
+ const l=content.lessons[0];c.state.reading={lastLessonId:l.id,positions:{[l.id]:{offset:200,contentHeight:2000,lessonVersion:l.version}}};c.tab('learn');
+ a.equal(flat(view(c)).some(n=>n.testId==='catalog-continue'),false);a.deepEqual(c.state.readLessons,[]);a.equal(get(c,'lesson-search').key,'lesson-search');
+});
 test('bookmark filter shows only selected theory',()=>{const {c}=setup();c.route={name:'catalog'};c.bookmarkedOnly=true;c.state.bookmarks=['SQLD-L001'];a.deepEqual(flat(view(c)).filter(n=>n.testId?.startsWith('lesson-SQLD')).map(n=>n.testId),['lesson-SQLD-L001']);});
 test('every day exposes all assigned lessons rather than only first',()=>{const {c}=setup();c.route={name:'plan'};for(let n=1;n<=30;n++)c.expanded.add('day:'+n);const tree=flat(view(c));for(const day of content.days)for(const id of day.lessonIds)a.ok(tree.find(n=>n.key==='day-'+day.day).children.flatMap(flat).some(n=>n.testId==='lesson-'+id));a.doesNotMatch(strings(view(c)),/null분|undefined분|NaN/);});
 test('current day can collapse and reopen',async()=>{const {c}=setup();c.route={name:'plan'};const id=c.currentDay().lessonIds[0];a.ok(flat(view(c)).some(n=>n.testId==='lesson-'+id));await click(c,'day-1-toggle');a.equal(flat(view(c)).some(n=>n.testId==='lesson-'+id),false);await click(c,'day-1-toggle');a.ok(flat(view(c)).some(n=>n.testId==='lesson-'+id));});
@@ -155,7 +176,15 @@ test('collapsed plan days keep only their overview and expose actions when expan
  await click(c,'day-2-toggle');a.equal(flat(card()).filter(n=>n.kind==='button').length,1);
 });
 test('all 60 lesson bodies and examples render without changing source',()=>{const {c}=setup();for(const l of content.lessons){c.route={name:'lesson',id:l.id};const out=view(c);a.ok(strings(out).includes(l.title));a.ok(get(c,'lesson-practice'));if(l.example?.sql)a.ok(flat(out).some(n=>n.kind==='code'&&n.text===l.example.sql));}a.equal(JSON.stringify(content),contentBefore);});
-test('read status and confirmation progress are separate',()=>{const {c}=setup(),l=content.lessons[0];c.state.readLessons=[l.id];a.match(fmt.lessonStatus(l,c.state),/읽음 · 확인 0\/2/);});
+test('read status and confirmation progress are separate across topic practice, catalog and lesson',async()=>{
+ const {c}=setup(),l=content.lessons[0];c.state.readLessons=[l.id];a.match(fmt.lessonStatus(l,c.state),/읽음 · 확인 0\/2/);
+ c.state.readLessons=[];await c.beginTopicPractice({lessonIds:[l.id],source:'confirmation'});a.equal(c.state.practice.mode,'review');
+ for(const id of l.questionIds){const q=c.getQuestion(id);await c.selectPractice(q.answer);await c.answerPractice();await c.nextPractice();}
+ a.deepEqual(c.state.readLessons,[]);a.match(fmt.lessonStatus(l,c.state),/읽기 전 · 확인 2\/2/);a.equal(d.lessonProgress(c.state,content,l.id).confirmationComplete,true);
+ c.tab('learn');a.match(strings(get(c,'lesson-'+l.id)),/읽기 전 · 확인 2\/2/);
+ c.navigate({name:'lesson',id:l.id});a.match(strings(view(c)),/읽기 전 · 확인 2\/2/);
+ c.tab('today');a.ok(strings(view(c)).includes(`개념 확인 1/${content.lessons.filter(x=>x.subject===l.subject).length} · 읽음 0/`));
+});
 test('all 120 confirmation screens withhold rationale before submission',()=>{const {c}=setup();for(const l of content.lessons)for(const id of l.questionIds){c.state.practice={id:'p',questionIds:[id],index:0,selected:null,uncertain:false,submitted:false,mode:'lesson',sessionCorrect:0,sessionAnswered:0};c.route={name:'practice'};const q=content.questions[id],out=view(c);a.ok(strings(out).includes(q.stem));a.ok(get(c,'submit-practice').disabled);a.equal(strings(out).includes(q.explanation),false);}});
 test('explicit submission reveals explanation and related theory',async()=>{const {c}=setup();await c.beginPractice(content.lessons[0].questionIds);const q=c.getQuestion(c.state.practice.questionIds[0]);await click(c,'option-'+q.answer);a.equal(strings(view(c)).includes(q.explanation),false);await click(c,'submit-practice');a.ok(strings(view(c)).includes(q.explanation));a.ok(get(c,'related-'+q.lessonIds[0]));});
 
@@ -359,7 +388,7 @@ test('four tabs retain learning access and review belongs to Learning',async()=>
 test('home continues unanswered confirmation questions after reading theory',async()=>{const {c}=setup();const day=c.currentDay();c.state.readLessons=[...day.lessonIds];c.route={name:'home'};a.equal(get(c,'home-study').text,'확인 문제 이어하기');await click(c,'home-study');a.equal(c.route.name,'practice');a.deepEqual(c.state.practice.questionIds,content.lessons.find(l=>l.id===day.lessonIds[0]).questionIds);});
 test('first home starts learning, then resumes the most recently visited unfinished lesson',async()=>{
  const {c}=setup();c.route={name:'home'};a.equal(get(c,'home-study').text,'학습 시작');
- a.match(strings(view(c)),/이론 0\/3 · 확인 0\/6/);a.match(strings(view(c)),/이번 이론 약 9분/);
+ a.match(strings(view(c)),/이론 0\/3 · 확인 0\/6/);a.match(strings(view(c)),/개념 \+ 확인 2문항 · 약 13분/);
  await click(c,'home-study');a.equal(c.route.id,content.lessons[0].id);
  const later=content.lessons[4];await c.rememberReading(later.id,{offset:780,contentHeight:3000});c.tab('today');
  a.equal(get(c,'home-study').text,'이어서 읽기');a.match(strings(view(c)),new RegExp(later.title));a.match(strings(view(c)),/읽던 이론 · Day 2/);
@@ -380,7 +409,7 @@ test('reading restoration is limited to lessons and does not change exam or prac
  makeExam(c);a.equal(get(c,'learning-content').reading,undefined);
 });
 test('exam days retain the mock exam action without empty theory counters',async()=>{
- const {c}=setup(),day=content.days.find(d=>d.examId);c.state.completedDays=content.days.filter(d=>d.day<day.day).map(d=>d.day);c.tab('today');
+ const {c}=setup(),day=content.days.find(d=>d.examId);const completed=content.days.filter(d=>d.day<day.day).map(d=>d.day);c.state.planProgress={version:2,completedDays:completed,legacyCompletedDays:[]};c.tab('today');
  a.equal(get(c,'home-study').text,'오늘의 모의고사 안내');a.doesNotMatch(strings(view(c)),/이론 0\/0/);
  await click(c,'home-study');a.deepEqual(c.route,{name:'examIntro',id:day.examId});
 });
@@ -417,13 +446,14 @@ test('reviewing a submitted mock does not create confirmation statistics or alte
  await c.beginPractice([q.id],'review');await c.selectPractice(q.answer);await c.answerPractice();await c.nextPractice();
  a.equal(c.state.responses.length,1);a.equal(c.state.responses[0].correct,true);a.equal(c.state.responses[0].mode,'review');
  c.tab('records');const before=JSON.stringify(c.state);a.match(strings(view(c)),/아직 풀이 기록이 없어요/);
- a.doesNotMatch(strings(view(c)),/첫 풀이 정답률|확신.*비율|계산 기준|문항 기준/);
+ a.doesNotMatch(strings(get(c,'confirmation-stats')),/첫 풀이 정답률|확신.*비율|계산 기준|문항 기준/);
+ a.equal(d.confirmationAccuracy(c.state,content).total,0);
  a.ok(get(c,'history-'+c.state.exams[0].id));a.equal(JSON.stringify(c.state),before);a.equal(JSON.stringify(c.state.exams),examBefore);
 });
 test('confirmation statistics distinguish no answers from zero correct and use saved correctness',()=>{
  const {c}=setup(),q=content.questions[content.lessons[0].questionIds[0]];c.tab('records');
  a.deepEqual(d.confirmationAccuracy(c.state,content),{total:0,correct:0,confidentCorrect:0,percent:null,confidentPercent:null});
- a.doesNotMatch(strings(view(c)),/NaN|확신.*비율|계산 기준|문항 기준/);
+ a.doesNotMatch(strings(get(c,'confirmation-stats')),/NaN|확신.*비율|계산 기준|문항 기준/);
  // Even if an answer key changed, records must reflect the result saved when answered.
  c.state.responses=[{questionId:q.id,selected:q.answer,correct:false,uncertain:false,mode:'lesson'}];
  a.match(strings(view(c)),/첫 풀이 정답률 0%/);a.match(strings(view(c)),/확신 있게 맞힌 비율 0%/);a.match(strings(view(c)),/1문항 기준/);
@@ -487,7 +517,7 @@ test('review empty action opens unfiltered theory after visiting bookmarks',asyn
  const {c}=setup();c.tab('learn');await click(c,'bookmarked-only');c.setSubject('S2');c.setSearch('missing-term');
  await click(c,'learn-review');await click(c,'review-empty-learn');
  a.equal(c.route.name,'catalog');a.equal(get(c,'learn-theory').selected,true);
- a.equal(c.search,'');a.equal(c.subject,'all');a.match(strings(view(c)),/60개 이론/);
+ a.equal(c.search,'');a.equal(c.subject,'all');a.match(strings(view(c)),/60개 개념/);
 });
 test('empty bookmarks explain saving and offer a direct route to theory',async()=>{
  const {c}=setup();c.tab('learn');await click(c,'bookmarked-only');c.setSearch('missing-term');
@@ -499,7 +529,7 @@ test('filtered bookmarks reset query and subject while keeping the saved collect
  const {c}=setup();await c.bookmark('SQLD-L001');c.tab('learn');await click(c,'bookmarked-only');
  c.setSubject('S2');c.setSearch('missing-term');a.match(strings(view(c)),/조건에 맞는 북마크가 없어요/);
  await click(c,'reset-lesson-search');a.equal(get(c,'bookmarked-only').selected,true);
- a.equal(c.search,'');a.equal(c.subject,'all');a.match(strings(view(c)),/1개 이론/);a.ok(get(c,'lesson-SQLD-L001'));
+ a.equal(c.search,'');a.equal(c.subject,'all');a.match(strings(view(c)),/1개 개념/);a.ok(get(c,'lesson-SQLD-L001'));
 });
 test('valid reading history shows reading in progress without marking completion',async()=>{
  const {c}=setup(),lesson=content.lessons[0];c.tab('learn');a.match(get(c,'lesson-'+lesson.id).label,/읽기 전/);
@@ -528,4 +558,227 @@ test('theory shortcut respects reward processing lock and cannot change filters 
  const {c}=setup();c.route={name:'review'};c.bookmarkedOnly=true;c.search='NULL';c.subject='S2';c.rewardBusy=true;
  a.equal(get(c,'review-empty-learn').disabled,true);c.openTheory();
  a.equal(c.route.name,'review');a.equal(c.bookmarkedOnly,true);a.equal(c.search,'NULL');a.equal(c.subject,'S2');
+});
+
+test('home places one primary recommendation first and preserves reading with a 15 versus 30 minute short-session choice',async()=>{
+ for(const [minutes,expected] of [[15,content.lessons[0]],[30,content.lessons[58]]]){
+  const {c}=setup(),long=content.lessons[58];c.state.settings.minutes=minutes;
+  await c.rememberReading(long.id,{offset:200,contentHeight:2000});c.tab('today');
+  const scroll=get(c,'learning-content'),hero=get(c,'home-recommendation');
+  a.ok(scroll.children.indexOf(hero)<scroll.children.findIndex(n=>strings(n).includes('최근 7일')));
+  a.equal(flat(hero).filter(n=>n.kind==='button'&&n.style?.backgroundColor===light.blue).length,1);a.ok(strings(hero).includes(long.title));
+  a.match(strings(hero),new RegExp(`전체 분량 · 개념 \\+ 확인 ${long.questionIds.length}문항 · 약 ${long.minutes+long.questionIds.length*2}분`));
+  await click(c,'home-study');a.equal(c.route.name,'lesson');a.equal(c.route.id,long.id);a.equal(get(c,'learning-content').reading.position.offset,200);c.tab('today');
+  if(minutes===15){a.match(get(c,'home-short-session').text,/약 13분/);await click(c,'home-short-session');a.equal(c.route.name,'lesson');a.equal(c.route.id,expected.id);}
+  else a.equal(flat(view(c)).some(n=>n.testId==='home-short-session'),false);
+ }
+});
+
+test('home resumes valid unfinished reading before due review while offering the bounded short review',async()=>{
+ const {c,clock}=setup(),lesson=content.lessons[4],ids=content.lessons.flatMap(l=>l.questionIds).slice(0,12);c.state.settings.minutes=15;
+ await c.rememberReading(lesson.id,{offset:780,contentHeight:3000});c.state.reviews=Object.fromEntries(ids.map(questionId=>[questionId,{questionId,dueDay:d.dayKey(clock.wall),step:0,lastAnsweredDay:'',lastCorrect:false}]));
+ c.tab('today');a.ok(strings(get(c,'home-recommendation')).includes(lesson.title));a.equal(get(c,'home-study').text,'이어서 읽기');a.equal(flat(view(c)).some(n=>n.testId==='home-review'),false);
+ a.match(get(c,'home-short-session').text,/짧은 복습 · 약 14분/);await click(c,'home-study');a.equal(c.route.id,lesson.id);a.equal(get(c,'learning-content').reading.position.offset,780);
+ c.tab('today');await click(c,'home-short-session');a.equal(c.route.name,'practice');a.deepEqual(c.state.practice.questionIds,ids.slice(0,7));
+});
+
+test('home prioritizes an active exam then unfinished practice before bounded due review',async()=>{
+ const {c,clock}=setup(),ids=content.lessons.flatMap(l=>l.questionIds).slice(0,12);
+ c.state.settings.minutes=15;c.state.reviews=Object.fromEntries(ids.map(questionId=>[questionId,{questionId,dueDay:d.dayKey(clock.wall),step:0,lastAnsweredDay:'',lastCorrect:false}]));
+ c.tab('today');a.equal(flat(get(c,'home-recommendation')).filter(n=>n.kind==='button').length,1);
+ a.equal(flat(view(c)).some(n=>n.testId==='home-study'),false);a.match(strings(get(c,'home-recommendation')),/복습 7문항 · 약 14분/);
+ await click(c,'home-review');a.deepEqual(c.state.practice.questionIds,ids.slice(0,7));
+ await c.selectPractice('1');c.tab('today');await click(c,'home-resume-practice');a.equal(c.state.practice.selected,'1');
+ const practiceBefore=JSON.stringify(c.state.practice),e=makeExam(c);c.tab('today');
+ a.equal(flat(view(c)).some(n=>n.testId==='home-resume-practice'||n.testId==='home-review'),false);
+ await click(c,'home-resume-exam');a.equal(c.route.id,e.id);a.equal(JSON.stringify(c.state.practice),practiceBefore);
+});
+
+test('home activity states its count scope and topic progress starts the entire selected group',async()=>{
+ const {c}=setup();await c.beginPractice([content.lessons[0].questionIds[0]]);const q=c.getQuestion(c.state.practice.questionIds[0]);
+ await c.selectPractice(q.answer);await c.answerPractice();await c.nextPractice();await c.returnPracticeHome();
+ a.match(strings(view(c)),/확인·복습 1문항 · 정답 1문항/);
+ a.match(strings(view(c)),/풀이 수는 확인 문제·복습 기준/);a.equal(flat(view(c)).filter(n=>n.key?.startsWith('activity-')).length,7);
+ await click(c,'home-topics');await click(c,'home-topic-model');a.equal(c.route.name,'practiceSetup');
+ a.match(strings(view(c)),/7개 주제 선택/);await click(c,'practice-count-20');await click(c,'practice-setup-start');
+ a.deepEqual(c.state.practice.questionIds,content.lessons.slice(0,7).flatMap(l=>l.questionIds));
+});
+
+test('seven-day activity keeps short date labels, exact numeric counts and aligned seven columns in home and records',()=>{
+ const {c,clock}=setup();clock.wall=Date.UTC(2026,9,4,12);c.state.settings.fontScale=1.3;c.state.settings.theme='dark';
+ const days=['2026-09-28','2026-09-29','2026-09-30','2026-10-01','2026-10-02','2026-10-03','2026-10-04'],counts=[0,1,12,123,999,1000,25],weekday=['월','화','수','목','금','토','일'],q=content.questions[content.lessons[0].questionIds[0]];
+ c.state.responses=days.flatMap((day,i)=>Array.from({length:counts[i]},(_,j)=>({id:`daily-${i}-${j}`,questionId:q.id,version:q.version,selected:q.answer,correct:true,uncertain:false,answeredAt:Date.parse(`${day}T12:00:00Z`),mode:'review'})));
+ for(const name of ['home','stats']){c.route={name};const before=JSON.stringify(c.state),activity=get(c,'learning-activity'),week=activity.children.find(n=>n.children?.every(child=>child.key?.startsWith('activity-'))&&n.children.length===7);
+  a.ok(week);a.equal(week.style.alignItems,'stretch');a.equal(week.style.gap,5);a.equal(get(c,'activity-period').text,'09/28–10/04');
+  a.deepEqual(week.children.map(n=>n.key),days.map(day=>'activity-'+day));
+  week.children.forEach((cell,i)=>{a.equal(cell.style.flex,1);a.equal(cell.style.flexBasis,0);a.equal(cell.style.minWidth,0);a.equal(cell.children.length,4);
+   const [dayName,date,icon,count]=cell.children;a.equal(dayName.text,weekday[i]);a.equal(date.text,days[i].slice(-2));a.equal(count.text,String(counts[i]));a.equal(date.style.fontSize,13);a.equal(dayName.style.fontSize,13);a.equal(count.style.fontSize,13);a.equal(date.style.lineHeight,21);
+   a.equal(icon.label,`${days[i]}, ${counts[i]?'학습함':'학습 기록 없음'}, 확인 문제·복습 ${counts[i]}문항`);
+  });a.equal(JSON.stringify(c.state),before);
+ }
+});
+
+test('activity period distinguishes a year boundary and weekdays stay correct in a negative timezone',()=>{
+ const {c,clock}=setup();clock.wall=Date.UTC(2027,0,4,12);c.tab('today');a.equal(get(c,'activity-period').text,'2026/12/29–2027/01/04');
+ const cp=require('node:child_process'),program=`
+ const {MonetizedController}=require('./.build/monetization/controller'),{renderMonetized}=require('./.build/monetization/views'),content=require('./generated/content.json');
+ const c=new MonetizedController(content,{clock:()=>({wall:Date.UTC(2027,0,4,12),mono:1,runtimeId:'timezone'}),uuid:()=> 'tz',repository:{load:async()=>null,save:async()=>{},clear:async()=>{}},platform:'web'});c.ready=true;c.state.onboarded=true;c.route={name:'home'};
+ const flat=n=>[n,...(n.children??[]).flatMap(flat)];
+ console.log(JSON.stringify(flat(renderMonetized(c)).filter(n=>n.key?.startsWith('activity-')).map(n=>[n.key,n.children[0].text,n.children[1].text,n.children[2].label])));
+ `;
+ for(const timezone of ['UTC','America/Los_Angeles']){const child=cp.spawnSync(process.execPath,['-e',program],{encoding:'utf8',env:{...process.env,TZ:timezone}});a.equal(child.status,0,child.stderr);const cells=JSON.parse(child.stdout.trim());
+  a.deepEqual(cells.map(n=>n.slice(0,3)),[['activity-2026-12-29','화','29'],['activity-2026-12-30','수','30'],['activity-2026-12-31','목','31'],['activity-2027-01-01','금','01'],['activity-2027-01-02','토','02'],['activity-2027-01-03','일','03'],['activity-2027-01-04','월','04']]);
+  for(const [key,,,label] of cells)a.equal(label,`${key.slice(9)}, 학습 기록 없음, 확인 문제·복습 0문항`);
+ }
+});
+
+test('concept groups cover all 60 lessons once while icons retain names and four tab targets',async()=>{
+ const {c}=setup();c.tab('learn');const nodes=flat(view(c)),lessons=nodes.filter(n=>n.testId?.startsWith('lesson-SQLD-'));
+ a.equal(lessons.length,60);a.equal(new Set(lessons.map(n=>n.testId)).size,60);
+ a.equal(nodes.filter(n=>n.key?.startsWith('group-')).length,9);a.equal(get(c,'app-settings').icon,'settings');a.equal(get(c,'app-settings').label,'설정');
+ for(const [id,icon] of [['today','home'],['learn','book'],['exams','timer'],['records','chart']]){a.equal(get(c,'tab-'+id).icon,icon);a.equal(get(c,'tab-'+id).iconPosition,'above');}
+ await click(c,'lesson-SQLD-L001');a.equal(get(c,'lesson-bookmark').icon,'bookmark');await click(c,'lesson-bookmark');a.equal(get(c,'lesson-bookmark').selected,true);
+});
+
+test('the fixed lesson action records reading only after a successful save before opening confirmation',async()=>{
+ const x=setup(),c=x.c,l=content.lessons[0];c.navigate({name:'lesson',id:l.id});
+ a.equal(flat(view(c)).filter(n=>n.testId==='lesson-practice').length,1);a.equal(flat(get(c,'learning-content')).some(n=>n.testId==='lesson-practice'),false);
+ a.equal(get(c,'lesson-practice').text,'읽기 완료하고 확인 문제');x.fail(true);await click(c,'lesson-practice');
+ a.equal(c.route.name,'lesson');a.deepEqual(c.state.readLessons,[]);a.equal(c.state.practice,null);a.match(strings(view(c)),/저장\/처리 실패/);
+ x.fail(false);await click(c,'lesson-practice');a.equal(c.route.name,'practice');a.deepEqual(c.state.readLessons,[l.id]);a.deepEqual(c.state.practice.questionIds,l.questionIds);
+ a.equal(JSON.stringify(content),contentBefore);
+});
+
+test('practice setup retains the learning tabs, limits choices, and never previews an unsubmitted mock',async()=>{
+ const {c}=setup();c.tab('learn');await click(c,'learn-questions');a.equal(c.route.name,'practiceSetup');a.equal(get(c,'tab-learn').selected,true);
+ a.deepEqual(flat(view(c)).filter(n=>n.role==='tab').map(n=>n.label),['홈','학습','실전','기록']);
+ a.match(strings(view(c)),/선택한 조건에 120문항/);a.equal(get(c,'practice-setup-start').disabled,false);
+ const hidden=content.questions[content.exams[1].questionIds[0]];a.equal(strings(view(c)).includes(hidden.stem),false);a.equal(strings(view(c)).includes(hidden.explanation),false);
+ await click(c,'practice-source-submitted-exams');a.equal(get(c,'practice-setup-start').disabled,true);a.match(strings(view(c)),/모의고사를 제출하거나/);
+ makeExam(c);c.navigate({name:'practiceSetup'});a.equal(get(c,'practice-setup-start').disabled,true);
+ await c.finishExam('manual');const examBefore=JSON.stringify(c.state.exams);c.openPracticeSetup();a.equal(get(c,'practice-setup-start').disabled,false);
+ await click(c,'practice-count-5');await click(c,'practice-setup-start');a.equal(c.state.practice.questionIds.length,5);
+ a.ok(c.state.practice.questionIds.every(id=>content.exams[0].questionIds.includes(id)));a.equal(JSON.stringify(c.state.exams),examBefore);
+});
+
+test('topic, answer-state and source choices affect the saved session without marking theory read',async()=>{
+ const {c}=setup(),l=content.lessons[0],[first,second]=l.questionIds;
+ await c.beginPractice([first]);const q=c.getQuestion(first);await c.selectPractice(q.options.find(o=>o.id!==q.answer).id);await c.uncertain();await c.answerPractice();await c.nextPractice();
+ c.openPracticeSetup();await click(c,'practice-topics');await click(c,'practice-topic-'+l.id);await click(c,'practice-source-confirmation');
+ await click(c,'practice-filter-uncertain');a.match(strings(view(c)),/이번에는 1문항/);
+ await click(c,'practice-filter-wrong');await click(c,'practice-setup-start');a.deepEqual(c.state.practice.questionIds,[first]);a.deepEqual(c.state.readLessons,[]);
+ c.openPracticeSetup();await click(c,'practice-filter-unanswered');await click(c,'practice-setup-start');a.ok(c.dialog);await c.acceptDialog();a.deepEqual(c.state.practice.questionIds,[second]);
+ a.equal(JSON.stringify(content),contentBefore);
+});
+
+test('practice completion saves the result and offers unique related review, next concept and home',async()=>{
+ const {c}=setup(),l=content.lessons[0];await c.beginPractice(l.questionIds);
+ for(let i=0;i<2;i++){const q=c.getQuestion(c.state.practice.questionIds[i]);await c.selectPractice(i?q.options.find(o=>o.id!==q.answer).id:q.answer);if(!i)await c.uncertain();await c.answerPractice();await c.nextPractice();}
+ a.equal(c.route.name,'practiceResult');a.equal(c.state.practice,null);const completed=c.practiceResult(),saved=JSON.stringify(c.state);
+ a.match(strings(view(c)),/1 \/ 2문항 정답/);a.match(strings(view(c)),/확신 부족 1문항/);a.ok(get(c,'practice-result-next'));a.ok(get(c,'practice-result-home'));
+ view(c);view(c);a.equal(JSON.stringify(c.state),saved);await click(c,'practice-result-review');a.deepEqual(c.state.practice.questionIds,[l.questionIds[1],l.questionIds[0]]);a.equal(new Set(c.state.practice.questionIds).size,2);
+ a.equal(c.state.practiceResults.filter(r=>r.id===completed.id).length,1);
+ const y=setup(),other=y.c;await other.beginPractice(l.questionIds);
+ for(let i=0;i<2;i++){const q=other.getQuestion(other.state.practice.questionIds[i]);await other.selectPractice(q.answer);await other.answerPractice();await other.nextPractice();}
+ const beforeResponses=JSON.stringify(other.state.responses);await click(other,'practice-result-next');a.equal(other.route.id,content.lessons[1].id);a.equal(JSON.stringify(other.state.responses),beforeResponses);
+ other.navigate({name:'practiceResult',id:other.state.practiceResults[0].id});await click(other,'practice-result-home');a.equal(other.route.name,'home');a.equal(other.state.practiceResults.length,1);
+});
+
+test('practice result shows the earliest actual session review date and count without unrelated schedules',async()=>{
+ const {c,clock}=setup(),l=content.lessons[0],other=content.lessons[1].questionIds[0];clock.wall=Date.UTC(2026,9,4,3);
+ c.state.reviews[other]={questionId:other,dueDay:d.dayKey(clock.wall-86400000),step:0,lastAnsweredDay:'',lastCorrect:false};
+ await c.beginPractice(l.questionIds);
+ for(const id of l.questionIds){const q=c.getQuestion(id);await c.selectPractice(q.options.find(o=>o.id!==q.answer).id);await c.answerPractice();await c.nextPractice();}
+ const day=c.state.reviews[l.questionIds[0]].dueDay;a.equal(day,c.state.reviews[l.questionIds[1]].dueDay);
+ a.equal(get(c,'practice-result-schedule').text,`다음 복습 · ${day} · 2문항`);const saved=JSON.stringify(c.state);view(c);a.equal(JSON.stringify(c.state),saved);
+ clock.wall+=86400000;a.equal(get(c,'practice-result-schedule').text,`오늘 복습 가능 · ${day} 예정 · 2문항`);
+ clock.wall+=86400000;a.equal(get(c,'practice-result-schedule').text,`오늘 복습 가능 · ${day} 예정 · 2문항`);
+ const y=setup(),clean=y.c;clean.state.reviews[other]={questionId:other,dueDay:d.dayKey(y.clock.wall),step:0,lastAnsweredDay:'',lastCorrect:false};
+ await clean.beginPractice(l.questionIds);for(const id of l.questionIds){const q=clean.getQuestion(id);await clean.selectPractice(q.answer);await clean.answerPractice();await clean.nextPractice();}
+ a.equal(flat(view(clean)).some(n=>n.testId==='practice-result-schedule'),false);a.ok(clean.state.reviews[other]);
+ const z=setup(),mixed=z.c,old=l.questionIds[0];mixed.state.reviews[old]={questionId:old,dueDay:d.dayKey(z.clock.wall),step:0,lastAnsweredDay:d.dayKey(z.clock.wall-86400000),lastCorrect:false};
+ await mixed.beginPractice(l.questionIds);for(const id of l.questionIds){const q=mixed.getQuestion(id);await mixed.selectPractice(id===old?q.answer:q.options.find(o=>o.id!==q.answer).id);await mixed.answerPractice();await mixed.nextPractice();}
+ const earliest=mixed.state.reviews[l.questionIds[1]].dueDay;a.ok(earliest<mixed.state.reviews[old].dueDay);a.equal(get(mixed,'practice-result-schedule').text,`다음 복습 · ${earliest} · 1문항`);
+});
+
+test('failed result storage keeps the last submitted answer and recovery renders one persisted result',async()=>{
+ const x=setup(),c=x.c;await c.beginPractice([content.lessons[0].questionIds[0]]);const q=c.getQuestion(c.state.practice.questionIds[0]);
+ await c.selectPractice(q.answer);await c.answerPractice();x.fail(true);await click(c,'next-practice');
+ a.equal(c.route.name,'practice');a.equal(c.state.practice.submitted,true);a.ok(strings(view(c)).includes(q.explanation));a.equal(c.state.practiceResults?.length??0,0);
+ x.fail(false);await click(c,'next-practice');a.equal(c.route.name,'practiceResult');
+ const recovered=new MonetizedController(content,x.services);await recovered.initialize();a.equal(recovered.route.name,'practiceResult');
+ a.match(strings(view(recovered)),/1 \/ 1문항 정답/);a.equal(recovered.state.practiceResults.length,1);a.equal(recovered.state.responses.length,1);
+});
+
+test('completed concepts result leaves for exams only after storage and cannot return on restart',async()=>{
+ const x=setup(),c=x.c,ids=content.lessons.flatMap(l=>l.questionIds),last=ids.at(-1);
+ c.state.responses=ids.filter(id=>id!==last).map((id,i)=>{const q=content.questions[id];return {id:'prior-'+i,questionId:id,version:q.version,selected:q.answer,correct:true,uncertain:false,answeredAt:x.clock.wall,mode:'review'};});
+ await c.beginPractice([last]);const q=c.getQuestion(last);await c.selectPractice(q.answer);await c.answerPractice();await c.nextPractice();
+ a.equal(c.nextConcept(),undefined);a.equal(get(c,'practice-result-next').text,'모의고사 선택');
+ const resultId=c.state.lastPracticeResultId,responses=JSON.stringify(c.state.responses),results=JSON.stringify(c.state.practiceResults);
+ x.fail(true);await click(c,'practice-result-next');a.equal(c.route.name,'practiceResult');a.equal(c.state.lastPracticeResultId,resultId);a.equal(c.practiceResult().id,resultId);
+ x.fail(false);await click(c,'practice-result-next');a.equal(c.route.name,'exams');a.equal(c.state.lastPracticeResultId,null);
+ a.equal(JSON.stringify(c.state.responses),responses);a.equal(JSON.stringify(c.state.practiceResults),results);
+ const recovered=new MonetizedController(content,x.services);await recovered.initialize();a.equal(recovered.route.name,'home');a.equal(recovered.state.lastPracticeResultId,null);
+ a.equal(JSON.stringify(recovered.state.practiceResults),results);a.equal(JSON.stringify(recovered.state.responses),responses);
+});
+
+test('exam progress filters retain all access and reject positions from a different result list',async()=>{
+ const {c}=setup(),first=result(c);c.tab('exams');a.equal(flat(view(c)).filter(n=>n.testId?.startsWith('exam-card-')).length,20);
+ await click(c,'exams-next');a.equal(c.route.id,'SQLD-M02');c.back();const all=get(c,'learning-content').catalog;all.onRemember({offset:800,contentHeight:6000});
+ await click(c,'exams-filter-completed');a.equal(c.examCatalogPosition(),undefined);all.onRemember({offset:1000,contentHeight:6000});a.equal(c.examCatalogPosition(),undefined);
+ a.equal(flat(view(c)).filter(n=>n.testId?.startsWith('exam-card-')).length,1);a.ok(get(c,'result-SQLD-M01'));
+ await click(c,'exams-filter-unattempted');a.equal(flat(view(c)).filter(n=>n.testId?.startsWith('exam-card-')).length,19);a.equal(flat(view(c)).some(n=>n.testId==='exam-SQLD-M01'),false);
+ await click(c,'exams-filter-all');a.equal(c.hasAccess('SQLD-M20'),true);a.equal(c.state.exams[0].id,first.id);
+});
+
+test('completed exam cards prioritize saved results and actual wrong review while keeping retake and active guards',async()=>{
+ const {c,clock}=setup(),qs=content.exams[0].questionIds.map(id=>content.questions[id]),answers={[qs[0].id]:qs[0].answer,[qs[1].id]:qs[1].options.find(o=>o.id!==qs[1].answer).id},done=result(c,answers);
+ c.tab('exams');const card=flat(get(c,'exam-card-SQLD-M01')),buttons=card.filter(n=>n.kind==='button');
+ a.equal(buttons[0].testId,'result-SQLD-M01');a.equal(buttons[0].style.backgroundColor,light.blue);a.equal(card.filter(n=>n.testId==='result-SQLD-M01').length,1);a.equal(get(c,'exam-SQLD-M01').text,'다시 응시');
+ await click(c,'result-SQLD-M01');a.equal(c.route.name,'result');a.equal(c.route.id,done.id);c.tab('exams');
+ await click(c,'exam-wrong-SQLD-M01');a.equal(c.route.name,'examReview');a.equal(c.route.id,done.id);a.equal(c.route.index,1);a.equal(get(c,'review-exam-wrong').selected,true);c.tab('exams');
+ await click(c,'exam-SQLD-M01');a.equal(c.route.name,'examIntro');a.equal(c.route.id,'SQLD-M01');c.tab('exams');
+ const live=d.startExam(c.state,content.exams[1],content,{...c.services.clock(),wall:clock.wall+1},'still-running');c.state.exams.push(live);
+ for(const id of ['result-SQLD-M01','exam-wrong-SQLD-M01','exam-SQLD-M01'])a.equal(get(c,id).disabled,true);a.equal(get(c,'exam-SQLD-M02').disabled,false);a.equal(get(c,'exam-SQLD-M02').text,'이어하기');
+ const y=setup(),clean=y.c,perfect=result(clean,Object.fromEntries(qs.map(q=>[q.id,q.answer])));clean.tab('exams');
+ a.equal(flat(get(clean,'exam-card-SQLD-M01')).some(n=>n.testId==='exam-wrong-SQLD-M01'),false);a.equal(get(clean,'result-SQLD-M01').disabled,false);await click(clean,'result-SQLD-M01');a.equal(clean.route.id,perfect.id);
+});
+
+test('records separate first and last saved confirmation outcomes and open a sparse topic without claiming certainty',async()=>{
+ const {c,clock}=setup(),q=content.questions[content.lessons[0].questionIds[0]];
+ c.state.responses=[{id:'old',questionId:q.id,version:q.version,selected:q.answer,correct:false,uncertain:false,answeredAt:clock.wall-8*86400000,mode:'lesson'},{id:'new',questionId:q.id,version:q.version,selected:q.answer,correct:true,uncertain:true,answeredAt:clock.wall,mode:'review'}];
+ c.tab('records');a.match(strings(get(c,'confirmation-stats')),/첫 풀이 정답률 0%/);a.match(strings(get(c,'confirmation-stats')),/최근 풀이 정답률 100%/);a.match(strings(view(c)),/표본이 적어 참고용/);
+ a.equal(flat(view(c)).filter(n=>n.key?.startsWith('activity-')).length,7);await click(c,'weak-topic-'+content.lessons[0].id);a.equal(c.route.name,'practiceSetup');a.match(strings(view(c)),/1개 주제 선택/);a.equal(get(c,'practice-setup-start').disabled,false);
+});
+
+test('records show at most three unique saved review sessions with immutable outcomes and replay their actual questions',async()=>{
+ const {c,clock}=setup(),ids=content.lessons[1].questionIds;await c.beginPractice([content.lessons[0].questionIds[0]]);let q=c.getQuestion(c.state.practice.questionIds[0]);await c.selectPractice(q.answer);await c.answerPractice();await c.nextPractice();c.tab('records');
+ a.equal(get(c,'recent-review-empty').text,'완료한 복습 기록이 없어요.');const completed=[];
+ for(let i=0;i<4;i++){clock.wall+=86400000;await c.beginPractice(ids,'review');for(const id of ids){q=c.getQuestion(id);await c.selectPractice(i===3&&id===ids[1]?q.options.find(o=>o.id!==q.answer).id:q.answer);if(i===3&&id===ids[0])await c.uncertain();await c.answerPractice();await c.nextPractice();}completed.push(structuredClone(c.practiceResult()));}
+ c.tab('records');const expected=completed.slice(1).reverse(),before=JSON.stringify(c.state);
+ a.deepEqual(flat(view(c)).filter(n=>n.testId?.startsWith('recent-review-result-')).map(n=>n.testId),expected.map(result=>'recent-review-result-'+result.id));view(c);a.equal(JSON.stringify(c.state),before);
+ const recent=expected[0],record=strings(get(c,'recent-review-result-'+recent.id));a.ok(record.includes(d.dayKey(recent.completedAt)));a.match(record,/정답 1\/2문항/);a.match(record,/확신 부족 1문항/);
+ const responses=JSON.stringify(c.state.responses),history=JSON.stringify(c.state.practiceResults);await click(c,'recent-review-replay-'+recent.id);a.equal(c.route.name,'practice');a.equal(c.state.practice.mode,'review');a.deepEqual(c.state.practice.questionIds,recent.questionIds);a.equal(JSON.stringify(c.state.responses),responses);a.equal(JSON.stringify(c.state.practiceResults),history);
+ c.tab('records');c.state.practiceResults.push(structuredClone(recent));a.equal(flat(view(c)).filter(n=>n.testId==='recent-review-result-'+recent.id).length,1);a.equal(JSON.stringify(content),contentBefore);
+});
+
+test('recent review replay rejects inaccessible unsubmitted mock questions without exposing answers or creating a result',async()=>{
+ const {c,clock}=setup(),id=content.exams[19].questionIds[0];c.state.practiceResults=[{id:'legacy-review',mode:'review',questionIds:[id],lessonIds:content.questions[id].lessonIds,total:1,correct:0,uncertain:0,wrongQuestionIds:[id],uncertainQuestionIds:[],completedAt:clock.wall}];
+ c.tab('records');const history=JSON.stringify(c.state.practiceResults);await click(c,'recent-review-replay-legacy-review');a.equal(c.route.name,'stats');a.equal(c.state.practice,null);a.equal(JSON.stringify(c.state.practiceResults),history);a.equal(c.state.lastPracticeResultId,null);
+ a.equal(strings(view(c)).includes(content.questions[id].stem),false);a.equal(strings(view(c)).includes(content.questions[id].explanation),false);
+});
+
+test('new learning routes are read-only when rendered and settings expose the named reminder entry',async()=>{
+ const {c,services}=setup();for(const name of ['home','catalog','practiceSetup','practiceResult','exams','stats']){c.route={name};const state=JSON.stringify(c.state),snapshot=c.getSnapshot();view(c);view(c);a.equal(JSON.stringify(c.state),state,name);a.equal(c.getSnapshot(),snapshot,name);}
+ a.equal(await services.repository.load(),null);c.navigate({name:'settings'});a.equal(get(c,'learning-reminder').icon,'bell');await click(c,'learning-reminder');a.equal(c.route.name,'reminderSettings');a.equal(JSON.stringify(content),contentBefore);
+});
+
+test('learning resets clear the old practice setup choices without affecting free exam access',async()=>{
+ for(const full of [false,true]){
+  const {c}=setup();c.openPracticeSetup();await click(c,'practice-source-submitted-exams');await click(c,'practice-filter-wrong');await click(c,'practice-count-20');
+  if(full)c.requestReset();else c.requestLearningReset();await c.acceptDialog();c.state.onboarded=true;c.openPracticeSetup();
+  a.equal(get(c,'practice-source-all').selected,true);a.equal(get(c,'practice-filter-all').selected,true);a.equal(get(c,'practice-count-10').selected,true);
+  a.equal(get(c,'practice-setup-start').disabled,false);a.equal(c.hasAccess('SQLD-M20'),true);
+ }
 });

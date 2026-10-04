@@ -1,16 +1,18 @@
-import type {AppState,Content,Dialog,ExamAttempt,Question,ReadingOffset,Route,Services,Settings,Tab} from './types';
+import type {AppState,Content,Dialog,ExamAttempt,PracticeResult,Question,ReadingOffset,Route,Services,Settings,Tab} from './types';
 import {validReadingOffset} from './domain/reading';
-import {advanceClock,applyPractice,assertContent,canStudyQuestion,dayKey,dueReviews,eligibleDay,initialState,parseState,startExam,submitExam,validTargetDate} from './domain';
+import {advanceClock,applyPractice,assertContent,canStudyQuestion,completedPracticeResult,dayKey,dueReviews,eligibleDay,homeRecommendation,initialState,isReviewStudyDay,migrateLearningState,nextConcept as findNextConcept,parseState,planCompletedDays,practiceQuestionIds,shortSession,startExam,submitExam,validTargetDate,type PracticeOptions} from './domain';
 export class Controller {
   state:AppState; ready=false; startupError=''; notice=''; busy=false; route:Route={name:'welcome'}; stack:Route[]=[];
   dialog:Dialog|null=null; search=''; subject='all'; bookmarkedOnly=false; filter='all'; expanded=new Set<string>();
   draftSettings:Settings; settingsError=''; supportText=''; supportNotice=''; reviewLimit=20; reviewPickerOpen=false; private listeners=new Set<()=>void>(); private serial:Promise<void>=Promise.resolve();
   private version=0; private checkpointAt=0; private expiryInFlight=false; private lastExpiryTry=0;
+  get isExamSubmitting(){return this.expiryInFlight;}
   private systemAppearance:'light'|'dark'='light';
   protected catalogScroll?:{context:string;position:ReadingOffset};
   protected examCatalogScroll?:{context:string;position:ReadingOffset};
   protected recordsScroll?:{context:string;position:ReadingOffset};
   protected examReviewScroll?:{context:string;position:ReadingOffset};
+  examProgressFilter:'all'|'unattempted'|'completed'='all';
   get isDark(){return this.state.settings.theme==='dark'||(this.state.settings.theme==='system'&&this.systemAppearance==='dark');}
   setSystemAppearance(value:'light'|'dark'){if(this.systemAppearance!==value){this.systemAppearance=value;this.notify();}}
   readonly getSnapshot=()=>this.version;
@@ -22,7 +24,7 @@ export class Controller {
     this.startupError='';this.ready=false;this.notify();
     try{assertContent(this.content);this.state=parseState(await this.services.repository.load(),this.content);this.draftSettings={...this.state.settings};
       await this.prepareStartup();
-      this.route={name:this.state.onboarded?'home':'welcome'};this.ready=true;const active=this.activeExam();
+      this.route=this.state.onboarded?(this.state.lastPracticeResultId&&!this.state.practice?{name:'practiceResult',id:this.state.lastPracticeResultId}:{name:'home'}):{name:'welcome'};this.ready=true;const active=this.activeExam();
       if(active)await this.checkpoint();this.notify();await this.pulse();
     }catch(e){this.startupError=e instanceof Error?e.message:String(e);this.ready=false;this.notify();}
   }
@@ -32,9 +34,9 @@ export class Controller {
       this.busy=true;this.notify();
       try{
         const next=reducer(this.state);if(next===this.state){ok=true;return;}
-        const completed=[...next.completedDays];
-        for(const day of this.content.days)if((day.lessonIds.length||day.examId)&&eligibleDay(next,this.content,day.day)&&!completed.includes(day.day))completed.push(day.day);
-        const stored={...next,revision:this.state.revision+1,completedDays:completed.sort((a,b)=>a-b)};
+        const learning=migrateLearningState(next,this.content),completed=planCompletedDays(learning,this.content);
+        for(const day of this.content.days)if(eligibleDay(learning,this.content,day.day)&&!completed.includes(day.day))completed.push(day.day);
+        const stored={...learning,revision:this.state.revision+1,completedDays:Array.from(new Set([...learning.completedDays,...completed])).sort((a,b)=>a-b),planProgress:{...learning.planProgress!,completedDays:completed.sort((a,b)=>a-b)}};
         await this.services.repository.save(stored);this.state=stored;ok=true;
       }catch(e){this.notice=`저장/처리 실패: ${e instanceof Error?e.message:String(e)}. 마지막 저장 기록은 유지됩니다.`;}
       finally{this.busy=false;this.notify();}
@@ -45,6 +47,7 @@ export class Controller {
   back(){
     if(this.dialog){this.dialog=null;this.notify();return;}
     if(this.reviewPickerOpen){this.closeReviewPicker();return;}
+    if(this.route.name==='practiceResult'){void this.returnPracticeHome();return;}
     if(this.route.name==='exam'){this.confirm('시험 화면을 나갈까요?','답안은 기기에 저장되며 남은 시간은 계속 흐릅니다. 종료 시각이 지나면 자동 제출합니다.','저장 후 나가기',async()=>{if(await this.checkpoint())this.tab('exams');});return;}
     this.supportNotice='';this.route=this.stack.pop()??{name:this.state.onboarded?'home':'welcome'};this.notify();
   }
@@ -65,7 +68,8 @@ export class Controller {
     if(this.ready&&this.state.onboarded&&context===this.catalogContext()&&validReadingOffset(position))
       this.catalogScroll={context,position:{...position}};
   }
-  examCatalogContext(){return JSON.stringify([this.expanded.has('exams:available'),this.notice,this.activeExam()?.id??null]);}
+  setExamProgressFilter(value:'all'|'unattempted'|'completed'){if(this.examProgressFilter!==value)this.examCatalogScroll=undefined;this.examProgressFilter=value;this.notify();}
+  examCatalogContext(){return JSON.stringify([this.expanded.has('exams:available'),this.examProgressFilter,this.notice,this.activeExam()?.id??null]);}
   examCatalogPosition(){return this.examCatalogScroll?.context===this.examCatalogContext()?this.examCatalogScroll.position:undefined;}
   rememberExamCatalog(context:string,position:ReadingOffset){
     if(this.ready&&this.state.onboarded&&context===this.examCatalogContext()&&validReadingOffset(position))
@@ -109,9 +113,10 @@ export class Controller {
     this.settingsError='';
     if(await this.commit(s=>({...s,settings:d,onboarded:onboard||s.onboarded}))){this.stack=[];this.route={name:'home'};this.notice='학습 설정을 저장했습니다. 기존 기록은 유지됩니다.';this.notify();}
   }
-  async markLesson(id:string){const ok=await this.commit(s=>({...s,readLessons:Array.from(new Set([...s.readLessons,id])),studyDays:Array.from(new Set([...s.studyDays,dayKey(this.services.clock().wall)]))}));if(ok){this.notice='이론 읽음을 기록했습니다. 확인 문제로 이해를 점검해 보세요.';this.notify();}}
+  private async saveLessonRead(id:string):Promise<boolean>{if(!this.ready||!this.state.onboarded||!this.content.lessons.some(l=>l.id===id))return false;const ok=await this.commit(s=>s.onboarded?({...s,readLessons:Array.from(new Set([...s.readLessons,id])),studyDays:Array.from(new Set([...s.studyDays,dayKey(this.services.clock().wall)]))}):s);const recorded=ok&&this.state.onboarded&&this.state.readLessons.includes(id);if(recorded){this.notice='이론 읽음을 기록했습니다. 확인 문제로 이해를 점검해 보세요.';this.notify();}return recorded;}
+  async markLesson(id:string):Promise<void>{await this.saveLessonRead(id);}
   async bookmark(id:string){await this.commit(s=>({...s,bookmarks:s.bookmarks.includes(id)?s.bookmarks.filter(x=>x!==id):[...s.bookmarks,id]}));}
-  currentDay(){return this.content.days.find(d=>!this.state.completedDays.includes(d.day))??this.content.days[29];}
+  currentDay(){const completed=planCompletedDays(this.state,this.content);return this.content.days.find(d=>!completed.includes(d.day))??this.content.days[29];}
   readingPosition(id:string){
     const position=this.state.reading?.positions[id],lesson=this.content.lessons.find(l=>l.id===id);
     return lesson&&position?.lessonVersion===lesson.version&&validReadingOffset(position)?position:undefined;
@@ -132,32 +137,60 @@ export class Controller {
       return {...s,reading:{lastLessonId:id,positions:{...s.reading?.positions,[id]:next}}};
     });
   }
-  async markDay(day:number){if(!eligibleDay(this.state,this.content,day)){this.notice='해당 학습일의 이론과 확인 문제 또는 모의고사를 먼저 완료해 주세요.';this.notify();return;}
-    await this.commit(s=>({...s,completedDays:Array.from(new Set([...s.completedDays,day]))}));}
+  async markDay(day:number){if(!eligibleDay(this.state,this.content,day)){this.notice='해당 학습일의 확인 문제, 새 복습 또는 모의고사를 먼저 완료해 주세요.';this.notify();return;}
+    await this.commit(s=>eligibleDay(s,this.content,day)?{...s,completedDays:Array.from(new Set([...s.completedDays,day]))}:s);}
   getQuestion(id:string):Question|undefined {
     const original=this.content.questions[id];if(original?.examId){for(const e of [...this.state.exams].reverse())if(e.status==='submitted'){const q=e.snapshots.find(x=>x.id===id);if(q)return q;}}
     return original;
   }
-  async beginPractice(ids:string[],mode:'lesson'|'review'='lesson'){
+  async beginPractice(ids:string[],mode:'lesson'|'review'='lesson',options:{planDay?:number}={}){
+    if(!this.ready||!this.state.onboarded)return;
     if(!ids.length){this.notice='선택 조건에 맞는 문제가 없습니다.';this.notify();return;}
     const qids=Array.from(new Set(ids)).filter(id=>{const q=this.getQuestion(id);return q&&canStudyQuestion(this.state,q);});
     if(!qids.length){this.notice='제출 전 모의고사 문제는 연습에서 열 수 없습니다.';this.notify();return;}
-    const begin=async()=>{if(await this.commit(s=>({...s,practice:{id:this.services.uuid(),questionIds:qids,index:0,selected:null,uncertain:false,submitted:false,mode,sessionCorrect:0,sessionAnswered:0}})))this.navigate({name:'practice'});};
+    if(options.planDay!==undefined){const day=this.content.days.find(d=>d.day===options.planDay),allowed=new Set(day?.lessonIds.flatMap(id=>this.content.lessons.find(l=>l.id===id)?.questionIds??[])??[]);if(!day||!isReviewStudyDay(day)||mode!=='review'||qids.some(id=>!allowed.has(id))){this.notice='이 복습일에 연결된 확인 문제를 선택해 주세요.';this.notify();return;}}
+    const begin=async()=>{const id=this.services.uuid();if(await this.commit(s=>s.onboarded?({...s,lastPracticeResultId:null,practice:{id,questionIds:qids,index:0,selected:null,uncertain:false,submitted:false,mode,sessionCorrect:0,sessionAnswered:0,...(options.planDay!==undefined?{planDay:options.planDay}:{})}}):s)&&this.state.practice?.id===id)this.navigate({name:'practice'});};
     if(this.state.practice){this.confirm('진행 중인 연습이 있어요','새 연습을 시작하면 아직 제출하지 않은 선택은 바뀝니다. 이미 제출한 풀이 기록은 유지됩니다.','새 연습 시작',begin);}else await begin();
   }
   resumePractice(){if(this.state.practice)this.navigate({name:'practice'});}
-  async selectPractice(option:string){await this.commit(s=>!s.practice||s.practice.submitted?s:{...s,practice:{...s.practice,selected:option}});}
-  async uncertain(){await this.commit(s=>!s.practice||s.practice.submitted?s:{...s,practice:{...s.practice,uncertain:!s.practice.uncertain}});}
-  async answerPractice(){await this.commit(s=>{
-    const p=s.practice;if(!p||p.submitted)return s;if(!p.selected)throw new Error('먼저 보기를 선택해 주세요');
+  async selectPractice(option:string){const origin=this.state.practice;await this.commit(s=>!s.practice||s.practice.id!==origin?.id||s.practice.index!==origin.index||s.practice.submitted?s:{...s,practice:{...s.practice,selected:option}});}
+  async uncertain(){const origin=this.state.practice;await this.commit(s=>!s.practice||s.practice.id!==origin?.id||s.practice.index!==origin.index||s.practice.submitted?s:{...s,practice:{...s.practice,uncertain:!s.practice.uncertain}});}
+  async answerPractice(){const origin=this.state.practice;await this.commit(s=>{
+    const p=s.practice;if(!p||p.id!==origin?.id||p.index!==origin.index||p.submitted)return s;if(!p.selected)throw new Error('먼저 보기를 선택해 주세요');
     const q=this.getQuestion(p.questionIds[p.index]);if(!q)throw new Error('문항을 찾을 수 없습니다');
-    const next=applyPractice(s,q,p.selected,p.uncertain,this.services.clock().wall,`${p.id}:${p.index}`,p.mode);
-    return {...next,practice:{...p,submitted:true,sessionAnswered:p.sessionAnswered+1,sessionCorrect:p.sessionCorrect+(p.selected===q.answer?1:0)}};
+    const next=applyPractice(s,q,p.selected,p.uncertain,this.services.clock().wall,`${p.id}:${p.index}`,p.mode,p.planDay);
+    const saved=next.responses.find(r=>r.id===`${p.id}:${p.index}`)!;
+    const answers=p.questionIds.slice(0,p.index+1).flatMap((_,i)=>next.responses.filter(r=>r.id===`${p.id}:${i}`));
+    return {...next,practice:{...p,selected:saved.selected,uncertain:saved.uncertain,submitted:true,sessionAnswered:answers.length,sessionCorrect:answers.filter(r=>r.correct).length}};
   });}
   async nextPractice(){const p=this.state.practice;if(!p?.submitted)return;
-    if(p.index===p.questionIds.length-1){if(await this.commit(s=>({...s,practice:null}))){this.route={name:p.mode==='review'?'review':'catalog'};this.stack=[];this.notice=`연습 완료 · ${p.sessionAnswered}문항 중 ${p.sessionCorrect}문항 정답. 확신 부족 문항은 복습으로 이어집니다.`;this.notify();}}
-    else await this.commit(s=>s.practice?{...s,practice:{...s.practice,index:s.practice.index+1,selected:null,uncertain:false,submitted:false}}:s);
+    if(p.index===p.questionIds.length-1){const ok=await this.commit(s=>{
+      if(!s.practice||s.practice.id!==p.id||s.practice.index!==p.index||!s.practice.submitted)return s;
+      const result=completedPracticeResult(s,this.content,p.id,this.services.clock().wall);
+      return {...s,practice:null,lastPracticeResultId:p.id,practiceResults:[...(s.practiceResults??[]).filter(r=>r.id!==p.id),result]};
+    });if(ok&&!this.state.practice&&this.state.lastPracticeResultId===p.id){this.route={name:'practiceResult',id:p.id};this.stack=[];this.notify();}}
+    else await this.commit(s=>s.practice?.id===p.id&&s.practice.index===p.index&&s.practice.submitted?{...s,practice:{...s.practice,index:s.practice.index+1,selected:null,uncertain:false,submitted:false}}:s);
   }
+  practiceResult(id=this.route.id??this.state.lastPracticeResultId??undefined):PracticeResult|undefined{return this.state.practiceResults?.find(r=>r.id===id);}
+  nextConcept(afterLessonId?:string){return findNextConcept(this.state,this.content,afterLessonId);}
+  private async dismissPracticeResult():Promise<boolean>{
+    if(!this.ready||!this.state.onboarded)return false;
+    const origin=this.state.lastPracticeResultId;
+    const ok=await this.commit(s=>s.lastPracticeResultId===origin&&origin?{...s,lastPracticeResultId:null}:s);
+    // A queued result action must not leave onboarding or replace a newer session.
+    return ok&&this.ready&&this.state.onboarded&&!this.state.practice&&this.state.lastPracticeResultId===null;
+  }
+  async openNextConcept(afterLessonId?:string){const lesson=this.nextConcept(afterLessonId);if(await this.dismissPracticeResult()){if(lesson)this.navigate({name:'lesson',id:lesson.id});else this.tab('exams');}}
+  async returnPracticeHome(){if(await this.dismissPracticeResult())this.tab('today');}
+  async returnPracticeExams(){if(await this.dismissPracticeResult())this.tab('exams');}
+  async beginRelatedReview(resultId?:string){const result=this.practiceResult(resultId);if(!result)return;await this.beginPractice(Array.from(new Set([...result.wrongQuestionIds,...result.uncertainQuestionIds])),'review');}
+  async beginLessonPractice(lessonId:string){const lesson=this.content.lessons.find(l=>l.id===lessonId);if(lesson)await this.beginPractice(lesson.questionIds);}
+  async finishLesson(lessonId:string){if(await this.saveLessonRead(lessonId))await this.beginLessonPractice(lessonId);}
+  async beginPlanPractice(dayNumber:number){const day=this.content.days.find(d=>d.day===dayNumber);if(!day||day.examId)return;const ids=day.lessonIds.flatMap(id=>this.content.lessons.find(l=>l.id===id)?.questionIds??[]);await this.beginPractice(ids,isReviewStudyDay(day)?'review':'lesson',isReviewStudyDay(day)?{planDay:dayNumber}:{});}
+  openPracticeSetup(){this.navigate({name:'practiceSetup'});}
+  async beginTopicPractice(options:PracticeOptions={}){await this.beginPractice(practiceQuestionIds(this.state,this.content,options),'review');}
+  async startHomeRecommendation(){const choice=homeRecommendation(this.state,this.content,this.services.clock().wall);if(choice.kind==='exam'){if(await this.checkpoint())this.navigate({name:'exam',id:choice.attemptId});}else if(choice.kind==='practice')this.resumePractice();else if(choice.kind==='review')await this.beginPractice(choice.questionIds,'review',choice.planDay!==undefined?{planDay:choice.planDay}:{});else if(choice.kind==='concept')this.navigate({name:'lesson',id:choice.lessonId});else this.tab('exams');}
+  async beginShortSession(){if(this.activeExam()||this.state.practice){await this.startHomeRecommendation();return;}const session=shortSession(this.state,this.content,this.services.clock().wall);if(session.kind==='concept'){if(session.lessonId&&this.state.readLessons.includes(session.lessonId))await this.beginLessonPractice(session.lessonId);else this.navigate({name:'lesson',id:session.lessonId});}else if(session.kind==='review')await this.beginPractice(session.questionIds,'review',session.planDay!==undefined?{planDay:session.planDay}:{});else this.tab('exams');}
   async beginDueReview(){await this.beginPractice(dueReviews(this.state,this.content,this.services.clock().wall).slice(0,10),'review');}
   activeExam():ExamAttempt|undefined{return this.state.exams.find(e=>e.status==='active');}
   examAttempt(id?:string):ExamAttempt|undefined{return id?this.state.exams.find(e=>e.id===id):this.activeExam();}
@@ -211,8 +244,9 @@ export class Controller {
     let cleared=false;
     const task=this.serial.then(async()=>{
       this.busy=true;this.notify();
-      try{await this.services.repository.clear();this.state=initialState(this.content,this.services.clock().wall);this.catalogScroll=undefined;this.examCatalogScroll=undefined;this.recordsScroll=undefined;this.examReviewScroll=undefined;this.reviewPickerOpen=false;this.draftSettings={...this.state.settings};this.route={name:'welcome'};this.stack=[];this.ready=false;this.startupError='';this.notice='';cleared=true;}
-      catch(e){this.notice=`초기화 실패: ${String(e)}`;}
+      let remindersCleared=false;
+      try{if(this.services.beforeFullReset){if(!await this.services.beforeFullReset())throw new Error('학습 알림 해제에 실패하여 학습 기록 삭제를 중단했습니다.');remindersCleared=true;}await this.services.repository.clear();this.state=initialState(this.content,this.services.clock().wall);this.catalogScroll=undefined;this.examCatalogScroll=undefined;this.recordsScroll=undefined;this.examReviewScroll=undefined;this.reviewPickerOpen=false;this.examProgressFilter='all';this.draftSettings={...this.state.settings};this.route={name:'welcome'};this.stack=[];this.ready=false;this.startupError='';this.notice='';cleared=true;}
+      catch(e){this.notice=`초기화 실패: ${String(e)}${remindersCleared?' 학습 알림은 해제되었고 학습 기록은 유지됩니다.':''}`;}
       finally{this.busy=false;this.notify();}
     });this.serial=task.catch(()=>{});await task;
     if(cleared){

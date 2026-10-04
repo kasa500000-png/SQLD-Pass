@@ -17,7 +17,7 @@ export function searchLessons(lessons:Lesson[],query:string,subject:string,bookm
   }));
 }
 export function lessonStatus(l:Lesson,s:AppState):string {
-  const done=new Set(s.responses.filter(r=>r.mode==='lesson').map(r=>r.questionId));
+  const done=new Set(s.responses.map(r=>r.questionId));
   const n=l.questionIds.filter(id=>done.has(id)).length;
   const position=s.reading?.positions[l.id];
   const started=position?.lessonVersion===l.version&&validReadingOffset(position);
