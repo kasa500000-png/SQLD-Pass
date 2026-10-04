@@ -33,13 +33,20 @@ export interface ExamAttempt {
 }
 export interface PracticeResponse {
   id:string; questionId:string; version:string; selected:string; correct:boolean; uncertain:boolean;
-  answeredAt:number; mode:'lesson'|'review';
+  answeredAt:number; mode:'lesson'|'review'; planDay?:number;
 }
 export interface ReviewItem { questionId:string; dueDay:string; step:number; lastAnsweredDay:string; lastCorrect:boolean; }
 export interface PracticeSession {
   id:string; questionIds:string[]; index:number; selected:string|null; uncertain:boolean;
   submitted:boolean; mode:'lesson'|'review'; sessionCorrect:number; sessionAnswered:number;
+  planDay?:number;
 }
+export interface PracticeResult {
+  id:string; mode:'lesson'|'review'; questionIds:string[]; lessonIds:string[];
+  total:number; correct:number; uncertain:number; wrongQuestionIds:string[]; uncertainQuestionIds:string[];
+  completedAt:number; planDay?:number;
+}
+export interface PlanProgress { version:2; completedDays:number[]; legacyCompletedDays:number[]; }
 export interface Settings { minutes:number; targetDate:string; theme:'light'|'dark'|'system'; fontScale:number; }
 export interface ReadingOffset { offset:number; contentHeight:number; }
 export interface ReadingPosition extends ReadingOffset { lessonVersion:string; }
@@ -48,13 +55,15 @@ export interface AppState {
   schema:1; contentVersion:string; revision:number; onboarded:boolean; startedDay:string;
   settings:Settings; readLessons:string[]; bookmarks:string[]; completedDays:number[]; studyDays:string[];
   responses:PracticeResponse[]; reviews:Record<string,ReviewItem>; practice:PracticeSession|null;
-  exams:ExamAttempt[]; reading?:ReadingState;
+  exams:ExamAttempt[]; reading?:ReadingState; planProgress?:PlanProgress;
+  practiceResults?:PracticeResult[]; lastPracticeResultId?:string|null;
 }
 export type Tab = 'today'|'learn'|'review'|'exams'|'records';
-export type Route = { name: 'welcome'|'setup'|'home'|'plan'|'catalog'|'lesson'|'practiceSetup'|'practice'|'review'|'exams'|'examIntro'|'exam'|'sheet'|'result'|'examReview'|'stats'|'settings'|'help'|'notices'|'privacy'; id?:string; index?:number; };
+export type Route = { name: 'welcome'|'setup'|'home'|'plan'|'catalog'|'lesson'|'practiceSetup'|'practice'|'practiceResult'|'review'|'exams'|'examIntro'|'exam'|'sheet'|'result'|'examReview'|'stats'|'settings'|'reminderSettings'|'help'|'notices'|'privacy'; id?:string; index?:number; };
 export interface Dialog { title:string; body:string; confirmLabel:string; destructive?:boolean; onConfirm:()=>void|Promise<void>; }
 export interface Repository { load():Promise<unknown|null>; save(state:AppState):Promise<void>; clear():Promise<void>; }
 export interface Services {
   repository:Repository; clock():Clock; uuid():string; openURL(url:string):Promise<void>;
+  beforeFullReset?():Promise<boolean>;
   share(text:string):Promise<'shared'|'copied'|'downloaded'|'cancelled'>; platform:'native'|'web'; supportEmail?:string; privacyUrl?:string; supportUrl?:string;
 }

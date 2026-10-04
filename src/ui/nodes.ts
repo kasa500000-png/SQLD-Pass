@@ -1,8 +1,10 @@
 import type {ReadingOffset} from '../core/types';
 export type Style = Record<string,string|number|undefined>;
+export type LearningIconName = 'home'|'book'|'timer'|'chart'|'settings'|'bookmark'|'search'|'chevron-right'|'check'|'close'|'arrow-right'|'refresh'|'bell'|'list'|'chevron-left';
 export interface Node {
-  kind:'box'|'text'|'button'|'input'|'date'|'progress'|'table'|'code'|'modal'; key?:string; children?:Node[];
+  kind:'box'|'text'|'button'|'input'|'date'|'progress'|'table'|'code'|'modal'|'icon'; key?:string; children?:Node[];
   text?:string; style?:Style; label?:string; testId?:string; action?:()=>void|Promise<void>;
+  icon?:LearningIconName; iconSize?:number; iconPosition?:'leading'|'trailing'|'above';
   disabled?:boolean; selected?:boolean; expanded?:boolean; value?:string; minimumDate?:string; placeholder?:string; onChange?:(v:string)=>void;
   multiline?:boolean; inputMode?:'text'|'numeric'; progress?:number; columns?:string[]; rows?:(string|number|null)[][];
   scroll?:boolean; heading?:boolean; alert?:boolean; close?:()=>void; role?:'button'|'radio'|'tab'; checked?:boolean;

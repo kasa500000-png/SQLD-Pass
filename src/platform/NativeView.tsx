@@ -9,6 +9,7 @@ import {AppText as Text, AppTextInput as TextInput} from './Typography';
 import {ReadingScrollView} from './ReadingScrollView';
 import {CatalogScrollView} from './CatalogScrollView';
 import {DateField} from './DateField';
+import {LearningIcon} from './LearningIcon';
 
 const textKeys = new Set(['fontSize','fontWeight','lineHeight','color','fontFamily','letterSpacing','textAlign']);
 function styles(source: Style | undefined, scale: number): {view: ViewStyle; text: TextStyle} {
@@ -32,15 +33,21 @@ export interface NativeViewProps {node: Node; scale: number; dark: boolean; path
 export function NativeView({node: n, scale, dark, path = '0'}: NativeViewProps): React.JSX.Element {
   const {width,fontScale}=useWindowDimensions();
   const s = styles(n.style, scale), ink = dark ? '#F0F5FF' : '#172033', line = dark ? '#2C3C55' : '#DFE7F1';
+  const iconColor=typeof s.text.color==='string'?s.text.color:ink;
   const children = (n.children ?? []).map((child, i) => <NativeView
     key={child.key ?? `${path}.${i}`} node={child} scale={scale} dark={dark} path={`${path}.${i}`} />);
+  if (n.kind === 'icon' && n.icon) return <View style={s.view} accessible={!!n.label} accessibilityRole={n.label?'image':undefined} accessibilityLabel={n.label} pointerEvents="none"><LearningIcon name={n.icon} size={n.iconSize??22} color={iconColor}/></View>;
   if (n.kind === 'text') return <Text accessibilityRole={n.heading ? 'header' : n.alert?'alert':undefined} accessibilityLiveRegion={n.alert?'polite':undefined}
     testID={n.testId} style={[s.view, {color: ink, flexShrink: 1}, s.text]}><RichText value={n.text ?? ''} /></Text>;
   if (n.kind === 'button') return <Pressable testID={n.testId} accessibilityRole={n.role ?? 'button'}
     accessibilityLabel={n.label ?? n.text} accessibilityState={{disabled: !!n.disabled, selected: !!n.selected, checked: n.checked, expanded:n.expanded}}
     disabled={n.disabled} onPress={() => {void n.action?.();}}
-    style={({pressed}) => [{minHeight: 48, justifyContent: 'center', paddingHorizontal: 12, paddingVertical: 10}, s.view, {opacity: pressed ? 0.78 : n.disabled ? 0.78 : 1}]}>
-    {n.text ? <Text style={[{color: ink, textAlign: 'center', fontSize: 15 * scale, fontWeight: '600', flexShrink: 1}, s.text]}><RichText value={n.text} /></Text> : null}
+    style={({pressed}) => [{minHeight: 48, justifyContent: 'center', paddingHorizontal: 12, paddingVertical: 10}, s.view, {opacity: n.disabled ? (n.role==='radio'?1:0.45) : pressed ? 0.78 : 1}]}>
+    {(n.text||n.icon)?<View style={{flexDirection:n.iconPosition==='above'?'column':'row',alignItems:'center',justifyContent:'center',gap:n.iconPosition==='above'?4:8}}>
+      {n.icon&&n.iconPosition!=='trailing'?<LearningIcon name={n.icon} size={n.iconSize??(n.role==='tab'?23:20)} color={iconColor}/>:null}
+      {n.text ? <Text style={[{color: ink, textAlign: 'center', fontSize: 15 * scale, fontWeight: '600', flexShrink: 1}, s.text]}><RichText value={n.text} /></Text> : null}
+      {n.icon&&n.iconPosition==='trailing'?<LearningIcon name={n.icon} size={n.iconSize??20} color={iconColor}/>:null}
+    </View>:null}
     {children}
   </Pressable>;
   if (n.kind === 'input') return <TextInput testID={n.testId} accessibilityLabel={n.label}
@@ -65,7 +72,7 @@ export function NativeView({node: n, scale, dark, path = '0'}: NativeViewProps):
   if(n.key==='lesson-grid')return <View style={{flexDirection:'row',flexWrap:'wrap',gap:12}}>{children.map((child,i)=><View key={n.children?.[i]?.key??i} style={{width:width>=768&&scale*fontScale<=1.3?'48%':'100%'}}>{child}</View>)}</View>;
   if(n.scroll&&n.reading)return <ReadingScrollView key={n.key} testID={n.testId} {...n.reading}
     keyboardShouldPersistTaps="handled" showsVerticalScrollIndicator
-    contentContainerStyle={[s.view,{width:'100%',maxWidth:920,alignSelf:'center'}]} style={{flex:1}}>{children}</ReadingScrollView>;
+    contentContainerStyle={[s.view,{width:'100%',maxWidth:720,alignSelf:'center'}]} style={{flex:1}}>{children}</ReadingScrollView>;
   if(n.scroll&&n.catalog)return <CatalogScrollView key={n.key} testID={n.testId} {...n.catalog} layoutKey={`${width}:${fontScale}:${scale}`}
     keyboardShouldPersistTaps="handled" showsVerticalScrollIndicator
     contentContainerStyle={[s.view,{width:'100%',maxWidth:920,alignSelf:'center'}]} style={{flex:1}}>{children}</CatalogScrollView>;

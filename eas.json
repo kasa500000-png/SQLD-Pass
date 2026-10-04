@@ -96,9 +96,19 @@
     }
   },
   "submit": {
+    "play-free": {
+      "android": {
+        "track": "alpha",
+        "releaseStatus": "draft",
+        "changesNotSentForReview": true
+      }
+    },
     "ios-free": {
       "ios": {
-        "ascAppId": "6818046749"
+        "ascAppId": "6818046749",
+        "ascApiKeyPath": "${EXPO_ASC_API_KEY_PATH}",
+        "ascApiKeyId": "${EXPO_ASC_KEY_ID}",
+        "ascApiKeyIssuerId": "${EXPO_ASC_ISSUER_ID}"
       }
     }
   }
