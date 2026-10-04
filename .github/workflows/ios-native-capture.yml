@@ -34,8 +34,8 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
-          test -d /Applications/Xcode_26.3.app/Contents/Developer
-          export DEVELOPER_DIR=/Applications/Xcode_26.3.app/Contents/Developer
+          test -d /Applications/Xcode_26.6.app/Contents/Developer
+          export DEVELOPER_DIR=/Applications/Xcode_26.6.app/Contents/Developer
           echo "DEVELOPER_DIR=$DEVELOPER_DIR" >> "$GITHUB_ENV"
           echo "CAPTURE_ROOT=$RUNNER_TEMP/sqld-native-capture" >> "$GITHUB_ENV"
           mkdir -p "$RUNNER_TEMP/sqld-native-capture/final"
@@ -48,9 +48,9 @@ jobs:
           from pathlib import Path
           root = Path(os.environ['RUNNER_TEMP']) / 'sqld-native-capture'
           runtimes = json.loads((root / 'runtimes.json').read_text())['runtimes']
-          runtime = next((r for r in runtimes if r.get('isAvailable') and r.get('name') == 'iOS 26.2'), None)
+          runtime = next((r for r in runtimes if r.get('isAvailable') and r.get('name') == 'iOS 26.5'), None)
           if not runtime:
-              raise SystemExit('The required installed iOS 26.2 Simulator runtime is unavailable.')
+              raise SystemExit('The required installed iOS 26.5 Simulator runtime is unavailable.')
           types = json.loads((root / 'device-types.json').read_text())['devicetypes']
           choices = {
               'iphone': [('iPhone 14 Plus', 1284, 2778), ('iPhone 17 Pro Max', 1320, 2868)],
@@ -254,7 +254,7 @@ jobs:
               images.append({'file': output.name, 'width': width, 'height': height})
           print(json.dumps({'sourceCommit': os.environ['GITHUB_SHA'], 'appBundleId': os.environ['IOS_BUNDLE_IDENTIFIER'],
               'appVersion': os.environ['CAPTURE_APP_VERSION'], 'appBuild': os.environ['CAPTURE_APP_BUILD'],
-              'environment': 'iOS Simulator / iOS 26.2', 'device': device['name'],
+              'environment': 'iOS Simulator / iOS 26.5', 'device': device['name'],
               'capturedAt': datetime.datetime.now(datetime.timezone.utc).isoformat(), 'images': images}))
           PY
             xcrun simctl shutdown "$udid"
