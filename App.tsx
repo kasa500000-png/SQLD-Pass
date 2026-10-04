@@ -12,6 +12,7 @@ import {MonetizedRoot as NativeView} from './src/platform/MonetizedRoot';
 import {createNativeServices} from './src/platform/native';
 import {createNativeReminders} from './src/platform/reminders';
 import {ReminderSettings} from './src/platform/ReminderSettings';
+import {ResponsiveLayoutProvider} from './src/platform/ResponsiveLayout';
 import contentData from './generated/content.json';
 
 const content = contentData as unknown as Content;
@@ -63,10 +64,10 @@ function LearnerApp(){
   return <SafeAreaView style={{flex:1,backgroundColor:isDark?'#0B1220':'#F6F8FC'}} edges={['top','bottom','left','right']}>
     <StatusBar style={isDark?'light':'dark'} />
     <KeyboardAvoidingView style={{flex:1}} behavior={Platform.OS==='ios'?'padding':undefined}>
-      <View style={{flex:1,width:'100%',maxWidth:920,alignSelf:'center'}}>
+      <ResponsiveLayoutProvider appScale={c.state.settings.fontScale}>
         {c.ready&&c.route.name==='reminderSettings'?<ReminderSettings c={c} reminders={reminders}/>:
           <NativeView node={render(c)} scale={c.state.settings.fontScale} dark={isDark} />}
-      </View>
+      </ResponsiveLayoutProvider>
     </KeyboardAvoidingView>
   </SafeAreaView>;
 }

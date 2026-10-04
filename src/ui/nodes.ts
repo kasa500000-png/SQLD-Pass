@@ -3,6 +3,8 @@ export type Style = Record<string,string|number|undefined>;
 export type LearningIconName = 'home'|'book'|'timer'|'chart'|'settings'|'bookmark'|'search'|'chevron-right'|'check'|'close'|'arrow-right'|'refresh'|'bell'|'list'|'chevron-left';
 export interface Node {
   kind:'box'|'text'|'button'|'input'|'date'|'progress'|'table'|'code'|'modal'|'icon'; key?:string; children?:Node[];
+  layout?:'lesson-sections'|'adaptive-row';
+  contentWidth?:'reading';
   text?:string; style?:Style; label?:string; testId?:string; action?:()=>void|Promise<void>;
   icon?:LearningIconName; iconSize?:number; iconPosition?:'leading'|'trailing'|'above';
   disabled?:boolean; selected?:boolean; expanded?:boolean; value?:string; minimumDate?:string; placeholder?:string; onChange?:(v:string)=>void;
@@ -17,6 +19,8 @@ export type Palette=typeof light;
 export function box(children:Node[]=[],style:Style={},key?:string):Node{return {kind:'box',children,style,key};}
 export function text(value:string,style:Style={},key?:string):Node{return {kind:'text',text:value,style,key};}
 export function row(children:Node[],style:Style={}):Node{return box(children,{flexDirection:'row',alignItems:'center',gap:10,...style});}
+/** Explicitly opt eligible groups into responsive wrapping; ordinary rows retain their layout. */
+export function adaptiveRow(children:Node[],style:Style={}):Node{return {...row(children,{flexWrap:'wrap',...style}),layout:'adaptive-row'};}
 export function button(label:string,action:()=>void|Promise<void>,style:Style={},props:Partial<Node>={}):Node{return {kind:'button',text:label,label,action,style,...props};}
 export function progress(value:number,color:string):Node{return {kind:'progress',progress:Math.max(0,Math.min(1,value)),style:{backgroundColor:color}};}
 export function table(columns:string[],rows:(string|number|null)[][],label='데이터 표'):Node{return {kind:'table',columns,rows,label};}

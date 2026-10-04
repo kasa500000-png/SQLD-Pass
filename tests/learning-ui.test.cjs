@@ -640,6 +640,33 @@ test('concept groups cover all 60 lessons once while icons retain names and four
  await click(c,'lesson-SQLD-L001');a.equal(get(c,'lesson-bookmark').icon,'bookmark');await click(c,'lesson-bookmark');a.equal(get(c,'lesson-bookmark').selected,true);
 });
 
+test('responsive catalog keeps each topic heading with its filtered lesson list as one section',()=>{
+ const {c}=setup(),groups=require('../.build/ui/learning-retention').learningGroups(content);c.route={name:'catalog'};c.state.settings.fontScale=1.3;
+ for(const filter of [{search:'',subject:'all',bookmarkedOnly:false},{search:'조인',subject:'S2',bookmarkedOnly:false},{search:'',subject:'all',bookmarkedOnly:true}]){
+  c.search=filter.search;c.subject=filter.subject;c.bookmarkedOnly=filter.bookmarkedOnly;c.state.bookmarks=['SQLD-L015','SQLD-L031'];
+  const before=JSON.stringify(c.state),grid=flat(view(c)).find(n=>n.key==='lesson-grid'),expected=fmt.searchLessons(content.lessons,c.search,c.subject,c.bookmarkedOnly?c.state.bookmarks:null);
+  a.equal(grid.layout,'lesson-sections');a.equal(grid.children.some(n=>n.kind==='text'||n.heading),false);a.equal(grid.children.length,groups.filter(group=>group.lessons.some(l=>expected.some(e=>e.id===l.id))).length);
+  const actual=[];for(const section of grid.children){a.match(section.key,/^lesson-section-/);a.equal(section.children.length,2);const [title,list]=section.children,group=groups.find(g=>'lesson-section-'+g.id===section.key);a.ok(group);a.equal(title.heading,true);a.ok(title.text.includes(group.title));a.equal(list.key,'group-'+group.id);
+   const ids=list.children.map(n=>n.testId.slice(7));a.deepEqual(ids,group.lessons.filter(l=>expected.some(e=>e.id===l.id)).map(l=>l.id));actual.push(...ids);
+  }a.deepEqual(actual,expected.map(l=>l.id));a.equal(JSON.stringify(c.state),before);a.equal(get(c,'lesson-search').key,'lesson-search');
+ }
+});
+
+test('adaptive layout is explicit for summaries while chips, activity, header and timed footer remain ordinary rows',()=>{
+ const {row,adaptiveRow,text}=require('../.build/ui/nodes'),children=[text('제목'),text('정보')];a.equal(row(children).layout,undefined);a.equal(adaptiveRow(children).layout,'adaptive-row');a.equal(adaptiveRow(children).style.flexWrap,'wrap');
+ const {c}=setup();c.expanded.add('home:topics');c.route={name:'home'};a.ok(flat(view(c)).some(n=>n.layout==='adaptive-row'));a.equal(view(c).children[0].layout,undefined);
+ const activity=get(c,'learning-activity');a.equal(activity.children.find(n=>n.children?.length===7).layout,undefined);
+ for(const name of ['catalog','practiceSetup','review','exams']){c.route={name};const nodes=flat(view(c)),chips=nodes.filter(n=>n.style?.flexDirection==='row'&&n.children?.length&&n.children.every(child=>child.kind==='button'&&child.role!=='tab'));for(const chipRow of chips){a.equal(chipRow.layout,undefined);a.equal(chipRow.style.flexWrap,'wrap');}}
+ c.route={name:'stats'};a.ok(flat(view(c)).some(n=>n.layout==='adaptive-row'&&n.children.length===2&&n.children.every(child=>child.kind==='box')));
+ makeExam(c);const root=view(c),footer=root.children.find(n=>n.key==='learning-footer');a.equal(footer.children[0].layout,undefined);a.equal(footer.children[0].style.flexWrap,'wrap');
+ a.equal(JSON.stringify(content),contentBefore);
+});
+
+test('reading and interaction screens request a bounded content frame without narrowing the four main catalogs',()=>{
+ const {c}=setup();for(const name of ['home','catalog','exams','stats']){c.route={name};a.equal(get(c,'learning-content').contentWidth,undefined,name);}
+ for(const name of ['lesson','practice','exam','examReview','practiceSetup','practiceResult','result','setup','settings','help','examIntro','privacy','notices','review','plan']){c.route={name};a.equal(get(c,'learning-content').contentWidth,'reading',name);}
+});
+
 test('the fixed lesson action records reading only after a successful save before opening confirmation',async()=>{
  const x=setup(),c=x.c,l=content.lessons[0];c.navigate({name:'lesson',id:l.id});
  a.equal(flat(view(c)).filter(n=>n.testId==='lesson-practice').length,1);a.equal(flat(get(c,'learning-content')).some(n=>n.testId==='lesson-practice'),false);

@@ -4,6 +4,7 @@ import DateTimePicker,{DateTimePickerAndroid} from '@react-native-community/date
 import {dayKey,validTargetDate} from '../core/domain';
 import {dark as darkPalette,light,type Node} from '../ui/nodes';
 import {AppText as Text} from './Typography';
+import {useResponsiveLayout} from './ResponsiveLayout';
 
 /** Dates are calendar days in the device's local timezone, never UTC timestamps. */
 function localDate(value:string):Date {
@@ -12,6 +13,7 @@ function localDate(value:string):Date {
 }
 
 export function DateField({node,scale,dark}:{node:Node;scale:number;dark:boolean}){
+  const layout=useResponsiveLayout();
   const p=dark?darkPalette:light;
   const minimum=node.minimumDate??dayKey(),minimumDate=localDate(minimum),maximumDate=new Date(2099,11,31,12);
   const initial=validTargetDate(node.value??'',minimum)&&node.value?localDate(node.value):minimumDate;
@@ -47,11 +49,15 @@ export function DateField({node,scale,dark}:{node:Node;scale:number;dark:boolean
     </Pressable>:null}
     {error?<Text accessibilityRole="alert" style={{fontSize:14*scale,lineHeight:22*scale,color:p.red}}>{error}</Text>:null}
     {Platform.OS==='ios'&&open?<Modal transparent visible animationType="fade" onRequestClose={()=>setOpen(false)}>
-      <View accessibilityViewIsModal style={{flex:1,backgroundColor:'rgba(10,20,40,0.5)',justifyContent:'center',padding:20}}>
-        <ScrollView style={{maxHeight:'90%',flexGrow:0,width:'100%',maxWidth:480,alignSelf:'center'}} contentContainerStyle={{padding:16,gap:12,backgroundColor:p.surface,borderRadius:16}}>
+      <View accessibilityViewIsModal style={{flex:1,backgroundColor:'rgba(10,20,40,0.5)',justifyContent:'center',paddingHorizontal:layout.horizontalPadding,paddingVertical:20}}>
+        <ScrollView style={{maxHeight:'90%',flexGrow:0,width:'100%',maxWidth:480,alignSelf:'center'}}
+          keyboardShouldPersistTaps="handled" contentContainerStyle={{padding:layout.stackRows?12:16,gap:12,backgroundColor:p.surface,borderRadius:16}}>
           <Text accessibilityRole="header" style={{fontSize:20*scale,color:p.ink,fontWeight:'700'}}>목표 시험일</Text>
-          <DateTimePicker value={draft} mode="date" display="spinner" locale="ko-KR" minimumDate={minimumDate} maximumDate={maximumDate}
-            themeVariant={dark?'dark':'light'} textColor={p.ink} onValueChange={(_event,date)=>setDraft(date)} />
+          <ScrollView horizontal showsHorizontalScrollIndicator style={{flexGrow:0}}
+            contentContainerStyle={{flexGrow:1,justifyContent:'center',alignItems:'center'}} accessibilityLabel="목표 시험일 선택">
+            <DateTimePicker value={draft} mode="date" display="spinner" locale="ko-KR" minimumDate={minimumDate} maximumDate={maximumDate}
+              themeVariant={dark?'dark':'light'} textColor={p.ink} onValueChange={(_event,date)=>setDraft(date)} />
+          </ScrollView>
           <Pressable accessibilityRole="button" accessibilityLabel="시험일 선택 완료" style={[control,{backgroundColor:p.blueSoft}]}
             onPress={()=>{node.onChange?.(dayKey(draft.getTime()));setOpen(false);}}>
             <Text style={{fontSize:16*scale,color:p.blue,textAlign:'center'}}>선택</Text>
