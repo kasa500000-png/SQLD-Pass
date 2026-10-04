@@ -18,9 +18,9 @@ export default ({config}:ConfigContext):ExpoConfig=>{
     owner:process.env.EXPO_OWNER??project.owner,
     platforms:['android','ios'],orientation:'default',userInterfaceStyle:'automatic',
     scheme:production?'sqld-pass':'sqld-pass-internal',updates:{enabled:false},
-    ios:{bundleIdentifier:process.env.IOS_BUNDLE_IDENTIFIER??'com.sqldpass.app.internal',buildNumber:'3',supportsTablet:true,
+    ios:{bundleIdentifier:process.env.IOS_BUNDLE_IDENTIFIER??'com.sqldpass.app.internal',buildNumber:'4',supportsTablet:true,
       infoPlist:{ITSAppUsesNonExemptEncryption:false}},
-    android:{package:process.env.ANDROID_PACKAGE??'com.sqldpass.app.internal',versionCode:9,allowBackup:false,
+    android:{package:process.env.ANDROID_PACKAGE??'com.sqldpass.app.internal',versionCode:10,allowBackup:false,
       adaptiveIcon:{foregroundImage:'./assets/brand/adaptive-foreground.png',backgroundColor:'#2457D6'},
       permissions:['android.permission.POST_NOTIFICATIONS','android.permission.RECEIVE_BOOT_COMPLETED'],softwareKeyboardLayoutMode:'resize',blockedPermissions:[
         'android.permission.CAMERA','android.permission.RECORD_AUDIO','android.permission.READ_CONTACTS','android.permission.WRITE_CONTACTS',
