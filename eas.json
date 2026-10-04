@@ -93,6 +93,10 @@
         "EXPO_PUBLIC_EXAM_ACCESS_POLICY": "launch-free",
         "IOS_BUNDLE_IDENTIFIER": "com.kasa500000.sqldpass"
       }
+    },
+    "ios-production": {
+      "extends": "production",
+      "autoIncrement": false
     }
   },
   "submit": {
@@ -104,6 +108,14 @@
       }
     },
     "ios-free": {
+      "ios": {
+        "ascAppId": "6818046749",
+        "ascApiKeyPath": "${EXPO_ASC_API_KEY_PATH}",
+        "ascApiKeyId": "${EXPO_ASC_KEY_ID}",
+        "ascApiKeyIssuerId": "${EXPO_ASC_ISSUER_ID}"
+      }
+    },
+    "ios-production": {
       "ios": {
         "ascAppId": "6818046749",
         "ascApiKeyPath": "${EXPO_ASC_API_KEY_PATH}",

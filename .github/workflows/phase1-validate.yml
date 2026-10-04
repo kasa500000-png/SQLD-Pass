@@ -27,7 +27,7 @@ jobs:
         run: |
           node scripts/materialize-content.cjs --required
           node scripts/check-content.cjs
-      - name: Verify actual content-review rejection
+      - name: Verify missing approval still blocks production
         run: node scripts/assert-draft-blocked.cjs
   native-source:
     needs: content
