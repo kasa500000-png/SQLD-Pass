@@ -153,12 +153,18 @@ jobs:
 
           final class CaptureTests: XCTestCase {
               private let productionSmoke = __PRODUCTION_SMOKE__
+              private let startedAt = ProcessInfo.processInfo.systemUptime
+
+              @MainActor private func mark(_ identifier: String) {
+                  print("SQLD-QA elapsed=\(Int(ProcessInfo.processInfo.systemUptime - startedAt))s id=\(identifier)")
+              }
 
               @MainActor private func element(_ app: XCUIApplication, _ identifier: String) -> XCUIElement {
                   app.descendants(matching: .any).matching(identifier: identifier).firstMatch
               }
 
               @MainActor private func tap(_ app: XCUIApplication, _ identifier: String) {
+                  mark("tap:\(identifier)")
                   let control = element(app, identifier)
                   XCTAssertTrue(control.waitForExistence(timeout: 30), "Missing control: \(identifier)")
                   for _ in 0..<5 where !control.isHittable { app.swipeUp() }
@@ -169,13 +175,15 @@ jobs:
               }
 
               @MainActor private func assertLabel(_ app: XCUIApplication, _ identifier: String, contains text: String) {
+                  mark("assert-label:\(identifier)")
                   let control = element(app, identifier)
                   XCTAssertTrue(control.waitForExistence(timeout: 30), "Missing saved-state control: \(identifier)")
                   let saved = XCTNSPredicateExpectation(predicate: NSPredicate(format: "label CONTAINS %@", text), object: control)
                   XCTAssertEqual(XCTWaiter.wait(for: [saved], timeout: 15), .completed, "Saved state missing: \(identifier), \(text)")
               }
 
-              @MainActor private func assertText(_ app: XCUIApplication, _ text: String) {
+              @MainActor private func assertText(_ app: XCUIApplication, _ text: String, stage: String) {
+                  mark(stage)
                   XCTAssertTrue(app.staticTexts.matching(NSPredicate(format: "label == %@", text)).firstMatch.waitForExistence(timeout: 30), "Missing result text: \(text)")
               }
 
@@ -189,33 +197,38 @@ jobs:
                       tap(app, "submit-practice")
                       tap(app, "next-practice")
                   }
-                  assertText(app, "학습 완료")
-                  assertText(app, "2문항 완료")
+                  assertText(app, "학습 완료", stage: "assert-text:practice-result")
+                  assertText(app, "2문항 완료", stage: "assert-text:practice-result-count")
                   tap(app, "practice-result-home")
                   tap(app, "tab-records")
-                  assertText(app, "2문항 기준")
+                  assertText(app, "2문항 기준", stage: "assert-text:records-before-restart")
+                  mark("restart:practice")
                   app.terminate()
                   app.launch()
                   tap(app, "tab-records")
-                  assertText(app, "2문항 기준")
+                  assertText(app, "2문항 기준", stage: "assert-text:records-after-restart")
 
                   // Persist one exam answer, then prove native process restart recovery.
                   // This does not test 90-minute expiry, full scoring, or physical devices.
                   tap(app, "tab-exams")
                   tap(app, "exams-next")
                   tap(app, "start-exam")
-                  XCTAssertTrue(element(app, "exam-status").waitForExistence(timeout: 30))
+                  mark("assert-ready:exam-sheet")
+                  XCTAssertTrue(element(app, "exam-sheet").waitForExistence(timeout: 30))
                   tap(app, "option-1")
                   assertLabel(app, "option-1", contains: "선택됨")
                   tap(app, "exam-sheet")
                   assertLabel(app, "sheet-1", contains: "1번 선택")
+                  mark("restart:exam")
                   app.terminate()
                   app.launch()
                   tap(app, "home-resume-exam")
-                  XCTAssertTrue(element(app, "exam-status").waitForExistence(timeout: 30))
+                  mark("assert-ready:exam-sheet")
+                  XCTAssertTrue(element(app, "exam-sheet").waitForExistence(timeout: 30))
                   assertLabel(app, "option-1", contains: "선택됨")
                   tap(app, "exam-sheet")
                   assertLabel(app, "sheet-1", contains: "1번 선택")
+                  mark("production-smoke-complete")
               }
 
               @MainActor func testActualFourTabs() throws {
@@ -223,6 +236,7 @@ jobs:
                   XCUIDevice.shared.orientation = .portrait
                   let app = XCUIApplication(bundleIdentifier: "com.kasa500000.sqldpass")
                   app.launchArguments = ["-AppleLanguages", "(ko)", "-AppleLocale", "ko_KR"]
+                  mark("launch:initial")
                   app.launch()
                   tap(app, "start")
                   tap(app, "finish-setup")
@@ -234,6 +248,7 @@ jobs:
                   ]
                   for (name, tab, ready) in screens {
                       tap(app, tab)
+                      mark("assert-ready:\(ready)")
                       XCTAssertTrue(element(app, ready).waitForExistence(timeout: 15), "Wrong or unloaded screen: \(name)")
                       RunLoop.current.run(until: Date().addingTimeInterval(0.5))
                       let pixels = XCUIScreen.main.screenshot().pngRepresentation
@@ -298,12 +313,65 @@ jobs:
             xcrun simctl ui "$udid" appearance light
             xcrun simctl status_bar "$udid" override --time '9:41' --batteryState charged --batteryLevel 100
             xcrun simctl install "$udid" "$CAPTURE_APP"
-            xcodebuild -quiet test -project "$CAPTURE_ROOT/Capture.xcodeproj" -scheme CaptureTests \
+            test_status=0
+            xcodebuild test -project "$CAPTURE_ROOT/Capture.xcodeproj" -scheme CaptureTests \
               -destination "platform=iOS Simulator,id=$udid" \
               -derivedDataPath "$CAPTURE_ROOT/test-build" \
               -resultBundlePath "$CAPTURE_ROOT/$family.xcresult" \
               -parallel-testing-enabled NO \
-              CODE_SIGNING_ALLOWED=NO ARCHS=arm64 ONLY_ACTIVE_ARCH=YES
+              CODE_SIGNING_ALLOWED=NO ARCHS=arm64 ONLY_ACTIVE_ARCH=YES || test_status=$?
+            if [ "$test_status" -ne 0 ]; then
+              CAPTURE_FAMILY="$family" python3 - <<'PY'
+          import json, os, re, subprocess
+          from pathlib import Path
+          result_path = Path(os.environ['CAPTURE_ROOT']) / f"{os.environ['CAPTURE_FAMILY']}.xcresult"
+          def read_json(arguments):
+              try:
+                  result = subprocess.run(['xcrun', 'xcresulttool', *arguments, '--path', str(result_path)], capture_output=True, text=True, timeout=45)
+                  return json.loads(result.stdout) if result.returncode == 0 else None
+              except (OSError, ValueError, subprocess.TimeoutExpired):
+                  return None
+          def value(item):
+              return item.get('_value') if isinstance(item, dict) and '_value' in item else item
+          def line_number(failure):
+              for key in ('lineNumber', 'line'):
+                  number = value(failure.get(key))
+                  if isinstance(number, int) or (isinstance(number, str) and number.isdigit()):
+                      return int(number)
+              context = failure.get('sourceCodeContext') or {}
+              location = (context.get('location') or {}) if isinstance(context, dict) else {}
+              if isinstance(location, dict):
+                  number = value(location.get('lineNumber'))
+                  if isinstance(number, int) or (isinstance(number, str) and number.isdigit()):
+                      return int(number)
+              document = failure.get('documentLocationInCreatingWorkspace') or {}
+              url = value(document.get('url')) if isinstance(document, dict) else None
+              if isinstance(url, str):
+                  match = re.search(r'(?:StartingLineNumber|line)=(\d+)', url)
+                  if match:
+                      return int(match.group(1))
+              return None
+          def minimal_failure(failure):
+              return {
+                  'testIdentifier': value(failure.get('testIdentifier') or failure.get('testCaseName') or failure.get('testName')),
+                  'message': value(failure.get('message')),
+                  'issueType': value(failure.get('issueType')),
+                  'line': line_number(failure),
+              }
+          summary = read_json(['get', 'test-results', 'summary', '--compact'])
+          failures = summary.get('testFailures', []) if isinstance(summary, dict) else []
+          status = (summary.get('result') or summary.get('status')) if isinstance(summary, dict) else None
+          if not isinstance(failures, list) or not failures:
+              legacy = read_json(['get', '--legacy', '--format', 'json'])
+              issues = legacy.get('issues', {}) if isinstance(legacy, dict) else {}
+              container = issues.get('testFailureSummaries', {}) if isinstance(issues, dict) else {}
+              failures = container.get('_values', []) if isinstance(container, dict) else []
+          if not isinstance(failures, list):
+              failures = []
+          print(json.dumps({'status': status or 'failed', 'testFailures': [minimal_failure(item) for item in failures if isinstance(item, dict)]}, ensure_ascii=False))
+          PY
+              exit "$test_status"
+            fi
             xcrun xcresulttool export attachments --path "$CAPTURE_ROOT/$family.xcresult" \
               --output-path "$CAPTURE_ROOT/$family-attachments"
             CAPTURE_FAMILY="$family" python3 - <<'PY'
