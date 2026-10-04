@@ -1,0 +1,269 @@
+name: SQLD Pass native iOS screenshots
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: sqld-ios-capture-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  capture:
+    runs-on: macos-26
+    timeout-minutes: 50
+    env:
+      CI: '1'
+      EXPO_PUBLIC_APP_ENV: internal
+      EXPO_PUBLIC_ADS_MODE: 'off'
+      EXPO_PUBLIC_EXAM_ACCESS_POLICY: launch-free
+      IOS_BUNDLE_IDENTIFIER: com.kasa500000.sqldpass
+      RCT_NO_LAUNCH_PACKAGER: '1'
+      LANG: en_US.UTF-8
+      LC_ALL: en_US.UTF-8
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Select the installed native toolchain
+        shell: bash
+        run: |
+          set -euo pipefail
+          test -d /Applications/Xcode_26.3.app/Contents/Developer
+          export DEVELOPER_DIR=/Applications/Xcode_26.3.app/Contents/Developer
+          echo "DEVELOPER_DIR=$DEVELOPER_DIR" >> "$GITHUB_ENV"
+          echo "CAPTURE_ROOT=$RUNNER_TEMP/sqld-native-capture" >> "$GITHUB_ENV"
+          mkdir -p "$RUNNER_TEMP/sqld-native-capture/final"
+          xcodebuild -version
+          ruby -rxcodeproj -e 'puts "Xcodeproj #{Xcodeproj::VERSION}"'
+          xcrun simctl list runtimes --json > "$RUNNER_TEMP/sqld-native-capture/runtimes.json"
+          xcrun simctl list devicetypes --json > "$RUNNER_TEMP/sqld-native-capture/device-types.json"
+          python3 - <<'PY'
+          import json, os
+          from pathlib import Path
+          root = Path(os.environ['RUNNER_TEMP']) / 'sqld-native-capture'
+          runtimes = json.loads((root / 'runtimes.json').read_text())['runtimes']
+          runtime = next((r for r in runtimes if r.get('isAvailable') and r.get('name') == 'iOS 26.2'), None)
+          if not runtime:
+              raise SystemExit('The required installed iOS 26.2 Simulator runtime is unavailable.')
+          types = json.loads((root / 'device-types.json').read_text())['devicetypes']
+          choices = {
+              'iphone': [('iPhone 14 Plus', 1284, 2778), ('iPhone 17 Pro Max', 1320, 2868)],
+              'ipad': [(f'iPad Pro (12.9-inch) ({g} generation)', 2048, 2732)
+                       for g in ['6th', '5th', '4th', '3rd']]
+                      + [('iPad Pro 13-inch (M5)', 2064, 2752)]
+          }
+          selected = {}
+          for family, preferences in choices.items():
+              for name, width, height in preferences:
+                  device = next((d for d in types if d.get('name') == name), None)
+                  if device:
+                      selected[family] = {'name': name, 'identifier': device['identifier'], 'width': width, 'height': height}
+                      break
+              if family not in selected:
+                  raise SystemExit(f'No supported {family} capture device type is installed.')
+          (root / 'devices.json').write_text(json.dumps(selected))
+          with open(os.environ['GITHUB_ENV'], 'a') as env:
+              env.write(f"CAPTURE_RUNTIME={runtime['identifier']}\n")
+          print(json.dumps({'runtime': runtime['name'], 'devices': selected}))
+          PY
+      - name: Install the pinned app dependencies
+        run: npm ci --no-audit --no-fund
+      - name: Verify the actual source and generate the iOS app
+        run: |
+          npm run typecheck:native
+          npm run ads:check
+          npx --no-install expo prebuild --platform ios --no-install
+          pod install --project-directory=ios --silent
+      - name: Compile the actual app for Simulator without signing credentials
+        shell: bash
+        run: |
+          set -euo pipefail
+          workspace="$(find ios -maxdepth 1 -type d -name '*.xcworkspace' -print -quit)"
+          project="$(find ios -maxdepth 1 -type d -name '*.xcodeproj' -print -quit)"
+          test -n "$workspace"
+          test -n "$project"
+          scheme="$(ruby -rxcodeproj -e 'p = Xcodeproj::Project.open(ARGV.fetch(0)); apps = p.targets.select { |t| t.product_type == "com.apple.product-type.application" }; abort "Expected one actual app target" unless apps.size == 1; puts apps.first.name' "$project")"
+          xcodebuild -quiet build -workspace "$workspace" -scheme "$scheme" \
+            -configuration Release -sdk iphonesimulator \
+            -destination 'generic/platform=iOS Simulator' \
+            -derivedDataPath "$CAPTURE_ROOT/app-build" \
+            ARCHS=arm64 ONLY_ACTIVE_ARCH=YES CODE_SIGNING_ALLOWED=NO
+          app="$(find "$CAPTURE_ROOT/app-build/Build/Products/Release-iphonesimulator" -maxdepth 1 -type d -name '*.app' -print -quit)"
+          test -n "$app"
+          test "$(/usr/libexec/PlistBuddy -c 'Print CFBundleIdentifier' "$app/Info.plist")" = "$IOS_BUNDLE_IDENTIFIER"
+          test -f "$app/main.jsbundle"
+          executable="$(/usr/libexec/PlistBuddy -c 'Print CFBundleExecutable' "$app/Info.plist")"
+          xcrun lipo -verify_arch arm64 "$app/$executable"
+          xcrun vtool -show-build "$app/$executable" | grep -q 'platform IOSSIMULATOR'
+          echo "CAPTURE_APP=$app" >> "$GITHUB_ENV"
+          echo "CAPTURE_APP_VERSION=$(/usr/libexec/PlistBuddy -c 'Print CFBundleShortVersionString' "$app/Info.plist")" >> "$GITHUB_ENV"
+          echo "CAPTURE_APP_BUILD=$(/usr/libexec/PlistBuddy -c 'Print CFBundleVersion' "$app/Info.plist")" >> "$GITHUB_ENV"
+      - name: Create a temporary native UI test runner
+        shell: bash
+        run: |
+          set -euo pipefail
+          cat > "$CAPTURE_ROOT/CaptureTests.swift" <<'SWIFT'
+          import XCTest
+          import UIKit
+
+          final class CaptureTests: XCTestCase {
+              @MainActor private func element(_ app: XCUIApplication, _ identifier: String) -> XCUIElement {
+                  app.descendants(matching: .any).matching(identifier: identifier).firstMatch
+              }
+
+              @MainActor private func tap(_ app: XCUIApplication, _ identifier: String) {
+                  let control = element(app, identifier)
+                  XCTAssertTrue(control.waitForExistence(timeout: 30), "Missing control: \(identifier)")
+                  for _ in 0..<5 where !control.isHittable { app.swipeUp() }
+                  XCTAssertTrue(control.isHittable, "Control is not reachable: \(identifier)")
+                  control.tap()
+              }
+
+              @MainActor func testActualFourTabs() throws {
+                  continueAfterFailure = false
+                  XCUIDevice.shared.orientation = .portrait
+                  let app = XCUIApplication(bundleIdentifier: "com.kasa500000.sqldpass")
+                  app.launchArguments = ["-AppleLanguages", "(ko)", "-AppleLocale", "ko_KR"]
+                  app.launch()
+                  tap(app, "start")
+                  tap(app, "finish-setup")
+                  let screens = [
+                      ("01-home", "tab-today", "home-study"),
+                      ("02-learning", "tab-learn", "lesson-search"),
+                      ("03-exams", "tab-exams", "exams-next"),
+                      ("04-records", "tab-records", "confirmation-stats")
+                  ]
+                  for (name, tab, ready) in screens {
+                      tap(app, tab)
+                      XCTAssertTrue(element(app, ready).waitForExistence(timeout: 15), "Wrong or unloaded screen: \(name)")
+                      RunLoop.current.run(until: Date().addingTimeInterval(0.5))
+                      let pixels = XCUIScreen.main.screenshot().pngRepresentation
+                      let image = try XCTUnwrap(UIImage(data: pixels))
+                      let jpeg = try XCTUnwrap(image.jpegData(compressionQuality: 1.0))
+                      let attachment = XCTAttachment(data: jpeg, uniformTypeIdentifier: "public.jpeg")
+                      attachment.name = "SQLD-CAPTURE-\(name)"
+                      attachment.lifetime = .keepAlways
+                      add(attachment)
+                  }
+              }
+          }
+          SWIFT
+          ruby - <<'RUBY'
+          require 'xcodeproj'
+          root = ENV.fetch('CAPTURE_ROOT')
+          project = Xcodeproj::Project.new("#{root}/Capture.xcodeproj")
+          target = project.new_target(:ui_test_bundle, 'CaptureTests', :ios, '16.4')
+          source = project.main_group.new_file('CaptureTests.swift')
+          target.source_build_phase.add_file_reference(source)
+          target.build_configurations.each do |config|
+            config.build_settings.merge!(
+              'SWIFT_VERSION' => '5.0',
+              'PRODUCT_BUNDLE_IDENTIFIER' => 'com.kasa500000.sqldpass.capturetests',
+              'GENERATE_INFOPLIST_FILE' => 'YES',
+              'TARGETED_DEVICE_FAMILY' => '1,2',
+              'SDKROOT' => 'iphonesimulator',
+              'SUPPORTED_PLATFORMS' => 'iphonesimulator',
+              'ENABLE_TESTING_SEARCH_PATHS' => 'YES',
+              'CODE_SIGNING_ALLOWED' => 'NO'
+            )
+          end
+          project.save
+          scheme = Xcodeproj::XCScheme.new
+          scheme.add_build_target(target, false)
+          scheme.add_test_target(target)
+          scheme.save_as(project.path, 'CaptureTests')
+          RUBY
+      - name: Run the actual app on iPhone and iPad and keep only its JPEG captures
+        shell: bash
+        run: |
+          set -euo pipefail
+          created_devices=()
+          cleanup() {
+            for device in "${created_devices[@]}"; do
+              xcrun simctl shutdown "$device" >/dev/null 2>&1 || true
+              xcrun simctl delete "$device" >/dev/null 2>&1 || true
+            done
+          }
+          trap cleanup EXIT
+          for family in iphone ipad; do
+            device_type="$(python3 -c 'import json,os,sys; print(json.load(open(os.path.join(os.environ["CAPTURE_ROOT"], "devices.json")))[sys.argv[1]]["identifier"])' "$family")"
+            udid="$(xcrun simctl create "SQLD-Capture-$family" "$device_type" "$CAPTURE_RUNTIME")"
+            created_devices+=("$udid")
+            xcrun simctl boot "$udid"
+            xcrun simctl bootstatus "$udid" -b
+            xcrun simctl ui "$udid" appearance light
+            xcrun simctl status_bar "$udid" override --time '9:41' --batteryState charged --batteryLevel 100
+            xcrun simctl install "$udid" "$CAPTURE_APP"
+            xcodebuild -quiet test -project "$CAPTURE_ROOT/Capture.xcodeproj" -scheme CaptureTests \
+              -destination "platform=iOS Simulator,id=$udid" \
+              -derivedDataPath "$CAPTURE_ROOT/test-build" \
+              -resultBundlePath "$CAPTURE_ROOT/$family.xcresult" \
+              -parallel-testing-enabled NO \
+              CODE_SIGNING_ALLOWED=NO ARCHS=arm64 ONLY_ACTIVE_ARCH=YES
+            xcrun xcresulttool export attachments --path "$CAPTURE_ROOT/$family.xcresult" \
+              --output-path "$CAPTURE_ROOT/$family-attachments"
+            CAPTURE_FAMILY="$family" python3 - <<'PY'
+          import datetime, json, os, re, shutil, subprocess
+          from pathlib import Path
+          root = Path(os.environ['CAPTURE_ROOT'])
+          family = os.environ['CAPTURE_FAMILY']
+          device = json.loads((root / 'devices.json').read_text())[family]
+          exported = (root / f'{family}-attachments').resolve()
+          manifest = json.loads((exported / 'manifest.json').read_text())
+          names = {'01-home', '02-learning', '03-exams', '04-records'}
+          found = {}
+          def visit(value):
+              if isinstance(value, list):
+                  for child in value:
+                      visit(child)
+              elif isinstance(value, dict):
+                  filename = value.get('exportedFileName')
+                  name = value.get('suggestedHumanReadableName', '')
+                  match = re.search(r'SQLD-CAPTURE-(01-home|02-learning|03-exams|04-records)', name) if isinstance(name, str) else None
+                  if filename and match:
+                      key = match.group(1)
+                      if key in found:
+                          raise SystemExit(f'Duplicate native screenshot: {key}')
+                      source = (exported / filename).resolve()
+                      if not source.is_relative_to(exported) or not source.is_file():
+                          raise SystemExit('Invalid exported screenshot path.')
+                      if source.read_bytes()[:3] != b'\xff\xd8\xff':
+                          raise SystemExit('The selected attachment is not a JPEG.')
+                      found[key] = source
+                  for child in value.values():
+                      if isinstance(child, (dict, list)):
+                          visit(child)
+          visit(manifest)
+          if set(found) != names:
+              raise SystemExit(f'Expected four native JPEGs, received {sorted(found)}')
+          images = []
+          for name, source in sorted(found.items()):
+              dimensions = subprocess.check_output(['/usr/bin/sips', '-g', 'pixelWidth', '-g', 'pixelHeight', str(source)], text=True)
+              width = int(re.search(r'pixelWidth:\s*(\d+)', dimensions).group(1))
+              height = int(re.search(r'pixelHeight:\s*(\d+)', dimensions).group(1))
+              if (width, height) != (device['width'], device['height']):
+                  raise SystemExit(f'Unexpected native resolution: {width}x{height} for {device["name"]}')
+              output = root / 'final' / f'{family}-{name}.jpg'
+              shutil.copyfile(source, output)
+              images.append({'file': output.name, 'width': width, 'height': height})
+          print(json.dumps({'sourceCommit': os.environ['GITHUB_SHA'], 'appBundleId': os.environ['IOS_BUNDLE_IDENTIFIER'],
+              'appVersion': os.environ['CAPTURE_APP_VERSION'], 'appBuild': os.environ['CAPTURE_APP_BUILD'],
+              'environment': 'iOS Simulator / iOS 26.2', 'device': device['name'],
+              'capturedAt': datetime.datetime.now(datetime.timezone.utc).isoformat(), 'images': images}))
+          PY
+            xcrun simctl shutdown "$udid"
+            xcrun simctl delete "$udid"
+          done
+          test "$(find "$CAPTURE_ROOT/final" -maxdepth 1 -type f -name '*.jpg' | wc -l | tr -d ' ')" = '8'
+      - uses: actions/upload-artifact@v4
+        with:
+          name: sqld-native-ios-jpeg-${{ github.sha }}
+          path: ${{ runner.temp }}/sqld-native-capture/final/*.jpg
+          retention-days: 1
+          if-no-files-found: error
