@@ -2,6 +2,20 @@ name: SQLD Pass native iOS screenshots
 
 on:
   workflow_dispatch:
+    inputs:
+      app_environment:
+        description: Actual app build environment
+        required: true
+        type: choice
+        default: internal
+        options:
+          - internal
+          - production
+      retain_screenshots:
+        description: Upload the eight native JPEG screenshots for one day
+        required: true
+        type: boolean
+        default: true
 
 permissions:
   contents: read
@@ -16,10 +30,11 @@ jobs:
     timeout-minutes: 50
     env:
       CI: '1'
-      EXPO_PUBLIC_APP_ENV: internal
+      EXPO_PUBLIC_APP_ENV: ${{ inputs.app_environment || 'internal' }}
       EXPO_PUBLIC_ADS_MODE: 'off'
       EXPO_PUBLIC_EXAM_ACCESS_POLICY: launch-free
       IOS_BUNDLE_IDENTIFIER: com.kasa500000.sqldpass
+      ANDROID_PACKAGE: com.kasa500000.sqldpass
       RCT_NO_LAUNCH_PACKAGER: '1'
       LANG: en_US.UTF-8
       LC_ALL: en_US.UTF-8
@@ -74,6 +89,9 @@ jobs:
           PY
       - name: Install the pinned app dependencies
         run: npm ci --no-audit --no-fund
+      - name: Verify production release approval before building or restoring an app
+        if: inputs.app_environment == 'production'
+        run: npm run release:check
       - name: Verify the actual source and generate the iOS app
         run: |
           npm run typecheck:native
@@ -85,7 +103,7 @@ jobs:
         uses: actions/cache/restore@v4
         with:
           path: ${{ runner.temp }}/sqld-native-capture/native-app
-          key: sqld-capture-xcode26.6-arm64-v1-${{ hashFiles('package.json', 'package-lock.json', 'app.config.ts', 'react-native.config.js', 'index.ts', 'App.tsx', 'src/**', 'assets/**', 'config/**', 'plugins/**', 'scripts/**', 'content-pack/content.json.gz', 'content-pack/content.lock.json') }}
+          key: sqld-capture-xcode26.6-arm64-v2-${{ inputs.app_environment || 'internal' }}-${{ hashFiles('package.json', 'package-lock.json', 'app.config.ts', 'react-native.config.js', 'index.ts', 'App.tsx', 'src/**', 'assets/**', 'config/**', 'plugins/**', 'scripts/**', 'content-pack/content.json.gz', 'content-pack/content.lock.json', 'release/CONTENT_REVIEW_STATUS.json', 'release-approval.json') }}
       - name: Compile the actual app for Simulator without signing credentials
         if: steps.native-app-cache.outputs.cache-hit != 'true'
         shell: bash
@@ -134,6 +152,8 @@ jobs:
           import UIKit
 
           final class CaptureTests: XCTestCase {
+              private let productionSmoke = __PRODUCTION_SMOKE__
+
               @MainActor private func element(_ app: XCUIApplication, _ identifier: String) -> XCUIElement {
                   app.descendants(matching: .any).matching(identifier: identifier).firstMatch
               }
@@ -143,7 +163,59 @@ jobs:
                   XCTAssertTrue(control.waitForExistence(timeout: 30), "Missing control: \(identifier)")
                   for _ in 0..<5 where !control.isHittable { app.swipeUp() }
                   XCTAssertTrue(control.isHittable, "Control is not reachable: \(identifier)")
+                  let enabled = XCTNSPredicateExpectation(predicate: NSPredicate(format: "enabled == true"), object: control)
+                  XCTAssertEqual(XCTWaiter.wait(for: [enabled], timeout: 15), .completed, "Control stayed disabled: \(identifier)")
                   control.tap()
+              }
+
+              @MainActor private func assertLabel(_ app: XCUIApplication, _ identifier: String, contains text: String) {
+                  let control = element(app, identifier)
+                  XCTAssertTrue(control.waitForExistence(timeout: 30), "Missing saved-state control: \(identifier)")
+                  let saved = XCTNSPredicateExpectation(predicate: NSPredicate(format: "label CONTAINS %@", text), object: control)
+                  XCTAssertEqual(XCTWaiter.wait(for: [saved], timeout: 15), .completed, "Saved state missing: \(identifier), \(text)")
+              }
+
+              @MainActor private func assertText(_ app: XCUIApplication, _ text: String) {
+                  XCTAssertTrue(app.staticTexts.matching(NSPredicate(format: "label == %@", text)).firstMatch.waitForExistence(timeout: 30), "Missing result text: \(text)")
+              }
+
+              @MainActor private func verifyProductionPersistence(_ app: XCUIApplication) {
+                  // Fresh GitHub Simulator data only; submit one real two-question lesson session.
+                  tap(app, "tab-learn")
+                  tap(app, "lesson-SQLD-L001")
+                  tap(app, "lesson-practice")
+                  for _ in 0..<2 {
+                      tap(app, "option-1")
+                      tap(app, "submit-practice")
+                      tap(app, "next-practice")
+                  }
+                  assertText(app, "학습 완료")
+                  assertText(app, "2문항 완료")
+                  tap(app, "practice-result-home")
+                  tap(app, "tab-records")
+                  assertText(app, "2문항 기준")
+                  app.terminate()
+                  app.launch()
+                  tap(app, "tab-records")
+                  assertText(app, "2문항 기준")
+
+                  // Persist one exam answer, then prove native process restart recovery.
+                  // This does not test 90-minute expiry, full scoring, or physical devices.
+                  tap(app, "tab-exams")
+                  tap(app, "exams-next")
+                  tap(app, "start-exam")
+                  XCTAssertTrue(element(app, "exam-status").waitForExistence(timeout: 30))
+                  tap(app, "option-1")
+                  assertLabel(app, "option-1", contains: "선택됨")
+                  tap(app, "exam-sheet")
+                  assertLabel(app, "sheet-1", contains: "1번 선택")
+                  app.terminate()
+                  app.launch()
+                  tap(app, "home-resume-exam")
+                  XCTAssertTrue(element(app, "exam-status").waitForExistence(timeout: 30))
+                  assertLabel(app, "option-1", contains: "선택됨")
+                  tap(app, "exam-sheet")
+                  assertLabel(app, "sheet-1", contains: "1번 선택")
               }
 
               @MainActor func testActualFourTabs() throws {
@@ -172,12 +244,17 @@ jobs:
                       attachment.lifetime = .keepAlways
                       add(attachment)
                   }
+                  if productionSmoke { verifyProductionPersistence(app) }
               }
           }
           SWIFT
           ruby - <<'RUBY'
           require 'xcodeproj'
           root = ENV.fetch('CAPTURE_ROOT')
+          source_path = File.join(root, 'CaptureTests.swift')
+          source_text = File.read(source_path)
+          raise 'Expected one production smoke placeholder' unless source_text.scan('__PRODUCTION_SMOKE__').size == 1
+          File.write(source_path, source_text.sub('__PRODUCTION_SMOKE__', ENV.fetch('EXPO_PUBLIC_APP_ENV') == 'production' ? 'true' : 'false'))
           project = Xcodeproj::Project.new("#{root}/Capture.xcodeproj")
           target = project.new_target(:ui_test_bundle, 'CaptureTests', :ios, '16.4')
           source = project.main_group.new_file('CaptureTests.swift')
@@ -275,6 +352,7 @@ jobs:
               images.append({'file': output.name, 'width': width, 'height': height})
           print(json.dumps({'sourceCommit': os.environ['GITHUB_SHA'], 'appBundleId': os.environ['IOS_BUNDLE_IDENTIFIER'],
               'appVersion': os.environ['CAPTURE_APP_VERSION'], 'appBuild': os.environ['CAPTURE_APP_BUILD'],
+              'appEnvironment': os.environ['EXPO_PUBLIC_APP_ENV'],
               'environment': 'iOS Simulator / iOS 26.5', 'device': device['name'],
               'capturedAt': datetime.datetime.now(datetime.timezone.utc).isoformat(), 'images': images}))
           PY
@@ -283,6 +361,7 @@ jobs:
           done
           test "$(find "$CAPTURE_ROOT/final" -maxdepth 1 -type f -name '*.jpg' | wc -l | tr -d ' ')" = '8'
       - uses: actions/upload-artifact@v4
+        if: inputs.retain_screenshots
         with:
           name: sqld-native-ios-jpeg-${{ github.sha }}
           path: ${{ runner.temp }}/sqld-native-capture/final/*.jpg

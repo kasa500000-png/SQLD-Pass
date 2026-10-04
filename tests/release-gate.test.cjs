@@ -30,13 +30,14 @@ function fixture(t) {
   const writeLock = () => fs.writeFileSync(lockPath, JSON.stringify(lock));
   writeLock();
   const review = {schemaVersion: 1, status: 'owner-reviewed-complete', contentSha256: lock.sha256,
-    scope: {lessons: 60, questions: 1120}, reviewer: 'Synthetic fixture reviewer', reviewedAt: '2026-09-18',
-    targetDbmsReview: 'Synthetic DBMS method and result', officialSyllabusReview: 'Synthetic official comparison', productionReleaseApproved: true};
+    scope: {lessons: 60, questions: 1120}, declaredBy: 'Synthetic fixture owner',
+    ownerStatement: 'Synthetic direct confirmation of completed content review', recordedAt: '2026-09-18T00:00:00Z',
+    productionReleaseApproved: true};
   const writeReview = () => fs.writeFileSync(reviewPath, JSON.stringify(review));
   writeReview();
   const approval = {schemaVersion: 1, approvedBy: 'Synthetic fixture', approvedAt: '2026-09-19T00:00:00Z',
     contentSha256: lock.sha256, contentVersion: lock.contentVersion, humanContentReview: 'Synthetic review',
-    targetDbmsReview: 'Synthetic DBMS', officialSyllabusReview: 'Synthetic syllabus', androidDeviceQA: 'Synthetic Android',
+    androidDeviceQA: 'Synthetic Android',
     iosDeviceQA: 'Synthetic iOS', ownerApproval: 'Synthetic fixture only',
     privacyUrl: 'https://sqldpass.test/privacy', supportUrl: 'https://sqldpass.test/support'};
   const writeApproval = () => fs.writeFileSync(approvalPath, JSON.stringify(approval));
@@ -62,7 +63,7 @@ test('external review and actual launch approval are separately required', t => 
   assert.throws(() => checkContentRelease(f.root), /release-approval.json is required/);
 });
 
-test('owner declaration and non-boolean release approval are insufficient', t => {
+test('unconfirmed review status and non-boolean release approval are insufficient', t => {
   const f = fixture(t);
   for (const status of ['owner-declared-complete', 'pending', undefined]) {
     f.review.status = status; f.writeReview(); assert.throws(() => checkContentRelease(f.root), /Content approval evidence is incomplete/);
@@ -87,20 +88,30 @@ test('review schema and non-object metadata fail closed', t => {
   }
 });
 
-test('reviewer, review date, DBMS method and official comparison are required facts', t => {
+test('direct owner confirmation fields remain mandatory', t => {
   const f = fixture(t), baseline = structuredClone(f.review);
-  for (const key of ['reviewer', 'reviewedAt', 'targetDbmsReview', 'officialSyllabusReview']) for (const value of [undefined, null, '  ', true, {}]) {
+  for (const key of ['declaredBy', 'ownerStatement', 'recordedAt']) for (const value of [undefined, null, '  ', true, {}]) {
     Object.assign(f.review, baseline, {[key]: value}); f.writeReview(); assert.throws(() => checkContentRelease(f.root), new RegExp('Missing content review field: ' + key));
   }
 });
 
-test('review dates reject invalid calendar dates and ambiguous timestamps', t => {
+test('direct owner confirmation does not require invented detailed review metadata', t => {
+  const f = fixture(t);
+  for (const key of ['reviewer', 'reviewedAt', 'targetDbmsReview', 'officialSyllabusReview']) assert.equal(Object.hasOwn(f.review, key), false);
+  for (const key of ['targetDbmsReview', 'officialSyllabusReview']) assert.equal(Object.hasOwn(f.approval, key), false);
+  assert.equal(checkContentRelease(f.root).approved, true);
+  const before = fs.readFileSync(f.reviewPath);
+  assert.equal(checkContentRelease(f.root).approved, true);
+  assert.deepEqual(fs.readFileSync(f.reviewPath), before);
+});
+
+test('confirmation timestamps reject invalid calendar dates and ambiguous timestamps', t => {
   const f = fixture(t);
   for (const date of ['not a date', '0', '2026-02-30', '2026-09-18T00:00:00']) {
-    f.review.reviewedAt = date; f.writeReview(); assert.throws(() => checkContentRelease(f.root), /Invalid content review timestamp/);
+    f.review.recordedAt = date; f.writeReview(); assert.throws(() => checkContentRelease(f.root), /Invalid content confirmation timestamp/);
   }
   for (const date of ['2026-09-18', '2026-09-18T12:00:00+09:00']) {
-    f.review.reviewedAt = date; f.writeReview(); assert.equal(checkContentRelease(f.root).approved, true);
+    f.review.recordedAt = date; f.writeReview(); assert.equal(checkContentRelease(f.root).approved, true);
   }
 });
 
@@ -123,7 +134,7 @@ test('launch approval schema and content version are mandatory', t => {
 
 test('all launch facts remain mandatory after content approval', t => {
   const f = fixture(t), baseline = structuredClone(f.approval);
-  for (const key of ['approvedBy', 'approvedAt', 'humanContentReview', 'targetDbmsReview', 'officialSyllabusReview', 'androidDeviceQA', 'iosDeviceQA', 'ownerApproval', 'privacyUrl', 'supportUrl']) {
+  for (const key of ['approvedBy', 'approvedAt', 'humanContentReview', 'androidDeviceQA', 'iosDeviceQA', 'ownerApproval', 'privacyUrl', 'supportUrl']) {
     Object.assign(f.approval, baseline, {[key]: '  '}); f.writeApproval(); assert.throws(() => checkContentRelease(f.root), new RegExp('Missing production approval field: ' + key));
   }
 });

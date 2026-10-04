@@ -4,7 +4,15 @@ This repository is the canonical standalone source for the SQLD Pass Android/iOS
 It is a separate product and codebase from QueryPass. Do not read, edit, merge into, or reuse
 QueryPass or SpicPass as an implicit target unless the owner explicitly requests cross-project work.
 
-## Latest owner direction — 2026-09-12
+## Latest owner direction — 2026-10-04
+
+The initial store release has ads off and all 20 mock exams free. The owner directly confirmed
+completion of content review on 2026-10-04 and removed the requirement for separate reviewer,
+completion-date, target-DBMS and official-syllabus evidence. Accept that owner confirmation for
+the exact hash-verified content pack; do not invent missing verification facts. Preserve content
+integrity checks, actual QA scope, explicit release authorization and the live-ad activation gate.
+
+## Future advertising model — 2026-09-12
 
 Use a low-maintenance free-learning + small-banner + opt-in rewarded-exam model.
 Theory, confirmation questions and review remain free. Mock exams SQLD-M01 through SQLD-M04
@@ -29,11 +37,11 @@ AdMob automatic banner refresh must be disabled to match application request-rat
 
 ## Content, data and engineering
 
-Preserve supplied question stems, SQL, answers, rationales and provenance. Original learning
-content remains unapproved until the real human owner completes independent review, target-DBMS
-checks and official syllabus comparison. Never fabricate approval, affiliation or passing claims.
-Keep production gates closed while evidence is missing. The original gzip content pack is tracked
-and hash-verified materialization is complete; this is not human content approval.
+Preserve supplied question stems, SQL, answers, rationales and provenance. Content release approval
+uses the owner's direct review-completion confirmation and the exact content hash/version/scope.
+Never fabricate verification facts, approval, affiliation or passing claims. The original gzip
+content pack is tracked and hash-verified materialization is complete; integrity verification
+alone does not constitute human content review.
 
 Learning and grants are device-local SQLite. No learner backend, account, cloud sync, runtime AI,
 remote learning analytics or payment is introduced. Google Ads/UMP may process device/network/ad

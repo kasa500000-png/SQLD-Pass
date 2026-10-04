@@ -1,9 +1,9 @@
 {
   "schemaVersion": 1,
-  "status": "owner-declared-complete",
-  "recordedAt": "2026-09-19T11:40:46.705Z",
+  "status": "owner-reviewed-complete",
+  "recordedAt": "2026-10-04T11:30:19.000Z",
   "declaredBy": "repository owner (current conversation)",
-  "ownerStatement": "콘텐츠 검수는 완료된 상태로 설정하고 다음 단계 진행",
+  "ownerStatement": "검수는 직접 완료했어 해당 규칙 삭제",
   "contentSha256": "08b6d35d539ed9b7c225befed155b126bf35809c1ec331e1ca12de6576fb0ead",
   "scope": {
     "lessons": 60,
@@ -14,6 +14,6 @@
   "targetDbmsReview": null,
   "officialSyllabusReview": null,
   "evidenceFiles": [],
-  "productionReleaseApproved": false,
-  "note": "Records the owner declaration, not agent-performed independent or DBMS verification. Detailed review metadata is pending. Original content archive and its provenance are unchanged."
+  "productionReleaseApproved": true,
+  "note": "The owner directly confirmed completion and removed the separate detailed-evidence requirement on 2026-10-04. recordedAt is the confirmation record time, not an inferred review completion date. Unprovided reviewer/date/DBMS/syllabus details remain null. Original content archive and its provenance are unchanged."
 }
