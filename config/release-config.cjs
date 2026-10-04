@@ -16,7 +16,7 @@ function checkContentRelease(root) {
   const bytes = readInput(path.join(root, 'generated/content.json'));
   const lock = JSON.parse(fs.readFileSync(path.join(root, 'content-pack/content.lock.json'), 'utf8'));
   const {content, counts, sha256} = validateBuffer(bytes, lock);
-  // Supplied editorial flags stay byte-identical. Actual review lives outside the pack.
+  // Supplied editorial flags stay byte-identical. The owner's confirmation lives outside the pack.
   const reviewPath = path.join(root, 'release/CONTENT_REVIEW_STATUS.json');
   if (!fs.existsSync(reviewPath)) throw new Error('Content review metadata is required for production release.');
   const review = JSON.parse(fs.readFileSync(reviewPath, 'utf8'));
@@ -25,16 +25,18 @@ function checkContentRelease(root) {
       review.scope.lessons !== counts.lessons || review.scope.questions !== counts.questions) {
     throw new Error('Content approval evidence is incomplete. Production release blocked.');
   }
-  for (const key of ['reviewer', 'reviewedAt', 'targetDbmsReview', 'officialSyllabusReview']) {
+  // The owner removed the separate DBMS/syllabus evidence requirement on 2026-10-04.
+  // Record the actual confirmation, without inventing a review date or verification method.
+  for (const key of ['declaredBy', 'ownerStatement', 'recordedAt']) {
     if (!isText(review[key])) throw new Error(`Missing content review field: ${key}`);
   }
-  if (!isReviewDate(review.reviewedAt)) throw new Error('Invalid content review timestamp.');
+  if (!isReviewDate(review.recordedAt)) throw new Error('Invalid content confirmation timestamp.');
   if (review.contentSha256 !== sha256) throw new Error('Content review hash does not match the reviewed content.');
   const approvalPath = path.join(root, 'release-approval.json');
   if (!fs.existsSync(approvalPath)) throw new Error('release-approval.json is required for production release.');
   const a = JSON.parse(fs.readFileSync(approvalPath, 'utf8'));
   if (!isObject(a) || a.schemaVersion !== 1) throw new Error('Invalid production approval schema.');
-  for (const key of ['approvedBy', 'approvedAt', 'humanContentReview', 'targetDbmsReview', 'officialSyllabusReview', 'androidDeviceQA', 'iosDeviceQA', 'ownerApproval', 'privacyUrl', 'supportUrl']) {
+  for (const key of ['approvedBy', 'approvedAt', 'humanContentReview', 'androidDeviceQA', 'iosDeviceQA', 'ownerApproval', 'privacyUrl', 'supportUrl']) {
     if (!isText(a[key])) throw new Error(`Missing production approval field: ${key}`);
   }
   if (!isReviewDate(a.approvedAt)) throw new Error('Invalid production approval timestamp.');
