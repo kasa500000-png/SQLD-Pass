@@ -12,7 +12,7 @@ on:
           - internal
           - production
       retain_screenshots:
-        description: Upload the eight native JPEG screenshots for one day
+        description: Upload native JPEG screenshots for one day (16 for production)
         required: true
         type: boolean
         default: true
@@ -187,11 +187,24 @@ jobs:
                   XCTAssertTrue(app.staticTexts.matching(NSPredicate(format: "label == %@", text)).firstMatch.waitForExistence(timeout: 30), "Missing result text: \(text)")
               }
 
-              @MainActor private func verifyProductionPersistence(_ app: XCUIApplication) {
+              @MainActor private func capture(_ app: XCUIApplication, _ name: String, ready: String) throws {
+                  XCTAssertTrue(element(app, ready).waitForExistence(timeout: 15), "Wrong or unloaded screen: \(name)")
+                  RunLoop.current.run(until: Date().addingTimeInterval(0.5))
+                  let image = try XCTUnwrap(UIImage(data: XCUIScreen.main.screenshot().pngRepresentation))
+                  let jpeg = try XCTUnwrap(image.jpegData(compressionQuality: 1.0))
+                  let attachment = XCTAttachment(data: jpeg, uniformTypeIdentifier: "public.jpeg")
+                  attachment.name = "SQLD-CAPTURE-\(name)"
+                  attachment.lifetime = .keepAlways
+                  add(attachment)
+              }
+
+              @MainActor private func verifyProductionPersistence(_ app: XCUIApplication) throws {
                   // Fresh GitHub Simulator data only; submit one real two-question lesson session.
                   tap(app, "tab-learn")
                   tap(app, "lesson-SQLD-L001")
+                  try capture(app, "05-lesson", ready: "lesson-practice")
                   tap(app, "lesson-practice")
+                  try capture(app, "06-practice", ready: "submit-practice")
                   for _ in 0..<2 {
                       tap(app, "option-1")
                       tap(app, "submit-practice")
@@ -207,11 +220,16 @@ jobs:
                   app.launch()
                   tap(app, "tab-records")
                   assertText(app, "2문항 기준", stage: "assert-text:records-after-restart")
+                  tap(app, "tab-learn")
+                  tap(app, "learn-review")
+                  tap(app, "review-all")
+                  try capture(app, "07-review", ready: "review-all")
 
                   // Persist one exam answer, then prove native process restart recovery.
                   // This does not test 90-minute expiry, full scoring, or physical devices.
                   tap(app, "tab-exams")
                   tap(app, "exams-next")
+                  try capture(app, "08-exam-intro", ready: "start-exam")
                   tap(app, "start-exam")
                   mark("assert-ready:exam-sheet")
                   XCTAssertTrue(element(app, "exam-sheet").waitForExistence(timeout: 30))
@@ -259,7 +277,7 @@ jobs:
                       attachment.lifetime = .keepAlways
                       add(attachment)
                   }
-                  if productionSmoke { verifyProductionPersistence(app) }
+                  if productionSmoke { try verifyProductionPersistence(app) }
               }
           }
           SWIFT
@@ -383,6 +401,8 @@ jobs:
           exported = (root / f'{family}-attachments').resolve()
           manifest = json.loads((exported / 'manifest.json').read_text())
           names = {'01-home', '02-learning', '03-exams', '04-records'}
+          if os.environ['EXPO_PUBLIC_APP_ENV'] == 'production':
+              names |= {'05-lesson', '06-practice', '07-review', '08-exam-intro'}
           found = {}
           def visit(value):
               if isinstance(value, list):
@@ -391,7 +411,7 @@ jobs:
               elif isinstance(value, dict):
                   filename = value.get('exportedFileName')
                   name = value.get('suggestedHumanReadableName', '')
-                  match = re.search(r'SQLD-CAPTURE-(01-home|02-learning|03-exams|04-records)', name) if isinstance(name, str) else None
+                  match = re.search(r'SQLD-CAPTURE-(' + '|'.join(sorted(names)) + r')', name) if isinstance(name, str) else None
                   if filename and match:
                       key = match.group(1)
                       if key in found:
@@ -407,7 +427,7 @@ jobs:
                           visit(child)
           visit(manifest)
           if set(found) != names:
-              raise SystemExit(f'Expected four native JPEGs, received {sorted(found)}')
+              raise SystemExit(f'Expected {len(names)} native JPEGs, received {sorted(found)}')
           images = []
           for name, source in sorted(found.items()):
               dimensions = subprocess.check_output(['/usr/bin/sips', '-g', 'pixelWidth', '-g', 'pixelHeight', str(source)], text=True)
@@ -427,7 +447,9 @@ jobs:
             xcrun simctl shutdown "$udid"
             xcrun simctl delete "$udid"
           done
-          test "$(find "$CAPTURE_ROOT/final" -maxdepth 1 -type f -name '*.jpg' | wc -l | tr -d ' ')" = '8'
+          expected=8
+          if [ "$EXPO_PUBLIC_APP_ENV" = 'production' ]; then expected=16; fi
+          test "$(find "$CAPTURE_ROOT/final" -maxdepth 1 -type f -name '*.jpg' | wc -l | tr -d ' ')" = "$expected"
       - uses: actions/upload-artifact@v4
         if: inputs.retain_screenshots
         with:
