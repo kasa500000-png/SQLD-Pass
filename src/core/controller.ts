@@ -13,6 +13,9 @@ export class Controller {
   private version=0; private checkpointAt=0; private expiryInFlight=false; private lastExpiryTry=0;
   get isExamSubmitting(){return this.expiryInFlight;}
   private systemAppearance:'light'|'dark'='light';
+  private screenScroll=new Map<string,ReadingOffset>();
+  screenPosition(context:string){return this.screenScroll.get(context);}
+  rememberScreen(context:string,position:ReadingOffset){if(validReadingOffset(position)){if(this.screenScroll.size>=80&&!this.screenScroll.has(context))this.screenScroll.delete(this.screenScroll.keys().next().value!);this.screenScroll.set(context,{...position});}}
   protected catalogScroll?:{context:string;position:ReadingOffset};
   protected examCatalogScroll?:{context:string;position:ReadingOffset};
   protected recordsScroll?:{context:string;position:ReadingOffset};
@@ -312,7 +315,7 @@ export class Controller {
     const task=this.serial.then(async()=>{
       this.busy=true;this.notify();
       let remindersCleared=false;
-      try{if(this.services.beforeFullReset){if(!await this.services.beforeFullReset())throw new Error('학습 알림 해제에 실패하여 학습 기록 삭제를 중단했습니다.');remindersCleared=true;}await this.services.repository.clear();this.state=initialState(this.content,this.services.clock().wall);this.mockNoteDrafts={};this.catalogScroll=undefined;this.examCatalogScroll=undefined;this.recordsScroll=undefined;this.examReviewScroll=undefined;this.reviewPickerOpen=false;this.libraryEditor=null;this.libraryError='';this.examProgressFilter='all';this.draftSettings={...this.state.settings};this.route={name:'welcome'};this.stack=[];this.ready=false;this.startupError='';this.notice='';cleared=true;}
+      try{if(this.services.beforeFullReset){if(!await this.services.beforeFullReset())throw new Error('학습 알림 해제에 실패하여 학습 기록 삭제를 중단했습니다.');remindersCleared=true;}await this.services.repository.clear();this.state=initialState(this.content,this.services.clock().wall);this.mockNoteDrafts={};this.screenScroll.clear();this.catalogScroll=undefined;this.examCatalogScroll=undefined;this.recordsScroll=undefined;this.examReviewScroll=undefined;this.reviewPickerOpen=false;this.libraryEditor=null;this.libraryError='';this.examProgressFilter='all';this.draftSettings={...this.state.settings};this.route={name:'welcome'};this.stack=[];this.ready=false;this.startupError='';this.notice='';cleared=true;}
       catch(e){this.notice=`초기화 실패: ${String(e)}${remindersCleared?' 학습 알림은 해제되었고 학습 기록은 유지됩니다.':''}`;}
       finally{this.busy=false;this.notify();}
     });this.serial=task.catch(()=>{});await task;
