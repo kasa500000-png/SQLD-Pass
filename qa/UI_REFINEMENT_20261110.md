@@ -20,7 +20,7 @@ Owner requested screen-specific PRs, commits and an integrated production update
 - #35 Settings and data management
 - #36 Help and privacy
 
-The integration patch fixes answer-sheet number/status wrapping and stable equal-width tab placement after a settings save. It also makes the daily learning link secondary when a mock attempt is active. All PRs retain separate commits; merge status is recorded separately after completion.
+The integration patch uses measured control-container widths (including narrower iPad reading footers) and fixes answer-sheet number/status wrapping and stable equal-width tab placement after a settings save. It also makes the daily learning link secondary when a mock attempt is active. All PRs retain separate commits; merge status is recorded separately after completion.
 
 ## Actual checks
 
@@ -29,7 +29,7 @@ The integration patch fixes answer-sheet number/status wrapping and stable equal
 - Android: Home, textbook/chapter, SELECT lesson/table, two-question practice (2/2), explanation, practice result, mock catalogue, study attempt submission (1 answered/49 unanswered, 2 points), result/explanation, settings, dark theme and app font 130%, flashcard front/back, privacy/help.
 - Settings -> privacy -> back retained the exact scroll position. Tab widths remained equal after saving settings on the final build.
 - Official Google test banner loaded. Official rewarded ad completed for M08, SDK displayed reward earned, and closing the ad opened the unlocked M08 intro. During the test the Google Ads store sheet opened; it was closed without installing. No live ad was used or clicked.
-- M08 timed mode started at 90 minutes; revised answer sheet visually confirmed with number and status on consistent lines at 130% font. Android uiautomator sometimes could not obtain idle state while the timer updated; the answer-sheet PNG is visual evidence, not a matching XML snapshot.
+- M08 timed mode started at 90 minutes; navigating Home and Records suppressed the banner; revised answer sheet visually confirmed with number and status on consistent lines at 130% font. Android uiautomator sometimes could not obtain idle state while the timer updated; the answer-sheet PNG is visual evidence, not a matching XML snapshot.
 - iPhone 17 simulator: actual Release app installed; XCTest traversed 13 screens successfully after final tab fixes (14 including onboarding on initial run). Screenshots cover Home, textbook, chapter, SQL lesson, practice list, mocks/intro, Records, Settings, Privacy, Help, cards and glossary.
 - iPad Pro 13-inch simulator: same native screen traversal including onboarding passed; tablet multi-column layout screenshots retained.
 
