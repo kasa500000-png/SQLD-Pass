@@ -1,0 +1,10 @@
+{
+  "androidReleaseApk": {
+    "path": "/Users/hari/Documents/GitHub/SQLD-Pass/android/app/build/outputs/apk/release/app-release.apk",
+    "sha256": "af8dbb8b05880ec8d0df344aad4074fcce1a48beed92e9f79703a04f59fb8de2"
+  },
+  "iosSimulatorBundle": {
+    "path": "/private/tmp/sqld-textbook-ios-build/Build/Products/Release-iphonesimulator/SQLDPass.app/main.jsbundle",
+    "sha256": "b44e9cd2f9f104c2b732737c7d931f2d5bac1877dd66208ca94108e08016cf5b"
+  }
+}

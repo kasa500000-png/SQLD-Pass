@@ -10,15 +10,17 @@ export default ({config}:ConfigContext):ExpoConfig=>{
   const productionContentApproval=production?checkContentRelease(__dirname):undefined;
   if(production&&(!process.env.ANDROID_PACKAGE||!process.env.IOS_BUNDLE_IDENTIFIER))throw new Error('Production app identifiers must be explicitly supplied by the owner.');
   const ads=checkAdsRelease(__dirname),projectId=process.env.EXPO_PUBLIC_EAS_PROJECT_ID??project.projectId;
+  const androidVersionCode=Number(process.env.ANDROID_VERSION_CODE??'10');
+  if(!Number.isSafeInteger(androidVersionCode)||androidVersionCode<1)throw new Error('ANDROID_VERSION_CODE must be a positive integer.');
   return {
-    ...config,name:'SQLD Pass',slug:'sqld-pass',version:'0.1.0',
+    ...config,name:'SQLD Pass',slug:'sqld-pass',version:process.env.APP_VERSION??'0.1.0',
     icon:'./assets/brand/icon.png',
     owner:process.env.EXPO_OWNER??project.owner,
-    platforms:['android','ios'],orientation:'default',userInterfaceStyle:'automatic',
+    platforms:ads.mode!=='off'&&ads.target!=='both'?[ads.target]:['android','ios'],orientation:'default',userInterfaceStyle:'automatic',
     scheme:production?'sqld-pass':'sqld-pass-internal',updates:{enabled:false},
-    ios:{bundleIdentifier:process.env.IOS_BUNDLE_IDENTIFIER??'com.sqldpass.app.internal',buildNumber:'5',supportsTablet:true,
+    ios:{bundleIdentifier:process.env.IOS_BUNDLE_IDENTIFIER??'com.sqldpass.app.internal',buildNumber:process.env.IOS_BUILD_NUMBER??'5',supportsTablet:true,
       infoPlist:{ITSAppUsesNonExemptEncryption:false}},
-    android:{package:process.env.ANDROID_PACKAGE??'com.sqldpass.app.internal',versionCode:10,allowBackup:false,
+    android:{package:process.env.ANDROID_PACKAGE??'com.sqldpass.app.internal',versionCode:androidVersionCode,allowBackup:false,
       adaptiveIcon:{foregroundImage:'./assets/brand/adaptive-foreground.png',backgroundColor:'#2457D6'},
       permissions:['android.permission.POST_NOTIFICATIONS','android.permission.RECEIVE_BOOT_COMPLETED'],softwareKeyboardLayoutMode:'resize',blockedPermissions:[
         'android.permission.CAMERA','android.permission.RECORD_AUDIO','android.permission.READ_CONTACTS','android.permission.WRITE_CONTACTS',
@@ -46,9 +48,8 @@ export default ({config}:ConfigContext):ExpoConfig=>{
           './assets/fonts/pretendard/Pretendard-ExtraBold.otf'
         ]}
       }],
-      ...(ads.mode==='off'?[]:[['react-native-google-mobile-ads',{androidAppId:ads.androidAppId,iosAppId:ads.iosAppId,delayAppMeasurementInit:true,
-        userTrackingUsageDescription:'광고 제공을 위한 기기 식별자 사용 여부를 선택할 수 있습니다. 허용하지 않아도 무료 학습과 열린 회차는 이용할 수 있습니다.'}] as [string,Record<string,unknown>]]),
-      ['expo-build-properties',{android:{compileSdkVersion:36,targetSdkVersion:36,minSdkVersion:24,kotlinVersion:'2.3.20',useLegacyPackaging:false,
+      ...(ads.mode==='off'?[]:[['react-native-google-mobile-ads',{androidAppId:ads.androidAppId,iosAppId:ads.iosAppId,delayAppMeasurementInit:true}] as [string,Record<string,unknown>],'./plugins/withAdPrivacy.cjs']),
+      ['expo-build-properties',{ios:{enableSceneSupport:true},android:{compileSdkVersion:36,targetSdkVersion:36,minSdkVersion:24,kotlinVersion:'2.3.20',useLegacyPackaging:false,
         usesCleartextTraffic:env==='development',...(ads.mode==='off'?{}:{extraProguardRules:'-keep class com.google.android.gms.internal.consent_sdk.** { *; }'})}}]
     ],
     extra:{appEnvironment:env,contentReleaseReady:productionContentApproval?.approved===true,

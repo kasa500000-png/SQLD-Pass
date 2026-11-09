@@ -5,7 +5,7 @@ const {MonetizedController}=require('../.build/monetization/controller');
 const {initialState,parseState,startExam}=require('../.build/core/domain');
 const {restoredReadingOffset}=require('../.build/core/domain/reading');
 const {migrateWallet}=require('../.build/monetization/policy');
-const content=require('../generated/content.json'),lesson=content.lessons[0];
+const content=require('./fixtures/legacy-content.cjs'),lesson=content.lessons[0];
 
 function harness(){
   let value=null,fail=false,n=0;

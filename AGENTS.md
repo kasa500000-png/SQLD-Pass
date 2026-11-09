@@ -4,7 +4,36 @@ This repository is the canonical standalone source for the SQLD Pass Android/iOS
 It is a separate product and codebase from QueryPass. Do not read, edit, merge into, or reuse
 QueryPass or SpicPass as an implicit target unless the owner explicitly requests cross-project work.
 
-## Latest owner direction — 2026-10-04
+## Latest owner direction — 2026-11-09 textbook replacement
+
+Use the supplied Part 1–5 textbook as the sole runtime learning source. The approved
+implementation replaces the old 60-lesson pack with 18 chapters / 216 sections and
+268 chapter questions + 72 mixed questions. Integrate the separately supplied
+SQLD_MockExam_20.html as 20 new exams / 1000 questions; neither the retired exam
+questions nor the textbook HTML's embedded 50-question mock is used. Keep five native
+tabs: Home / Textbook / Practice / Mock / Records. Timed mode is 90 minutes and study
+mode is untimed; both reveal answers only after final submission. One active attempt
+across modes; suppress ads across navigation while either mode is active.
+Render all 37 educational widgets as native controls, never a WebView.
+
+The owner chose automatic removal of content-linked progress, bookmarks, collections,
+answers, reviews, practice sessions/results and exam attempts/snapshots on upgrade.
+Keep settings, reminders and existing entitlements. Perform the purge transactionally,
+including the previous SQLite slot, once; show the notice after success. Do not map old
+answers onto new IDs. This purge applies only to phase1.20260908.1. Preserve all new
+textbook learning data, preferences and grants on textbook.20261109.1 → .2. Never purge
+the previous SQLite slot or snapshots during that compatible upgrade. Keep immutable
+mock snapshots and all attempt history; review success must not rewrite exam scores.
+Existing SQLD-M01..20 grants cover both modes, retakes and submitted explanations.
+
+The 2026-10-04 content approval applies only to the retired pack hash. Do not transfer it
+to the new textbook. Keep the original authored source, deterministic importer, integrity
+checks and independent new-content release gate. Legacy content under tests/fixtures is
+for regression and migration tests only and must not be imported by app entry points.
+See docs/MOCK_EXAMS_20261109.md and qa/MOCK_EXAMS_20261109.md for the integrated
+version; textbook replacement documents retain the preceding phase's evidence.
+
+## Historical owner direction — 2026-10-04
 
 The initial store release has ads off and all 20 mock exams free. The owner directly confirmed
 completion of content review on 2026-10-04 and removed the requirement for separate reviewer,

@@ -1,0 +1,27 @@
+{
+  "observedAt": "2026-11-09T10:47:40.019Z",
+  "appStore": {
+    "current": "0.2.0",
+    "draft": "0.2.2",
+    "draftState": "제출 준비 중",
+    "url": "https://appstoreconnect.apple.com/apps/6818046749/distribution/ios/version/inflight"
+  },
+  "play": {
+    "url": "https://play.google.com/console/u/0/developers/7871930997193802319/app/4972123172088629069/tracks/4697320985078461490/releases/3/details",
+    "observedText": [
+      "프로덕션",
+      "15 (0.2.2)",
+      "프로덕션",
+      "출시일: 11월 4일 오후 5:59",
+      "15 (0.2.2)"
+    ]
+  },
+  "admob": {
+    "url": "https://admob.google.com/v2/apps/list",
+    "rows": [
+      "SQLD Pass Androidcontent_copy\n ca-app-pub-9314207769680999~2504786470        \n\n \ncheck_circle준비됨광고 게재 사용 설정됨  Google Playcom.kasa500000.sqldpass        \n2개 운영중",
+      "SQLD Pass iOScontent_copy\n ca-app-pub-9314207769680999~3391326882        \n\n \ncheck_circle준비됨광고 게재 사용 설정됨  App Store68180467492개 운영중"
+    ]
+  },
+  "readOnly": true
+}

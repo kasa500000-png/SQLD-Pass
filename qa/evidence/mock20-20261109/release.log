@@ -1,0 +1,38 @@
+
+> sqld-pass@0.1.0 prerelease:check
+> node scripts/materialize-content.cjs --required
+
+{"status":"ready","sha256":"1f7a60245d9b75a19ad733dca7fc281539d73ebdc0fcfa25fd5a959ebd7d589d","counts":{"lessons":216,"practice":340,"exams":20,"examQuestions":1000,"questions":1340,"days":0}}
+
+> sqld-pass@0.1.0 release:check
+> node scripts/check-content.cjs && node scripts/release-gate.cjs && node scripts/check-ads.cjs
+
+{
+  "status": "valid",
+  "counts": {
+    "lessons": 216,
+    "practice": 340,
+    "exams": 20,
+    "examQuestions": 1000,
+    "questions": 1340,
+    "days": 0
+  },
+  "sha256": "1f7a60245d9b75a19ad733dca7fc281539d73ebdc0fcfa25fd5a959ebd7d589d",
+  "releaseReady": false
+}
+/Users/hari/Documents/GitHub/SQLD-Pass/config/release-config.cjs:26
+    throw new Error('Content approval evidence is incomplete. Production release blocked.');
+    ^
+
+Error: Content approval evidence is incomplete. Production release blocked.
+    at checkContentRelease (/Users/hari/Documents/GitHub/SQLD-Pass/config/release-config.cjs:26:11)
+    at Object.<anonymous> (/Users/hari/Documents/GitHub/SQLD-Pass/scripts/release-gate.cjs:3:1)
+    at Module._compile (node:internal/modules/cjs/loader:1929:14)
+    at Object..js (node:internal/modules/cjs/loader:2060:10)
+    at Module.load (node:internal/modules/cjs/loader:1651:32)
+    at Module._load (node:internal/modules/cjs/loader:1443:12)
+    at wrapModuleLoad (node:internal/modules/cjs/loader:261:19)
+    at Module.executeUserEntryPoint [as runMain] (node:internal/modules/run_main:154:5)
+    at node:internal/main/run_main_module:33:47
+
+Node.js v24.22.2

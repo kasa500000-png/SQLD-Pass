@@ -1,9 +1,13 @@
+import type {WidgetSpec} from '../textbook/types';
 import type {ReadingOffset} from '../core/types';
 export type Style = Record<string,string|number|undefined>;
 export type LearningIconName = 'home'|'book'|'timer'|'chart'|'settings'|'bookmark'|'search'|'chevron-right'|'check'|'close'|'arrow-right'|'refresh'|'bell'|'list'|'chevron-left';
 export interface Node {
-  kind:'box'|'text'|'button'|'input'|'date'|'progress'|'table'|'code'|'modal'|'icon'; key?:string; children?:Node[];
-  layout?:'lesson-sections'|'adaptive-row';
+  widget?:WidgetSpec; highlight?:number[][];
+  kind:'widget'|'box'|'text'|'button'|'input'|'date'|'progress'|'table'|'code'|'modal'|'icon'|'ring'; key?:string; children?:Node[];
+  layout?:'lesson-sections'|'adaptive-row'|'dashboard'|'question-grid';
+  buttonKind?:'primary'|'secondary'|'row'|'choice'|'danger';
+  feedback?:'correct'|'incorrect';
   contentWidth?:'reading';
   text?:string; style?:Style; label?:string; testId?:string; action?:()=>void|Promise<void>;
   icon?:LearningIconName; iconSize?:number; iconPosition?:'leading'|'trailing'|'above';
@@ -13,8 +17,9 @@ export interface Node {
   reading?:{position?:ReadingOffset;onSave:(position:ReadingOffset)=>Promise<boolean>};
   catalog?:{context:string;position?:ReadingOffset;preserveContentOffset?:boolean;onRemember:(position:ReadingOffset)=>void};
 }
-export const light={bg:'#F6F8FC',surface:'#FFFFFF',ink:'#172033',muted:'#53647F',line:'#DFE7F1',blue:'#2457D6',blueSoft:'#EAF0FF',navy:'#12254A',green:'#13734D',greenSoft:'#E9F7EF',orange:'#8A4B08',orangeSoft:'#FFF5E5',red:'#B42318',redSoft:'#FDEDEB',code:'#13233D',codeInk:'#EBF2FF'};
-export const dark={bg:'#0B1220',surface:'#152136',ink:'#F0F5FF',muted:'#B0BFD6',line:'#2C3C55',blue:'#8BB1FF',blueSoft:'#20365D',navy:'#20365D',green:'#8CE0B6',greenSoft:'#19392D',orange:'#FFD39B',orangeSoft:'#44321C',red:'#FFB4AE',redSoft:'#482925',code:'#08101D',codeInk:'#EBF2FF'};
+// SQLD Pass reference design tokens. Keep light/dark semantic roles aligned.
+export const light={bg:'#F6F8FC',surface:'#FFFFFF',ink:'#172033',muted:'#64718A',line:'#E6EAF1',blue:'#2457D6',blueSoft:'#EDF3FF',navy:'#18243B',green:'#16836B',greenSoft:'#EAF7F1',orange:'#A96512',orangeSoft:'#FFF5E6',red:'#C34750',redSoft:'#FFF0F1',code:'#18243B',codeInk:'#EBF2FF'};
+export const dark={bg:'#101A2B',surface:'#182337',ink:'#E8EDF7',muted:'#9BAAC1',line:'#29374C',blue:'#89AAFF',blueSoft:'#253859',navy:'#253859',green:'#6FD1AF',greenSoft:'#1D3935',orange:'#EDBC77',orangeSoft:'#3A3025',red:'#F19A9E',redSoft:'#3E2933',code:'#0C1421',codeInk:'#EBF2FF'};
 export type Palette=typeof light;
 export function box(children:Node[]=[],style:Style={},key?:string):Node{return {kind:'box',children,style,key};}
 export function text(value:string,style:Style={},key?:string):Node{return {kind:'text',text:value,style,key};}

@@ -1,0 +1,19 @@
+
+> sqld-pass@0.1.0 ci:content
+> node scripts/materialize-content.cjs --required && node scripts/check-content.cjs && node scripts/assert-draft-blocked.cjs
+
+{"status":"ready","sha256":"3491a3643f2d5ff4643ab69274e652a8fb552139f41b757b8b8ccaecfacf1cb0","counts":{"lessons":216,"practice":340,"exams":0,"examQuestions":0,"questions":340,"days":0}}
+{
+  "status": "valid",
+  "counts": {
+    "lessons": 216,
+    "practice": 340,
+    "exams": 0,
+    "examQuestions": 0,
+    "questions": 340,
+    "days": 0
+  },
+  "sha256": "3491a3643f2d5ff4643ab69274e652a8fb552139f41b757b8b8ccaecfacf1cb0",
+  "releaseReady": false
+}
+Verified exact production rejection without external review metadata; source content remains unchanged.

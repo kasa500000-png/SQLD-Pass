@@ -75,7 +75,7 @@ export class RemindersController {
       if(this.disposed)return false;
       this.publish({error:''});
       try{return await action();}
-      catch {this.publish({status:'unavailable',error:'알림 설정을 완료하지 못했습니다. 다시 시도해 주세요.'});return false;}
+      catch {this.publish({status:'unavailable',error:'알림 설정을 완료하지 못했습니다. 앱을 다시 열거나 잠시 후 다시 시도해 주세요.'});return false;}
     }).finally(()=>{this.pending--;this.publish();});
     this.chain=work;return work;
   }

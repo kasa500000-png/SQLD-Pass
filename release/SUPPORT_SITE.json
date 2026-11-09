@@ -1,10 +1,10 @@
 {
   "siteId": "appgprj_6aae6a02162c81918889df5b4c23a6a6",
   "url": "https://sqld-pass-support.shk1122.chatgpt.site",
-  "sourceDirectory": "D:/SQLD-Pass-Support",
-  "sourceCommit": "d296d1693cd85420a017e7d8d9c1cd415b552d",
-  "versionId": "appgprj_6aae6a02162c81918889df5b4c23a6a6~appgver_9977c96bbbf481918d8ffc73825ebbc7",
-  "deploymentId": "appgdep_6aae6b7e010c81919ebf9c3b5b72ceb0",
-  "publishedAt": "2026-09-19T11:01:33.565278+00:00",
+  "sourceDirectory": null,
+  "sourceCommit": "40ba0146ec178b88fe667d65fa482b3c0d059261",
+  "versionId": "appgprj_6aae6a02162c81918889df5b4c23a6a6~appgver_831f5251bc6881919a9b66013d5f8751",
+  "deploymentId": "appgdep_6af1c4da9924819195b39dd5b3792ff3",
+  "publishedAt": "2026-11-09T13:04:40.304160+00:00",
   "access": "public"
 }

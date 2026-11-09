@@ -3,7 +3,7 @@ const {test}=require('node:test'),a=require('node:assert/strict');
 const {Controller}=require('../.build/core/controller');
 const {MonetizedController}=require('../.build/monetization/controller');
 const {initialState,parseState,applyPractice,startExam,submitExam,dayKey,addDays,lessonProgress,learningDayEligible,planCompletedDays,homeRecommendation,shortSession,practiceQuestionIds,topicPracticeOptions,learningStats,reviewAfter}=require('../.build/core/domain');
-const content=require('../generated/content.json'),lesson=content.lessons[0];
+const content=require('./fixtures/legacy-content.cjs'),lesson=content.lessons[0];
 const now=new Date(2026,9,4,12).getTime();
 function harness(ControllerType=Controller){
   let value=null,failSave=false,failClear=false,n=0,clears=0,saves=0;

@@ -1,13 +1,16 @@
 {
   "schemaVersion": 1,
   "status": "owner-reviewed-complete",
-  "recordedAt": "2026-10-04T11:30:19.000Z",
+  "recordedAt": "2026-11-09T12:31:39.506Z",
   "declaredBy": "repository owner (current conversation)",
-  "ownerStatement": "검수는 직접 완료했어 해당 규칙 삭제",
-  "contentSha256": "08b6d35d539ed9b7c225befed155b126bf35809c1ec331e1ca12de6576fb0ead",
+  "ownerStatement": "새 교재·모의고사 내용 검수 완료",
+  "contentSha256": "1f7a60245d9b75a19ad733dca7fc281539d73ebdc0fcfa25fd5a959ebd7d589d",
   "scope": {
-    "lessons": 60,
-    "questions": 1120
+    "lessons": 216,
+    "questions": 1340,
+    "practiceQuestions": 340,
+    "mockExams": 20,
+    "mockQuestions": 1000
   },
   "reviewer": null,
   "reviewedAt": null,
@@ -15,5 +18,6 @@
   "officialSyllabusReview": null,
   "evidenceFiles": [],
   "productionReleaseApproved": true,
-  "note": "The owner directly confirmed completion and removed the separate detailed-evidence requirement on 2026-10-04. recordedAt is the confirmation record time, not an inferred review completion date. Unprovided reviewer/date/DBMS/syllabus details remain null. Original content archive and its provenance are unchanged."
+  "note": "Owner directly confirmed completion for the new textbook and separate mock pack in the current conversation on 2026-11-09. Store submission and live advertising were explicitly authorized. This records content review only; native QA and advertising release gates remain independent. No unprovided reviewer, review date, DBMS or syllabus verification details are inferred.",
+  "contentVersion": "textbook.20261109.2"
 }

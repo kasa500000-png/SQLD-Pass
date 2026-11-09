@@ -54,10 +54,13 @@ export class NativeRepository implements Repository {
     await db.withExclusiveTransactionAsync(async tx => {
       const old = await tx.getFirstAsync<{revision: number; payload: string; saved_at: number}>('SELECT revision, payload, saved_at FROM learner_state WHERE slot = ?', 'current');
       if ((old?.revision ?? 0) !== state.revision - 1) throw new Error('저장 기록의 버전이 다릅니다. 앱을 다시 열어 주세요.');
+      const migrating=state.textbookMigration?.version===1&&!!old&&JSON.parse(old.payload).contentVersion==='phase1.20260908.1'&&state.contentVersion!==JSON.parse(old.payload).contentVersion;
+      if(migrating){await tx.runAsync('DELETE FROM learner_state WHERE slot = ?', 'previous');await tx.runAsync('DELETE FROM exam_snapshot');}
       for (const exam of pending) await tx.runAsync('INSERT OR IGNORE INTO exam_snapshot(attempt_id, payload) VALUES (?, ?)', exam.id, JSON.stringify(exam.snapshots));
-      if (old) await tx.runAsync('INSERT OR REPLACE INTO learner_state(slot, revision, payload, saved_at) VALUES (?, ?, ?, ?)', 'previous', old.revision, old.payload, old.saved_at);
+      if (old && !migrating) await tx.runAsync('INSERT OR REPLACE INTO learner_state(slot, revision, payload, saved_at) VALUES (?, ?, ?, ?)', 'previous', old.revision, old.payload, old.saved_at);
       await tx.runAsync('INSERT OR REPLACE INTO learner_state(slot, revision, payload, saved_at) VALUES (?, ?, ?, ?)', 'current', state.revision, payload, Date.now());
     });
+    if(state.textbookMigration&&state.exams.length===0)this.knownSnapshots.clear();
     for (const exam of pending) this.knownSnapshots.add(exam.id);
   }
   async clear(): Promise<void> {

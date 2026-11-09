@@ -1,0 +1,17 @@
+{
+  "schema": 1,
+  "contentVersion": "textbook.20261109.1",
+  "sha256": "3491a3643f2d5ff4643ab69274e652a8fb552139f41b757b8b8ccaecfacf1cb0",
+  "bytes": 1614265,
+  "counts": {
+    "lessons": 216,
+    "practice": 340,
+    "exams": 0,
+    "examQuestions": 0
+  },
+  "sourceHashes": {
+    "textbook-20261109.html": "cb789f945b31c6e5f53ab0cf5e55d1ba43d5824882e1da85cd835dc8ee7e9182"
+  },
+  "status": "editorial_draft",
+  "note": "Identity only. New content requires its own review and release approval."
+}

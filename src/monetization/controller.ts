@@ -1,5 +1,5 @@
 import {Controller} from '../core/controller';
-import type {Content, Services, Route, Tab} from '../core/types';
+import type {Content, Services, Route, Tab, ExamMode} from '../core/types';
 import {initialState} from '../core/domain';
 import {bannerAllowed,canAccessExam,clearPending,disabledAds,earnReward,grantLaunchFreeAccess,isFreeExam,migrateWallet,prepareReward,validExamId,walletOf,type ExamAccessPolicy,type PendingReward,type RewardDriver} from './policy';
 
@@ -27,20 +27,34 @@ export class MonetizedController extends Controller {
   override tab(tab:Tab){if(!this.rewardBusy)super.tab(tab);}
   override openTheory(){if(!this.rewardBusy)super.openTheory();}
   override back(){if(!this.rewardBusy)super.back();}
-  override async beginExam(id:string){
+  override async beginExam(id:string,mode:ExamMode='timed'){
     if(!this.ready||this.rewardBusy)return;
     if(!this.hasAccess(id)){this.offerUnlock(id);return;}
-    await super.beginExam(id);
+    await super.beginExam(id,mode);
   }
   offerUnlock(id:string){
     if(this.rewardBusy)return;
     if(this.needsRewardSave){this.notice='시청 완료한 보상이 저장되지 않았습니다. 먼저 보상 저장 재시도를 눌러 주세요.';this.notify();return;}
-    if(this.activeExam()){this.notice='시험 시간은 계속 흐릅니다. 진행 중인 시험부터 마쳐 주세요.';this.notify();return;}
+    if(this.activeExam()){this.notice='진행 중인 모의고사를 먼저 마쳐 주세요.';this.notify();return;}
     const e=this.content.exams.find(x=>x.id===id);if(!e)return;
     if(this.hasAccess(id)){this.navigate({name:'examIntro',id});return;}
+    // Navigation alone is never an opt-in. Current native screens disclose the
+    // reward and eligibility beside a dedicated watch button.
+    if(this.content.mockPack){this.navigate({name:'examIntro',id});return;}
     this.confirm(`${e.title} 열기`,
-      '보상형 광고 1회를 끝까지 시청하면 이 회차 50문항과 제출 후 해설을 이 기기에 계속 열어 둡니다. 클릭·설치·추적 허용은 필요하지 않습니다. 반복 응시는 추가 시청이 없습니다. 앱 삭제·데이터 삭제·기기 변경 시 복원되지 않습니다. 취소해도 무료 1~4회와 열린 회차는 유지됩니다.'+(this.ads.mode==='test'?'\n테스트 광고로 열린 회차는 운영 광고 버전으로 이전되지 않습니다.':''),
-      '광고 1회 시청하고 열기',()=>this.unlockAfterOptIn(id));
+      '광고 기능은 만 18세 이상만 이용할 수 있습니다. 생년월일은 수집하지 않으며, 연령 확인은 앱을 종료하면 초기화됩니다. 보상형 광고 1회를 끝까지 시청하면 이 회차와 제출 후 해설을 이 기기에 계속 열어 둡니다. 클릭·설치·추적 허용은 필요하지 않습니다. 앱 삭제·데이터 삭제·기기 변경 시 복원되지 않습니다. 취소해도 무료 1~4회와 열린 회차는 유지됩니다.'+(this.ads.mode==='test'?'\n테스트 광고로 열린 회차는 운영 광고 버전으로 이전되지 않습니다.':''),
+      '만 18세 이상 · 광고 시청',()=>{this.ads.confirmAdult();return this.unlockAfterOptIn(id);});
+  }
+  async watchAdToUnlock(id:string){
+    if(!this.ready||this.rewardBusy)return;
+    if(this.needsRewardSave){this.notice='시청 완료한 보상이 저장되지 않았습니다. 먼저 보상 저장 재시도를 눌러 주세요.';this.notify();return;}
+    if(this.activeExam()){this.notice='진행 중인 모의고사를 먼저 마쳐 주세요.';this.notify();return;}
+    if(!validExamId(id)||!this.content.exams.some(e=>e.id===id))return;
+    if(this.hasAccess(id)){this.navigate({name:'examIntro',id});return;}
+    if(this.ads.mode!=='off')this.ads.confirmAdult();
+    await this.unlockAfterOptIn(id);
+    // Start the exam only after the learner chooses a mode and starts it.
+    if(this.hasAccess(id)&&!this.needsRewardSave)this.navigate({name:'examIntro',id});
   }
   private async saveEarned(p:PendingReward):Promise<void>{
     const ok=await this.commit(s=>earnReward(s,p,this.services.clock().wall));
@@ -77,6 +91,10 @@ export class MonetizedController extends Controller {
   async openAdPrivacy(){
     if(this.rewardBusy||this.activeExam())return;
     if(this.ads.mode==='off'){this.notice='현재 광고가 미활성 상태여서 설정할 광고 개인정보 항목이 없습니다.';this.notify();return;}
+    if(!this.ads.adultConfirmed){
+      this.confirm('광고 이용 연령 확인','광고 기능은 만 18세 이상만 이용할 수 있습니다. 생년월일은 수집하지 않으며, 확인 결과는 앱을 종료하면 초기화됩니다.','만 18세 이상',async()=>{this.ads.confirmAdult();await this.openAdPrivacy();});
+      return;
+    }
     try{await this.ads.privacyOptions();this.notice='광고 개인정보 상태를 확인했습니다. 지역과 보호 설정에 따라 선택 화면이 제공되지 않을 수 있습니다. 학습 기록과 열린 회차는 그대로 유지됩니다.';}
     catch{this.notice='개인정보 선택 화면을 열지 못했습니다. 광고 없는 무료 학습은 계속 이용할 수 있습니다.';}
     this.notify();
@@ -84,16 +102,17 @@ export class MonetizedController extends Controller {
   /** Soft reset preserves grants; explicit full reset deletes them through the existing serialized path. */
   requestLearningReset(){
     if(this.rewardBusy||this.needsRewardSave)return;
-    this.confirm('학습 기록만 초기화할까요?',this.isLaunchFree?'진도·북마크·풀이·복습·진행 중 시험을 삭제합니다. 글자 크기·테마·학습 목표는 유지합니다. 이 버전의 모의고사 20회는 계속 무료로 이용할 수 있습니다.':'진도·북마크·풀이·복습·진행 중 시험을 삭제합니다. 글자 크기·테마·학습 목표·이미 열린 회차는 유지합니다.','학습만 초기화',async()=>{
+    this.confirm('학습 기록만 초기화할까요?',this.content.textbook?'새 교재의 읽음·저장 목록·풀이·카드, 모의고사 응시 기록·진행 중 시험·저장 문항·메모를 삭제합니다. 설정과 기존 이용 권한은 유지합니다.':this.isLaunchFree?'진도·북마크·학습서재·풀이·복습·진행 중 시험을 삭제합니다. 글자 크기·테마·학습 목표는 유지합니다. 이 버전의 모의고사 20회는 계속 무료로 이용할 수 있습니다.':'진도·북마크·학습서재·풀이·복습·진행 중 시험을 삭제합니다. 글자 크기·테마·학습 목표·이미 열린 회차는 유지합니다.','학습만 초기화',async()=>{
       const ok=await this.commit(s=>({...initialState(this.content,this.services.clock().wall),settings:{...s.settings},monetization:walletOf(s)}));
-      if(ok){this.catalogScroll=undefined;this.examCatalogScroll=undefined;this.recordsScroll=undefined;this.examReviewScroll=undefined;this.reviewPickerOpen=false;this.route={name:'welcome'};this.stack=[];this.draftSettings={...this.state.settings};this.notify();}
+      if(ok){this.mockNoteDrafts={};this.catalogScroll=undefined;this.examCatalogScroll=undefined;this.recordsScroll=undefined;this.examReviewScroll=undefined;this.reviewPickerOpen=false;this.libraryEditor=null;this.libraryError='';this.route={name:'welcome'};this.stack=[];this.draftSettings={...this.state.settings};this.notify();}
     },true);
   }
   override requestReset(){
     if(this.rewardBusy||this.needsRewardSave){this.notice='광고 처리와 보상 저장을 먼저 마쳐 주세요.';this.notify();return;}
     super.requestReset();
     if(this.dialog){
-      if(this.isLaunchFree)this.dialog.body='읽은 이론, 북마크, 풀이 기록, 진행 중 시험과 설정을 이 앱에서 삭제합니다. 앱 자체 기록 복원 기능은 제공하지 않으며, 기록의 유지·복원을 보장하지 않습니다. 이 버전의 모의고사 20회는 계속 무료로 이용할 수 있습니다.';
+      if(this.content.textbook)this.dialog.body='학습 기록, 카드 상태, 설정, 알림과 기존 이용 권한을 모두 삭제합니다. 앱 자체 복원 기능은 없습니다.';
+      else if(this.isLaunchFree)this.dialog.body='읽은 이론, 북마크, 학습서재, 풀이 기록, 진행 중 시험과 설정을 이 앱에서 삭제합니다. 앱 자체 기록 복원 기능은 제공하지 않으며, 기록의 유지·복원을 보장하지 않습니다. 이 버전의 모의고사 20회는 계속 무료로 이용할 수 있습니다.';
       else this.dialog.body+=' 광고 시청으로 열린 회차도 모두 삭제되며 복원할 수 없습니다.';
     }
     this.notify();

@@ -6,7 +6,7 @@ import {pretendardLicense} from './font-license';
 
 export function render(c:Controller):Node {
   const p:Palette=c.isDark?dark:light;
-  const onBlue=c.isDark?'#0B1220':'#FFFFFF';
+  const onBlue=c.isDark?p.bg:'#FFFFFF';
   const small=(v:string,s:Style={})=>text(v,{fontSize:13,lineHeight:20,color:p.muted,...s});
   const body=(v:string,s:Style={})=>text(v,{fontSize:16,lineHeight:25,color:p.ink,...s});
   const heading=(v:string,n=28)=>({...text(v,{fontSize:n,lineHeight:n+9,fontWeight:'700',color:p.ink}),heading:true});
@@ -22,14 +22,23 @@ export function render(c:Controller):Node {
   const explanation=(q:Question,selected?:string):Node[]=>[notice(selected===q.answer?'정답입니다.':'해설로 오개념을 확인해 보세요.',selected===q.answer?p.green:p.orange,selected===q.answer?p.greenSoft:p.orangeSoft),heading('정답 해설',20),body(q.explanation),...Object.entries(q.optionExplanations).filter(([id])=>id!==q.answer).map(([id,v])=>card([small(`${id}번 보기`,{fontWeight:'700'}),body(v,{fontSize:14})],{padding:13}))];
 
   let title='';let contents:Node[]=[];let footer:Node|undefined;const route=c.route.name;const s=c.state;const active=c.activeExam();const main=['home','catalog','practiceSetup','review','exams','stats'].includes(route);
-  if(!c.ready){contents=c.startupError?[empty('학습 콘텐츠를 준비하지 못했어요',c.startupError),secondary('다시 읽기',()=>c.initialize())]:[empty('학습 자료 준비 중','기기에 포함된 콘텐츠를 확인하고 있습니다.')];}
+  if(!c.ready){contents=c.startupError?[empty('학습 자료를 불러오지 못했어요',`기기에 저장된 학습 기록은 삭제하지 않았어요. 다시 시도해 주세요.\n${c.startupError}`),primary('다시 불러오기',()=>c.initialize(),'startup-retry')]:[empty('학습 자료 준비 중','기기에 포함된 콘텐츠를 확인하고 있습니다.')];}
   else switch(route){
-    case 'welcome': contents=[brand(),pill('회원가입 없이 · 기기 저장'),heading('오늘의 공부를\n합격의 루틴으로.'),body('이론부터 오답 복습, 90분 실전 모의고사까지 하나의 흐름으로 공부합니다.'),primary('SQLD 학습 시작',()=>c.navigate({name:'setup'}),'start')];break;
+    case 'welcome': contents=[brand(),box([box([small('ONE QUERY A DAY',{color:p.blue,fontWeight:'700',letterSpacing:1}),text('SELECT tomorrow\nFROM today\nWHERE you_keep_learning;',{fontSize:18,lineHeight:30,fontWeight:'700',color:p.ink})],{backgroundColor:p.surface,borderWidth:1,borderColor:p.line,borderRadius:18,padding:20,gap:14})],{backgroundColor:p.blueSoft,borderRadius:24,padding:24,marginVertical:24}),small('작은 공부가 쌓이는 곳',{color:p.blue,fontWeight:'700'}),heading('오늘의 한 개념,\n내일의 자신감.'),body('이론부터 오답 복습, 실전 모의고사까지.\n나에게 맞는 SQLD 공부를 시작해요.'),pill('회원가입 없이 · 기기에 저장'),primary('나의 학습 시작하기',()=>c.navigate({name:'setup'}),'start')];break;
     case 'setup': title='학습 설정';contents=[heading('하루 학습량을 정해요.'),row([15,30,45,60,90].map(n=>button(`${n}분`,()=>{c.draftSettings.minutes=n;c.notify();},{flex:1,minHeight:48,borderRadius:10,backgroundColor:c.draftSettings.minutes===n?p.blueSoft:p.surface,color:p.ink})),{flexWrap:'wrap'}),{kind:'input',label:'목표 시험일',value:c.draftSettings.targetDate,onChange:v=>{c.draftSettings.targetDate=v;c.notify();},placeholder:'목표일 선택 · YYYY-MM-DD',style:{minHeight:52,borderWidth:1,borderColor:p.line,borderRadius:12,padding:14,color:p.ink}},primary('30일 플랜 시작',()=>c.saveSettings(true),'finish-setup')];break;
     case 'home':{const d=c.currentDay(),due=dueReviews(s,c.content,c.services.clock().wall);contents=[brand(),heading(`Day ${d.day}. 오늘 할 일을\n한 번에 끝내요.`),card([row([box([small('30일 진행'),heading(`${s.completedDays.length}/30`,24)],{flex:1}),pill(`${Math.round(s.completedDays.length/30*100)}%`)]),progress(s.completedDays.length/30,p.blue),primary(d.examId?'오늘의 모의고사 보기':'오늘의 학습 시작',()=>d.examId?c.navigate({name:'examIntro',id:d.examId??undefined}):c.navigate({name:'plan'}))]),row([card([small('오늘 복습'),heading(`${due.length}문제`,22)],{flex:1}),card([small('이론 읽음'),heading(`${s.readLessons.length}/60`,22)],{flex:1})]),...(active?[notice(`${active.title} 진행 중 · ${formatTime(c.remaining())}`,p.orange,p.orangeSoft),primary('모의고사 이어하기',()=>{c.stack=[];c.route={name:'exam',id:active.id};c.notify();})]:[]),secondary('30일 학습 플랜',()=>c.navigate({name:'plan'})),secondary('내 학습 통계',()=>c.navigate({name:'stats'}))];break;}
     case 'plan': title='30일 학습 플랜';contents=[heading('하루씩 완성하는\n30일 로드맵'),...c.content.days.map(d=>card([row([pill(`DAY ${d.day}`,s.completedDays.includes(d.day)?p.green:p.blue,s.completedDays.includes(d.day)?p.greenSoft:p.blueSoft),box([text(d.task,{fontSize:16,fontWeight:'700',color:p.ink}),small(d.examId?'실전 모의고사':`${d.lessonIds.length}개 이론 · 약 ${d.minutes}분`)],{flex:1})]),...(d.lessonIds[0]?[secondary('이론 열기',()=>c.navigate({name:'lesson',id:d.lessonIds[0]}))]:[]),...(d.examId?[secondary('모의고사 열기',()=>c.navigate({name:'examIntro',id:d.examId??undefined}))]:[])],{padding:14}))];break;
     case 'catalog':{title='학습';const list=c.content.lessons.filter(l=>(c.subject==='all'||l.subject===c.subject)&&(c.search===''||l.title.toLowerCase().includes(c.search.toLowerCase())));contents=[heading('60개 이론을\n필요한 순서로.'),{kind:'input',label:'이론 검색',value:c.search,onChange:v=>c.setSearch(v),placeholder:'예: 조인, NULL, 정규화',style:{minHeight:52,borderWidth:1,borderColor:p.line,borderRadius:12,padding:14,color:p.ink}},...list.map(l=>secondary(`${String(l.order).padStart(2,'0')} · ${l.title}${s.readLessons.includes(l.id)?' · 읽음':''}`,()=>c.navigate({name:'lesson',id:l.id}),`lesson-${l.id}`))];break;}
     case 'lesson':{title='이론';const l=c.content.lessons.find(x=>x.id===c.route.id);if(!l){contents=[empty('이론을 찾지 못했어요','학습 목록에서 다시 선택해 주세요.')];break;}contents=[pill(`LESSON ${String(l.order).padStart(2,'0')}`),heading(l.title),card([small('학습 목표',{fontWeight:'700'}),...l.objectives.map(v=>body(`✓ ${v}`,{fontSize:15}))],{backgroundColor:p.blueSoft,borderWidth:0}),body(l.body),...(l.example?[heading('예제',20),...l.example.tables.flatMap(t=>[small(t.name,{fontWeight:'700'}),table(t.columns,t.rows,t.name)]),code(l.example.sql),...(l.example.columns.length?[table(l.example.columns,l.example.rows,'예상 결과')]:[])]:[]),card([heading('핵심 요약',20),...l.summary.map(v=>body(`✓ ${v}`,{fontSize:15}))]),secondary(s.bookmarks.includes(l.id)?'★ 북마크 해제':'☆ 북마크',()=>c.bookmark(l.id)),secondary(s.readLessons.includes(l.id)?'✓ 읽음 기록됨':'이론 읽음 기록',async()=>{await c.markLesson(l.id);}),primary('확인 문제 풀기',()=>c.beginPractice(l.questionIds))];break;}
+    case 'day': title='일차별 학습';break;
+    case 'lessonSummary': title='핵심 요약';break;
+    case 'library': title='학습서재';break;
+    case 'collection': title='학습서재';break;
+    case 'savedQuestion': title='저장한 해설';break;
+    case 'calendar': title='학습 달력';break;
+    case 'examHistory': title='응시 기록';break;
+    case 'appearance': title='화면 · 글자 크기';break;
+    case 'data': title='기기 데이터 관리';break;
     case 'practiceSetup': title='학습';break;
     case 'practiceResult': title='학습 결과';break;
     case 'reminderSettings': title='학습 알림';break;
@@ -43,7 +52,7 @@ export function render(c:Controller):Node {
     case 'examReview':{title='정답·해설';const e=c.examAttempt(c.route.id);if(!e||e.status!=='submitted'){contents=[empty('제출 후 확인할 수 있어요','시험을 먼저 제출해 주세요.')];break;}const i=Math.min(49,Math.max(0,c.route.index??0)),q=e.snapshots[i];contents=[small(`${i+1}/50`),...question(q),...choices(q,e.answers[q.id]??null,true,()=>{}),...explanation(q,e.answers[q.id])];footer=row([secondary('← 이전',()=>{c.route={...c.route,index:Math.max(0,i-1)};c.notify();}),primary(i===49?'결과로':'다음 →',()=>{c.route=i===49?{name:'result',id:e.id}:{...c.route,index:i+1};c.notify();})]);break;}
     case 'stats':{title='내 학습';const a=confirmationAccuracy(s,c.content);contents=[heading('학습 기록'),row([card([small('학습 날짜'),heading(`${s.studyDays.length}일`,22)],{flex:1}),card([small('최초·확신 정답률'),heading(a.confidentPercent===null?'—':`${a.confidentPercent}%`,22)],{flex:1})]),row([card([small('이론 읽음'),heading(`${s.readLessons.length}/60`,22)],{flex:1}),card([small('모의고사 제출'),heading(`${s.exams.filter(e=>e.status==='submitted').length}회`,22)],{flex:1})]),secondary('설정',()=>c.navigate({name:'settings'})),secondary('고객센터',()=>c.navigate({name:'help'})),secondary('콘텐츠 상태',()=>c.navigate({name:'notices'})),secondary('개인정보 안내',()=>c.navigate({name:'privacy'}))];break;}
     case 'settings': title='설정';contents=[heading('학습 환경'),notice('현재 로그인·광고·원격 분석·결제가 없습니다.'),secondary('라이트 모드',async()=>{c.draftSettings.theme='light';await c.commit(x=>({...x,settings:{...x.settings,theme:'light'}}));}),secondary('다크 모드',async()=>{c.draftSettings.theme='dark';await c.commit(x=>({...x,settings:{...x.settings,theme:'dark'}}));}),secondary('이 앱 학습 데이터 초기화',()=>c.requestReset())];break;
-    case 'help': title='고객센터';contents=[
+    case 'help': case 'report': title=route==='help'?'고객센터':'오류 · 의견 제보';contents=[
       heading('오류·의견 제보'),body('학습 답안이나 개인정보를 자동 전송하지 않습니다.'),
       {kind:'input',label:'오류 상황',value:c.supportText,onChange:v=>{c.supportText=v;c.notify();},placeholder:'어느 화면에서 어떤 문제가 있었나요?',multiline:true,style:{minHeight:120,borderWidth:1,borderColor:p.line,borderRadius:12,padding:14,color:p.ink}},
       ...(c.services.supportEmail?[
@@ -54,7 +63,7 @@ export function render(c:Controller):Node {
         primary('이메일로 문의하기',()=>c.contactSupport(),'support-email')
       ]:[]),
       ...(c.services.supportUrl?[secondary('고객지원 페이지',()=>c.external(c.services.supportUrl!),'support-page')]:[]),
-      secondary('제보 내용 공유하기',()=>c.report(c.route.id))
+      secondary('제보 내용 공유하기',()=>c.report(c.route.id),'report-share')
     ];break;
     case 'notices': title='앱·콘텐츠 정보';contents=[heading('SQLD Pass'),body('앱 버전 0.1.0'),small(`콘텐츠 버전 ${c.content.manifest.version}`),heading('수록 콘텐츠',20),body('이론 60개 · 확인 문제 120문항\n모의고사 20회 · 1,000문항'),body('학습용 자체 제작 콘텐츠입니다. 이용 가능한 모의고사는 실전 탭에서 확인할 수 있습니다.'),heading('오픈소스 글꼴',20),body('Pretendard 1.3.9 · 길형진\nSIL Open Font License 1.1'),secondary(c.expanded.has('font-license')?'글꼴 라이선스 접기':'글꼴 라이선스 전문',()=>c.toggleExpanded('font-license'),'font-license'),...(c.expanded.has('font-license')?[body(pretendardLicense,{fontSize:13,lineHeight:21})]:[])];break;
     case 'privacy': title='개인정보 안내';contents=[heading('공부 기록은 기기에.'),body('목표, 이론 읽음, 북마크, 문제 선택, 복습 일정과 모의고사 결과는 이 기기에 저장합니다.'),...(c.services.privacyUrl?[primary('개인정보처리방침 전문',()=>c.external(c.services.privacyUrl!),'privacy-policy')]:[notice('개인정보처리방침을 열 수 없습니다. 고객센터로 문의해 주세요.',p.orange,p.orangeSoft)])];break;
@@ -63,9 +72,9 @@ export function render(c:Controller):Node {
 
   const header=(!c.ready||route==='welcome')?undefined:row([...(main?[brand()]:[button('',()=>c.back(),{width:48,minHeight:48,padding:12,color:p.ink},{label:'뒤로',icon:'chevron-left',iconSize:24}),text(title,{fontSize:18,fontWeight:'700',color:p.ink,flex:1})]),...(main?[box([],{flex:1}),button('',()=>c.navigate({name:'stats'}),{width:48,minHeight:48,padding:12,borderRadius:14,color:p.blue},{label:'내 학습',icon:'chart',iconSize:22})]:[])],{paddingHorizontal:16,paddingVertical:8,borderBottomWidth:1,borderColor:p.line,backgroundColor:p.surface});
   const tabs:[Tab,string][]=[['today','홈'],['learn','학습'],['exams','실전'],['records','기록']];const selected:Record<string,Tab>={home:'today',catalog:'learn',practiceSetup:'learn',review:'learn',exams:'exams',stats:'records'};
-  if(main&&c.ready)footer=row(tabs.map(([id,label])=>button(label,()=>c.tab(id),{flex:1,minHeight:64,borderRadius:14,paddingVertical:8,backgroundColor:selected[route]===id?p.blueSoft:p.surface,color:selected[route]===id?p.blue:p.muted,fontSize:12,fontWeight:'700'},{label,testId:`tab-${id}`,role:'tab',selected:selected[route]===id,icon:({today:'home',learn:'book',exams:'timer',records:'chart',review:'book'} as const)[id],iconSize:22,iconPosition:'above'})),{backgroundColor:p.surface,paddingHorizontal:12,paddingVertical:8,borderTopWidth:1,borderColor:p.line,gap:5});
+  if(main&&c.ready)footer=row(tabs.map(([id,label])=>button(label,()=>c.tab(id),{flex:1,minHeight:64,borderRadius:14,paddingVertical:8,backgroundColor:p.surface,color:selected[route]===id?p.blue:p.muted,fontSize:12,fontWeight:'700'},{label,testId:`tab-${id}`,role:'tab',selected:selected[route]===id,icon:({today:'home',learn:'book',exams:'timer',records:'chart',review:'book'} as const)[id],iconSize:22,iconPosition:'above'})),{backgroundColor:p.surface,paddingHorizontal:12,paddingVertical:8,borderTopWidth:1,borderColor:p.line,gap:5});
   const content=box([...(c.notice?[notice(c.notice)]:[]),...contents],{paddingHorizontal:20,paddingTop:22,paddingBottom:36,gap:17},`${route}:${c.route.id??''}:${c.route.index??''}:${s.practice?.index??''}`);content.scroll=true;
-  const root=box([...(header?[header]:[]),content,...(footer?[footer]:[])],{flex:1,backgroundColor:p.bg},'app');
+  const root=box([...(header?[header]:[]),content,...(footer?[footer]:[])],{flex:1,backgroundColor:route==='welcome'?p.surface:p.bg},'app');
   if(c.dialog)root.children!.push({kind:'modal',label:c.dialog.title,close:()=>c.cancelDialog(),children:[card([heading(c.dialog.title,20),body(c.dialog.body),primary(c.dialog.confirmLabel,()=>c.acceptDialog()),secondary('취소',()=>c.cancelDialog())],{maxWidth:420,width:'100%'})]});
   return root;
 }

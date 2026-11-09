@@ -16,7 +16,7 @@ const req=(id='r1',examId='SQLD-M05',mode='live')=>({requestId:id,examId,mode,cr
 function harness({mode='test',accessPolicy,initial=null,result='closed',earn=true,failEarn=false,failClear=false,duplicate=false,held=false}={}){
   let stored=initial?structuredClone(initial):null,count=0,shows=0,release;
   const services={repository:{load:async()=>stored?structuredClone(stored):null,save:async s=>{count++;if(failEarn&&p.walletOf(s).grants['SQLD-M05'])throw Error('disk');stored=structuredClone(s);},clear:async()=>{if(failClear)throw Error('clear failed');stored=null;}},clock:()=>({wall:1000,mono:1000,runtimeId:'test'}),uuid:()=>`uuid${++count}`,platform:'web',openURL:async()=>{},share:async()=>'cancelled'};
-  const ads={mode,privacyOptions:async()=>{},showReward:async callback=>{shows++;if(held)await new Promise(r=>release=r);if(earn)await callback();if(duplicate)await callback();return result;}};
+  const ads={mode,adultConfirmed:false,confirmAdult(){this.adultConfirmed=true;},privacyOptions:async()=>{},showReward:async callback=>{shows++;if(held)await new Promise(r=>release=r);if(earn)await callback();if(duplicate)await callback();return result;}};
   const controller=new MonetizedController(c,services,ads,accessPolicy);controller.ready=true;controller.state=d.initialState(c,1);controller.state.onboarded=true;controller.route={name:'exams'};
   return {controller,services,ads,get stored(){return stored;},get shows(){return shows;},release:()=>release?.(),allowSave:()=>{failEarn=false;},failSave:()=>{failEarn=true;}};
 }
@@ -42,6 +42,7 @@ test('only home and stats can display banners',()=>{assert.ok(p.bannerAllowed('h
 test('active exam, modal and reward suppress banners globally',()=>{assert.equal(p.bannerAllowed('home',true,false,false),false);assert.equal(p.bannerAllowed('stats',false,true,false),false);assert.equal(p.bannerAllowed('home',false,false,true),false);});
 test('direct beginExam is gated, not just the button',async()=>{const h=harness();await h.controller.beginExam('SQLD-M05');assert.equal(h.controller.state.exams.length,0);assert.ok(h.controller.dialog);assert.equal(h.shows,0);});
 test('cancel opt-in does not load an ad',()=>{const h=harness();h.controller.offerUnlock('SQLD-M05');h.controller.cancelDialog();assert.equal(h.shows,0);});
+test('only explicit adult confirmation enables the reward path',async()=>{const h=harness();h.controller.offerUnlock('SQLD-M05');assert.equal(h.ads.adultConfirmed,false);assert.match(h.controller.dialog.body,/만 18세 이상/);h.controller.cancelDialog();assert.equal(h.ads.adultConfirmed,false);h.controller.offerUnlock('SQLD-M05');await h.controller.acceptDialog();assert.equal(h.ads.adultConfirmed,true);assert.equal(h.shows,1);});
 test('ad unavailable leaves access unchanged',async()=>{const h=harness({result:'unavailable',earn:false});h.controller.offerUnlock('SQLD-M05');await h.controller.acceptDialog();assert.equal(h.controller.hasAccess('SQLD-M05'),false);assert.equal(p.walletOf(h.controller.state).pending,null);});
 test('close without earned callback never grants',async()=>{const h=harness({earn:false});h.controller.offerUnlock('SQLD-M05');await h.controller.acceptDialog();assert.equal(h.controller.hasAccess('SQLD-M05'),false);});
 test('reward is saved once and repeat attempt needs no additional ad',async()=>{const h=harness({duplicate:true});h.controller.offerUnlock('SQLD-M05');await h.controller.acceptDialog();assert.equal(h.controller.hasAccess('SQLD-M05'),true);assert.equal(Object.keys(p.walletOf(h.controller.state).grants).length,1);await h.controller.beginExam('SQLD-M05');assert.equal(h.controller.state.exams.length,1);assert.equal(h.shows,1);});
@@ -72,7 +73,7 @@ test('free launch persists all twenty exams before becoming ready without ad cal
   assert.equal(h.controller.ready,true);assert.ok(observations.length);assert.ok(observations.every(Boolean));
   assert.equal(Object.keys(p.walletOf(h.stored).grants).length,20);
   for(const e of c.exams){assert.equal(h.controller.hasAccess(e.id),true);assert.equal(p.walletOf(h.stored).grants[e.id].source,'launch-free');}
-  await h.controller.beginExam('SQLD-M20');assert.equal(h.controller.state.exams[0].examId,'SQLD-M20');assert.equal(h.shows,0);
+  await h.controller.saveSettings(true);await h.controller.beginExam('SQLD-M20');assert.equal(h.controller.state.exams[0].examId,'SQLD-M20');assert.equal(h.shows,0);
   assert.equal(h.controller.dialog,null);assert.equal(h.controller.showBanner,false);
 });
 test('unattempted free-launch exams remain open after restart and future rewarded update',async()=>{
@@ -82,7 +83,7 @@ test('unattempted free-launch exams remain open after restart and future rewarde
   const updated=harness({mode:'live',accessPolicy:'rewarded',initial:free.stored});await updated.controller.initialize();
   for(const e of c.exams)assert.equal(updated.controller.hasAccess(e.id),true);
   assert.equal(updated.controller.state.exams.length,0);assert.equal(updated.shows,0);
-  await updated.controller.beginExam('SQLD-M20');assert.equal(updated.controller.state.exams[0].examId,'SQLD-M20');assert.equal(updated.shows,0);
+  await updated.controller.saveSettings(true);await updated.controller.beginExam('SQLD-M20');assert.equal(updated.controller.state.exams[0].examId,'SQLD-M20');assert.equal(updated.shows,0);
 });
 test('free launch preserves existing real rewards and learning records while replacing test-only access',async()=>{
   const live=req('real','SQLD-M05','live'),testOnly=req('test','SQLD-M06','test');

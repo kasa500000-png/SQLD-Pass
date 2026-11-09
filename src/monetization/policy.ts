@@ -4,6 +4,11 @@ export type AdMode = 'off' | 'test' | 'live';
 export type ExamAccessPolicy = 'launch-free' | 'rewarded';
 export const FREE_EXAM_IDS = ['SQLD-M01','SQLD-M02','SQLD-M03','SQLD-M04'] as const;
 export const POLICY_VERSION = '2026-09-30.1';
+// Shown beside every direct rewarded-ad button, before the user opts in.
+export const REWARD_ACTION = '광고 1회 보고 회차 열기';
+export const REWARD_DISCLOSURE = '광고 완료 후 이 회차의 두 모드·재응시·해설을 이 기기에서 계속 이용합니다.';
+export const REWARD_AGE_DISCLOSURE = '만 18세 이상이며 광고 시청을 원하면 아래 버튼을 눌러 주세요.';
+export const REWARD_STORAGE_DISCLOSURE = '중간에 닫으면 잠금은 유지됩니다. 무료 1~4회와 열린 회차는 그대로 이용할 수 있습니다. 앱 삭제·전체 데이터 삭제·기기 변경 시 해제 기록은 복원되지 않습니다.';
 export interface Grant {
   examId:string; requestId:string; grantedAt:number; source:'reward'|'legacy'|'launch-free'; mode:AdMode;
 }
@@ -12,12 +17,15 @@ export interface Wallet {version:1; grants:Record<string,Grant>; pending:Pending
 export type MonetizedState = AppState & {monetization?:Wallet};
 export interface RewardDriver {
   readonly mode:AdMode;
+  /** Called only after the user explicitly confirms adult eligibility. */
+  confirmAdult():void;
+  readonly adultConfirmed:boolean;
   /** Called only after explicit opt-in. onEarned is exclusively an SDK reward event. */
   showReward(onEarned:()=>Promise<void>):Promise<'closed'|'unavailable'|'cancelled'>;
   privacyOptions():Promise<void>;
 }
 export const disabledAds:RewardDriver = {
-  mode:'off', async showReward(){return 'unavailable';}, async privacyOptions(){}
+  mode:'off', adultConfirmed:false, confirmAdult(){}, async showReward(){return 'unavailable';}, async privacyOptions(){}
 };
 export function validExamId(id:string):boolean {return /^SQLD-M(0[1-9]|1[0-9]|20)$/.test(id);}
 export function isFreeExam(id:string):boolean {return (FREE_EXAM_IDS as readonly string[]).includes(id);}

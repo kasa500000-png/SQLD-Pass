@@ -24,6 +24,7 @@ function references(ids, known, label) {
 }
 function validateContent(c) {
   insist(object(c) && !c.migrationIncomplete, 'full authored pack is required; placeholder is not content');
+  if(c.manifest?.schema === 2)return require('./textbook-integrity.cjs')(c);
   const m = c.manifest;
   insist(object(m) && m.schema === 1 && text(m.version), 'manifest schema/version');
   insist(object(c.questions) && object(c.sources), 'questions/sources must be objects');

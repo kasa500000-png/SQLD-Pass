@@ -1,3 +1,4 @@
+import {renderTextbook} from '../textbook/views';
 import {render} from '../ui/views';
 import {launchFreeLocalDataNotice,polishLearning} from '../ui/learning-polish';
 import {box,button,dark,light,text,type Node} from '../ui/nodes';
@@ -5,6 +6,7 @@ import type {MonetizedController} from './controller';
 import {isFreeExam} from './policy';
 
 export function renderMonetized(c:MonetizedController):Node {
+  if(c.content.textbook)return renderTextbook(c);
   const root=render(c),p=c.isDark?dark:light;
   const launchFree=c.isLaunchFree;
   const scroll=root.children?.find(n=>n.scroll);
@@ -49,11 +51,11 @@ export function renderMonetized(c:MonetizedController):Node {
     title(launchFree?'기기 저장 안내':'광고와 개인정보'),
     ...(launchFree?[body('회원가입 없이 사용할 수 있으며, 학습 기록은 이 기기에 저장됩니다.'),body(launchFreeLocalDataNotice)]:c.ads.mode==='off'?[body('이 버전에서는 광고를 요청하지 않으며, 학습 기록을 광고 서비스로 전송하지 않습니다.')]:[
       body('Google 광고 SDK가 광고 제공을 위해 기기·네트워크·광고 상호작용 정보를 처리할 수 있습니다. 답안·진도·메모는 광고 타기팅으로 전달하지 않습니다. 비개인화 광고도 개인정보가 처리될 수 있습니다.'),
-      body('모든 이용자에게 아동 보호 광고 설정을 적용합니다. 생년월일을 수집하지 않으며, Android 광고 ID 권한을 요청하지 않습니다.'),
+      body('광고 기능은 만 18세 이상임을 확인한 이용자에게 제공하며, 확인 결과는 앱 실행 중에만 사용합니다. 생년월일은 수집하지 않으며, Android 광고 ID 권한을 요청하지 않습니다.'),
       body('광고를 건너뛰거나 개인정보 선택을 거부해도 무료 학습과 이미 열린 회차는 유지됩니다.'),
       action('광고 개인정보 선택',()=>c.openAdPrivacy(),'ad-privacy-detail')])
   ]));
-  if(c.route.name==='help'&&!launchFree&&c.ads.mode!=='off')scroll.children?.push(action('부적절한 광고 신고 내용 작성',()=>{
+  if((c.route.name==='help'||c.route.name==='report')&&!launchFree&&c.ads.mode!=='off')scroll.children?.push(action('부적절한 광고 신고 내용 작성',()=>{
     c.supportText='[광고 신고]\n표시된 화면/날짜:\n광고 내용과 문제점:\n개인정보나 광고 식별자는 적지 마세요.';c.notify();
   },'report-ad'));
   if(c.notice&&['exams','examIntro'].includes(c.route.name))scroll.children?.unshift(body(c.notice));
@@ -65,6 +67,6 @@ export function renderMonetized(c:MonetizedController):Node {
     root.children!.splice(idx+1,0,box([],{minHeight:0},'monetization-banner'));
   }
   const lock=(n:Node):Node=>({...n,disabled:n.kind==='button'&&c.rewardBusy?true:n.disabled,children:n.children?.map(lock)});
-  const improved=polishLearning(c,root,{hasAccess:id=>c.hasAccess(id),offerUnlock:id=>c.offerUnlock(id),mode:c.ads.mode,launchFree,busy:c.rewardBusy,resetLearning:()=>c.requestLearningReset()});
+  const improved=polishLearning(c,root,{hasAccess:id=>c.hasAccess(id),offerUnlock:id=>c.offerUnlock(id),mode:c.ads.mode,launchFree,busy:c.rewardBusy,resetLearning:()=>c.requestLearningReset(),resetAll:()=>c.requestReset()});
   return c.rewardBusy?lock(improved):improved;
 }
