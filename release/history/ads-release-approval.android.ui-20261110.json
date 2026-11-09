@@ -1,0 +1,15 @@
+{
+  "platform": "android",
+  "policyVersion": "2026-09-30.1",
+  "codeSha256": "04578589575542982cf4162c6ecadba7548c4e15c9e08653b9cf43b134729c37",
+  "androidDeviceEvidence": "qa/UI_REFINEMENT_20261110.md: actual Samsung SM-F721N Release-mode official test APK 0.3.2(18), current UI code: test banner, M08 earned reward and unlock, timed attempt and active-home suppression, dark/130% layout, practice and exam submission/results. Existing test grants and textbook records survived APK updates. No new full 90-minute expiry or accessibility claim. Final measured-width renderer rebuild installed on same Samsung with M08 active attempt and grants retained; reward evidence precedes only that layout correction.",
+  "androidConsentEvidence": "Consent policy/SDK is unchanged from the 2026-11-09 physical Samsung published-UMP EEA reject/reopen/consent/withdraw evidence in qa/RELEASE_TEXTBOOK_20261109.md. Current 2026-11-10 build: home privacy entry, session age confirmation and privacy status check verified; no new EEA geography test claimed.",
+  "adPlacementEvidence": "Current Samsung official test banner loaded on home. Starting M08 timed and navigating home suppresses banner across navigation. Prior study suppression evidence retained. AdMob refresh-disabled console verification is dated 2026-11-09, not a new console observation.",
+  "sdkCompatibilityEvidence": "418 automated tests and native TypeScript passed; current Android Release test APK built/installed and official SDK reward earned. Production artifact alignment/signature validation remains separate.",
+  "appAdsTxtEvidence": "2026-11-09 console evidence: both apps Ready/serving and correct publisher app-ads.txt. 2026-11-10 direct read returned HTTP403; browser workspace is user-held, so current console recheck remains pending. No claim of new verification.",
+  "privacyDisclosureEvidence": "Google Play existing published Ads YES and Data Safety reviewed 2026-11-09: approximate location, diagnostics, app interactions, device identifiers optional collected/shared for ads/analytics/fraud; support contact optional. Evidence play-data-safety.txt. Public support/privacy version13 published with new textbook and migration disclosures.",
+  "privacyUrl": "https://sqld-pass-support.shk1122.chatgpt.site/privacy.html",
+  "supportUrl": "https://sqld-pass-support.shk1122.chatgpt.site/support.html",
+  "approvedBy": "Owner 2026-11-10 explicitly authorized recommended screen changes, per-screen PRs/commits, and production submission to both stores; unchanged exact textbook content retains prior owner review.",
+  "approvedAt": "2026-11-09T23:48:52.546Z"
+}

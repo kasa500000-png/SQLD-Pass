@@ -1,0 +1,22 @@
+{
+  "recordedAt": "2026-11-09T23:57:29.355197+00:00",
+  "artifact": ".build/release-ui-20261110/sqld-pass-0.3.2-18.aab",
+  "sha256": "6e981f6b75d8ee1412e55788aa0303d5bd5ed4068d4f1c78a81a95f2a989e3fe",
+  "version": "0.3.2",
+  "versionCode": 18,
+  "package": "com.kasa500000.sqldpass",
+  "appEnvironment": "production",
+  "adsMode": "live",
+  "adsRuntimeEnabled": true,
+  "examAccessPolicy": "rewarded",
+  "contentSha256": "1f7a60245d9b75a19ad733dca7fc281539d73ebdc0fcfa25fd5a959ebd7d589d",
+  "uploadCertificateSha256": "EA1E8482B51D7A905271EECDABF840E244ADCFAAED7DA559329CB929E7171942",
+  "certificateMatchesRestoredUploadCertificate": true,
+  "bundletoolValidation": "passed",
+  "jarSignature": "verified (expected self-signed Android upload certificate)",
+  "nativeLibraries16KBStaticChecks": 36,
+  "inspectionApkInstalled": false,
+  "uploaded": false,
+  "submittedToProduction": false,
+  "remaining": "Browser workspace11 user-held; return of control required for console state and upload."
+}
