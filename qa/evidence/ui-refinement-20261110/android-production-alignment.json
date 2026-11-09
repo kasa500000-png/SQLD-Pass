@@ -1,0 +1,369 @@
+{
+  "artifact": "sqld-ui-prod-inspection.apk",
+  "sha256": "3f91f8f3d18b2e5a8e7f2ca033ff534b12fa3a8a93a3a19604dd3b21f370d6c4",
+  "scope": "Static APK and 64-bit ELF alignment only; not device execution",
+  "libraries": [
+    {
+      "path": "lib/arm64-v8a/libappmodules.so",
+      "loadAlignments": [
+        16384,
+        16384,
+        16384
+      ],
+      "zipOffset": 17973248,
+      "compressed": false
+    },
+    {
+      "path": "lib/arm64-v8a/libc++_shared.so",
+      "loadAlignments": [
+        16384,
+        16384,
+        16384,
+        16384
+      ],
+      "zipOffset": 19234816,
+      "compressed": false
+    },
+    {
+      "path": "lib/arm64-v8a/libdatastore_shared_counter.so",
+      "loadAlignments": [
+        16384,
+        16384,
+        16384
+      ],
+      "zipOffset": 20529152,
+      "compressed": false
+    },
+    {
+      "path": "lib/arm64-v8a/libexpo-modules-core.so",
+      "loadAlignments": [
+        16384,
+        16384,
+        16384
+      ],
+      "zipOffset": 20545536,
+      "compressed": false
+    },
+    {
+      "path": "lib/arm64-v8a/libexpo-sqlite.so",
+      "loadAlignments": [
+        16384,
+        16384,
+        16384
+      ],
+      "zipOffset": 22003712,
+      "compressed": false
+    },
+    {
+      "path": "lib/arm64-v8a/libfbjni.so",
+      "loadAlignments": [
+        16384,
+        16384,
+        16384
+      ],
+      "zipOffset": 23838720,
+      "compressed": false
+    },
+    {
+      "path": "lib/arm64-v8a/libgifimage.so",
+      "loadAlignments": [
+        16384,
+        16384,
+        16384
+      ],
+      "zipOffset": 24018944,
+      "compressed": false
+    },
+    {
+      "path": "lib/arm64-v8a/libhermestooling.so",
+      "loadAlignments": [
+        16384,
+        16384,
+        16384
+      ],
+      "zipOffset": 24346624,
+      "compressed": false
+    },
+    {
+      "path": "lib/arm64-v8a/libhermesvm.so",
+      "loadAlignments": [
+        16384,
+        16384,
+        16384
+      ],
+      "zipOffset": 24494080,
+      "compressed": false
+    },
+    {
+      "path": "lib/arm64-v8a/libimagepipeline.so",
+      "loadAlignments": [
+        16384,
+        16384,
+        16384
+      ],
+      "zipOffset": 26984448,
+      "compressed": false
+    },
+    {
+      "path": "lib/arm64-v8a/libjsi.so",
+      "loadAlignments": [
+        16384,
+        16384,
+        16384
+      ],
+      "zipOffset": 27000832,
+      "compressed": false
+    },
+    {
+      "path": "lib/arm64-v8a/libnative-filters.so",
+      "loadAlignments": [
+        16384,
+        16384,
+        16384
+      ],
+      "zipOffset": 27426816,
+      "compressed": false
+    },
+    {
+      "path": "lib/arm64-v8a/libnative-imagetranscoder.so",
+      "loadAlignments": [
+        16384,
+        16384,
+        16384
+      ],
+      "zipOffset": 27459584,
+      "compressed": false
+    },
+    {
+      "path": "lib/arm64-v8a/libreact_codegen_rnsvg.so",
+      "loadAlignments": [
+        16384,
+        16384,
+        16384
+      ],
+      "zipOffset": 28049408,
+      "compressed": false
+    },
+    {
+      "path": "lib/arm64-v8a/libreact_codegen_safeareacontext.so",
+      "loadAlignments": [
+        16384,
+        16384,
+        16384
+      ],
+      "zipOffset": 28852224,
+      "compressed": false
+    },
+    {
+      "path": "lib/arm64-v8a/libreactnative.so",
+      "loadAlignments": [
+        16384,
+        16384,
+        16384
+      ],
+      "zipOffset": 29016064,
+      "compressed": false
+    },
+    {
+      "path": "lib/arm64-v8a/libstatic-webp.so",
+      "loadAlignments": [
+        16384,
+        16384,
+        16384
+      ],
+      "zipOffset": 36012032,
+      "compressed": false
+    },
+    {
+      "path": "lib/arm64-v8a/libzstd-kmp.so",
+      "loadAlignments": [
+        16384,
+        16384,
+        16384
+      ],
+      "zipOffset": 36519936,
+      "compressed": false
+    },
+    {
+      "path": "lib/x86_64/libappmodules.so",
+      "loadAlignments": [
+        16384,
+        16384,
+        16384
+      ],
+      "zipOffset": 71483392,
+      "compressed": false
+    },
+    {
+      "path": "lib/x86_64/libc++_shared.so",
+      "loadAlignments": [
+        16384,
+        16384,
+        16384,
+        16384
+      ],
+      "zipOffset": 72810496,
+      "compressed": false
+    },
+    {
+      "path": "lib/x86_64/libdatastore_shared_counter.so",
+      "loadAlignments": [
+        16384,
+        16384
+      ],
+      "zipOffset": 74072064,
+      "compressed": false
+    },
+    {
+      "path": "lib/x86_64/libexpo-modules-core.so",
+      "loadAlignments": [
+        16384,
+        16384,
+        16384
+      ],
+      "zipOffset": 74088448,
+      "compressed": false
+    },
+    {
+      "path": "lib/x86_64/libexpo-sqlite.so",
+      "loadAlignments": [
+        16384,
+        16384,
+        16384
+      ],
+      "zipOffset": 75513856,
+      "compressed": false
+    },
+    {
+      "path": "lib/x86_64/libfbjni.so",
+      "loadAlignments": [
+        16384,
+        16384,
+        16384
+      ],
+      "zipOffset": 77398016,
+      "compressed": false
+    },
+    {
+      "path": "lib/x86_64/libgifimage.so",
+      "loadAlignments": [
+        16384,
+        16384,
+        16384
+      ],
+      "zipOffset": 77578240,
+      "compressed": false
+    },
+    {
+      "path": "lib/x86_64/libhermestooling.so",
+      "loadAlignments": [
+        16384,
+        16384,
+        16384
+      ],
+      "zipOffset": 77889536,
+      "compressed": false
+    },
+    {
+      "path": "lib/x86_64/libhermesvm.so",
+      "loadAlignments": [
+        16384,
+        16384,
+        16384
+      ],
+      "zipOffset": 78036992,
+      "compressed": false
+    },
+    {
+      "path": "lib/x86_64/libimagepipeline.so",
+      "loadAlignments": [
+        16384,
+        16384,
+        16384
+      ],
+      "zipOffset": 80642048,
+      "compressed": false
+    },
+    {
+      "path": "lib/x86_64/libjsi.so",
+      "loadAlignments": [
+        16384,
+        16384,
+        16384
+      ],
+      "zipOffset": 80658432,
+      "compressed": false
+    },
+    {
+      "path": "lib/x86_64/libnative-filters.so",
+      "loadAlignments": [
+        16384,
+        16384,
+        16384
+      ],
+      "zipOffset": 81084416,
+      "compressed": false
+    },
+    {
+      "path": "lib/x86_64/libnative-imagetranscoder.so",
+      "loadAlignments": [
+        16384,
+        16384,
+        16384
+      ],
+      "zipOffset": 81117184,
+      "compressed": false
+    },
+    {
+      "path": "lib/x86_64/libreact_codegen_rnsvg.so",
+      "loadAlignments": [
+        16384,
+        16384,
+        16384
+      ],
+      "zipOffset": 81838080,
+      "compressed": false
+    },
+    {
+      "path": "lib/x86_64/libreact_codegen_safeareacontext.so",
+      "loadAlignments": [
+        16384,
+        16384,
+        16384
+      ],
+      "zipOffset": 82722816,
+      "compressed": false
+    },
+    {
+      "path": "lib/x86_64/libreactnative.so",
+      "loadAlignments": [
+        16384,
+        16384,
+        16384
+      ],
+      "zipOffset": 82886656,
+      "compressed": false
+    },
+    {
+      "path": "lib/x86_64/libstatic-webp.so",
+      "loadAlignments": [
+        16384,
+        16384,
+        16384
+      ],
+      "zipOffset": 89997312,
+      "compressed": false
+    },
+    {
+      "path": "lib/x86_64/libzstd-kmp.so",
+      "loadAlignments": [
+        16384,
+        16384,
+        16384
+      ],
+      "zipOffset": 90570752,
+      "compressed": false
+    }
+  ],
+  "failures": []
+}

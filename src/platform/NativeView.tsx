@@ -47,6 +47,15 @@ function LessonSections({node,scale,dark,path,maxSystemFontMultiplier}:NativeVie
     </View>)}
   </View>;
 }
+function ResponsiveSegments({node,scale,dark,path,maxSystemFontMultiplier}:NativeViewProps){
+  const layout=useResponsiveLayout(),[measured,setMeasured]=useState(0);
+  const width=Math.min(measured||layout.usableWidth,layout.usableWidth),items=node.children??[],minCell=76*layout.effectiveFontScale;
+  const count=width/items.length>=minCell?items.length:width/2>=minCell?2:1;
+  const cellWidth=(width-(count-1)*6)/count;
+  return <View onLayout={event=>setMeasured(event.nativeEvent.layout.width)} style={{width:'100%',flexDirection:'row',flexWrap:'wrap',gap:6}}>{items.map((child,index)=><View key={child.key??index} style={{width:cellWidth}}>
+    <NativeView node={{...child,style:{...child.style,flex:undefined,width:'100%',paddingHorizontal:6,fontSize:13,borderRadius:10}}} scale={scale} dark={dark} path={`${path}.${index}`} maxSystemFontMultiplier={maxSystemFontMultiplier}/>
+  </View>)}</View>;
+}
 function ResponsiveTiles({node,scale,dark,path,maxSystemFontMultiplier}:NativeViewProps){
   const layout=useResponsiveLayout(),[measured,setMeasured]=useState(0);
   const width=Math.min(measured||layout.usableWidth,layout.usableWidth);
@@ -116,13 +125,7 @@ export function NativeView({node: n, scale, dark, path = '0',maxSystemFontMultip
       </ScrollView>
     </SafeAreaView>
   </Modal>;
-  if(n.layout==='segments'){
-    const items=n.children??[],minCell=76*layout.effectiveFontScale;
-    const count=layout.usableWidth/items.length>=minCell?items.length:layout.usableWidth/2>=minCell?2:1;
-    return <View style={{flexDirection:'row',flexWrap:'wrap',gap:6}}>{items.map((child,index)=><View key={child.key??index} style={{width:count===1?'100%':`${(100-(count-1)*6/layout.usableWidth*100)/count}%`}}>
-      <NativeView node={{...child,style:{...child.style,flex:undefined,width:'100%',paddingHorizontal:6,fontSize:13,borderRadius:10}}} scale={scale} dark={dark} maxSystemFontMultiplier={maxSystemFontMultiplier}/>
-    </View>)}</View>;
-  }
+  if(n.layout==='segments')return <ResponsiveSegments node={n} scale={scale} dark={dark} path={path} maxSystemFontMultiplier={maxSystemFontMultiplier}/>;
   if(n.layout==='dashboard'||n.layout==='question-grid')return <ResponsiveTiles node={n} scale={scale} dark={dark} path={path} maxSystemFontMultiplier={maxSystemFontMultiplier}/>;
   if(n.layout==='lesson-sections')return <LessonSections node={n} scale={scale} dark={dark} path={path} maxSystemFontMultiplier={maxSystemFontMultiplier}/>;
   if(n.layout==='adaptive-row'&&layout.stackRows)return <View testID={n.testId}
