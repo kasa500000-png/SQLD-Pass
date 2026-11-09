@@ -1,0 +1,21 @@
+{
+  "environment": "internal",
+  "adsMode": "off",
+  "examAccessPolicy": "launch-free",
+  "contentVersion": "textbook.20261109.2",
+  "contentSha256": "1f7a60245d9b75a19ad733dca7fc281539d73ebdc0fcfa25fd5a959ebd7d589d",
+  "artifacts": {
+    "androidInternalApk": {
+      "sha256": "833b532398ffee61f1ab2b3215a57e31e5e240ba35dd24c802dffb64ab57c7e6",
+      "bytes": 93442841
+    },
+    "iosSimulatorBundle": {
+      "sha256": "00f88f0358fa8fc3eff72549a4b263a544cab44ce9d796572057f1837cc6174b",
+      "bytes": 6544903
+    },
+    "iosDeviceBundle": {
+      "sha256": "eeb6434973526cd4c2b76c6e064b873fcab08db43485df86837fcbf4c6f0a767",
+      "bytes": 6544893
+    }
+  }
+}

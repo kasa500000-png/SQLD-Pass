@@ -6,6 +6,7 @@ import {advanceClock,applyPractice,assertContent,canStudyQuestion,completedPract
 export class Controller {
   state:AppState; ready=false; startupError=''; notice=''; busy=false; route:Route={name:'welcome'}; stack:Route[]=[];
   dialog:Dialog|null=null; search=''; subject='all'; bookmarkedOnly=false; filter='all'; expanded=new Set<string>();
+  practiceBatchSize=10; flashcardsUnknownOnly=false;
   mockResultFilter:'all'|'wrong'|'flagged'='all'; mockSearch=''; mockTopicFilter=''; mockListLimit=20; mockHistoryLimit=20; mockNoteDrafts:Record<string,string>={};
   libraryEditor:{id?:string;name:string}|null=null; libraryError='';
   draftSettings:Settings; settingsError=''; supportText=''; supportNotice=''; reviewLimit=20; reviewPickerOpen=false; private listeners=new Set<()=>void>(); private serial:Promise<void>=Promise.resolve();
@@ -56,7 +57,7 @@ export class Controller {
     if(this.dialog){this.dialog=null;this.notify();return;}
     if(this.reviewPickerOpen){this.closeReviewPicker();return;}
     if(this.route.name==='practiceResult'){void this.returnPracticeHome();return;}
-    if(this.route.name==='exam'){this.confirm('시험 화면을 나갈까요?',this.activeExam()?.mode==='study'?'답안은 기기에 저장되며 시간 제한 없이 이어서 풀 수 있습니다.':'답안은 기기에 저장되며 남은 시간은 계속 흐릅니다. 종료 시각이 지나면 자동 제출합니다.','저장 후 나가기',async()=>{if(await this.checkpoint())this.tab('exams');});return;}
+    if(this.route.name==='exam'||this.route.name==='sheet'){this.confirm('시험 화면을 나갈까요?',this.activeExam()?.mode==='study'?'답안은 기기에 저장되며 시간 제한 없이 이어서 풀 수 있습니다.':'답안은 기기에 저장되며 남은 시간은 계속 흐릅니다. 종료 시각이 지나면 자동 제출합니다.','저장 후 나가기',async()=>{if(await this.checkpoint())this.tab('exams');});return;}
     this.supportNotice='';this.route=this.stack.pop()??{name:this.state.onboarded?'home':'welcome'};this.notify();
   }
   confirm(title:string,body:string,confirmLabel:string,onConfirm:()=>void|Promise<void>,destructive=false){this.dialog={title,body,confirmLabel,onConfirm,destructive};this.notify();}
@@ -120,7 +121,7 @@ export class Controller {
     if(d.weeklyGoalDays!==undefined&&(!Number.isInteger(d.weeklyGoalDays)||d.weeklyGoalDays<1||d.weeklyGoalDays>7)){this.settingsError='주간 목표는 1~7일 중에서 선택해 주세요.';this.notify();return;}
     if(![15,30,45,60,90].includes(d.minutes))return;
     this.settingsError='';
-    if(await this.commit(s=>({...s,settings:d,onboarded:onboard||s.onboarded}))){this.stack=[];this.route={name:'home'};this.notice='학습 설정을 저장했습니다. 기존 기록은 유지됩니다.';this.notify();}
+    if(await this.commit(s=>({...s,settings:d,onboarded:onboard||s.onboarded}))){if(onboard||this.route.name==='setup'||!this.content.textbook){this.stack=[];this.route={name:'home'};}else this.route=this.stack.pop()??{name:'home'};this.notice='설정을 저장했습니다.';this.notify();}
   }
   private async saveLessonRead(id:string):Promise<boolean>{if(!this.ready||!this.state.onboarded||!this.content.lessons.some(l=>l.id===id))return false;const ok=await this.commit(s=>s.onboarded?({...s,readLessons:Array.from(new Set([...s.readLessons,id])),studyDays:Array.from(new Set([...s.studyDays,dayKey(this.services.clock().wall)]))}):s);const recorded=ok&&this.state.onboarded&&this.state.readLessons.includes(id);if(recorded){this.notice='이론 읽음을 기록했습니다. 확인 문제로 이해를 점검해 보세요.';this.notify();}return recorded;}
   async markLesson(id:string):Promise<void>{await this.saveLessonRead(id);}

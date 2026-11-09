@@ -31,8 +31,8 @@ test('immutable snapshots, ordered answers and final submission survive failures
 });
 test('retakes hide old explanations, saved notes and review entry points until final submission',async()=>{
  const e=await ready(),ctrl=e.ctrl;await ctrl.beginExam('SQLD-M01','study');const q=ctrl.activeExam().snapshots[0];a.ok(!text(ctrl).includes(q.explanation));await ctrl.finishExam('manual');const old=ctrl.state.exams[0].id;await ctrl.bookmarkMock(q.id);await ctrl.saveMockNote(q.id,'PRIVATE_NOTE');await ctrl.beginExam('SQLD-M01','timed');
- for(const route of [{name:'result',id:old},{name:'mockQuestion',id:q.id},{name:'mockSaved'},{name:'mockReview'}]){ctrl.route=route;a.ok(!text(ctrl).includes(q.explanation));a.ok(!text(ctrl).includes('PRIVATE_NOTE'));}
- await ctrl.beginPractice([q.id],'review');a.equal(ctrl.state.practice,null);await ctrl.saveMockNote(q.id,'forbidden');a.equal(ctrl.state.mockStudy.notes[q.id],'PRIVATE_NOTE');await ctrl.finishExam('manual');a.ok(text(ctrl).includes(q.explanation));
+ for(const route of [{name:'result',id:old},{name:'examReview',id:old,index:0},{name:'mockQuestion',id:q.id},{name:'mockSaved'},{name:'mockReview'}]){ctrl.route=route;a.ok(!text(ctrl).includes(q.explanation));a.ok(!text(ctrl).includes('PRIVATE_NOTE'));}
+ await ctrl.beginPractice([q.id],'review');a.equal(ctrl.state.practice,null);await ctrl.saveMockNote(q.id,'forbidden');a.equal(ctrl.state.mockStudy.notes[q.id],'PRIVATE_NOTE');await ctrl.finishExam('manual');ctrl.route={name:'examReview',id:ctrl.state.exams.at(-1).id,index:0};a.ok(text(ctrl).includes(q.explanation));
 });
 test('latest submission owns wrong list; correct review removes item without changing score; retake reinstates it',async()=>{
  const e=await ready(),ctrl=e.ctrl;await ctrl.beginExam('SQLD-M01','study');await ctrl.finishExam('manual');const q=ctrl.state.exams[0].snapshots[0];a.equal(mockWrongQuestions(ctrl.state).length,50);const score=structuredClone(ctrl.state.exams[0].score);
@@ -49,9 +49,34 @@ test('compatible textbook update retains read, practice, cards, settings and gra
  const base=await ready(),ctrl=base.ctrl;await ctrl.markLesson(c.lessons[0].id);await ctrl.toggleKnownCard(c.textbook.flashcards[0].id);await ctrl.beginPractice([c.lessons[0].questionIds[0]]);await ctrl.selectPractice('2');const raw=structuredClone(base.stored());raw.contentVersion='textbook.20261109.1';raw.textbookMigration={version:1,fromVersion:'phase1.20260908.1',noticePending:false};raw.reading={lastLessonId:c.lessons[0].id,positions:{[c.lessons[0].id]:{offset:180,contentHeight:1200,lessonVersion:c.lessons[0].version}}};const before=JSON.stringify(raw);const next=d.parseState(raw,c);a.equal(JSON.stringify(raw),before);a.equal(next.contentVersion,c.manifest.version);for(const k of ['readLessons','bookmarks','practice','knownCards','settings','monetization','textbookMigration','reading','responses'])a.deepEqual(next[k],raw[k],k);const updated=await ready(raw);a.equal(updated.stored().contentVersion,c.manifest.version);a.deepEqual(updated.ctrl.state.practice,raw.practice);
 });
 test('every question renders native blocks and every post-submit result table is reachable',async()=>{
- const e=await ready(),ctrl=e.ctrl;for(const exam of c.exams){await ctrl.beginExam(exam.id,'study');for(let i=0;i<50;i++){ctrl.state.exams.at(-1).index=i;const nodes=flat(renderTextbook(ctrl)),q=ctrl.activeExam().snapshots[i];a.equal(nodes.filter(n=>n.kind==='table').length,q.blocks.filter(b=>b.type==='table').length);a.ok(!text(ctrl).includes(q.explanation));}await ctrl.finishExam('manual');const id=ctrl.state.exams.at(-1).id;for(let i=0;i<50;i++){ctrl.route={name:'result',id,index:i};const q=ctrl.state.exams.at(-1).snapshots[i],nodes=flat(renderTextbook(ctrl));a.ok(nodes.some(n=>n.text===q.explanation));a.equal(nodes.filter(n=>n.kind==='table').length,q.blocks.filter(b=>b.type==='table').length+(q.result?1:0)+(q.explanationBlocks??[]).filter(b=>b.type==='table').length);}}
+ const e=await ready(),ctrl=e.ctrl;for(const exam of c.exams){await ctrl.beginExam(exam.id,'study');for(let i=0;i<50;i++){ctrl.state.exams.at(-1).index=i;const nodes=flat(renderTextbook(ctrl)),q=ctrl.activeExam().snapshots[i];a.equal(nodes.filter(n=>n.kind==='table').length,q.blocks.filter(b=>b.type==='table').length);a.ok(!text(ctrl).includes(q.explanation));}await ctrl.finishExam('manual');const id=ctrl.state.exams.at(-1).id;for(let i=0;i<50;i++){ctrl.route={name:'examReview',id,index:i};const q=ctrl.state.exams.at(-1).snapshots[i],nodes=flat(renderTextbook(ctrl));a.ok(nodes.some(n=>n.text===q.explanation));a.equal(nodes.filter(n=>n.kind==='table').length,q.blocks.filter(b=>b.type==='table').length+(q.result?1:0)+(q.explanationBlocks??[]).filter(b=>b.type==='table').length);}}
  a.equal(ctrl.state.exams.length,20);a.equal(flat(renderTextbook(ctrl)).filter(n=>n.role==='tab').length,5);
 });
 test('latest-submission review and statistics use saved attempt order even after clock rollback',()=>{
  const s=d.initialState(c),clock={wall:100000,mono:100000,runtimeId:'a'};let first=d.startExam(s,c.exams[0],c,clock,'a','study');first.answers=Object.fromEntries(first.snapshots.map(q=>[q.id,q.answer]));s.exams=[d.submitExam(first,clock,'manual')];const earlier={wall:50000,mono:1,runtimeId:'b'},second=d.submitExam(d.startExam(s,c.exams[0],c,earlier,'b','study'),earlier,'manual');s.exams.push(second);a.equal(mockWrongQuestions(s).length,50);a.equal(mockStats(s,'study').average,0);
+});
+
+test('focused exam keeps timer and navigation outside scrolling content and preserves saved exit',async()=>{
+ const {ctrl}=await ready();await ctrl.beginExam('SQLD-M01','timed');await ctrl.updateExamAnswer('2');
+ const root=renderTextbook(ctrl),nodes=flat(root),scroll=nodes.find(n=>n.scroll),footer=nodes.find(n=>n.testId==='screen-footer');
+ a.ok(footer);a.ok(!flat(scroll).some(n=>n.testId==='mock-next'));a.ok(flat(footer).some(n=>n.testId==='mock-next'));
+ a.equal(nodes.filter(n=>n.role==='tab').length,0);a.ok(nodes.some(n=>n.testId==='screen-header'));
+ ctrl.route={name:'sheet',id:ctrl.activeExam().id};ctrl.back();a.ok(ctrl.dialog);await ctrl.acceptDialog();a.equal(ctrl.route.name,'exams');a.equal(Object.keys(ctrl.activeExam().answers).length,1);
+});
+test('result summary opens immutable explanations and question picker without changing score',async()=>{
+ const {ctrl}=await ready();await ctrl.beginExam('SQLD-M01','study');await ctrl.finishExam('manual');
+ const e=ctrl.state.exams[0],score=structuredClone(e.score),q=e.snapshots[0];a.ok(!text(ctrl).includes(q.explanation));
+ await flat(renderTextbook(ctrl)).find(n=>n.testId==='review-all').action();a.equal(ctrl.route.name,'examReview');a.ok(text(ctrl).includes(q.explanation));
+ await flat(renderTextbook(ctrl)).find(n=>n.testId==='review-picker').action();a.ok(flat(renderTextbook(ctrl)).some(n=>n.kind==='modal'));
+ await flat(renderTextbook(ctrl)).find(n=>n.testId==='review-jump-13').action();a.equal(ctrl.route.index,12);a.equal(ctrl.reviewPickerOpen,false);a.deepEqual(ctrl.state.exams[0].score,score);
+});
+test('practice feedback marks correct and chosen wrong options only after persisted submission',async()=>{
+ const {ctrl}=await ready(),q=Object.values(c.questions).find(q=>q.pool==='chapter');await ctrl.beginPractice([q.id]);const wrong=q.options.find(o=>o.id!==q.answer).id;await ctrl.selectPractice(wrong);
+ a.ok(flat(renderTextbook(ctrl)).filter(n=>n.buttonKind==='choice').every(n=>!n.feedback));await ctrl.answerPractice();
+ const nodes=flat(renderTextbook(ctrl));a.equal(nodes.find(n=>n.testId==='option-'+q.answer).feedback,'correct');a.equal(nodes.find(n=>n.testId==='option-'+wrong).feedback,'incorrect');
+ a.ok(flat(nodes.find(n=>n.testId==='screen-footer')).some(n=>n.testId==='next-question'));
+});
+test('settings save returns to caller and leaves textbook records intact',async()=>{
+ const {ctrl}=await ready();await ctrl.markLesson(c.lessons[0].id);ctrl.navigate({name:'chapter',id:c.textbook.chapters[0].id});ctrl.navigate({name:'settings'});ctrl.draftSettings.fontScale=1.15;await ctrl.saveSettings();
+ a.equal(ctrl.route.name,'chapter');a.equal(ctrl.state.settings.fontScale,1.15);a.ok(ctrl.state.readLessons.includes(c.lessons[0].id));
 });

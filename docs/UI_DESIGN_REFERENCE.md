@@ -37,3 +37,22 @@ The compatible textbook .1 → .2 update preserves all textbook state and grants
 `src/ui/nodes.ts` owns semantic color tokens; `src/ui/learning-polish.ts` shapes the shared screen tree, while `src/platform/NativeView.tsx` renders real React Native controls. `DateField`, `ReminderSettings`, and `StudyReadables` are native specialized components. Content, SQLite, exam state, grants, consent and release gates are not design tokens and must remain authoritative. Accessibility and data accuracy take precedence when a pixel-perfect interpretation would conflict.
 
 Before a store release, compare representative light/dark and small/large text screens on real devices, including initial, populated, empty, error and active-exam states. Record what was actually tested; automated tests and a browser prototype do not establish native device quality or ad-serving readiness.
+
+## Native UX refinement — 2026-11-09
+
+The owner authorized implementation of the simulator review recommendations in
+`qa/IOS_UI_UX_REVIEW_20261109.md`. Preserve authored learning content and state contracts.
+Use distinct primary actions, secondary actions, left-aligned navigation rows, answer
+choices and destructive actions. Submitted practice answers show correct/incorrect text
+and semantic feedback; active mocks must never disclose scoring or explanations.
+
+Keep five tabs in normal navigation. Active exam and answer-sheet screens use a focused
+layout with explicit saved exit, a fixed timer/status header and fixed navigation outside
+the question scroller. Timed exit does not pause the clock. Result summaries open separate
+explanation views with fixed previous/next controls and an accessible question picker.
+Intro start, settings save and lesson/practice follow-up actions remain outside long content.
+
+Home and catalog groups adapt to two columns only with sufficient available width and
+manageable text scale; body reading widths remain bounded. Empty states explain the next
+action. Settings save returns to its caller; initial setup returns home. Short practice
+batches and unknown-card filters do not alter authored questions or historic scores.

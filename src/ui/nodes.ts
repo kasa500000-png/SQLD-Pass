@@ -5,7 +5,9 @@ export type LearningIconName = 'home'|'book'|'timer'|'chart'|'settings'|'bookmar
 export interface Node {
   widget?:WidgetSpec; highlight?:number[][];
   kind:'widget'|'box'|'text'|'button'|'input'|'date'|'progress'|'table'|'code'|'modal'|'icon'|'ring'; key?:string; children?:Node[];
-  layout?:'lesson-sections'|'adaptive-row';
+  layout?:'lesson-sections'|'adaptive-row'|'dashboard'|'question-grid';
+  buttonKind?:'primary'|'secondary'|'row'|'choice'|'danger';
+  feedback?:'correct'|'incorrect';
   contentWidth?:'reading';
   text?:string; style?:Style; label?:string; testId?:string; action?:()=>void|Promise<void>;
   icon?:LearningIconName; iconSize?:number; iconPosition?:'leading'|'trailing'|'above';
