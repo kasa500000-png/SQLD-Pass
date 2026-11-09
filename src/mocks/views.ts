@@ -1,7 +1,7 @@
 import type {MonetizedController} from '../monetization/controller';
 import type {Question,Route} from '../core/types';
 import type {ContentBlock} from '../textbook/types';
-import {box,row,adaptiveRow,table,type Node} from '../ui/nodes';
+import {box,row,adaptiveRow,segments,table,type Node} from '../ui/nodes';
 import {canStudyQuestion,formatTime,publicQuestion} from '../core/domain/exam';
 import {latestMocks,mockStats,mockWrongQuestions,modeName} from './domain';
 import {REWARD_ACTION,REWARD_DISCLOSURE,REWARD_AGE_DISCLOSURE,REWARD_STORAGE_DISCLOSURE} from '../monetization/policy';
@@ -30,9 +30,9 @@ export function renderMockScreen(c:MonetizedController,u:UI):{title:string;body:
  const rewardInfo=(details=false)=>[small(REWARD_DISCLOSURE),small(REWARD_AGE_DISCLOSURE),...(details?[small(REWARD_STORAGE_DISCLOSURE),small('광고 클릭·설치·추적 허용은 필요 없습니다.')]:[]),...(c.ads.mode==='test'?[small('테스트 광고 · 운영 버전으로 해제 이전 안 됨')]:[])];
  if(r.name==='exams')return {title:'실전',body:[h('모의고사 20회'),small('회차당 50문항 · 실전 90분 / 학습 시간 제한 없음'),
  ...(active?[card([h('진행 중인 모의고사'),t(`${active.title} · ${modeName(active.mode)}`),act('모의고사 이어하기',go('exam',active.id),'resume-mock')])]:[]),
- t(c.isLaunchFree?'이 버전에서는 모든 회차를 무료로 이용할 수 있습니다.':c.ads.mode==='off'?'1~4회와 이미 열린 회차를 이용할 수 있습니다. 추가 회차 광고 해제는 현재 제공하지 않습니다.':'1~4회는 무료입니다. 5~20회는 회차별 선택 광고 1회 완료 후 두 모드를 계속 이용합니다.'),
- act('오답·미응답 복습',go('mockReview'),'mock-wrong'),act('저장한 문항',go('mockSaved'),'mock-saved'),act('응시 기록',go('examHistory'),'mock-history'),
- adaptiveRow((['all','unattempted','completed'] as const).map((f,i)=>act(['전체','미응시','응시 완료'][i],()=>c.setExamProgressFilter(f),'exam-filter-'+f,c.examProgressFilter===f))),
+ small(c.isLaunchFree?'이 버전에서는 모든 회차를 무료로 이용할 수 있습니다.':c.ads.mode==='off'?'1~4회와 이미 열린 회차를 이용할 수 있습니다. 추가 회차 광고 해제는 현재 제공하지 않습니다.':'1~4회는 무료입니다. 5~20회는 회차별 선택 광고 1회 완료 후 두 모드를 계속 이용합니다.'),
+ segments([act('오답 복습',go('mockReview'),'mock-wrong'),act('저장 문항',go('mockSaved'),'mock-saved'),act('응시 기록',go('examHistory'),'mock-history')]),
+ segments((['all','unattempted','completed'] as const).map((f,i)=>act(['전체','미응시','응시 완료'][i],()=>c.setExamProgressFilter(f),'exam-filter-'+f,c.examProgressFilter===f))),
  ...c.content.exams.filter(e=>c.examProgressFilter==='all'||(s.exams.some(a=>a.examId===e.id&&a.status==='submitted')===(c.examProgressFilter==='completed'))).map(e=>{
    const open=c.hasAccess(e.id),history=(['timed','study'] as const).map(mode=>{const a=latestMocks(s,mode).find(a=>a.examId===e.id);return a?` · ${modeName(mode)} ${a.score?.points??0}점`:'';}).join('');
    if(open||c.ads.mode==='off')return link(`${e.title}\n${open?'이용 가능':'현재 잠김'}${history}`,intro(e.id),'mock-'+e.id);
