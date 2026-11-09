@@ -5,11 +5,11 @@ export type LearningIconName = 'home'|'book'|'timer'|'chart'|'settings'|'bookmar
 export interface Node {
   widget?:WidgetSpec; highlight?:number[][];
   kind:'widget'|'box'|'text'|'button'|'input'|'date'|'progress'|'table'|'code'|'modal'|'icon'|'ring'; key?:string; children?:Node[];
-  layout?:'lesson-sections'|'adaptive-row'|'dashboard'|'question-grid';
+  layout?:'lesson-sections'|'adaptive-row'|'dashboard'|'question-grid'|'segments';
   buttonKind?:'primary'|'secondary'|'row'|'choice'|'danger';
   feedback?:'correct'|'incorrect';
   contentWidth?:'reading';
-  text?:string; style?:Style; label?:string; testId?:string; action?:()=>void|Promise<void>;
+  text?:string; subtitle?:string; style?:Style; label?:string; testId?:string; action?:()=>void|Promise<void>;
   icon?:LearningIconName; iconSize?:number; iconPosition?:'leading'|'trailing'|'above';
   disabled?:boolean; selected?:boolean; expanded?:boolean; value?:string; minimumDate?:string; placeholder?:string; onChange?:(v:string)=>void;
   multiline?:boolean; inputMode?:'text'|'numeric'; progress?:number; columns?:string[]; rows?:(string|number|null)[][];
@@ -30,3 +30,6 @@ export function button(label:string,action:()=>void|Promise<void>,style:Style={}
 export function progress(value:number,color:string):Node{return {kind:'progress',progress:Math.max(0,Math.min(1,value)),style:{backgroundColor:color}};}
 export function table(columns:string[],rows:(string|number|null)[][],label='데이터 표'):Node{return {kind:'table',columns,rows,label};}
 export function code(sql:string):Node{return {kind:'code',text:sql,label:'SQL 코드'};}
+
+/** Compact selection groups wrap only when their labels need the space. */
+export function segments(children:Node[]):Node{return {...row(children),layout:'segments'};}

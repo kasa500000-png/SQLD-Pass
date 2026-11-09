@@ -62,3 +62,11 @@ Home and catalog groups adapt to two columns only with sufficient available widt
 manageable text scale; body reading widths remain bounded. Empty states explain the next
 action. Settings save returns to its caller; initial setup returns home. Short practice
 batches and unknown-card filters do not alter authored questions or historic scores.
+
+## Production Android review refinement — 2026-11-10
+
+The owner approved qa/ANDROID_PRODUCTION_UI_REVIEW_20261110.md. Use quiet neutral rows,
+19sp/600 section titles and 16sp/400 reading text; reserve filled blue for primary actions.
+Compact segmented controls must fit short labels at 360dp rather than blindly stacking.
+Keep 48dp targets and wrapping at large text. Tab widths remain equal.
+Source content, immutable scores, grants, earned-event and consent gates remain unchanged.
