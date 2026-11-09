@@ -1,5 +1,5 @@
 import React,{useEffect,useState,useSyncExternalStore} from 'react';
-import {Alert,AppState,Pressable,View,useWindowDimensions,type ViewStyle} from 'react-native';
+import {AppState,View,useWindowDimensions,type ViewStyle} from 'react-native';
 import {AppText as Text} from './Typography';
 import {NativeView,type NativeViewProps} from './NativeView';
 import {nativeAds} from './ads';
@@ -23,13 +23,6 @@ function SmallBanner({dark}:{dark:boolean}){
     });},delay);
     return ()=>{cancelled=true;clearTimeout(timer);};
   },[foreground,width,failed,reserved,adultConfirmed]);
-  if(foreground&&width>=352&&!adultConfirmed)return <View style={{paddingVertical:16,alignItems:'center',borderTopWidth:1,borderColor:palette.line}}>
-    <Pressable accessibilityRole="button" accessibilityLabel="광고 표시 설정" onPress={()=>Alert.alert('광고 이용 연령 확인',
-      '광고 기능은 만 18세 이상만 이용할 수 있습니다. 생년월일은 수집하지 않으며, 확인 결과는 앱을 종료하면 초기화됩니다. 광고 없이도 무료 학습과 열린 회차를 이용할 수 있습니다.',
-      [{text:'나중에',style:'cancel'},{text:'만 18세 이상',onPress:()=>nativeAds.confirmAdult()}])} style={{minHeight:48,justifyContent:'center',paddingHorizontal:18}}>
-      <Text style={{fontSize:14,color:palette.muted}}>광고 표시 설정</Text>
-    </Pressable>
-  </View>;
   if(!foreground||width<352||failed||!reserved||!nativeAds.bannersReady)return null;
   const {BannerAd,BannerAdSize}=nativeAds.sdk();
   return <View testID="small-ad-slot" style={{paddingVertical:28,alignItems:'center',borderTopWidth:1,borderColor:palette.line}}>

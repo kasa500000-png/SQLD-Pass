@@ -46,12 +46,20 @@ export function renderTextbook(c:MonetizedController):Node{
   footer=[primary(r==='setup'?'설정하고 학습 시작':'설정 저장',()=>c.saveSettings(r==='setup'),'save-textbook-settings')];
  }
  else if(r==='home'){
-  title='홈';const today=dailySections(s,c.content,c.services.clock().wall);const last=c.lastReadingLesson();const latest=new Map(s.responses.filter(a=>!c.content.questions[a.questionId]?.examId).map(a=>[a.questionId,a]));const wrong=[...latest.values()].filter(a=>!a.correct||a.uncertain).map(a=>a.questionId);
-  body=[h('오늘의 학습'),...(c.activeExam()?[card([t(`${c.activeExam()!.title} · ${c.activeExam()!.mode==='study'?'학습 모드':'실전 모드'}`),primary('모의고사 이어하기',go('exam',c.activeExam()!.id),'resume-mock')])]:[]),...(s.practice?[card([t('진행 중인 문제풀이가 있습니다.'),primary('문제풀이 이어하기',()=>c.resumePractice(),'resume-textbook-practice')])]:[]),
-   card([small(s.settings.targetDate?`목표일 ${s.settings.targetDate}`:'교재 순서대로 학습'),h(today.length?today.every(l=>s.readLessons.includes(l.id))?'오늘 분량 완료':`오늘 ${today.length}개 절`:'전체 교재를 읽었습니다'),...today.slice(0,5).map(l=>sectionLink(l.id)),...(today.length>5?[small(`외 ${today.length-5}개 절 · 목차에서 이어서 학습`),act('전체 목차',go('catalog'))]:[])]),
-   ...(last&&!today.some(l=>l.id===last.id)?[card([small('읽던 곳에서 계속'),t(last.title),primary('이어서 읽기',go('lesson',last.id))])]:[]),...(wrong.length?[card([small('확인 문제 복습'),h(`${wrong.length}문항 다시 확인`),primary(`오답 ${Math.min(5,wrong.length)}문항 복습`,()=>c.beginPractice(wrong.slice(0,5),'review'))])]:[]),card([h('학습 현황'),t(`읽음 ${m.read} / ${m.sections}절`),progress(m.read/m.sections,p.blue),t(`풀어본 문제 ${m.attempted} / ${m.questions}문항`),t(`최근 답안 기준 정답률 ${m.accuracy===null?'—':m.accuracy+'%'}`)]),card([h('학습 도구'),link('핵심 카드',go('flashcards')),link('용어 사전',go('glossary')),link('모의고사 20회',go('exams'))])];
-  const split=body.findIndex(n=>n.children?.some(child=>child.text==='학습 현황'));
-  body=[body[0],{...box([box(body.slice(1,split),{gap:16}),box(body.slice(split),{gap:16})]),layout:'dashboard'}];
+  title='홈';const today=dailySections(s,c.content,c.services.clock().wall),last=c.lastReadingLesson();
+  const latest=new Map(s.responses.filter(a=>!c.content.questions[a.questionId]?.examId).map(a=>[a.questionId,a]));
+  const wrong=[...latest.values()].filter(a=>!a.correct||a.uncertain).map(a=>a.questionId);
+  body=[h('오늘의 학습'),
+   ...(c.activeExam()?[card([small('진행 중인 모의고사'),t(`${c.activeExam()!.title} · ${c.activeExam()!.mode==='study'?'학습 모드':'실전 모드'}`),primary('모의고사 이어하기',go('exam',c.activeExam()!.id),'resume-mock')])]:[]),
+   ...(s.practice?[link('문제풀이 이어하기',()=>c.resumePractice(),'resume-textbook-practice')]:[]),
+   card([small(s.settings.targetDate?`목표일 ${s.settings.targetDate}`:'교재 순서대로 학습'),h(today.length?today.every(l=>s.readLessons.includes(l.id))?'오늘 분량 완료':`오늘 ${today.length}개 절`:'전체 교재를 읽었습니다'),
+    ...today.slice(0,1).map(l=>primary(l.title,go('lesson',l.id),`section-${l.id}`)),
+    ...(today.length>1?[link(`남은 ${today.length-1}개 절 · 전체 목차`,go('catalog'))]:[])]),
+   ...(last&&!today.some(l=>l.id===last.id)?[link(`이어서 읽기\n${last.title}`,go('lesson',last.id))]:[]),
+   ...(wrong.length?[link(`오답 ${Math.min(5,wrong.length)}문항 복습\n다시 확인할 문제 ${wrong.length}개`,()=>c.beginPractice(wrong.slice(0,5),'review'))]:[]),
+   h('학습 현황'),small(`읽음 ${m.read}/${m.sections}절 · 풀이 ${m.attempted}/${m.questions}문항 · 정답률 ${m.accuracy===null?'—':m.accuracy+'%'}`),progress(m.read/m.sections,p.blue),
+   h('학습 도구'),segments([act('핵심 카드',go('flashcards')),act('용어 사전',go('glossary')),act('모의고사',go('exams'))]),
+   ...(c.showBanner?[act('광고 표시 설정',()=>c.openAdPrivacy(),'home-ad-settings')]:[])];
  }
  else if(r==='catalog'||r==='plan'||r==='day'){
   title='교재';body=[h('전체 목차'),{kind:'input',label:'교재 검색',placeholder:'개념 · 용어 · SQL 검색',value:c.search,onChange:v=>c.setSearch(v),style:{minHeight:52,padding:14,borderWidth:1,borderColor:p.line,borderRadius:14,backgroundColor:p.surface}},act(c.bookmarkedOnly?'전체 교재 보기':'저장한 절만 보기',()=>{c.bookmarkedOnly=!c.bookmarkedOnly;c.notify();},'bookmarked-sections',c.bookmarkedOnly)];
