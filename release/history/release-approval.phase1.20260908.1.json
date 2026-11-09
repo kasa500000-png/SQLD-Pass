@@ -1,0 +1,13 @@
+{
+  "schemaVersion": 1,
+  "approvedBy": "repository owner (current conversation)",
+  "approvedAt": "2026-10-04T11:30:19.000Z",
+  "contentSha256": "08b6d35d539ed9b7c225befed155b126bf35809c1ec331e1ca12de6576fb0ead",
+  "contentVersion": "phase1.20260908.1",
+  "humanContentReview": "Owner directly confirmed: 검수는 직접 완료했어 해당 규칙 삭제. Separate reviewer/date/DBMS/syllabus evidence is no longer required by the owner. No missing verification facts are inferred.",
+  "androidDeviceQA": "Recorded Samsung SM-F721N physical-device checks on 2026-09-26 covered four tabs, lesson search/filter/bookmarks, return navigation, reading-position persistence after force stop, and 100%/130% text. This is not a new full regression check of the final release binary.",
+  "iosDeviceQA": "Owner previously reported iPad QA complete. Actual native 0.1.0 (5) was also run on iPhone 14 Plus and iPad Pro 12.9-inch iOS 26.5 Simulators in GitHub Actions run 37196621662: onboarding and all four tabs passed. Simulator coverage does not constitute final physical iPhone/iPad QA; the responsive fix's physical-device regression scope is not independently recorded.",
+  "ownerApproval": "Owner explicitly requested iOS production release, approved Simulator captures because iOS USB connection is unavailable, requested formal review submission, and directly confirmed content review complete on 2026-10-04. Launch policy: ads off, all 20 exams free.",
+  "privacyUrl": "https://sqld-pass-support.shk1122.chatgpt.site/privacy.html",
+  "supportUrl": "https://sqld-pass-support.shk1122.chatgpt.site/support.html"
+}

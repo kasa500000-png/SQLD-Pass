@@ -65,3 +65,10 @@ test('daily assignment stays fixed after completing a section and is recalculate
 test('lesson and practice screens retain their parent tab selection',async()=>{
  const {controller:ctrl}=setup();await ctrl.initialize();await ctrl.saveSettings(true);ctrl.route={name:'lesson',id:c.lessons[0].id};a.equal(flat(renderTextbook(ctrl)).find(n=>n.testId==='tab-learn').selected,true);await ctrl.beginPractice([Object.keys(c.questions)[0]]);a.equal(flat(renderTextbook(ctrl)).find(n=>n.testId==='tab-review').selected,true);
 });
+test('screen navigation offsets are isolated, validated and never persisted as learning',async()=>{
+ const env=setup(),ctrl=env.controller;await ctrl.initialize();const before=JSON.stringify(env.stored());
+ const position={offset:720,contentHeight:2000};ctrl.rememberScreen('settings',position);position.offset=0;
+ a.equal(ctrl.screenPosition('settings').offset,720);a.equal(ctrl.screenPosition('catalog'),undefined);
+ ctrl.rememberScreen('settings',{offset:NaN,contentHeight:2000});a.equal(ctrl.screenPosition('settings').offset,720);
+ a.equal(JSON.stringify(env.stored()),before);a.equal(setup(env.stored()).controller.screenPosition('settings'),undefined);
+});
