@@ -12,12 +12,15 @@ export interface Wallet {version:1; grants:Record<string,Grant>; pending:Pending
 export type MonetizedState = AppState & {monetization?:Wallet};
 export interface RewardDriver {
   readonly mode:AdMode;
+  /** Called only after the user explicitly confirms adult eligibility. */
+  confirmAdult():void;
+  readonly adultConfirmed:boolean;
   /** Called only after explicit opt-in. onEarned is exclusively an SDK reward event. */
   showReward(onEarned:()=>Promise<void>):Promise<'closed'|'unavailable'|'cancelled'>;
   privacyOptions():Promise<void>;
 }
 export const disabledAds:RewardDriver = {
-  mode:'off', async showReward(){return 'unavailable';}, async privacyOptions(){}
+  mode:'off', adultConfirmed:false, confirmAdult(){}, async showReward(){return 'unavailable';}, async privacyOptions(){}
 };
 export function validExamId(id:string):boolean {return /^SQLD-M(0[1-9]|1[0-9]|20)$/.test(id);}
 export function isFreeExam(id:string):boolean {return (FREE_EXAM_IDS as readonly string[]).includes(id);}

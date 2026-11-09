@@ -1,19 +1,18 @@
 {
   "schema": 1,
-  "contentVersion": "phase1.20260908.1",
-  "sha256": "08b6d35d539ed9b7c225befed155b126bf35809c1ec331e1ca12de6576fb0ead",
-  "bytes": 1941994,
+  "contentVersion": "textbook.20261109.2",
+  "sha256": "1f7a60245d9b75a19ad733dca7fc281539d73ebdc0fcfa25fd5a959ebd7d589d",
+  "bytes": 4150040,
   "counts": {
-    "lessons": 60,
-    "practice": 120,
+    "lessons": 216,
+    "practice": 340,
     "exams": 20,
     "examQuestions": 1000
   },
   "sourceHashes": {
-    "SQLD_Pass_Textbook_v1_0/content_pack.json": "778cea8c8f19877f42d018b2226021aaf5172e8c653daa041c4f625c17758792",
-    "SQLD_Pass_Mock_20_v1_0/app/mock_exam_pack.json": "eb9acfae7b12e98bfce50b93ffce2524c68af3a18234fb67a3fa57c5cfed03ee",
-    "SQLD_Pass_Textbook_v1_0/dataset.json": "b73bf8e221c35a27dd28b8f9a69dff41e59095d6c993957145950789f8161e1a"
+    "textbook-20261109.html": "cb789f945b31c6e5f53ab0cf5e55d1ba43d5824882e1da85cd835dc8ee7e9182",
+    "mock20-20261109.html": "6184a2dec1b82fbf850004ae309fe5c373dd5a8e42e099c0a5d4a608a03320b1"
   },
   "status": "editorial_draft",
-  "note": "Content identity only; not human review, DBMS validation or permission to release."
+  "note": "Identity only. New content requires its own review and release approval."
 }

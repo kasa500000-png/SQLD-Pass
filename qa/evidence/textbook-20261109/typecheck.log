@@ -1,0 +1,8 @@
+
+> sqld-pass@0.1.0 pretypecheck:native
+> node scripts/materialize-content.cjs
+
+{"status":"ready","sha256":"3491a3643f2d5ff4643ab69274e652a8fb552139f41b757b8b8ccaecfacf1cb0","counts":{"lessons":216,"practice":340,"exams":0,"examQuestions":0,"questions":340,"days":0}}
+
+> sqld-pass@0.1.0 typecheck:native
+> tsc -p tsconfig.json --noEmit

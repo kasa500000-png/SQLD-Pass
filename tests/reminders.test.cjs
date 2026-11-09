@@ -161,7 +161,7 @@ test('reentrant controller notifications consume a pending tap only once',async(
 });
 test('App notification guard retains the tap until submitted result is safely exited from an exam list',async()=>{
   const {Controller}=require('../.build/core/controller'),{startExam}=require('../.build/core/domain');
-  const content=require('../generated/content.json'),now={wall:Date.now(),mono:100,runtimeId:'reminder-regression'};
+  const content=require('./fixtures/legacy-content.cjs'),now={wall:Date.now(),mono:100,runtimeId:'reminder-regression'};
   const c=new Controller(content,{repository:{load:async()=>null,save:async()=>{},clear:async()=>{}},platform:'native',
     clock:()=>now,uuid:()=> 'reminder-regression',openURL:async()=>{},share:async()=> 'cancelled'});
   c.state.onboarded=true;c.ready=true;c.route={name:'exams'};

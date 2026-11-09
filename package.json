@@ -42,7 +42,8 @@
     "prerelease:check": "node scripts/materialize-content.cjs --required",
     "ads:check": "node scripts/check-ads.cjs",
     "ads:hash": "node scripts/check-ads.cjs --hash",
-    "test:monetization": "tsc -p tsconfig.core.json && node --test tests/monetization*.test.cjs"
+    "test:monetization": "tsc -p tsconfig.core.json && node --test tests/monetization*.test.cjs",
+    "content:build-textbook": "node scripts/build-textbook.cjs"
   },
   "dependencies": {
     "@react-native-community/datetimepicker": "9.1.0",

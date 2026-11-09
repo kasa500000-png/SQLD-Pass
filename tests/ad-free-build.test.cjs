@@ -57,11 +57,29 @@ test('iOS TestFlight QA uses the confirmed bundle while internal and simulator i
   for(const name of ['internal','simulator'])assert.equal(appConfig(profileEnvironment(name)).ios.bundleIdentifier,'com.sqldpass.app.internal',name);
   for(const mode of ['test','live'])assert.throws(()=>adsBuildConfig({...env,EXPO_PUBLIC_ADS_MODE:mode}),/Launch-free/);
 });
+test('Android-scoped advertising config generates only Android and uses the next version code',()=>{
+  const env={...profileEnvironment('android-ads-production'),ADS_LIVE_APPROVED:'true',
+    ADMOB_ANDROID_APP_ID:'ca-app-pub-1111111111111111~1111111111',ADMOB_IOS_APP_ID:'ca-app-pub-1111111111111111~2222222222',
+    EXPO_PUBLIC_ADMOB_ANDROID_BANNER:'ca-app-pub-1111111111111111/1111111111',EXPO_PUBLIC_ADMOB_ANDROID_REWARDED:'ca-app-pub-1111111111111111/2222222222',
+    EXPO_PUBLIC_ADMOB_IOS_BANNER:'ca-app-pub-1111111111111111/3333333333',EXPO_PUBLIC_ADMOB_IOS_REWARDED:'ca-app-pub-1111111111111111/4444444444'};
+  const c=appConfig(env,()=>({approved:true}));assert.deepEqual(Array.from(c.platforms),['android']);
+  assert.equal(c.android.versionCode,15);assert.equal(c.version,'0.2.2');
+  assert.throws(()=>appConfig({...env,ANDROID_VERSION_CODE:'bad'},()=>({approved:true})),/positive integer/);
+});
 test('production profile supplies both confirmed app identifiers and retains production checks',()=>{
   const env=profileEnvironment('production');
   assert.equal(env.ANDROID_PACKAGE,'com.kasa500000.sqldpass');
   assert.equal(env.IOS_BUNDLE_IDENTIFIER,'com.kasa500000.sqldpass');
   assert.equal(env.EXPO_PUBLIC_APP_ENV,'production');
+});
+test('staged iOS ad release targets the new version but still requires explicit activation',()=>{
+  const env=profileEnvironment('ios-ads-production');
+  assert.equal(env.EXPO_PUBLIC_APP_ENV,'production');
+  assert.equal(env.EXPO_PUBLIC_ADS_MODE,'live');
+  assert.equal(env.EXPO_PUBLIC_EXAM_ACCESS_POLICY,'rewarded');
+  assert.equal(env.IOS_BUNDLE_IDENTIFIER,'com.kasa500000.sqldpass');
+  assert.equal(env.APP_VERSION,'0.2.0');assert.equal(env.IOS_BUILD_NUMBER,'8');
+  assert.throws(()=>adsBuildConfig(env),/owner activation/);
 });
 test('iOS production includes only the accepted receipt and keeps ads off and all exams free',()=>{
   const lock=require('../content-pack/content.lock.json');

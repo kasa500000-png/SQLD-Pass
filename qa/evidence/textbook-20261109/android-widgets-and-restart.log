@@ -1,0 +1,7 @@
+android-widget-anatomy-result
+android-widget-commit
+android-widget-rollback
+android-dark-large-home
+android-dark-large-records
+android-restarted-records
+PASS: native anatomy, commit/rollback, dark mode, 130% text, restart persistence

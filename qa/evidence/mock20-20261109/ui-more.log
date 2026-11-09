@@ -1,0 +1,11 @@
+android-mock-retry
+android-mock-retry-answer
+android-wrong-after-correct
+android-saved-list
+android-note-restored
+Traceback (most recent call last):
+  File "/tmp/sqld-mock-ui-more.py", line 6, in <module>
+    tap('tab-exams');tap('mock-SQLD-M02');tap('start-mock-timed');d=shot('android-timed-start');assert '실전 모드' in labels(d);tap('mock-option-1');tap('tab-today');shot('android-active-home')
+  File "<string>", line 23, in shot
+  File "<string>", line 10, in dump
+Exception: UI tree unavailable: ERROR: could not get idle state.

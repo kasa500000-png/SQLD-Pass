@@ -1,0 +1,10 @@
+{
+  "contentVersion": "textbook.20261109.2",
+  "contentSha256": "1f7a60245d9b75a19ad733dca7fc281539d73ebdc0fcfa25fd5a959ebd7d589d",
+  "androidAPK": "android/app/build/outputs/apk/release/app-release.apk",
+  "androidSha256": "6fd5574b8dfa6cd45abeef8f0c6a3d195f6eec74218edc4ca7c5ff0725b23d3d",
+  "applicationId": "com.sqldpass.app.internal",
+  "adsMode": "off",
+  "iosConfiguration": "Release iphonesimulator",
+  "testsPassed": 404
+}

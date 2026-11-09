@@ -97,6 +97,32 @@
     "ios-production": {
       "extends": "production",
       "autoIncrement": false
+    },
+    "ios-ads-production": {
+      "extends": "ios-production",
+      "env": {
+        "EXPO_PUBLIC_APP_ENV": "production",
+        "EXPO_PUBLIC_ADS_MODE": "live",
+        "EXPO_PUBLIC_EXAM_ACCESS_POLICY": "rewarded",
+        "APP_VERSION": "0.2.0",
+        "IOS_BUILD_NUMBER": "8",
+        "ANDROID_PACKAGE": "com.kasa500000.sqldpass",
+        "IOS_BUNDLE_IDENTIFIER": "com.kasa500000.sqldpass"
+      }
+    },
+    "android-ads-production": {
+      "extends": "production",
+      "autoIncrement": false,
+      "env": {
+        "EXPO_PUBLIC_APP_ENV": "production",
+        "EXPO_PUBLIC_ADS_MODE": "live",
+        "EXPO_PUBLIC_ADS_TARGET": "android",
+        "EXPO_PUBLIC_EXAM_ACCESS_POLICY": "rewarded",
+        "APP_VERSION": "0.2.2",
+        "ANDROID_VERSION_CODE": "15",
+        "ANDROID_PACKAGE": "com.kasa500000.sqldpass",
+        "IOS_BUNDLE_IDENTIFIER": "com.kasa500000.sqldpass"
+      }
     }
   },
   "submit": {
@@ -122,6 +148,9 @@
         "ascApiKeyId": "${EXPO_ASC_KEY_ID}",
         "ascApiKeyIssuerId": "${EXPO_ASC_ISSUER_ID}"
       }
+    },
+    "ios-ads-production": {
+      "extends": "ios-production"
     }
   }
 }

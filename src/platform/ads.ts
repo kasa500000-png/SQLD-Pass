@@ -1,15 +1,17 @@
-import {AppState} from 'react-native';
+import {AppState,Platform} from 'react-native';
 import type {AdMode,ExamAccessPolicy,RewardDriver} from '../monetization/policy';
 
 type SDK = typeof import('react-native-google-mobile-ads');
 const requested=process.env.EXPO_PUBLIC_ADS_MODE;
 const appEnv=process.env.EXPO_PUBLIC_APP_ENV ?? 'development';
+const target=process.env.EXPO_PUBLIC_ADS_TARGET ?? 'both';
+const permittedTarget=target==='both'||(target==='android'&&Platform.OS==='android');
 export const nativeExamAccessPolicy:ExamAccessPolicy=process.env.EXPO_PUBLIC_EXAM_ACCESS_POLICY==='rewarded'?'rewarded':'launch-free';
-const mode:AdMode=nativeExamAccessPolicy!=='rewarded'?'off':requested==='test'&&appEnv!=='production'?'test':requested==='live'&&appEnv==='production'?'live':'off';
+const mode:AdMode=!permittedTarget||nativeExamAccessPolicy!=='rewarded'?'off':requested==='test'&&appEnv!=='production'?'test':requested==='live'&&appEnv==='production'?'live':'off';
 const UNIT=/^ca-app-pub-\d{16}\/\d{10}$/;
 const NON_PERSONALIZED={requestNonPersonalizedAdsOnly:true};
-// Apply the same conservative privacy treatment to every user; no age is collected.
-const CONSENT_OPTIONS={tagForUnderAgeOfConsent:true};
+// These options are used only after an explicit, session-only adult confirmation.
+const CONSENT_OPTIONS={tagForUnderAgeOfConsent:false};
 
 export class NativeAds implements RewardDriver {
   readonly mode=mode;
@@ -17,6 +19,7 @@ export class NativeAds implements RewardDriver {
   private ready=false;
   private preparation:Promise<boolean>|null=null;
   private gathered=false;
+  private adult=false;
   private rewardActive=false;
   private revision=0;
   private listeners=new Set<()=>void>();
@@ -26,6 +29,8 @@ export class NativeAds implements RewardDriver {
   readonly subscribe=(fn:()=>void)=>{this.listeners.add(fn);return ()=>{this.listeners.delete(fn);};};
   readonly snapshot=()=>this.revision;
   private changed(){this.revision++;for(const fn of this.listeners)fn();}
+  get adultConfirmed(){return this.adult;}
+  confirmAdult(){if(this.mode!=='off'&&!this.adult){this.adult=true;this.changed();}}
   sdk():SDK {
     if(this.mode==='off')throw new Error('이 앱 버전에는 광고가 없습니다.');
     if(!this.module)this.module=require('react-native-google-mobile-ads') as SDK;
@@ -35,6 +40,8 @@ export class NativeAds implements RewardDriver {
     return sdk.default().setRequestConfiguration({
       maxAdContentRating:sdk.MaxAdContentRating.G,
       tagForChildDirectedTreatment:true,
+      // UMP does not forward this tag to the Mobile Ads SDK's ad requests.
+      tagForUnderAgeOfConsent:false,
     });
   }
   get bannersReady(){return this.ready&&!this.rewardActive&&this.mode!=='off';}
@@ -47,7 +54,7 @@ export class NativeAds implements RewardDriver {
     return value;
   }
   async prepare():Promise<boolean>{
-    if(this.mode==='off'||AppState.currentState!=='active')return false;
+    if(this.mode==='off'||!this.adult||AppState.currentState!=='active')return false;
     if(this.preparation)return this.preparation;
     this.preparation=(async()=>{
       try{
@@ -77,7 +84,7 @@ export class NativeAds implements RewardDriver {
     this.lastBanner=performance.now();this.bannerRequests++;return true;
   }
   async privacyOptions(){
-    if(this.mode==='off')throw new Error('광고 미활성');
+    if(this.mode==='off'||!this.adult)throw new Error('광고 이용 연령을 확인하지 않았습니다.');
     this.ready=false;this.changed();
     if(this.preparation)await this.preparation;
     this.ready=false;this.gathered=false;this.changed();

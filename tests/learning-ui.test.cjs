@@ -5,7 +5,7 @@ const {renderMonetized}=require('../.build/monetization/views');
 const fmt=require('../.build/ui/learning-format'),{polishLearning}=require('../.build/ui/learning-polish');
 const {questionContext}=require('../.build/ui/question-context');
 const {light}=require('../.build/ui/nodes'),d=require('../.build/core/domain');
-const content=require('../generated/content.json');
+const content=require('./fixtures/legacy-content.cjs');
 const hash=x=>crypto.createHash('sha256').update(x).digest('hex');
 const contentBefore=JSON.stringify(content);
 function setup(ads,accessPolicy){let value=null,n=0,fail=false;const clock={wall:Date.now(),mono:10,runtimeId:'ui-test'};
@@ -134,7 +134,7 @@ test('system theme follows OS changes without overwriting the saved preference',
  c.state.settings.theme='dark';c.setSystemAppearance('light');a.equal(c.isDark,true);
 });
 
-test('authored payload identity is unchanged',()=>a.equal(hash(fs.readFileSync(require.resolve('../generated/content.json'))),'08b6d35d539ed9b7c225befed155b126bf35809c1ec331e1ca12de6576fb0ead'));
+test('retired regression fixture identity is unchanged',()=>a.equal(hash(require('node:zlib').gunzipSync(fs.readFileSync(require.resolve('./fixtures/legacy-content.json.gz')))),'08b6d35d539ed9b7c225befed155b126bf35809c1ec331e1ca12de6576fb0ead'));
 test('Markdown headings and fenced SQL are semantic nodes',()=>{const blocks=fmt.lessonBlocks('### 소제목\n\n설명\n```sql\nSELECT a | b;\n```',light);a.equal(blocks[0].heading,true);a.equal(blocks[0].text,'소제목');a.equal(blocks[2].kind,'code');a.equal(blocks[2].text,'SELECT a | b;');});
 test('pipe table handles escaped pipes without splitting data',()=>{const n=fmt.lessonBlocks('| A | B |\n| --- | --- |\n| a\\|b | 0 |',light)[0];a.equal(n.kind,'table');a.deepEqual(n.rows,[['a|b','0']]);});
 test('SQL text and HTML are not interpreted as executable markup',()=>{const n=fmt.lessonBlocks('```sql\n<script>alert(1)</script>\n```',light)[0];a.equal(n.kind,'code');a.equal(n.text,'<script>alert(1)</script>');});
@@ -621,7 +621,7 @@ test('seven-day activity keeps short date labels, exact numeric counts and align
 test('activity period distinguishes a year boundary and weekdays stay correct in a negative timezone',()=>{
  const {c,clock}=setup();clock.wall=Date.UTC(2027,0,4,12);c.tab('today');a.equal(get(c,'activity-period').text,'2026/12/29–2027/01/04');
  const cp=require('node:child_process'),program=`
- const {MonetizedController}=require('./.build/monetization/controller'),{renderMonetized}=require('./.build/monetization/views'),content=require('./generated/content.json');
+ const {MonetizedController}=require('./.build/monetization/controller'),{renderMonetized}=require('./.build/monetization/views'),content=require('./tests/fixtures/legacy-content.cjs');
  const c=new MonetizedController(content,{clock:()=>({wall:Date.UTC(2027,0,4,12),mono:1,runtimeId:'timezone'}),uuid:()=> 'tz',repository:{load:async()=>null,save:async()=>{},clear:async()=>{}},platform:'web'});c.ready=true;c.state.onboarded=true;c.route={name:'home'};
  const flat=n=>[n,...(n.children??[]).flatMap(flat)];
  console.log(JSON.stringify(flat(renderMonetized(c)).filter(n=>n.key?.startsWith('activity-')).map(n=>[n.key,n.children[0].text,n.children[1].text,n.children[2].label])));
@@ -808,4 +808,112 @@ test('learning resets clear the old practice setup choices without affecting fre
   a.equal(get(c,'practice-source-all').selected,true);a.equal(get(c,'practice-filter-all').selected,true);a.equal(get(c,'practice-count-10').selected,true);
   a.equal(get(c,'practice-setup-start').disabled,false);a.equal(c.hasAccess('SQLD-M20'),true);
  }
+});
+
+test('reference home progress and shortcuts use saved learning state',async()=>{
+ const {c,clock}=setup(),ids=content.lessons[0].questionIds;
+ c.state.planProgress={version:2,completedDays:[1,2,3],legacyCompletedDays:[]};
+ c.state.readLessons=[content.lessons[0].id];
+ c.state.reviews=Object.fromEntries(ids.map(questionId=>[questionId,{questionId,dueDay:d.dayKey(clock.wall),step:0,lastAnsweredDay:'',lastCorrect:false}]));
+ c.tab('today');
+ const ring=flat(view(c)).find(n=>n.kind==='ring');
+ a.ok(ring);a.equal(ring.progress,3/30);a.equal(ring.label,'전체 30일 과정 진행률');
+ a.match(get(c,'home-review-shortcut').label,/2문제/);
+ a.match(get(c,'home-theory-shortcut').label,/1 \/ 60/);
+ await click(c,'home-review-shortcut');a.equal(c.route.name,'review');
+ c.tab('today');await click(c,'home-theory-shortcut');a.equal(c.route.name,'catalog');
+});
+
+test('reference day and lesson summary use actual curriculum without marking an unread lesson',async()=>{
+ const {c}=setup();c.navigate({name:'plan'});a.equal(flat(view(c)).filter(n=>n.testId?.startsWith('day-open-')).length,30);
+ await click(c,'day-open-2');a.equal(c.route.name,'day');a.equal(c.route.id,'2');
+ const lesson=content.lessons.find(l=>l.id===content.days[1].lessonIds[0]);a.ok(strings(view(c)).includes(lesson.title));
+ await click(c,'day-detail-lesson-'+lesson.id);await click(c,'lesson-summary');a.equal(c.route.name,'lessonSummary');
+ for(const line of lesson.summary)a.ok(strings(view(c)).includes(line));a.deepEqual(c.state.readLessons,[]);
+ await click(c,'summary-practice');a.equal(c.route.name,'practice');a.deepEqual(c.state.readLessons,[]);a.deepEqual(c.state.practice.questionIds,lesson.questionIds);
+});
+
+test('learning calendar displays saved activity for selected dates and changes months without changing state',async()=>{
+ const {c,clock}=setup();clock.wall=new Date(2026,10,3,12).getTime();const q=content.questions[content.lessons[0].questionIds[0]];
+ c.state.studyDays=['2026-11-02'];c.state.responses=[{id:'calendar-response',questionId:q.id,version:q.version,selected:q.answer,correct:true,uncertain:false,answeredAt:new Date(2026,10,2,12).getTime(),mode:'lesson'}];
+ const saved=JSON.stringify(c.state);c.tab('records');await click(c,'stats-calendar');a.equal(c.route.name,'calendar');
+ a.match(strings(view(c)),/11월 3일의 학습/);a.equal(get(c,'calendar-day-2026-11-30').style.paddingHorizontal,0);await click(c,'calendar-day-2026-11-02');
+ a.match(strings(view(c)),/11월 2일의 학습/);a.match(strings(view(c)),/확인 문제·복습 1문항 · 정답 1문항/);
+ await click(c,'calendar-prev');a.match(strings(view(c)),/2026년 10월/);await click(c,'calendar-next');a.match(strings(view(c)),/2026년 11월/);
+ a.equal(JSON.stringify(c.state),saved);
+});
+
+test('reference settings and history preserve real reset, theme and result actions',async()=>{
+ const {c}=setup();c.navigate({name:'settings'});await click(c,'open-appearance');await click(c,'appearance-theme-system');a.equal(c.state.settings.theme,'system');c.back();
+ await click(c,'open-data');await click(c,'data-reset-learning');a.ok(c.dialog);c.cancelDialog();await click(c,'data-reset-all');a.ok(c.dialog);c.cancelDialog();
+ const exam=result(c);c.tab('records');await click(c,'stats-exam-history');a.equal(c.route.name,'examHistory');await click(c,'exam-history-'+exam.id);a.equal(c.route.name,'result');a.equal(c.route.id,exam.id);
+});
+
+test('reference help FAQ expands and leaves the existing report draft intact',async()=>{
+ const {c}=setup();c.supportText='기존 문의';c.navigate({name:'help'});await click(c,'help-faq-1');
+ a.match(strings(view(c)),/기기 간 동기화는 지원하지 않습니다/);a.equal(c.supportText,'기존 문의');a.ok(flat(view(c)).some(n=>n.label==='오류 상황'));
+});
+
+test('reference report preserves context and acknowledges share results on its own screen',async()=>{
+ const {c}=setup();c.navigate({name:'help',id:'SQLD-L001-Q01'});c.supportText='설명 확인';await click(c,'open-report');
+ a.equal(c.route.name,'report');a.ok(strings(view(c)).includes('SQLD-L001-Q01'));await click(c,'report-share');
+ a.match(strings(view(c)),/공유창을 열었습니다/);a.equal(c.route.name,'report');
+});
+
+test('expired exam result explains automatic submission without changing a saved score',()=>{
+ const {c}=setup(),e=result(c);e.submitReason='expired';const before=JSON.stringify(c.state);
+ a.match(strings(view(c)),/시험 시간이 끝나 현재 답안으로 자동 제출/);a.equal(JSON.stringify(c.state),before);
+});
+
+test('released library and weekly goal remain accessible after a settings write',async()=>{
+ const {c}=setup(),lesson=content.lessons[0];
+ c.state.settings.weeklyGoalDays=5;
+ c.state.collections=[{id:'existing',name:'다시 보기',items:[{kind:'lesson',id:lesson.id}],updatedAt:123}];
+ c.state=d.parseState(structuredClone(c.state),content);
+ c.tab('today');a.match(strings(view(c)),/목표 5일/);await click(c,'home-library');
+ await click(c,'collection-open-existing');a.match(strings(view(c)),new RegExp(lesson.title));
+ await click(c,`library-item-${JSON.stringify(['lesson',lesson.id])}`);a.equal(c.route.id,lesson.id);
+ c.navigate({name:'setup'});await click(c,'weekly-goal-4');await click(c,'finish-setup');
+ a.equal(c.state.settings.weeklyGoalDays,4);a.deepEqual(c.state.collections[0].items,[{kind:'lesson',id:lesson.id}]);
+});
+
+test('collections create, rename and remove saved lessons without changing learning data',async()=>{
+ const {c}=setup(),lesson=content.lessons[0];c.openLibrary();await click(c,'library-create');
+ get(c,'collection-name').onChange('복습 서재');await click(c,'collection-save');
+ const id=c.state.collections[0].id;c.navigate({name:'lesson',id:lesson.id});
+ const key=JSON.stringify(['lesson',lesson.id]);await click(c,`library-picker-${key}`);await click(c,`library-save-${id}`);
+ a.deepEqual(c.state.collections[0].items,[{kind:'lesson',id:lesson.id}]);
+ c.openLibrary();await click(c,`collection-open-${id}`);await click(c,'collection-rename');get(c,'collection-name').onChange('개념 모음');await click(c,'collection-save');
+ a.equal(c.state.collections[0].name,'개념 모음');await click(c,`library-remove-${key}`);a.deepEqual(c.state.collections[0].items,[]);
+ a.deepEqual(c.state.readLessons,[]);a.deepEqual(c.state.bookmarks,[]);
+});
+
+test('saved explanations only resolve answered questions and submitted exam snapshots',async()=>{
+ const {c}=setup(),lib=require('../.build/core/domain/library'),q=content.questions[content.lessons[0].questionIds[0]];
+ a.equal(lib.resolveLibraryItem(c.state,content,{kind:'question',id:q.id}),null);
+ c.state.responses.push({id:'r',questionId:q.id,version:q.version,selected:q.options[0].id,correct:false,uncertain:false,answeredAt:Date.now(),mode:'lesson'});
+ a.ok(lib.resolveLibraryItem(c.state,content,{kind:'question',id:q.id}));
+ const active=makeExam(c),saved={kind:'examReview',attemptId:active.id,questionId:active.snapshots[0].id};
+ a.equal(lib.resolveLibraryItem(c.state,content,saved),null);
+ const submitted=d.submitExam(active,c.services.clock(),'manual');c.state.exams=[submitted];
+ a.equal(lib.resolveLibraryItem(c.state,content,saved).question,submitted.snapshots[0]);
+ c.state.collections=[{id:'explanations',name:'해설',items:[saved,{kind:'question',id:q.id}],updatedAt:123}];
+ c.openLibrary();await click(c,'collection-open-explanations');await click(c,`library-item-${lib.libraryItemKey(saved)}`);
+ a.equal(c.route.name,'examReview');a.equal(c.route.id,submitted.id);a.equal(c.route.index,0);
+});
+
+test('invalid stored collections are not overwritten by library edits',async()=>{
+ const {c}=setup();c.state.collections=[{id:'broken',name:'기록',items:[{kind:'future-format',id:'x'}],updatedAt:123}];
+ const before=structuredClone(c.state.collections);c.openLibrary();a.match(strings(view(c)),/기존 기록은 유지/);
+ c.editCollection();c.setCollectionName('새 서재');await c.saveCollection();
+ a.deepEqual(c.state.collections,before);a.match(c.notice,/기존 기록은 유지/);
+});
+
+test('weekly goal counts unique local study days Monday through Sunday',()=>{
+ const {c}=setup(),{weeklyGoalProgress}=require('../.build/core/domain/library');
+ const monday=new Date(2026,10,2,12).getTime(),tuesday=new Date(2026,10,3,12).getTime();
+ c.state.settings.weeklyGoalDays=5;c.state.studyDays=['2026-11-01','2026-11-02'];
+ c.state.responses=[{id:'r',questionId:'x',version:'1',selected:'1',correct:true,uncertain:false,answeredAt:monday,mode:'lesson'},
+  {id:'r2',questionId:'y',version:'1',selected:'1',correct:true,uncertain:false,answeredAt:tuesday,mode:'lesson'}];
+ const week=weeklyGoalProgress(c.state,tuesday);a.equal(week.goal,5);a.equal(week.count,2);a.equal(week.days[0].day,'2026-11-02');a.equal(week.days[6].day,'2026-11-08');
 });

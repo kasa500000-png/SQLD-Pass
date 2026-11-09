@@ -30,7 +30,7 @@ function fixture(t) {
   const writeLock = () => fs.writeFileSync(lockPath, JSON.stringify(lock));
   writeLock();
   const review = {schemaVersion: 1, status: 'owner-reviewed-complete', contentSha256: lock.sha256,
-    scope: {lessons: 60, questions: 1120}, declaredBy: 'Synthetic fixture owner',
+    scope: {lessons: content.lessons.length, questions: Object.keys(content.questions).length}, declaredBy: 'Synthetic fixture owner',
     ownerStatement: 'Synthetic direct confirmation of completed content review', recordedAt: '2026-09-18T00:00:00Z',
     productionReleaseApproved: true};
   const writeReview = () => fs.writeFileSync(reviewPath, JSON.stringify(review));
@@ -74,7 +74,7 @@ test('unconfirmed review status and non-boolean release approval are insufficien
   }
 });
 
-test('review must cover all 60 lessons and 1120 questions', t => {
+test('review must cover the entire current pack', t => {
   const f = fixture(t);
   for (const scope of [{lessons: 59, questions: 1120}, {lessons: 60, questions: 1119}, {lessons: 60, questions: 120}, {lessons: '60', questions: 1120}, null, []]) {
     f.review.scope = scope; f.writeReview(); assert.throws(() => checkContentRelease(f.root), /Content approval evidence is incomplete/);
@@ -148,10 +148,10 @@ test('launch approval rejects invalid or normalized dates', t => {
 
 test('question, SQL, answer, provenance, version and source flag changes invalidate pinned bytes', t => {
   const f = fixture(t);
-  const mutations = [c => {c.questions['SQLD-M01-Q11'].stem += ' changed';}, c => {c.questions['SQLD-M01-Q11'].sql = 'SELECT 1';},
-    c => {const q = c.questions['SQLD-M01-Q11']; q.answer = q.options.find(o => o.id !== q.answer).id;},
+  const mutations = [c => {c.questions[Object.keys(c.questions)[0]].stem += ' changed';}, c => {c.questions[Object.keys(c.questions)[0]].sql = 'SELECT 1';},
+    c => {const q = c.questions[Object.keys(c.questions)[0]]; q.answer = q.options.find(o => o.id !== q.answer).id;},
     c => {c.manifest.sourceHashes[Object.keys(c.manifest.sourceHashes)[0]] = 'changed';}, c => {c.manifest.version = 'changed.version';},
-    c => {c.manifest.releaseReady = true; c.questions['SQLD-M01-Q11'].humanReviewed = true;}];
+    c => {c.manifest.releaseReady = true; c.questions[Object.keys(c.questions)[0]].humanReviewed = true;}];
   for (const mutate of mutations) {
     const changed = JSON.parse(authoredBytes.toString('utf8')); mutate(changed); fs.writeFileSync(f.contentPath, JSON.stringify(changed));
     assert.throws(() => checkContentRelease(f.root), /source SHA-256\/byte length mismatch/);
@@ -176,7 +176,7 @@ test('true source flags cannot bypass missing external review or launch approval
 
 test('malformed full pack is blocked before approval is considered', t => {
   const f = fixture(t); f.content.questions = {}; f.writeContent();
-  assert.throws(() => checkContentRelease(f.root), /expected 60 lessons, 20 exams, 1120 questions/);
+  assert.throws(() => checkContentRelease(f.root), /CONTENT_INVALID/);
 });
 
 test('launch gate rejects placeholder, insecure and credential-bearing URLs', t => {

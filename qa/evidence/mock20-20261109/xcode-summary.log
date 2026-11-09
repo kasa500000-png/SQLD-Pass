@@ -1,0 +1,21 @@
+    /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/appintentsnltrainingprocessor --infoplist-path /tmp/sqld-textbook-ios-build/Build/Products/Release-iphonesimulator/SQLDPass.app/Info.plist --temp-dir-path /tmp/sqld-textbook-ios-build/Build/Intermediates.noindex/SQLDPass.build/Release-iphonesimulator/SQLDPass.build/ssu --bundle-id com.sqldpass.app.internal --product-path /tmp/sqld-textbook-ios-build/Build/Products/Release-iphonesimulator/SQLDPass.app --extracted-metadata-path /tmp/sqld-textbook-ios-build/Build/Products/Release-iphonesimulator/SQLDPass.app/Metadata.appintents --metadata-file-list /tmp/sqld-textbook-ios-build/Build/Intermediates.noindex/SQLDPass.build/Release-iphonesimulator/SQLDPass.build/SQLDPass.DependencyMetadataFileList --source-file /tmp/sqld-textbook-ios-build/Build/Products/Release-iphonesimulator/SQLDPass.app/Info.plist --archive-ssu-assets
+2026-11-09 18:02:34.493 appintentsnltrainingprocessor[14457:669894] Parsing options for appintentsnltrainingprocessor
+2026-11-09 18:02:34.493 appintentsnltrainingprocessor[14457:669894] Starting AppIntents SSU YAML Generation
+2026-11-09 18:02:34.493 appintentsnltrainingprocessor[14457:669894] No AppShortcuts found - Skipping.
+
+GenerateDSYMFile /tmp/sqld-textbook-ios-build/Build/Products/Release-iphonesimulator/SQLDPass.app.dSYM /tmp/sqld-textbook-ios-build/Build/Products/Release-iphonesimulator/SQLDPass.app/SQLDPass (in target 'SQLDPass' from project 'SQLDPass')
+    cd /Users/hari/Documents/GitHub/SQLD-Pass/ios
+    export PATH\=/Applications/Xcode.app/Contents/SharedFrameworks/SwiftBuild.framework/Versions/A/PlugIns/SWBBuildService.bundle/Contents/PlugIns/SWBUniversalPlatformPlugin.bundle/Contents/Frameworks/SWBUniversalPlatform.framework/Resources:/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin:/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/local/bin:/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/libexec:/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/usr/bin:/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/usr/local/bin:/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/usr/bin:/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/usr/local/bin:/Applications/Xcode.app/Contents/Developer/usr/bin:/Applications/Xcode.app/Contents/Developer/usr/local/bin:/Applications/ChatGPT.app/Contents/Resources/codex-cli/codex-path:/Users/hari/.local/bin:/opt/homebrew/bin:/opt/homebrew/sbin:/usr/local/bin:/System/Cryptexes/App/usr/bin:/usr/bin:/bin:/usr/sbin:/sbin:/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/local/bin:/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/bin:/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/appleinternal/bin:/pkg/env/global/bin:/Library/Apple/usr/bin:/Users/hari/.codex/tmp/arg0-macos/codex-arg05GKHUp:/Users/hari/.cache/codex-runtimes/codex-primary-runtime/dependencies/bin/override:/Users/hari/.cache/codex-runtimes/codex-primary-runtime/dependencies/bin/fallback:/Applications/ChatGPT.app/Contents/Resources:/Applications/ChatGPT.app/Contents/Resources/codex-cli/CodexCLI.app/Contents/MacOS
+    /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/dsymutil /tmp/sqld-textbook-ios-build/Build/Products/Release-iphonesimulator/SQLDPass.app/SQLDPass -o /tmp/sqld-textbook-ios-build/Build/Products/Release-iphonesimulator/SQLDPass.app.dSYM
+
+Validate /tmp/sqld-textbook-ios-build/Build/Products/Release-iphonesimulator/SQLDPass.app (in target 'SQLDPass' from project 'SQLDPass')
+    cd /Users/hari/Documents/GitHub/SQLD-Pass/ios
+    builtin-validationUtility /tmp/sqld-textbook-ios-build/Build/Products/Release-iphonesimulator/SQLDPass.app -validate-for-store -shallow-bundle -infoplist-subpath Info.plist
+
+PruneExplicitPrecompiledModules /tmp/sqld-textbook-ios-build/Build/Intermediates.noindex/SwiftExplicitPrecompiledModules
+
+PruneExplicitPrecompiledModules /tmp/sqld-textbook-ios-build/SDKExplicitPrecompiledModules
+
+PruneExplicitPrecompiledModules /tmp/sqld-textbook-ios-build/Build/Intermediates.noindex/ExplicitPrecompiledModules
+
+** BUILD SUCCEEDED **
