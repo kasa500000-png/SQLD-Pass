@@ -18,7 +18,7 @@ export interface Node {
   catalog?:{context:string;position?:ReadingOffset;preserveContentOffset?:boolean;onRemember:(position:ReadingOffset)=>void};
 }
 // SQLD Pass reference design tokens. Keep light/dark semantic roles aligned.
-export const light={bg:'#F6F8FC',surface:'#FFFFFF',ink:'#172033',muted:'#64718A',line:'#E6EAF1',blue:'#2457D6',blueSoft:'#EDF3FF',navy:'#18243B',green:'#16836B',greenSoft:'#EAF7F1',orange:'#A96512',orangeSoft:'#FFF5E6',red:'#C34750',redSoft:'#FFF0F1',code:'#18243B',codeInk:'#EBF2FF'};
+export const light={bg:'#F6F8FC',surface:'#FFFFFF',ink:'#172033',muted:'#64718A',line:'#E6EAF1',blue:'#2457D6',blueSoft:'#EDF3FF',navy:'#18243B',green:'#16836B',greenSoft:'#EAF7F1',orange:'#A96512',orangeSoft:'#FFF5E6',red:'#C34750',redSoft:'#FFF0F1',code:'#EEF1F6',codeInk:'#24334B'};
 export const dark={bg:'#101A2B',surface:'#182337',ink:'#E8EDF7',muted:'#9BAAC1',line:'#29374C',blue:'#89AAFF',blueSoft:'#253859',navy:'#253859',green:'#6FD1AF',greenSoft:'#1D3935',orange:'#EDBC77',orangeSoft:'#3A3025',red:'#F19A9E',redSoft:'#3E2933',code:'#0C1421',codeInk:'#EBF2FF'};
 export type Palette=typeof light;
 export function box(children:Node[]=[],style:Style={},key?:string):Node{return {kind:'box',children,style,key};}
