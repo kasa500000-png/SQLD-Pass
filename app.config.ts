@@ -32,7 +32,7 @@ export default ({config}:ConfigContext):ExpoConfig=>{
         'com.google.android.gms.permission.AD_ID','android.permission.ACCESS_ADSERVICES_AD_ID',
         'android.permission.ACCESS_ADSERVICES_ATTRIBUTION','android.permission.ACCESS_ADSERVICES_TOPICS','com.android.vending.BILLING'
       ]},
-    plugins:['expo-sqlite','./plugins/withKotlinVersion.cjs','./plugins/withLocalReminders.cjs',
+    plugins:['expo-sqlite','./plugins/withInterfaceTheme.cjs','./plugins/withKotlinVersion.cjs','./plugins/withLocalReminders.cjs',
       ['expo-splash-screen',{image:'./assets/brand/icon.png',imageWidth:160,backgroundColor:'#2457D6',dark:{backgroundColor:'#2457D6'}}],
       ['expo-font',{
         android:{fonts:[{fontFamily:'Pretendard',fontDefinitions:[

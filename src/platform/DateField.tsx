@@ -28,7 +28,7 @@ export function DateField({node,scale,dark}:{node:Node;scale:number;dark:boolean
     if(Platform.OS==='android'){
       androidOpen.current=true;
       try{DateTimePickerAndroid.open({value:initial,mode:'date',display:'calendar',minimumDate,maximumDate,
-        positiveButton:{label:'선택'},negativeButton:{label:'취소'},
+        positiveButton:{label:'선택',textColor:p.blue},negativeButton:{label:'취소',textColor:p.muted},
         onValueChange:(_event,date)=>{if(androidOpen.current){androidOpen.current=false;node.onChange?.(dayKey(date.getTime()));}},
         onDismiss:()=>{androidOpen.current=false;},
         onError:()=>{androidOpen.current=false;setError('달력을 열지 못했습니다. 다시 선택해 주세요.');}
