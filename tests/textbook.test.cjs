@@ -53,7 +53,12 @@ test('practice survives restart, hides rationales until submitted, and scores ex
 test('reading and accuracy are separate, daily plan is bounded, search never indexes rationales',()=>{
  const s=initialState(c),ids=Object.keys(c.questions);s.readLessons=[c.lessons[0].id];s.responses=[{questionId:ids[0],correct:false},{questionId:ids[0],correct:true},{questionId:ids[1],correct:false}];const m=textbookMetrics(s,c);a.equal(m.read,1);a.equal(m.attempted,2);a.equal(m.accuracy,50);a.equal(dailySections(s,c,Date.now()).length,1);s.settings.targetDate='2026-11-10';a.equal(dailySections(s,c,new Date('2026-11-09T12:00:00+09:00').getTime()).length,108);const modified=structuredClone(c);Object.values(modified.questions)[0].explanation='SECRET_RATIONALE_TOKEN';a.equal(searchSections(modified,'SECRET_RATIONALE_TOKEN').length,0);a.ok(searchSections(c,'SELECT').length>0);
 });
-test('new content cannot reuse previous store approval',()=>{a.throws(()=>require('../config/release-config.cjs').checkContentRelease(path.resolve(__dirname,'..')),/Content approval evidence is incomplete/);});
+test('new content cannot reuse previous store approval',()=>{
+ const root=path.resolve(__dirname,'..'),read=fs.readFileSync;
+ const oldReview=read(path.join(root,'release/history/CONTENT_REVIEW_STATUS.phase1.20260908.1.json'));
+ fs.readFileSync=function(file,...args){return String(file)===path.join(root,'release/CONTENT_REVIEW_STATUS.json')?oldReview:read.call(this,file,...args);};
+ try{a.throws(()=>require('../config/release-config.cjs').checkContentRelease(root),/Content approval evidence is incomplete/);}finally{fs.readFileSync=read;}
+});
 test('daily assignment stays fixed after completing a section and is recalculated on a new day',async()=>{
  const {controller:ctrl}=setup();await ctrl.initialize();await ctrl.saveSettings(true);const before=structuredClone(ctrl.state.textbookDay);await ctrl.markLesson(before.sectionIds[0]);a.deepEqual(ctrl.state.textbookDay,before);const {withDailyPlan}=require('../.build/textbook/learning');const next=withDailyPlan(ctrl.state,c,ctrl.services.clock().wall+86400000);a.notEqual(next.textbookDay.day,before.day);a.ok(!next.textbookDay.sectionIds.includes(before.sectionIds[0]));
 });

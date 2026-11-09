@@ -52,6 +52,12 @@ the question scroller. Timed exit does not pause the clock. Result summaries ope
 explanation views with fixed previous/next controls and an accessible question picker.
 Intro start, settings save and lesson/practice follow-up actions remain outside long content.
 
+For the 2026-11-10 rewarded-exam flow, show the reward and adult eligibility beside each
+locked exam's explicit `광고 1회 보고 회차 열기` button. One tap starts the consent/ad flow
+without a separate confirmation modal. Keep an `광고·저장 안내` navigation action, free
+and unlocked access, and the earned-event-only save. Successful completion opens the
+exam introduction; it must not start a timed attempt automatically.
+
 Home and catalog groups adapt to two columns only with sufficient available width and
 manageable text scale; body reading widths remain bounded. Empty states explain the next
 action. Settings save returns to its caller; initial setup returns home. Short practice

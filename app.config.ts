@@ -16,7 +16,7 @@ export default ({config}:ConfigContext):ExpoConfig=>{
     ...config,name:'SQLD Pass',slug:'sqld-pass',version:process.env.APP_VERSION??'0.1.0',
     icon:'./assets/brand/icon.png',
     owner:process.env.EXPO_OWNER??project.owner,
-    platforms:ads.mode!=='off'&&ads.target==='android'?['android']:['android','ios'],orientation:'default',userInterfaceStyle:'automatic',
+    platforms:ads.mode!=='off'&&ads.target!=='both'?[ads.target]:['android','ios'],orientation:'default',userInterfaceStyle:'automatic',
     scheme:production?'sqld-pass':'sqld-pass-internal',updates:{enabled:false},
     ios:{bundleIdentifier:process.env.IOS_BUNDLE_IDENTIFIER??'com.sqldpass.app.internal',buildNumber:process.env.IOS_BUILD_NUMBER??'5',supportsTablet:true,
       infoPlist:{ITSAppUsesNonExemptEncryption:false}},
@@ -48,8 +48,7 @@ export default ({config}:ConfigContext):ExpoConfig=>{
           './assets/fonts/pretendard/Pretendard-ExtraBold.otf'
         ]}
       }],
-      ...(ads.mode==='off'?[]:[['react-native-google-mobile-ads',{androidAppId:ads.androidAppId,iosAppId:ads.iosAppId,delayAppMeasurementInit:true,
-        userTrackingUsageDescription:'광고 제공을 위한 기기 식별자 사용 여부를 선택할 수 있습니다. 허용하지 않아도 무료 학습과 열린 회차는 이용할 수 있습니다.'}] as [string,Record<string,unknown>]]),
+      ...(ads.mode==='off'?[]:[['react-native-google-mobile-ads',{androidAppId:ads.androidAppId,iosAppId:ads.iosAppId,delayAppMeasurementInit:true}] as [string,Record<string,unknown>],'./plugins/withAdPrivacy.cjs']),
       ['expo-build-properties',{ios:{enableSceneSupport:true},android:{compileSdkVersion:36,targetSdkVersion:36,minSdkVersion:24,kotlinVersion:'2.3.20',useLegacyPackaging:false,
         usesCleartextTraffic:env==='development',...(ads.mode==='off'?{}:{extraProguardRules:'-keep class com.google.android.gms.internal.consent_sdk.** { *; }'})}}]
     ],

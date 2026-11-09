@@ -5,13 +5,16 @@ type SDK = typeof import('react-native-google-mobile-ads');
 const requested=process.env.EXPO_PUBLIC_ADS_MODE;
 const appEnv=process.env.EXPO_PUBLIC_APP_ENV ?? 'development';
 const target=process.env.EXPO_PUBLIC_ADS_TARGET ?? 'both';
-const permittedTarget=target==='both'||(target==='android'&&Platform.OS==='android');
+const permittedTarget=target==='both'||(target==='android'&&Platform.OS==='android')||(target==='ios'&&Platform.OS==='ios');
 export const nativeExamAccessPolicy:ExamAccessPolicy=process.env.EXPO_PUBLIC_EXAM_ACCESS_POLICY==='rewarded'?'rewarded':'launch-free';
 const mode:AdMode=!permittedTarget||nativeExamAccessPolicy!=='rewarded'?'off':requested==='test'&&appEnv!=='production'?'test':requested==='live'&&appEnv==='production'?'live':'off';
 const UNIT=/^ca-app-pub-\d{16}\/\d{10}$/;
 const NON_PERSONALIZED={requestNonPersonalizedAdsOnly:true};
 // These options are used only after an explicit, session-only adult confirmation.
 const CONSENT_OPTIONS={tagForUnderAgeOfConsent:false};
+const consentOptions=(sdk:SDK)=>mode==='test'&&appEnv!=='production'&&process.env.EXPO_PUBLIC_CONSENT_TEST_REGION==='EEA'?
+  {...CONSENT_OPTIONS,debugGeography:sdk.AdsConsentDebugGeography.EEA,
+    testDeviceIdentifiers:['EMULATOR',...(process.env.EXPO_PUBLIC_CONSENT_TEST_DEVICES??'').split(',').filter(Boolean)]}:CONSENT_OPTIONS;
 
 export class NativeAds implements RewardDriver {
   readonly mode=mode;
@@ -62,7 +65,7 @@ export class NativeAds implements RewardDriver {
         // Configure before UMP or Mobile Ads initialization, including retries.
         await this.configure(sdk);
         if(!this.gathered){
-          await sdk.AdsConsent.gatherConsent(CONSENT_OPTIONS);this.gathered=true;
+          await sdk.AdsConsent.gatherConsent(consentOptions(sdk));this.gathered=true;
         }
         const info=await sdk.AdsConsent.getConsentInfo();
         if(!info.canRequestAds){this.ready=false;this.changed();return false;}
@@ -90,7 +93,7 @@ export class NativeAds implements RewardDriver {
     this.ready=false;this.gathered=false;this.changed();
     try{
       const sdk=this.sdk();await this.configure(sdk);
-      const info=await sdk.AdsConsent.requestInfoUpdate(CONSENT_OPTIONS);
+      const info=await sdk.AdsConsent.requestInfoUpdate(consentOptions(sdk));
       this.gathered=true;
       if(info.privacyOptionsRequirementStatus===sdk.AdsConsentPrivacyOptionsRequirementStatus.REQUIRED)
         await sdk.AdsConsent.showPrivacyOptionsForm();

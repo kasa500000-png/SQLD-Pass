@@ -4,6 +4,7 @@ import type {ContentBlock} from '../textbook/types';
 import {box,row,adaptiveRow,table,type Node} from '../ui/nodes';
 import {canStudyQuestion,formatTime,publicQuestion} from '../core/domain/exam';
 import {latestMocks,mockStats,mockWrongQuestions,modeName} from './domain';
+import {REWARD_ACTION,REWARD_DISCLOSURE,REWARD_AGE_DISCLOSURE,REWARD_STORAGE_DISCLOSURE} from '../monetization/policy';
 interface UI{
  t:(s:string)=>Node;small:(s:string)=>Node;h:(s:string)=>Node;card:(ns:Node[],key?:string)=>Node;
  act:(s:string,fn:()=>void|Promise<void>,id?:string,selected?:boolean,disabled?:boolean)=>Node;
@@ -26,12 +27,17 @@ export function renderMockScreen(c:MonetizedController,u:UI):{title:string;body:
  if(!c.content.mockPack)return;
  const {t,small,h,act,primary,link,choice,go,blocks,card}=u,s=c.state,r=c.route,active=c.activeExam(),pack=c.content.mockPack;
  const intro=(id:string)=>go('examIntro',id);
+ const rewardInfo=(details=false)=>[small(REWARD_DISCLOSURE),small(REWARD_AGE_DISCLOSURE),...(details?[small(REWARD_STORAGE_DISCLOSURE),small('광고 클릭·설치·추적 허용은 필요 없습니다.')]:[]),...(c.ads.mode==='test'?[small('테스트 광고 · 운영 버전으로 해제 이전 안 됨')]:[])];
  if(r.name==='exams')return {title:'실전',body:[h('모의고사 20회'),small('회차당 50문항 · 실전 90분 / 학습 시간 제한 없음'),
  ...(active?[card([h('진행 중인 모의고사'),t(`${active.title} · ${modeName(active.mode)}`),act('모의고사 이어하기',go('exam',active.id),'resume-mock')])]:[]),
  t(c.isLaunchFree?'이 버전에서는 모든 회차를 무료로 이용할 수 있습니다.':c.ads.mode==='off'?'1~4회와 이미 열린 회차를 이용할 수 있습니다. 추가 회차 광고 해제는 현재 제공하지 않습니다.':'1~4회는 무료입니다. 5~20회는 회차별 선택 광고 1회 완료 후 두 모드를 계속 이용합니다.'),
  act('오답·미응답 복습',go('mockReview'),'mock-wrong'),act('저장한 문항',go('mockSaved'),'mock-saved'),act('응시 기록',go('examHistory'),'mock-history'),
  adaptiveRow((['all','unattempted','completed'] as const).map((f,i)=>act(['전체','미응시','응시 완료'][i],()=>c.setExamProgressFilter(f),'exam-filter-'+f,c.examProgressFilter===f))),
- ...c.content.exams.filter(e=>c.examProgressFilter==='all'||(s.exams.some(a=>a.examId===e.id&&a.status==='submitted')===(c.examProgressFilter==='completed'))).map(e=>link(`${e.title}\n${c.hasAccess(e.id)?'이용 가능':'광고 시청 후 열림'}${(['timed','study'] as const).map(mode=>{const a=latestMocks(s,mode).find(a=>a.examId===e.id);return a?` · ${modeName(mode)} ${a.score?.points??0}점`:'';}).join('')}`,c.hasAccess(e.id)?intro(e.id):()=>c.offerUnlock(e.id),'mock-'+e.id)),act('모의고사 출처와 기준',go('mockSources'))]};
+ ...c.content.exams.filter(e=>c.examProgressFilter==='all'||(s.exams.some(a=>a.examId===e.id&&a.status==='submitted')===(c.examProgressFilter==='completed'))).map(e=>{
+   const open=c.hasAccess(e.id),history=(['timed','study'] as const).map(mode=>{const a=latestMocks(s,mode).find(a=>a.examId===e.id);return a?` · ${modeName(mode)} ${a.score?.points??0}점`:'';}).join('');
+   if(open||c.ads.mode==='off')return link(`${e.title}\n${open?'이용 가능':'현재 잠김'}${history}`,intro(e.id),'mock-'+e.id);
+   return card([h(e.title),...rewardInfo(),primary(REWARD_ACTION,()=>c.watchAdToUnlock(e.id),'mock-'+e.id,!!active||c.rewardBusy),link('광고·저장 안내',intro(e.id),'reward-info-'+e.id)],'reward-'+e.id);
+ }),act('모의고사 출처와 기준',go('mockSources'))]};
  if(r.name==='examIntro'){
   const e=c.content.exams.find(e=>e.id===r.id);if(!e)return {title:'실전',body:[t('회차를 찾을 수 없습니다.')]};
   const mode=c.expanded.has('intro:study')?'study':'timed';
@@ -40,7 +46,7 @@ export function renderMockScreen(c:MonetizedController,u:UI):{title:string;body:
    card([t(mode==='timed'?'실제 시험처럼 90분 동안 풀어보세요. 화면을 나가도 시간은 계속 흐릅니다.':'시간 제한 없이 풀어보세요. 답안은 기기에 저장됩니다.'),t('두 모드 모두 최종 제출 후 정답과 해설을 확인합니다.'),small('미응답은 0점입니다. 제출한 답안은 변경할 수 없습니다.')]),
    act('응시 기준 자세히',()=>c.toggleExpanded('intro:rules'),'exam-rules',c.expanded.has('intro:rules')),
    ...(c.expanded.has('intro:rules')?[t('문항당 2점. 총점 60점 이상, 1과목 4문항·2과목 16문항 이상 정답을 연습 기준으로 사용합니다. 실제 시험의 합격을 보장하지 않습니다.'),...pack.assumptions.map(small)]:[])],
-   footer:active?[primary('진행 중 모의고사 이어하기',go('exam',active.id),'resume-mock')]:c.hasAccess(e.id)?[primary(mode==='timed'?'실전 모드 시작 · 90분':'학습 모드 시작',()=>c.beginExam(e.id,mode),mode==='timed'?'start-mock-timed':'start-mock-study')]:[primary('광고 시청 안내',()=>c.offerUnlock(e.id),'unlock-mock')]};
+   footer:active?[primary('진행 중 모의고사 이어하기',go('exam',active.id),'resume-mock')]:c.hasAccess(e.id)?[primary(mode==='timed'?'실전 모드 시작 · 90분':'학습 모드 시작',()=>c.beginExam(e.id,mode),mode==='timed'?'start-mock-timed':'start-mock-study')]:[...rewardInfo(true),primary(REWARD_ACTION,()=>c.watchAdToUnlock(e.id),'unlock-mock',c.rewardBusy||c.ads.mode==='off')]};
  }
  if(r.name==='exam'||r.name==='sheet'){
   const e=c.examAttempt(r.id);if(!e||e.status!=='active')return {title:'실전',body:[t('진행 중인 응시를 찾을 수 없습니다.'),link('회차 목록',go('exams'))]};

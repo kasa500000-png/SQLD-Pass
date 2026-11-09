@@ -123,6 +123,38 @@
         "ANDROID_PACKAGE": "com.kasa500000.sqldpass",
         "IOS_BUNDLE_IDENTIFIER": "com.kasa500000.sqldpass"
       }
+    },
+    "textbook-ads-production": {
+      "extends": "production",
+      "autoIncrement": false,
+      "env": {
+        "EXPO_PUBLIC_APP_ENV": "production",
+        "EXPO_PUBLIC_ADS_MODE": "live",
+        "EXPO_PUBLIC_ADS_TARGET": "both",
+        "EXPO_PUBLIC_EXAM_ACCESS_POLICY": "rewarded",
+        "APP_VERSION": "0.3.0",
+        "ANDROID_VERSION_CODE": "16",
+        "IOS_BUILD_NUMBER": "10",
+        "ANDROID_PACKAGE": "com.kasa500000.sqldpass",
+        "IOS_BUNDLE_IDENTIFIER": "com.kasa500000.sqldpass"
+      }
+    },
+    "textbook-ios-production": {
+      "extends": "textbook-ads-production",
+      "autoIncrement": false,
+      "env": {
+        "EXPO_PUBLIC_ADS_TARGET": "ios",
+        "IOS_BUILD_NUMBER": "11"
+      }
+    },
+    "textbook-android-production": {
+      "extends": "textbook-ads-production",
+      "autoIncrement": false,
+      "env": {
+        "EXPO_PUBLIC_ADS_TARGET": "android",
+        "ANDROID_VERSION_CODE": "17",
+        "APP_VERSION": "0.3.1"
+      }
     }
   },
   "submit": {

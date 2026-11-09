@@ -38,9 +38,23 @@ export class MonetizedController extends Controller {
     if(this.activeExam()){this.notice='진행 중인 모의고사를 먼저 마쳐 주세요.';this.notify();return;}
     const e=this.content.exams.find(x=>x.id===id);if(!e)return;
     if(this.hasAccess(id)){this.navigate({name:'examIntro',id});return;}
+    // Navigation alone is never an opt-in. Current native screens disclose the
+    // reward and eligibility beside a dedicated watch button.
+    if(this.content.mockPack){this.navigate({name:'examIntro',id});return;}
     this.confirm(`${e.title} 열기`,
       '광고 기능은 만 18세 이상만 이용할 수 있습니다. 생년월일은 수집하지 않으며, 연령 확인은 앱을 종료하면 초기화됩니다. 보상형 광고 1회를 끝까지 시청하면 이 회차와 제출 후 해설을 이 기기에 계속 열어 둡니다. 클릭·설치·추적 허용은 필요하지 않습니다. 앱 삭제·데이터 삭제·기기 변경 시 복원되지 않습니다. 취소해도 무료 1~4회와 열린 회차는 유지됩니다.'+(this.ads.mode==='test'?'\n테스트 광고로 열린 회차는 운영 광고 버전으로 이전되지 않습니다.':''),
       '만 18세 이상 · 광고 시청',()=>{this.ads.confirmAdult();return this.unlockAfterOptIn(id);});
+  }
+  async watchAdToUnlock(id:string){
+    if(!this.ready||this.rewardBusy)return;
+    if(this.needsRewardSave){this.notice='시청 완료한 보상이 저장되지 않았습니다. 먼저 보상 저장 재시도를 눌러 주세요.';this.notify();return;}
+    if(this.activeExam()){this.notice='진행 중인 모의고사를 먼저 마쳐 주세요.';this.notify();return;}
+    if(!validExamId(id)||!this.content.exams.some(e=>e.id===id))return;
+    if(this.hasAccess(id)){this.navigate({name:'examIntro',id});return;}
+    if(this.ads.mode!=='off')this.ads.confirmAdult();
+    await this.unlockAfterOptIn(id);
+    // Start the exam only after the learner chooses a mode and starts it.
+    if(this.hasAccess(id)&&!this.needsRewardSave)this.navigate({name:'examIntro',id});
   }
   private async saveEarned(p:PendingReward):Promise<void>{
     const ok=await this.commit(s=>earnReward(s,p,this.services.clock().wall));
