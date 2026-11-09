@@ -78,7 +78,7 @@ export function NativeView({node: n, scale, dark, path = '0',maxSystemFontMultip
     style={({pressed}) => [{minHeight: 48,minWidth:0,maxWidth:'100%', justifyContent: 'center', paddingHorizontal: 12, paddingVertical: 10}, s.view, roleStyle, {opacity: n.disabled ? (n.role==='radio'?1:0.45) : pressed ? 0.78 : 1}]}>
     {(n.text||n.icon)?<View style={{flexDirection:n.iconPosition==='above'?'column':'row',alignItems:'center',justifyContent:list||choice?'flex-start':'center',gap:n.iconPosition==='above'?4:8}}>
       {n.icon&&n.iconPosition!=='trailing'?<LearningIcon name={n.icon} size={n.iconSize??(n.role==='tab'?23:20)} color={iconColor}/>:null}
-      {n.text ? <Text maxFontSizeMultiplier={maxSystemFontMultiplier} style={[{color: ink, textAlign: 'center', fontSize: 15 * scale, fontWeight: '600', flexShrink: 1}, s.text,roleText]}><RichText value={n.text} /></Text> : null}
+      {n.text ? <Text maxFontSizeMultiplier={maxSystemFontMultiplier} style={[{color: ink, textAlign: 'center', fontSize: 15 * scale, fontWeight: choice?'400':'500', flexShrink: 1}, s.text,roleText]}><RichText value={n.text} />{n.subtitle?<Text style={{fontSize:12*scale,lineHeight:20*scale,fontWeight:'400',color:palette.muted}}>{'\n'+n.subtitle}</Text>:null}</Text> : null}
       {n.icon&&n.iconPosition==='trailing'?<LearningIcon name={n.icon} size={n.iconSize??20} color={iconColor}/>:null}
     </View>:null}
     {list?<View style={{position:'absolute',right:10}} pointerEvents="none"><LearningIcon name="chevron-right" size={18} color={palette.muted}/></View>:null}
@@ -116,6 +116,13 @@ export function NativeView({node: n, scale, dark, path = '0',maxSystemFontMultip
       </ScrollView>
     </SafeAreaView>
   </Modal>;
+  if(n.layout==='segments'){
+    const items=n.children??[],minCell=76*layout.effectiveFontScale;
+    const count=layout.usableWidth/items.length>=minCell?items.length:layout.usableWidth/2>=minCell?2:1;
+    return <View style={{flexDirection:'row',flexWrap:'wrap',gap:6}}>{items.map((child,index)=><View key={child.key??index} style={{width:count===1?'100%':`${(100-(count-1)*6/layout.usableWidth*100)/count}%`}}>
+      <NativeView node={{...child,style:{...child.style,flex:undefined,width:'100%',paddingHorizontal:6,fontSize:13,borderRadius:10}}} scale={scale} dark={dark} maxSystemFontMultiplier={maxSystemFontMultiplier}/>
+    </View>)}</View>;
+  }
   if(n.layout==='dashboard'||n.layout==='question-grid')return <ResponsiveTiles node={n} scale={scale} dark={dark} path={path} maxSystemFontMultiplier={maxSystemFontMultiplier}/>;
   if(n.layout==='lesson-sections')return <LessonSections node={n} scale={scale} dark={dark} path={path} maxSystemFontMultiplier={maxSystemFontMultiplier}/>;
   if(n.layout==='adaptive-row'&&layout.stackRows)return <View testID={n.testId}
