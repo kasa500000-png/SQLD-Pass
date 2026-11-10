@@ -1,0 +1,16 @@
+{
+  "recordedAt": "2026-11-10T01:39:02.587Z",
+  "package": "com.kasa500000.sqldpass",
+  "version": "0.3.2",
+  "versionCode": 18,
+  "track": "production",
+  "rolloutPercent": 100,
+  "state": "Changes in review",
+  "managedPublishing": false,
+  "additionalChanges": [
+    "Pause Alpha test track",
+    "Target audience 16+"
+  ],
+  "additionalPhysicalQA": "waived by owner; not performed",
+  "aabSHA256": "6e981f6b75d8ee1412e55788aa0303d5bd5ed4068d4f1c78a81a95f2a989e3fe"
+}

@@ -48,3 +48,7 @@ Preparing 0.3.2: Android versionCode 18, iOS build 12. Not yet submitted by this
 `.build/release-ui-20261110/sqld-pass-0.3.2-18.aab` built successfully using the existing upload key. Bundletool validation and JAR signature passed; certificate SHA-256 matches the backed-up upload certificate. Embedded app.config confirms production, adsMode=live, adsRuntimeEnabled=true and rewarded exam policy. Derived universal inspection APK passed static 16KB checks for 36 native libraries; it was not installed or used to request live ads. SHA-256 and limitations are in evidence/ui-refinement-20261110/android-production-artifact.json. This artifact is not uploaded or submitted yet.
 
 Store screenshot candidates for iPhone 6.5-inch and iPad 13-inch are staged under `.build/release-ui-20261110/screenshots/`. Fresh physical-iPad verification, iOS production archive and both store submissions remain pending. App Store existing version 0.3.0 is still a separate submission; no new submission status is implied.
+
+## Submission follow-up
+
+The owner explicitly waived additional physical-device verification on 2026-11-10. Subsequent build, AdMob and store submission evidence is recorded in [RELEASE_UI_20261110.md](RELEASE_UI_20261110.md); the earlier pending-state statements above are historical checkpoints, not current store status.

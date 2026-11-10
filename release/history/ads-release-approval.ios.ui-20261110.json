@@ -1,0 +1,16 @@
+{
+  "platform": "ios",
+  "policyVersion": "2026-09-30.1",
+  "codeSha256": "04578589575542982cf4162c6ecadba7548c4e15c9e08653b9cf43b134729c37",
+  "adPlacementEvidence": "Current renderer: Home/Records slots only and active mock suppression preserved; current Samsung timed active-home/Records suppression verified. iOS current simulators verified screen layouts. Historical physical iPad active suppression owner-confirmed; no new physical claim.",
+  "sdkCompatibilityEvidence": "418 automated tests, native TypeScript and Release simulator builds/flows passed. Signed iOS 0.3.2(12) archive/export/upload succeeded; embedded production/live/rewarded configuration verified. No additional physical-device test claimed.",
+  "appAdsTxtEvidence": "2026-11-10 fresh AdMob console: Android and iOS Ready, ad serving enabled, two ad units each. iOS app-ads.txt found and verified; see qa/evidence/release-ui-20261110/admob-status.json.",
+  "privacyDisclosureEvidence": "Google Play existing published Ads YES and Data Safety reviewed 2026-11-09: approximate location, diagnostics, app interactions, device identifiers optional collected/shared for ads/analytics/fraud; support contact optional. Evidence play-data-safety.txt. Public support/privacy version13 published with new textbook and migration disclosures.",
+  "privacyUrl": "https://sqld-pass-support.shk1122.chatgpt.site/privacy.html",
+  "supportUrl": "https://sqld-pass-support.shk1122.chatgpt.site/support.html",
+  "approvedBy": "Owner explicitly instructed: 실기기 검증 없이 양 스토어 정식 제출까지 바로 진행 (2026-11-10). This overrides the additional physical-device release gate only; content integrity and truthful evidence retained.",
+  "approvedAt": "2026-11-10T01:34:10.996Z",
+  "iosDeviceEvidence": "Owner explicitly directed on 2026-11-10 to skip additional physical-device verification and submit both stores immediately. No fresh physical iPad QA is claimed. Existing prior iPad owner-observed test banner/reward/cancel/active suppression remains historical evidence. Current native Release app passed iPhone17, iPhone13ProMax and iPad13 simulator screen flows; see qa/UI_REFINEMENT_20261110.md.",
+  "consentAndATTEvidence": "Current consent and privacy policy unchanged. Existing published UMP EEA reject/reopen/consent/withdraw and iPad owner-observed test ads are scoped in qa/RELEASE_TEXTBOOK_20261109.md. Current UI privacy entry and sections passed simulator checks. No new physical consent validation is claimed; owner waived additional device verification. Production diagnostic geography disabled and ATT prompt removed as previously verified.",
+  "additionalPhysicalDeviceVerification": "Explicitly waived by owner for 0.3.2; not performed or marked passed"
+}
