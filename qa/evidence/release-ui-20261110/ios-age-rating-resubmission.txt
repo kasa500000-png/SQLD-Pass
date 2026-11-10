@@ -1,0 +1,86 @@
+  container
+    container
+      anchor [ref=562, url=https://appstoreconnect.apple.com/apps/6818046749/distribution/reviewsubmissions]
+        svg_root
+        text "앱 심사"
+      heading
+        text "iOS 제출"
+      paragraph
+        svg_root
+        text "심사 대기 중"
+    container
+      heading
+        text "제출된 항목(1개)"
+      table
+        table_row
+          table_cell [ref=563]
+            text "항목"
+          table_cell [ref=564]
+            text "유형"
+          table_cell [ref=565]
+            text "심사 상태"
+          table_cell [ref=566]
+          table_cell
+        table_row
+          table_cell
+            image "앱 아이콘"
+            container
+              paragraph
+                text "iOS 앱 0.3.2"
+              paragraph
+                anchor [ref=567, loc=href:/apps/6818046749/testflight/ios/753ec483-1849-4e6d-bf60-f465e6e79449/metadata, url=https://appstoreconnect.apple.com/apps/6818046749/testflight/ios/753ec483-1849-4e6d-bf60-f465e6e79449/metadata]
+                  text "0.3.2 (12)"
+              paragraph
+          table_cell
+            text "앱 버전"
+          table_cell
+            svg_root
+            text "심사 대기 중"
+          table_cell
+          table_cell
+    container
+      heading
+        text "메시지(2개)"
+      button [ref=568]
+        svg_root
+        heading
+          text "Apple"
+          text "오늘 오후 5:07"
+      container
+        button [ref=569]
+          svg_root
+          heading
+            text "김석현"
+            text "오늘 오후 7:16"
+        region "김석현오늘 오후 7:16"
+          text "Hello App Review Team, Thank you for identifying the inaccurate declaration under Guideline 2.3.6. We have corrected App Information > Age Rating > Age Assurance (나이 확인) to No/None and verifie..."
+    text "제출한 날짜"
+    text "2026년 11월 10일 오후 7:17"
+    text "제출 ID"
+    text "b7c04070-48c8-40ff-8638-63fa5db2fc80"
+    text "제출한 사람"
+    text "김석현"
+    text "최근 업데이트한 사람"
+    text "김석현"
+    button [ref=570]
+      text "제출 취소"
+  contentinfo
+    unordered_list
+      list_item
+        anchor [ref=541, url=https://appstoreconnect.apple.com/apps]
+          text "App Store Connect"
+    unordered_list
+      list_item
+        text "Copyright © 2026 Apple Inc. 모든 권리 보유."
+        text "|"
+      list_item
+        anchor [ref=542, loc=href:/WebObjects/iTunesConnect.woa/wa/termsOfService, url=https://appstoreconnect.apple.com/WebObjects/iTunesConnect.woa/wa/termsOfService]
+          text "서비스 약관"
+        text "|"
+      list_item
+        anchor [ref=543, loc=href:https://www.apple.com/legal/privacy, url=https://www.apple.com/legal/privacy]
+          text "개인정보 처리방침"
+        text "|"
+      list_item
+        anchor [ref=544, loc=href:/contact-us, url=https://appstoreconnect.apple.com/contact-us]
+          text "Apple에 문의"

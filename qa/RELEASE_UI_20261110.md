@@ -22,3 +22,11 @@ Final iOS production `npm run release:check` passed with the exact content hash 
 - Google Play: production 0.3.2(18), changes in review, 100% release after approval. See `google-play-submission.json` and `play-submission.txt`.
 - App Store: 0.3.2(12), WAITING_FOR_REVIEW, submitted 2026-11-10 01:46:04 UTC / 10:46:04 KST, release type AFTER_APPROVAL. Review submission `b7c04070-48c8-40ff-8638-63fa5db2fc80`; see `ios-review-submission.json`. A transient Apple HTTP 500 was resolved by checking state and retrying the pending submission; no duplicate submission was created.
 - Both are submissions, not claims of approval or public availability. Temporary signing keychain removed and prior keychain search list restored.
+
+## App Store 2.3.6 correction and resubmission
+
+Apple rejected 0.3.2(12) on 2026-11-10 at 17:07 KST because the Age Assurance declaration did not match discoverable in-app functionality. App Information had Age Assurance Yes, Parental Controls No and Advertising Yes. Corrected Age Assurance to No and verified it after navigation/reload; Parental Controls No and Advertising Yes retained. The calculated global rating remains 4+.
+
+Clarified review notes that optional advertising adult eligibility is self-declaration, not age verification. Sent the explanation to App Review at 19:16 KST. Resubmitted the unchanged production build 12 at 19:17 KST; browser confirmed both submission and version WAITING_FOR_REVIEW under the existing submission b7c04070-48c8-40ff-8638-63fa5db2fc80. AFTER_APPROVAL release retained. No binary, content, advertising configuration or device QA changes were made. Additional mock volumes remain deferred.
+
+Evidence: `evidence/release-ui-20261110/ios-age-rating-resubmission.txt`. This supersedes the earlier initial-submission timestamp, not the artifact checksum.
