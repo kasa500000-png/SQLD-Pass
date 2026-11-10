@@ -1,0 +1,18 @@
+{
+  "recordedAt": "2026-11-10T01:39:21.784Z",
+  "android": {
+    "appId": "ca-app-pub-9314207769680999~2504786470",
+    "state": "Ready",
+    "adServing": "Enabled",
+    "adUnits": 2
+  },
+  "ios": {
+    "appId": "ca-app-pub-9314207769680999~3391326882",
+    "state": "Ready",
+    "adServing": "Enabled",
+    "adUnits": 2,
+    "appAdsTxt": [
+      "check_circle\nhttps://sqld-pass-support.shk1122.chatgpt.site/app-ads.txt\nSQLD Pass\n6818046749\nApp Store\n8분 전\n100건 미만\napp-ads.txt 파일을 찾아서 확인했습니다.\nexpand_more"
+    ]
+  }
+}

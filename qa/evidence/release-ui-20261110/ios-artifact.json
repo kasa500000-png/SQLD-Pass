@@ -1,0 +1,16 @@
+{
+  "recordedAt": "2026-11-10",
+  "version": "0.3.2",
+  "build": "12",
+  "bundleId": "com.kasa500000.sqldpass",
+  "adMobAppId": "ca-app-pub-9314207769680999~3391326882",
+  "ipaSha256": "9881008ff7a09b402c125762dff424659ab0d45886f5966fc0f6abc2eb0038e7",
+  "uploadDeliveryUUID": "753ec483-1849-4e6d-bf60-f465e6e79449",
+  "additionalPhysicalQA": "Owner waived; not performed",
+  "appEnvironment": "production",
+  "adsMode": "live",
+  "adsRuntimeEnabled": true,
+  "examAccessPolicy": "rewarded",
+  "remoteAnalyticsEnabled": false,
+  "ATTUsageDescriptionPresent": false
+}
