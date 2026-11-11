@@ -21,6 +21,17 @@ Implementation, TestFlight and both production submissions remain authorized.
 Current physical validation is on the connected Android at the owner's direction;
 do not describe iOS simulator evidence as physical iPad validation.
 
+### Scoped owner exception — iOS 0.4.0(15), 2026-11-12
+
+After the remaining iPad/consent validation and submission status were reported,
+the owner explicitly instructed “ios도 별도 검증 생략 후 진행”. For this candidate
+only, proceed with TestFlight and App Store submission without additional physical
+iPad or consent reruns. Record them as unperformed and keep current simulator and
+Android evidence separate. This is a new scoped exception, not reuse of the older
+waivers. Preserve actual archive/export/upload validation, exact content approval,
+runtime consent, earned-reward and signing gates. Future versions remain subject
+to the normal validation requirements.
+
 ## Latest owner direction — 2026-11-11 interruption and UI refinement
 
 The owner approved implementation of the2026-11-12 volume expansion plan. Add volumes2–3

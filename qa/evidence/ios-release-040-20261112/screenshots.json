@@ -1,0 +1,88 @@
+{
+  "recordedAt": "2026-11-11T23:43:22.925Z",
+  "versionId": "eeea18de-bf63-4825-b1c4-3cba9b7f6fe3",
+  "sets": [
+    {
+      "setId": "b0f91576-37a8-4ecb-9c32-6593dc2f1988",
+      "replacedFile": "032-4-mock-catalog.png",
+      "files": [
+        {
+          "id": "4bffa022-198e-4dd2-8ce8-7b1cb2b211f4",
+          "name": "032-1-home.png",
+          "state": "COMPLETE",
+          "width": 1284,
+          "height": 2778
+        },
+        {
+          "id": "f14455e8-0144-4a92-8988-444310315860",
+          "name": "032-2-textbook.png",
+          "state": "COMPLETE",
+          "width": 1284,
+          "height": 2778
+        },
+        {
+          "id": "cfa72438-5e51-49d9-96fe-78aedaf98ad2",
+          "name": "032-3-lesson-sql.png",
+          "state": "COMPLETE",
+          "width": 1284,
+          "height": 2778
+        },
+        {
+          "id": "5b800019-6632-831d-8038-3bc317973bc9",
+          "name": "040-mock-volume2-iphone.png",
+          "state": "COMPLETE",
+          "width": 1284,
+          "height": 2778
+        },
+        {
+          "id": "a3ec1008-6e04-496b-8bdd-00151d552cca",
+          "name": "032-5-records.png",
+          "state": "COMPLETE",
+          "width": 1284,
+          "height": 2778
+        }
+      ]
+    },
+    {
+      "setId": "3372334c-7b25-4d3e-bfc1-cbe5a34b04e0",
+      "replacedFile": "032-4-mock-catalog.png",
+      "files": [
+        {
+          "id": "50a8e429-7bf8-41b3-9e7f-d455ba37270a",
+          "name": "032-1-home.png",
+          "state": "COMPLETE",
+          "width": 2064,
+          "height": 2752
+        },
+        {
+          "id": "924268d1-8704-4359-97a9-18b0e831f68b",
+          "name": "032-2-textbook.png",
+          "state": "COMPLETE",
+          "width": 2064,
+          "height": 2752
+        },
+        {
+          "id": "2e7a4b15-e8fc-4599-9aec-fd7387f448ea",
+          "name": "032-3-lesson-sql.png",
+          "state": "COMPLETE",
+          "width": 2064,
+          "height": 2752
+        },
+        {
+          "id": "65000019-6632-831d-801c-57c32331f5e1",
+          "name": "040-mock-volume2-ipad.png",
+          "state": "COMPLETE",
+          "width": 2064,
+          "height": 2752
+        },
+        {
+          "id": "871cb3c8-b272-49c1-a1b4-b5a928d5b4ef",
+          "name": "032-5-records.png",
+          "state": "COMPLETE",
+          "width": 2064,
+          "height": 2752
+        }
+      ]
+    }
+  ]
+}
