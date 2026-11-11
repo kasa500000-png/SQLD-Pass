@@ -18,7 +18,7 @@ export function renderTextbook(c:MonetizedController):Node{
  const choice=(label:string,action:()=>void|Promise<void>,id:string,selected:boolean,disabled=false,feedback?:'correct'|'incorrect'):Node=>({...act(label,action,id,selected,disabled),buttonKind:'choice',feedback,role:'radio',checked:selected});
  const segments=segmentGroup;
  const go=(name:Route['name'],id?:string)=>()=>c.navigate({name,id});
- const sectionLink=(id:string)=>{const l=c.content.lessons.find(l=>l.id===id)!;return link(`${s.readLessons.includes(id)?'✓ ':''}${l.title}`,go('lesson',id),`section-${id}`);};
+ const sectionLink=(id:string)=>{const l=c.content.lessons.find(l=>l.id===id)!;return link(`${l.title}\n${s.readLessons.includes(id)?'✓ 읽음 완료':c.readingPosition(id)?'읽는 중':'학습 전'}`,go('lesson',id),`section-${id}`);};
  const blocks=(bs:ContentBlock[],key:string):Node[]=>bs.map((b,i)=>{
   const k=key+':'+i;
   switch(b.type){
@@ -82,8 +82,8 @@ export function renderTextbook(c:MonetizedController):Node{
   const ch=tb.chapters.find(x=>x.id===c.route.id);title='장별 목차';if(ch)body=[small(`CHAPTER ${ch.number}`),h(ch.title),t(ch.subtitle),{...act('학습 목표',()=>c.toggleExpanded('goals:'+ch.id)),expanded:c.expanded.has('goals:'+ch.id),icon:'chevron-right' as const,iconPosition:'trailing' as const},...(c.expanded.has('goals:'+ch.id)?ch.goals.map(t):[]),...ch.sectionIds.map(sectionLink),card([h('마무리 점검'),...ch.recap.map(t)]),act('이 장의 확인 문제',()=>c.beginPractice(Object.values(c.content.questions).filter(q=>q.chapterId===ch.id&&q.pool==='chapter').map(q=>q.id)))];
  }
  else if(r==='lesson'||r==='lessonSummary'){
-  const l=c.content.lessons.find(l=>l.id===c.route.id);title='학습';if(l){const ch=tb.chapters.find(x=>x.id===l.chapterId)!;const next=c.content.lessons[c.content.lessons.indexOf(l)+1];
-   body=[small(`CHAPTER ${ch.number} · ${ch.title}`),h(l.title),t(l.body),{...act(s.bookmarks.includes(l.id)?'저장됨 · 해제':'이 절 저장',()=>c.bookmark(l.id),'bookmark-section',s.bookmarks.includes(l.id)),icon:'bookmark' as const,style:{alignSelf:'flex-start',color:p.blue}},...blocks(l.blocks??[],l.id),card([h('핵심 정리'),...l.summary.map(t)]),link('이 장의 목차',go('chapter',ch.id)),act('이 절의 출처',go('sources',l.id)),...(next?[link(`다음 · ${next.title}`,go('lesson',next.id),'next-section')]:[])];
+  const l=c.content.lessons.find(l=>l.id===c.route.id);title='교재 읽기';if(l){const ch=tb.chapters.find(x=>x.id===l.chapterId)!;const index=c.content.lessons.indexOf(l),next=c.content.lessons[index+1],previous=c.content.lessons[index-1];
+   body=[row([small(`${ch.number}장 · ${ch.sectionIds.indexOf(l.id)+1} / ${ch.sectionIds.length}절`),box([],{flex:1}),{...act(s.bookmarks.includes(l.id)?'저장됨':'저장',()=>c.bookmark(l.id),'bookmark-section',s.bookmarks.includes(l.id)),label:s.bookmarks.includes(l.id)?'이 절 저장 해제':'이 절 저장',icon:'bookmark' as const,style:{color:p.blue}}]),h(l.title),t(l.body),...blocks(l.blocks??[],l.id),card([h('핵심 정리'),...l.summary.map(t)]),link(`이 장의 목차\n${ch.title}`,go('chapter',ch.id),'lesson-toc'),...(previous?[link(`이전 절\n${previous.title}`,go('lesson',previous.id),'previous-section')]:[]),...(next?[link(`다음 절\n${next.title}`,go('lesson',next.id),'next-section')]:[t('교재의 마지막 절입니다. 확인 문제로 학습 내용을 점검해 보세요.')]),act('이 절의 출처',go('sources',l.id))];
    footer=[segments([act(s.readLessons.includes(l.id)?'✓ 읽음 완료':'읽음 완료',()=>c.markLesson(l.id),'mark-section',s.readLessons.includes(l.id)),...(l.questionIds.length?[primary('확인 문제',()=>c.beginLessonPractice(l.id),'section-practice')]:next?[primary('다음 절',go('lesson',next.id),'next-section')]:[])])];
   }
  }
