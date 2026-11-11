@@ -18,3 +18,13 @@
 `content-pack/build-target.json`의 권 수가1인 동안 운영 팩은 바뀌지 않는다. 후보는 `build(root,{mockVolumes:3,outputRoot:...})` 또는 `write:false`로 생성한다. PR1~4의 화면·기록 처리는1권 팩도 지원한다. 최종 통합 PR에서만3권 팩을 활성화한다.
 
 기존 버전의 콘텐츠 승인과 iPad 검증 예외를 새 버전에 전용하지 않는다. 새 콘텐츠의 직접 검수 완료 확인, 실제 native/consent 검증, 콘텐츠·광고·서명 게이트를 각각 기록하고 TestFlight와 양 스토어 프로덕션 제출을 수행한다. 진행 중 시험의90분 실제 풀이 시간·명시적 재개·불변 점수와 SQLite의 순서 있는 저장은 그대로 유지한다.
+
+2026-11-12 소유자는 위 통합 버전·해시를 제시한 질문에 “새 2·3권 내용 검수 완료”라고 답했다. 이 확인은 `release/CONTENT_REVIEW_STATUS.json`에 기록했다. 원문 검산의 전문 감수 여부나 제공되지 않은 검수 일시는 추정하지 않는다.
+
+## 구현 단위
+
+1. [PR #64](https://github.com/kasa500000-png/SQLD-Pass/pull/64): 원본·권 모델·결정적 가져오기·원문 대조.
+2. [PR #65](https://github.com/kasa500000-png/SQLD-Pass/pull/65): 호환 기록 이관·60회 권한 범위.
+3. [PR #66](https://github.com/kasa500000-png/SQLD-Pass/pull/66): 권 탭·통합 필터·전역 진행 중 회차.
+4. [PR #67](https://github.com/kasa500000-png/SQLD-Pass/pull/67): 모드/권별 기록·독립 복습/저장 필터·출처.
+5. 통합 PR: 실행 팩 활성화·전체 문항 렌더링 검사·네이티브 화면/광고 검증·출시 기록.

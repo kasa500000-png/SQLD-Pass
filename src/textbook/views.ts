@@ -65,7 +65,7 @@ export function renderTextbook(c:MonetizedController):Node{
     ...(next?[t(next.title),(active||s.practice?link:primary)(continuing?'이어서 읽기':'교재 공부 시작',go('lesson',next.id),`section-${next.id}`)]:[t('확인 문제와 모의고사로 이해한 내용을 점검해 보세요.'),link('확인 문제 풀기',go('review'))]),
     small('읽은 뒤 직접 읽음 완료를 표시해 주세요.')]),
    ...(wrong.length?[link(`오답·헷갈린 문제 복습\n${wrong.length}문항 중 ${Math.min(5,wrong.length)}문항부터`,()=>c.beginPractice(wrong.slice(0,5),'review'),'home-wrong')]:[]),
-   link(`학습 기록\n읽음 ${m.read}/${m.sections}절 · 풀이 ${m.attempted}/${m.questions}문항`,go('stats'),'home-records'),
+   link(`학습 기록\n읽음 ${m.read}/${m.sections}절 · 풀이 ${m.attempted}/${m.questions}문항 · 모의고사 ${new Set(s.exams.filter(e=>e.status==='submitted').map(e=>e.examId)).size}/${c.content.exams.length}회`,go('stats'),'home-records'),
    segments([act('핵심 카드',go('flashcards')),act('용어 사전',go('glossary'))]),
    ...(c.showBanner?[act('광고 표시 설정',()=>c.openAdPrivacy(),'home-ad-settings')]:[])];
  }

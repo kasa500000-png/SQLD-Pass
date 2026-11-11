@@ -152,9 +152,9 @@ test('question, SQL, answer, provenance, version and source flag changes invalid
     c => {const q = c.questions[Object.keys(c.questions)[0]]; q.answer = q.options.find(o => o.id !== q.answer).id;},
     c => {c.manifest.sourceHashes[Object.keys(c.manifest.sourceHashes)[0]] = 'changed';}, c => {c.manifest.version = 'changed.version';},
     c => {c.manifest.releaseReady = true; c.questions[Object.keys(c.questions)[0]].humanReviewed = true;}];
-  for (const mutate of mutations) {
+  for (const [index,mutate] of mutations.entries()) {
     const changed = JSON.parse(authoredBytes.toString('utf8')); mutate(changed); fs.writeFileSync(f.contentPath, JSON.stringify(changed));
-    assert.throws(() => checkContentRelease(f.root), /source SHA-256\/byte length mismatch/);
+    assert.throws(() => checkContentRelease(f.root), index===4&&f.content.mockPack?.volumes ? /CONTENT_INVALID: textbook volume versions/ : /source SHA-256\/byte length mismatch/);
   }
 });
 

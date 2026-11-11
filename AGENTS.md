@@ -4,6 +4,23 @@ This repository is the canonical standalone source for the SQLD Pass Android/iOS
 It is a separate product and codebase from QueryPass. Do not read, edit, merge into, or reuse
 QueryPass or SpicPass as an implicit target unless the owner explicitly requests cross-project work.
 
+## Latest owner direction — 2026-11-12 mock volumes 2 and 3
+
+The owner reactivated the deferred additional-volume plan and requested implementation.
+The runtime pack is textbook.20261112.1: 216 sections, 340 practice questions and
+60 mock exams / 3,000 mock questions. Preserve the original textbook and exams 1–20
+byte-for-byte; use volume-scoped IDs for new content. Compatible textbook upgrades
+preserve all learning records, immutable snapshots, pauses and grants, including the
+previous SQLite slot. Historical launch-free/legacy grants cover only exams 1–20;
+new exams 21–60 require one earned reward per exam, shared across modes and retakes.
+Use volume tabs, a combined filter dialog and independent record/review/saved filters.
+The owner directly confirmed “새 2·3권 내용 검수 완료” for SHA-256
+ef14277859237b0a08f5f8b0857e37ff26587cdc0aff6b5d21527787870a1db3.
+This supersedes the deferral below, without reusing older content or device waivers.
+Implementation, TestFlight and both production submissions remain authorized.
+Current physical validation is on the connected Android at the owner's direction;
+do not describe iOS simulator evidence as physical iPad validation.
+
 ## Latest owner direction — 2026-11-11 interruption and UI refinement
 
 The owner approved implementation of the2026-11-12 volume expansion plan. Add volumes2–3

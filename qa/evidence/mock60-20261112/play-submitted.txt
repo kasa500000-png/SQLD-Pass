@@ -1,0 +1,205 @@
+2026-11-11T23:20:52.450Z
+[p1 "게시 개요 | SQLD Pass" | space "SQLD Pass 0.4.0 출시 20261112"(21): 3 managed, 0 untracked — p1* "게시 개요 | SQLD Pass", p2 "고객지원 · SQLD Pass", p3 "기본 스토어 등록정보 | SQLD Pass"]
+root
+  svg_root
+  text "Google Play Console 로드 중"
+  container
+    container
+      text "판매자 상태 선언"
+      link "세부정보 보기" [ref=534, loc=css:a[aria-label="세부정보 보기"], url=https://play.google.com/console/u/0/developers/7871930997193802319/home]
+        text "세부정보 보기"
+    container
+      anchor [ref=535, url=https://play.google.com/console/u/0/developers/7871930997193802319/home]
+        button [ref=536]
+      container
+        button "읽지 않은 알림 알림 센터 열기" [ref=537, loc=css:button[aria-label="읽지 않은 알림 알림 센터 열기"]]
+          image
+            text "notifications_unread"
+          text "읽지 않은 알림"
+        container
+          button "개발자 계정 전환" [ref=538, loc=role:button[name="개발자 계정 전환"]]
+            image
+            image
+              text "more_vert"
+          button "Google 계정: [owner account], Google 멤버십" [ref=539, loc=css:a[aria-label="Google 계정: [owner account], Google 멤버십"], url=https://accounts.google.com/SignOutOptions?hl=ko&continue=https://play.google.com/console/u/0/developers/7871930997193802319/app/4972123172088629069/publishing&ec=GBRAywQ]
+  image
+  image
+  list
+    listitem "홈"
+      button "홈" [ref=540, loc=css:a[aria-label="홈"], url=https://play.google.com/console/u/0/developers/7871930997193802319/home]
+        container [ref=541]
+          image
+            text "home"
+    listitem "계정 관리"
+      button "계정 관리" [ref=542, loc=css:a[aria-label="계정 관리"], url=https://play.google.com/console/u/0/developers/7871930997193802319/manage-account]
+        container [ref=543]
+          image
+            text "badge"
+    listitem "SQLD Pass"
+      button "SQLD Pass" [ref=544, loc=role:button[name="SQLD Pass"]]
+        image
+        image
+          text "play_prism"
+    listitem "대시보드"
+      button "대시보드" [ref=545, loc=css:a[aria-label="대시보드"], url=https://play.google.com/console/u/0/developers/7871930997193802319/app/4972123172088629069/app-dashboard]
+        container [ref=546]
+          image
+            text "dashboard"
+    listitem "통계"
+      button "통계" [ref=547, loc=css:a[aria-label="통계"], url=https://play.google.com/console/u/0/developers/7871930997193802319/app/4972123172088629069/statistics]
+        container [ref=548]
+          image
+            text "bar_chart"
+    listitem "게시 개요"
+      button "게시 개요" [ref=549, loc=css:a[aria-label="게시 개요"], url=https://play.google.com/console/u/0/developers/7871930997193802319/app/4972123172088629069/publishing]
+        container [ref=550]
+          image
+            text "overview"
+    listitem "Google Play로 보호됨"
+      button "Google Play로 보호됨" [ref=551, loc=css:a[aria-label="Google Play로 보호됨"], url=https://play.google.com/console/u/0/developers/7871930997193802319/app/4972123172088629069/protect-with-play]
+        container [ref=552]
+          image
+            text "shield"
+    listitem "테스트 및 출시"
+      button "테스트 및 출시" [ref=553, loc=css:a[aria-label="테스트 및 출시"], url=https://play.google.com/console/u/0/developers/7871930997193802319/app/4972123172088629069/test-and-release]
+        container [ref=554]
+          image
+            text "rocket_launch"
+    listitem "모니터링 및 개선"
+      button "모니터링 및 개선" [ref=555, loc=css:a[aria-label="모니터링 및 개선"], url=https://play.google.com/console/u/0/developers/7871930997193802319/app/4972123172088629069/monitor]
+        container [ref=556]
+          image
+            text "vital_signs"
+    listitem "사용자 늘리기"
+      button "사용자 늘리기" [ref=557, loc=css:a[aria-label="사용자 늘리기"], url=https://play.google.com/console/u/0/developers/7871930997193802319/app/4972123172088629069/grow-overview]
+        container [ref=558]
+          image
+            text "finance_mode"
+    listitem "Play를 통한 수익 창출"
+      button "Play를 통한 수익 창출" [ref=559, loc=css:a[aria-label="Play를 통한 수익 창출"], url=https://play.google.com/console/u/0/developers/7871930997193802319/app/4972123172088629069/monetize]
+        container [ref=560]
+          image
+            text "sell"
+  container [ref=561]
+    container
+      container
+        heading
+          text "게시 개요"
+        container
+          text "앱 변경사항의 개요를 확인하고, 변경사항을 전송하여 검토를 받거나 게시할 시점을 관리하세요."
+          button "게시 개요에 관한 세부정보 더보기" [ref=609, loc=css:a[aria-label="게시 개요에 관한 세부정보 더보기"]]
+            text "더보기"
+      container
+        button [ref=610]
+          container
+            container [ref=611]
+              image
+                text "sync_disabled"
+            text "관리형 게시가 사용 중지됨"
+          image
+            text "arrow_drop_down"
+        container
+          container
+            container [ref=612]
+              image
+                text "history"
+            text "최근 게시일: 2026년 11월 11일"
+          link [ref=613, url=https://play.google.com/console/u/0/developers/7871930997193802319/app/4972123172088629069/publishing/submission-activity]
+            text "제출 활동"
+            image
+              text "arrow_right_alt"
+      container
+        container
+          container
+            heading
+              text "검토 중인 변경사항"
+            button ""검토 중인 변경사항"에 대한 추가 정보" [ref=614, loc=role:button[name="\"검토 중인 변경사항\"에 대한 추가 정보"]]
+              image
+                text "help"
+          container
+            button [ref=615]
+              text "변경사항 삭제"
+            button "콘텐츠 숨기기: 검토 중인 변경사항" [ref=616]
+              text "숨기기"
+              image
+                text "expand_less"
+        grid "변경사항" [ref=617, loc=role:grid[name="변경사항"]]
+          row
+            columnheader [ref=618]
+              text "변경된 항목"
+            columnheader [ref=619]
+              text "설명"
+            cell [ref=620]
+          row
+            container [ref=621]
+              image
+                text "rocket_launch"
+            gridcell
+              text "프로덕션"
+          row
+            gridcell [ref=622]
+              text "0.4.0 (21) 모의고사 3권 60회"
+            gridcell [ref=623]
+              text "전체 출시 시작"
+            gridcell [ref=624]
+              listbox "추가 작업"
+                button "추가 작업" [ref=625]
+                  image
+                    text "more_vert"
+          row
+            container [ref=626]
+              image
+                text "play_prism"
+            gridcell
+              text "스토어 등록정보"
+          row
+            gridcell [ref=627]
+              text "한국어 – ko-KR"
+              text "기본 스토어 등록정보"
+            gridcell [ref=628]
+              text "간단한 설명을 '216개 학습 절, 340문항과 모의고사 60회로 준비하는 SQLD'(으)로 변경"
+            gridcell [ref=629]
+              listbox "추가 작업"
+                button "추가 작업" [ref=630]
+                  image
+                    text "more_vert"
+          row
+            gridcell [ref=631]
+              text "한국어 – ko-KR"
+              text "기본 스토어 등록정보"
+            gridcell [ref=632]
+              text "전체 설명 변경"
+            gridcell [ref=633]
+              listbox "추가 작업"
+                button "추가 작업" [ref=634]
+                  image
+                    text "more_vert"
+          row
+            gridcell [ref=635]
+              text "한국어 – ko-KR"
+              text "기본 스토어 등록정보"
+            gridcell [ref=636]
+              text "휴대전화 스크린샷 변경"
+            gridcell [ref=637]
+              listbox "추가 작업"
+                button "추가 작업" [ref=638]
+                  image
+                    text "more_vert"
+    anchor [ref=594, loc=href:/console/about/whats-new/, url=https://play.google.com/console/about/whats-new/]
+      text "제품 업데이트"
+    anchor [ref=595, loc=href:https://status.play.google.com/, url=https://status.play.google.com/]
+      text "상태 대시보드"
+    anchor [ref=596, loc=href:/console/metrics, url=https://play.google.com/console/metrics]
+      text "Play metrics"
+    anchor [ref=597, url=https://play.google.com/console/u/0/developers/7871930997193802319/help-and-support?app=4972123172088629069]
+      text "도움말"
+    text "© 2026 Google"
+    anchor [ref=598, loc=href:https://www.google.com/policies/privacy/, url=https://www.google.com/policies/privacy/]
+      text "개인 정보 보호"
+    anchor [ref=599, loc=href:/about/developer-distribution-agreement.html, url=https://play.google.com/about/developer-distribution-agreement.html]
+      text "개발자 배포 계약"
+    anchor [ref=600, loc=href:/about/console/terms-of-service/, url=https://play.google.com/about/console/terms-of-service/]
+      text "서비스 약관"
+  container
+    text "검토를 위해 변경사항 4개를 전송했습니다."
+    text "검토를 위해 변경사항 4개를 전송했습니다."

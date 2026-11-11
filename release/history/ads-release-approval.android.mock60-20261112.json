@@ -1,0 +1,15 @@
+{
+  "platform": "android",
+  "policyVersion": "2026-11-12.1",
+  "codeSha256": "537367c8710b4b962418382afbb533f639bd813e3e04d75346b1521d46d54a6a",
+  "androidDeviceEvidence": "Current0.4.0(21) on physical SM-F721N Android16: official test earned rewards M21/40/41/60; M60 interruption before reward stays locked; answered/flagged M21 pause and restart preserves01:28:59; score2 with correct1/wrong1/unanswered48; volume/records/dark130% checks. qa/MOCK_VOLUMES_20261112.md and qa/evidence/mock60-20261112/android-physical.",
+  "androidConsentEvidence": "Current0.4.0 test build: session adult confirmation cancelled then accepted; published SQLD Pass EEA diagnostic message opened on physical Android, Do not consent, reopen Consent, reopen Do not consent. Initial privacy-form-preloading error recovered by explicit retry. Test geography uses official test ad units and is excluded from production. Historical consent evidence remains separately scoped.",
+  "adPlacementEvidence": "Active paused mock suppresses home ads and remains visible across volumes; reward completion leaves intro until explicit start; test M60 available in timed/study modes. Both AdMob banner refresh disabled checked2026-11-12. Official-test observations do not claim live impressions.",
+  "sdkCompatibilityEvidence": "Current Android release test APK and iOS simulator/signed-device build succeed;458automated tests, native types, content integrity, Expo doctor21/21 passed; test APK64-bit ELF16KB check passed. Signed production artifact checks and Play acceptance are recorded separately before final submission.",
+  "appAdsTxtEvidence": "2026-11-12 direct seller record pub-9314207769680999 verified in public app-ads.txt. AdMob both apps Ready/serving enabled. qa/evidence/mock60-20261112/admob-status.json and app-ads.txt.",
+  "privacyDisclosureEvidence": "Content expansion adds no SDK, identifier, collection or sharing. Existing Google Play Ads YES/Data Safety inventory and public privacy treatment retained; learner answers/progress/notes stay local. Published support version16 clarifies60-exam scope and preserved rights without claiming0.4.0 released.",
+  "privacyUrl": "https://sqld-pass-support.shk1122.chatgpt.site/privacy.html",
+  "supportUrl": "https://sqld-pass-support.shk1122.chatgpt.site/support.html",
+  "approvedBy": "Repository owner authorized revised60-exam implementation, content review, live ads and both official store updates; current physical QA directed to Android. This approval is Android-only; it does not waive iOS physical QA.",
+  "approvedAt": "2026-11-11T23:08:10.055Z"
+}

@@ -1,0 +1,12 @@
+{
+  "projectId": "appgprj_6aae6a02162c81918889df5b4c23a6a6",
+  "version": 16,
+  "versionId": "appgprj_6aae6a02162c81918889df5b4c23a6a6~appgver_0784ecc591d881918db6a4dd4d2cad46",
+  "commitSha": "3997627242327b1949799a3ccc3ba0d1944e5e10",
+  "deploymentId": "appgdep_6af4f4c39b108191b467047f45e5405f",
+  "status": "succeeded",
+  "updatedAt": "2026-11-11T23:05:51.423623+00:00",
+  "url": "https://sqld-pass-support.shk1122.chatgpt.site",
+  "audience": "public; unchanged",
+  "change": "Current 0.3.4 store status and version-specific 0.4.0 60-exam/access/migration guidance; no 0.4.0 publication claim. Static validation and local browser content review passed."
+}
