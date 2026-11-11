@@ -1,0 +1,30 @@
+{
+  "observedAt": "2026-11-11T10:14:10.394Z",
+  "android": {
+    "version": "0.3.3",
+    "versionCode": 19,
+    "track": "production",
+    "state": "changes_in_review",
+    "rollout": 1.0,
+    "managedPublishing": false,
+    "adsMode": "live",
+    "publicVersionAtSubmission": "0.3.2 (18)",
+    "observedAt": "2026-11-11T09:18:31.124506+00:00"
+  },
+  "ios": {
+    "candidateVersion": "0.3.3",
+    "candidateBuild": "13",
+    "candidateState": "WAITING_FOR_REVIEW",
+    "buildId": "6ad2dfae-481b-4001-af79-79bcb6159e1f",
+    "reviewSubmissionId": "b4494fbd-9d0b-4197-97ff-8e4855f2d90b",
+    "submittedDate": "2026-11-11T10:14:08.133Z",
+    "releaseType": "AFTER_APPROVAL",
+    "adsMode": "live",
+    "publicVersionAtSubmission": "0.2.0",
+    "testFlightCandidateUploaded": true,
+    "testFlightState": "IN_BETA_TESTING",
+    "testFlightAudience": "existing_internal_group",
+    "replacedReviewVersion": "0.3.2",
+    "additionalPhysicalValidation": "owner-waived; not performed"
+  }
+}

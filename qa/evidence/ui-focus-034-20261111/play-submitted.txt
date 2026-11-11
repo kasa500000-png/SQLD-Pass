@@ -1,0 +1,49 @@
+2026-11-11T12:55:17.736Z
+Google Play Console 로드 중
+판매자 상태 선언
+세부정보 보기
+notifications_unread
+읽지 않은 알림
+more_vert
+home
+badge
+play_prism
+dashboard
+bar_chart
+overview
+shield
+rocket_launch
+vital_signs
+finance_mode
+sell
+게시 개요
+앱 변경사항의 개요를 확인하고, 변경사항을 전송하여 검토를 받거나 게시할 시점을 관리하세요. 더보기
+sync_disabled
+관리형 게시가 사용 중지됨
+arrow_drop_down
+history
+최근 게시일: 2026년 11월 11일
+제출 활동
+arrow_right_alt
+검토 중인 변경사항
+help
+변경사항 삭제
+숨기기
+expand_less
+변경된 항목
+설명
+rocket_launch
+프로덕션
+0.3.4 (20) 학습 집중 UI와 제출 안정성 개선
+전체 출시 시작
+more_vert
+제품 업데이트
+상태 대시보드
+Play metrics
+도움말
+© 2026 Google
+개인 정보 보호
+개발자 배포 계약
+서비스 약관
+검토를 위해 변경사항 1개를 전송했습니다.
+검토를 위해 변경사항 1개를 전송했습니다.
