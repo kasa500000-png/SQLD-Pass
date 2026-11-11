@@ -12,7 +12,12 @@ export class Controller {
   examSheetFilter:'all'|'unanswered'|'flagged'='all';
   mockVolumeId='vol1'; mockAvailableOnly=false; mockFiltersOpen=false;
   mockFilterDraft:{progress:'all'|'unattempted'|'completed';available:boolean}={progress:'all',available:false};
-  mockResultFilter:'all'|'wrong'|'flagged'='all'; mockSearch=''; mockTopicFilter=''; mockListLimit=20; mockHistoryLimit=20; mockNoteDrafts:Record<string,string>={};
+  mockResultFilter:'all'|'wrong'|'flagged'='all'; mockHistoryLimit=20; mockNoteDrafts:Record<string,string>={};
+  private mockListFilters={mockReview:{search:'',topic:'',limit:20},mockSaved:{search:'',topic:'',limit:20}};
+  private get currentMockList(){return this.mockListFilters[this.route.name==='mockSaved'?'mockSaved':'mockReview'];}
+  get mockSearch(){return this.currentMockList.search;} set mockSearch(v:string){this.currentMockList.search=v;}
+  get mockTopicFilter(){return this.currentMockList.topic;} set mockTopicFilter(v:string){this.currentMockList.topic=v;}
+  get mockListLimit(){return this.currentMockList.limit;} set mockListLimit(v:number){this.currentMockList.limit=v;}
   libraryEditor:{id?:string;name:string}|null=null; libraryError='';
   draftSettings:Settings; settingsError=''; supportText=''; supportNotice=''; reviewLimit=20; reviewPickerOpen=false; private listeners=new Set<()=>void>(); private serial:Promise<void>=Promise.resolve();
   private version=0; private checkpointAt=0; private expiryInFlight=false; private lastExpiryTry=0;
@@ -114,6 +119,13 @@ export class Controller {
   }
   setExamProgressFilter(value:'all'|'unattempted'|'completed'){if(this.examProgressFilter!==value)this.examCatalogScroll=undefined;this.examProgressFilter=value;this.notify();}
   selectMockVolume(id:string){if(!mockVolumes(this.content).some(v=>v.id===id))return;this.mockVolumeId=id;this.notify();}
+  mockRecordVolumes={stats:'all',examHistory:'all',mockReview:'all',mockSaved:'all'};
+  selectMockRecordVolume(screen:keyof typeof this.mockRecordVolumes,id:string){
+    const volume=mockVolumes(this.content).find(v=>v.id===id);if(id!=='all'&&!volume)return;
+    this.mockRecordVolumes[screen]=id;
+    if(screen==='mockReview'||screen==='mockSaved'){const filter=this.mockListFilters[screen];if(volume&&!volume.topicIds.includes(filter.topic))filter.topic='';filter.limit=20;}
+    if(screen==='examHistory')this.mockHistoryLimit=20;this.notify();
+  }
   openMockCatalog(examId?:string){if(examId)this.mockVolumeId=mockVolumeForExam(this.content,examId)?.id??this.mockVolumeId;this.navigate({name:'exams'});}
   openMockFilters(){this.mockFilterDraft={progress:this.examProgressFilter,available:this.mockAvailableOnly};this.mockFiltersOpen=true;this.notify();}
   closeMockFilters(){this.mockFiltersOpen=false;this.notify();}
