@@ -1,0 +1,38 @@
+{
+  "version": "0.4.0",
+  "versionCode": 21,
+  "package": "com.kasa500000.sqldpass",
+  "runtime": {
+    "appEnvironment": "production",
+    "contentReleaseReady": true,
+    "productionContentApproval": {
+      "schemaVersion": 1,
+      "approved": true,
+      "contentSha256": "ef14277859237b0a08f5f8b0857e37ff26587cdc0aff6b5d21527787870a1db3",
+      "contentVersion": "textbook.20261112.1"
+    },
+    "adsRuntimeEnabled": true,
+    "adsMode": "live",
+    "examAccessPolicy": "rewarded",
+    "remoteAnalyticsEnabled": false,
+    "eas": {
+      "projectId": "9c3d6489-bfb8-426a-9a6c-8673fa3c07f0"
+    }
+  },
+  "sha256": {
+    "SQLDPass21.aab": "9a3f97b8fdb72e0c21adceeea7bc91490f9d4789d7c62a949c49f6f15de2fcb5",
+    "SQLDPass21.apk": "5a7deb9b6d3c8310393c67647ca0f716727413deaf27bef86266fbaa32412d18"
+  },
+  "uploadCertificateSha256": "ea1e8482b51d7a905271eecdabf840e244adcfaaed7da559329cb929e7171942",
+  "apkSignatureVerified": true,
+  "aabAndApkJsBundleIdentical": true,
+  "native64BitLibraries16KB": 36,
+  "alignmentFailures": [],
+  "targetSdk": 36,
+  "testGeography": "Excluded from production build environment; official diagnostic APK is a separate artifact",
+  "physicalEvidence": "Separate official-test APK on SM-F721N. Production live ads not exercised.",
+  "adMobAppId": "ca-app-pub-9314207769680999~2504786470",
+  "testDeviceHashAbsent": true,
+  "aabBundletoolValidated": true,
+  "aabJarSignatureVerified": true
+}

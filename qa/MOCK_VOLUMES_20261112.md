@@ -70,3 +70,12 @@
 - UMP WebView는 UIAutomator2에서 하위 요소가 생략되어 Android 기본 UIAutomator 트리를 사용했다. 좌표는 관찰된 버튼 경계에서만 계산했다. 동의 과정의 네트워크/광고 추적 URL이 포함될 수 있는 원시 XML은 Git 증거에 포함하지 않는다.
 - 운영 빌드는 테스트 geography·기기 목록·테스트 App ID를 포함하지 않는다. 새 Android 전용 광고 승인은 `release/history/ads-release-approval.android.mock60-20261112.json`에 저장했다. 이 승인은 iOS를 승인하지 않는다.
 - [고객지원 사이트](https://sqld-pass-support.shk1122.chatgpt.site) 버전16 게시 성공.0.3.4 출시 상태와0.4.0 범위·권한·호환 업데이트를 구분했고0.4.0 출시 완료를 주장하지 않았다. 공개 범위는 유지했다.
+
+## 최종 Android 아티팩트와 제출
+
+- 운영 AAB/APK 0.4.0(21), `com.kasa500000.sqldpass`, targetSdk 36을 생성했다. APK 업로드 인증서와 AAB 서명, bundletool 구조, APK/AAB의 동일 JS 번들, 콘텐츠 승인 해시, 운영 광고/회차별 권한 설정을 확인했다. Android 64비트 라이브러리 36개의 16KB 정렬 검사 통과. 상세 해시는 `evidence/mock60-20261112/android-production-artifact.json`에 있다.
+- 운영 파일에는 EEA 강제 지역·테스트 기기 해시가 없다. 운영 광고를 직접 노출하거나 클릭하지 않았다. 물리 기기는 데이터 삭제 없이 일반 공식 테스트 APK로 복원했다(2026-11-12 08:16 KST). 실제 배포 앱 패키지와 학습 데이터는 조작하지 않았다.
+- 2026-11-12 08:20 KST Google Play **프로덕션**에 0.4.0(21)과 한국어 짧은/상세 설명·휴대전화 스크린샷을 함께 제출했다. 게시 개요에서 `검토 중인 변경사항`, `전체 출시 시작`, 관리형 게시 사용 중지 확인. 승인 후 100% 자동 출시이며 아직 새 버전 출시 완료가 아니다. `play-submitted.txt`와 `release/STORE_STATUS_20261112.json` 참조.
+- 업로드 검토의 비차단 경고 1개는 기존 R8/proguard 가독화 파일 미첨부다. 지원 기기 감소는 0대다. 기존 난독화 설정과 개인정보·광고 SDK 범위는 바꾸지 않았다.
+- 새 스토어 이미지는 1080×1920 Android 에뮬레이터에서 직접 캡처한 `android/23-play-volume2-9x16.png`다. 원본 실기기 캡처는 1080×2640으로 Play 비율 조건에 맞지 않아 게시에 사용하지 않았다. 캡처 후 에뮬레이터 해상도를 복원했다.
+- iOS 0.4.0(15)은 시뮬레이터와 서명 내부 기기 빌드까지다. 이번 버전의 물리 iPad·동의 재검증 또는 별도 한정 예외에 대한 소유자 답변을 기다리며 TestFlight 업로드·App Store 정식 제출은 하지 않았다. 현재 공개 버전 0.3.4의 READY_FOR_SALE와 빌드14 VALID만 확인했다.
