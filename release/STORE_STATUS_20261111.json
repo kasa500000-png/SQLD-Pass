@@ -1,5 +1,5 @@
 {
-  "observedAt": "2026-11-11T12:56:41.292935+00:00",
+  "observedAt": "2026-11-11T14:54:48.738Z",
   "android": {
     "version": "0.3.4",
     "versionCode": 20,
@@ -10,22 +10,35 @@
     "adsMode": "live",
     "publicVersionAtSubmission": "0.3.3 (19)",
     "submittedAt": "2026-11-11T12:55:17.736Z",
-    "evidence": "qa/evidence/ui-focus-034-20261111/play-submitted.txt"
+    "evidence": "qa/evidence/ui-focus-034-20261111/play-submitted.txt",
+    "observedAt": "2026-11-11T12:56:41.292935+00:00"
   },
   "ios": {
     "candidateVersion": "0.3.4",
-    "plannedBuild": "14",
     "versionId": "c237d65d-9bd9-46df-82b6-5052a12ce25b",
-    "candidateState": "PREPARE_FOR_SUBMISSION",
+    "candidateState": "WAITING_FOR_REVIEW",
     "releaseType": "AFTER_APPROVAL",
-    "buildUploaded": false,
-    "testFlightUpdated": false,
+    "buildUploaded": true,
+    "testFlightUpdated": true,
     "publicVersion": "0.3.3 (13)",
     "publicState": "READY_FOR_SALE",
-    "testFlightCurrentBuild": "13",
-    "blocker": "Physical iPad test app0.3.4 installed successfully, but device lock prevented XCTest launch and the runner timed out. Current physical advertising/consent evidence pending; no0.3.4 validation waiver received.",
-    "evidence": "qa/evidence/ios-release-034-20261111/preparation.json",
-    "observedAt": "2026-11-11T13:14:19.114Z"
+    "testFlightCurrentBuild": "14",
+    "blocker": null,
+    "evidence": "qa/evidence/ios-release-034-20261111/app-store-submission.json",
+    "observedAt": "2026-11-11T14:54:48.738Z",
+    "validationException": {
+      "version": "0.3.4",
+      "build": "14",
+      "ownerStatement": "이번에도 예외로 진행",
+      "scope": "Additional physical iPad and consent reruns only; unperformed checks remain unperformed."
+    },
+    "build": "14",
+    "testFlightInternalState": "IN_BETA_TESTING",
+    "buildProcessingState": "VALID",
+    "buildId": "0c86953c-66f7-4bbc-999d-3a4a909e53ab",
+    "reviewSubmissionId": "73cab924-16fc-4bf8-8512-898b6cf5c47b",
+    "submittedAt": "2026-11-11T14:54:46.878Z",
+    "adsMode": "live"
   },
   "implementation": {
     "prs": [

@@ -1,0 +1,38 @@
+{
+  "artifact": "SQLDPass.ipa",
+  "bytes": 19027317,
+  "sha256": "2e7ad32b886d5917f2d5856a229acacca0dd05cc524f11c7b66e49b1efe8754d",
+  "version": "0.3.4",
+  "build": "14",
+  "bundleId": "com.kasa500000.sqldpass",
+  "adMobAppId": "ca-app-pub-9314207769680999~3391326882",
+  "trackingPermissionDescriptionPresent": false,
+  "nonExemptEncryption": false,
+  "runtime": {
+    "appEnvironment": "production",
+    "contentReleaseReady": true,
+    "productionContentApproval": {
+      "schemaVersion": 1,
+      "approved": true,
+      "contentSha256": "1f7a60245d9b75a19ad733dca7fc281539d73ebdc0fcfa25fd5a959ebd7d589d",
+      "contentVersion": "textbook.20261109.2"
+    },
+    "adsRuntimeEnabled": true,
+    "adsMode": "live",
+    "examAccessPolicy": "rewarded",
+    "remoteAnalyticsEnabled": false,
+    "eas": {
+      "projectId": "9c3d6489-bfb8-426a-9a6c-8673fa3c07f0"
+    }
+  },
+  "productionAdUnitsPresent": {
+    "ca-app-pub-9314207769680999/4355019185": true,
+    "ca-app-pub-9314207769680999/9507152408": true
+  },
+  "archiveSignatureVerified": true,
+  "privacyManifestIncluded": true,
+  "newPhysicalValidation": "Test app installed; XCTest failed before launch because device locked. Additional device/consent checks waived by owner for0.3.4(14), not performed.",
+  "exportedSignatureVerified": true,
+  "applicationIdentifier": "F4HJ438953.com.kasa500000.sqldpass",
+  "debuggable": false
+}
