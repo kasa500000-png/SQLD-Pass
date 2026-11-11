@@ -47,12 +47,12 @@ test('landscape or keyboard-shortened height reduces chrome padding without choo
   assert.equal(getResponsiveLayout({width:1366,height:500}).sectionColumns,2);
 });
 
-test('reading measure grows modestly with text size and remains bounded separately from catalogs',()=>{
+test('reading measure remains bounded for comfortable Korean lines at every text scale',()=>{
   const normal=getResponsiveLayout({width:1366,height:1024});
-  assert.equal(normal.readingMaxWidth,760);
-  assert.ok(Math.abs(getResponsiveLayout({width:1366,height:1024,appScale:1.1}).readingMaxWidth-836)<0.001);
+  assert.equal(normal.readingMaxWidth,720);
+  assert.ok(Math.abs(getResponsiveLayout({width:1366,height:1024,appScale:1.1}).readingMaxWidth-720)<0.001);
   const enlarged=getResponsiveLayout({width:1366,height:1024,systemFontScale:2});
-  assert.equal(enlarged.readingMaxWidth,840);
+  assert.equal(enlarged.readingMaxWidth,720);
   assert.ok(enlarged.readingMaxWidth<enlarged.contentMaxWidth);
   for(const key of ['headerMaxWidth','footerMaxWidth','navigationMaxWidth'])assert.equal(normal[key],1160);
 });
@@ -118,7 +118,7 @@ test('RN provider updates font scale immediately and uses new rotation geometry 
   f.window.width=1366;f.window.height=1024;f.window.fontScale=1.2;
   assert.equal(f.render(1.1).sectionColumns,1);assert.equal(f.api.useResponsiveLayout().effectiveFontScale,1.32);
   const frame=f.api.ResponsiveFrame({kind:'reading',children:'body'});
-  assert.equal(frame.props.style[1].maxWidth,840);assert.equal(frame.props.style[1].width,'100%');
+  assert.equal(frame.props.style[1].maxWidth,720);assert.equal(frame.props.style[1].width,'100%');
 });
 
 test('native responsive hook requires its provider instead of silently guessing a tablet layout',()=>{

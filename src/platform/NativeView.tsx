@@ -4,7 +4,7 @@ import {
   Modal, Platform, Pressable, ScrollView, View,
   type TextStyle, type ViewStyle
 } from 'react-native';
-import {dark as darkPalette, light as lightPalette, type Node, type Style} from '../ui/nodes';
+import {dark as darkPalette, light as lightPalette, learningType, type Node, type Style} from '../ui/nodes';
 import Svg,{Circle} from 'react-native-svg';
 import {StudyCode,StudyTable} from './StudyReadables';
 import {AppText as Text, AppTextInput as TextInput} from './Typography';
@@ -77,17 +77,19 @@ export function NativeView({node: n, scale, dark, path = '0',maxSystemFontMultip
     testID={n.testId} maxFontSizeMultiplier={maxSystemFontMultiplier} style={[s.view, {color: ink, flexShrink: 1}, s.text]}><RichText value={n.text ?? ''} /></Text>;
   if (n.kind === 'button') {
     const choice=n.buttonKind==='choice', list=n.buttonKind==='row';
-    const tone=n.feedback==='correct'?palette.green:n.feedback==='incorrect'?palette.red:palette.blue;
+    const tone=n.feedback==='correct'?palette.greenText:n.feedback==='incorrect'?palette.redText:palette.blue;
     const fill=n.feedback==='correct'?palette.greenSoft:n.feedback==='incorrect'?palette.redSoft:palette.blueSoft;
-    const roleStyle:ViewStyle=n.buttonKind==='primary'?{backgroundColor:palette.blue}:n.buttonKind==='danger'?{backgroundColor:palette.redSoft}:list?{backgroundColor:palette.surface,borderWidth:1,borderColor:palette.line}:choice?{backgroundColor:n.feedback||n.selected?fill:palette.surface,borderWidth:n.selected||n.feedback?2:1,borderColor:n.selected||n.feedback?tone:palette.line}:{};
-    const roleText:TextStyle=n.buttonKind==='primary'?{color:dark?'#101A2B':'#FFFFFF'}:n.buttonKind==='danger'?{color:palette.red}:list||choice?{color:n.feedback?tone:palette.ink,textAlign:'left',flex:1}:{};
+    const roleStyle:ViewStyle=n.buttonKind==='primary'?{backgroundColor:palette.blue,borderRadius:14}:n.buttonKind==='danger'?{backgroundColor:palette.redSoft}:list?{backgroundColor:palette.surface,borderBottomWidth:1,borderColor:palette.line,borderRadius:0}:choice?{backgroundColor:n.feedback||n.selected?fill:palette.surface,borderWidth:n.selected||n.feedback?2:1,borderColor:n.selected||n.feedback?tone:palette.line,borderRadius:14,paddingVertical:14}:{};
+    const roleText:TextStyle=n.buttonKind==='primary'?{color:dark?'#101A2B':'#FFFFFF',fontWeight:'600'}:n.buttonKind==='danger'?{color:palette.redText}:list?{color:palette.ink,textAlign:'left',flex:1,fontWeight:'400',fontSize:16*scale,lineHeight:26*scale}:choice?{color:n.feedback?tone:palette.ink,textAlign:'left',flex:1,fontWeight:'400',fontSize:learningType.choice.fontSize*scale,lineHeight:learningType.choice.lineHeight*scale}:{};
+    const option=choice?n.text?.match(/^(\d+)\.\s([\s\S]*)$/):undefined;
     return <Pressable testID={n.testId} accessibilityRole={n.role ?? 'button'}
     accessibilityLabel={n.label ?? n.text} accessibilityState={{disabled: !!n.disabled, selected: !!n.selected, checked: n.checked, expanded:n.expanded}}
     disabled={n.disabled} onPress={() => {void n.action?.();}}
     style={({pressed}) => [{minHeight: 48,minWidth:0,maxWidth:'100%', justifyContent: 'center', paddingHorizontal: 12, paddingVertical: 10}, s.view, roleStyle, {opacity: n.disabled ? (n.role==='radio'?1:0.45) : pressed ? 0.78 : 1}]}>
     {(n.text||n.icon)?<View style={{flexDirection:n.iconPosition==='above'?'column':'row',alignItems:'center',justifyContent:list||choice?'flex-start':'center',gap:n.iconPosition==='above'?4:8}}>
       {n.icon&&n.iconPosition!=='trailing'?<LearningIcon name={n.icon} size={n.iconSize??(n.role==='tab'?23:20)} color={iconColor}/>:null}
-      {n.text ? <Text maxFontSizeMultiplier={maxSystemFontMultiplier} style={[{color: ink, textAlign: 'center', fontSize: 15 * scale, fontWeight: choice?'400':'500', flexShrink: 1}, s.text,roleText]}><RichText value={n.text} />{n.subtitle?<Text style={{fontSize:12*scale,lineHeight:20*scale,fontWeight:'400',color:palette.muted}}>{'\n'+n.subtitle}</Text>:null}</Text> : null}
+      {option?<View accessible={false} style={{minWidth:28,minHeight:28,borderRadius:14,alignSelf:'flex-start',alignItems:'center',justifyContent:'center',backgroundColor:n.selected?palette.blue:palette.code}}><Text style={{fontSize:14*scale,fontWeight:'600',color:n.selected?(dark?palette.bg:'#FFFFFF'):palette.ink}}>{option[1]}</Text></View>:null}
+      {n.text ? <Text maxFontSizeMultiplier={maxSystemFontMultiplier} style={[{color: ink, textAlign: 'center', fontSize: 15 * scale, fontWeight:'400', flexShrink: 1}, s.text,roleText]}><RichText value={option?.[2]??n.text} />{n.subtitle?<Text style={{fontSize:13*scale,lineHeight:21*scale,fontWeight:'400',color:palette.muted}}>{'\n'+n.subtitle}</Text>:null}</Text> : null}
       {n.icon&&n.iconPosition==='trailing'?<LearningIcon name={n.icon} size={n.iconSize??20} color={iconColor}/>:null}
     </View>:null}
     {list?<View style={{position:'absolute',right:10}} pointerEvents="none"><LearningIcon name="chevron-right" size={18} color={palette.muted}/></View>:null}
@@ -118,8 +120,8 @@ export function NativeView({node: n, scale, dark, path = '0',maxSystemFontMultip
     accessibilityValue={{min: 0, max: 100, now: Math.round((n.progress ?? 0) * 100)}} style={{height: 8, backgroundColor: line, borderRadius: 8, overflow: 'hidden'}}>
     <View style={{height:8,width:`${Math.round((n.progress??0)*100)}%`,backgroundColor:String(n.style?.backgroundColor??'#2457D6')}} />
   </View>;
-  if (n.kind === 'modal') return <Modal transparent visible animationType="fade" onRequestClose={n.close}>
-    <SafeAreaView accessibilityViewIsModal style={{flex:1,backgroundColor:'rgba(10,20,40,0.5)',justifyContent:layout.compactHeight?'center':'flex-end',paddingHorizontal:layout.horizontalPadding,paddingVertical:12}}>
+  if (n.kind === 'modal') return <Modal transparent visible animationType="none" onRequestClose={n.close}>
+    <SafeAreaView accessibilityViewIsModal onAccessibilityEscape={n.close} style={{flex:1,backgroundColor:'rgba(10,20,40,0.5)',justifyContent:layout.compactHeight?'center':'flex-end',paddingHorizontal:layout.horizontalPadding,paddingVertical:12}}>
       <ScrollView style={{maxHeight:Math.max(160,layout.height-32),flexGrow:0,width:'100%',maxWidth:560,alignSelf:'center'}} contentContainerStyle={{flexGrow:0,alignItems:'center'}} keyboardShouldPersistTaps="handled">
         {children}
       </ScrollView>
