@@ -1,0 +1,20 @@
+{
+  "verifiedAt": "2026-11-11T11:51:52.991821+00:00",
+  "originalPngCount": 100,
+  "dimensions": "1080x2640",
+  "pngSignatureChunkCrcAndIdatInflate": "passed",
+  "xmlParseCount": 100,
+  "galleryLocalReferencesChecked": 444,
+  "missingLocalReferences": 0,
+  "screenGroups": 40,
+  "groupsWithRepresentativeCaptures": 38,
+  "groupsWithoutCapture": [
+    "X03",
+    "X04"
+  ],
+  "trackedSourceDiff": "empty",
+  "productionPackageVersionAfterAudit": "0.3.2 (18)",
+  "testPackageVersionAfterAudit": "0.3.3 (19)",
+  "buildAndUnitTestsRerun": false,
+  "reason": "No application source changes; UI capture and briefing only"
+}

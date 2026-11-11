@@ -1,0 +1,64 @@
+Attributes: Application, 0x110bb8f00, pid: 45827, label: 'SQLD Pass'
+Element subtree:
+ →Application, 0x110bb8f00, pid: 45827, label: 'SQLD Pass'
+    Window (Main), 0x110bb8dc0, {{0.0, 0.0}, {402.0, 874.0}}
+      Other, 0x110bb8c80, {{0.0, 0.0}, {402.0, 874.0}}
+        Other, 0x110bb8b40, {{0.0, 0.0}, {402.0, 874.0}}
+          Other, 0x110bb8a00, {{0.0, 0.0}, {402.0, 874.0}}
+            Other, 0x110bb88c0, {{0.0, 0.0}, {402.0, 874.0}}
+              Other, 0x110bb8780, {{0.0, 0.0}, {402.0, 874.0}}
+                Other, 0x110bb8500, {{0.0, 0.0}, {402.0, 874.0}}
+                  Other, 0x110bb8640, {{0.0, 0.0}, {402.0, 874.0}}
+                    Other, 0x110bb8280, {{0.0, 62.0}, {402.0, 778.0}}
+                      Other, 0x110bb83c0, {{0.0, 62.0}, {402.0, 64.0}}
+                      Other, 0x110bb8000, {{0.0, 62.0}, {402.0, 64.0}}
+                      Other, 0x110bb8140, {{0.0, 62.0}, {402.0, 778.0}}
+                      Button, 0x110bb9040, {{16.0, 70.0}, {48.0, 48.0}}, label: '뒤로'
+                      Button, 0x110bb9180, {{338.0, 70.0}, {48.0, 48.0}}, label: '설정'
+                      StaticText, 0x110bb92c0, {{74.0, 79.3}, {254.0, 29.0}}, label: '응시 안내'
+                        StaticText, 0x110bb9400, {{74.0, 79.3}, {254.0, 29.0}}, label: '응시 안내'
+                      Other, 0x110bb9540, {{0.0, 126.0}, {402.0, 565.3}}
+                        ScrollView, 0x110bb9680, {{0.0, 126.0}, {402.0, 565.3}}
+                          Other, 0x110bb97c0, {{0.0, 126.0}, {402.0, 420.0}}
+                            Other, 0x110bb9900, {{0.0, 126.0}, {402.0, 420.0}}
+                              StaticText, 0x110bb9a40, {{16.0, 142.0}, {370.0, 28.0}}, label: '제01회 실전 모의고사'
+                                StaticText, 0x110bb9b80, {{16.0, 142.0}, {370.0, 28.0}}, label: '제01회 실전 모의고사'
+                              StaticText, 0x110bba440, {{16.0, 182.0}, {370.0, 20.0}}, label: '50문항 · 1과목 10문항 / 2과목 40문항'
+                                StaticText, 0x110bba580, {{16.0, 182.0}, {370.0, 20.0}}, label: '50문항 · 1과목 10문항 / 2과목 40문항'
+                              Button, 0x110bba6c0, {{16.0, 214.0}, {182.0, 48.0}}, identifier: 'mode-timed', label: '실전 · 90분', Selected
+                              Button, 0x110bba800, {{204.0, 214.0}, {182.0, 48.0}}, identifier: 'mode-study', label: '학습 · 무제한'
+                              Other, 0x110bbabc0, {{16.0, 274.0}, {370.0, 196.0}}
+                              StaticText, 0x110bbbc00, {{31.0, 289.0}, {340.0, 56.0}}, label: '풀이 시간은 총 90분입니다. 일시정지하거나 앱을 벗어나면 남은 시간을 저장합니다.'
+                                StaticText, 0x110bbbd40, {{31.0, 289.0}, {340.0, 56.0}}, label: '풀이 시간은 총 90분입니다. 일시정지하거나 앱을 벗어나면 남은 시간을 저장합니다.'
+                              StaticText, 0x110bbbe80, {{31.0, 355.0}, {340.0, 40.0}}, label: '돌아오면 이어서 풀기를 눌러 재개합니다. 일시정지 이력은 결과에 표시됩니다.'
+                                StaticText, 0x110bbbac0, {{31.0, 355.0}, {340.0, 40.0}}, label: '돌아오면 이어서 풀기를 눌러 재개합니다. 일시정지 이력은 결과에 표시됩니다.'
+                              StaticText, 0x110bbb980, {{31.0, 405.0}, {340.0, 20.0}}, label: '두 모드 모두 최종 제출 후 정답과 해설을 확인합니다.'
+                                StaticText, 0x110bbb840, {{31.0, 405.0}, {340.0, 20.0}}, label: '두 모드 모두 최종 제출 후 정답과 해설을 확인합니다.'
+                              StaticText, 0x110bbb700, {{31.0, 435.0}, {340.0, 20.0}}, label: '미응답은 0점입니다. 제출한 답안은 변경할 수 없습니다.'
+                                StaticText, 0x110bbb5c0, {{31.0, 435.0}, {340.0, 20.0}}, label: '미응답은 0점입니다. 제출한 답안은 변경할 수 없습니다.'
+                              Button, 0x110bbb480, {{16.0, 482.0}, {370.0, 48.0}}, identifier: 'exam-rules', label: '응시 기준 자세히'
+                          Other, 0x110bbb340, {{369.0, 126.0}, {30.0, 565.3}}, label: 'Vertical scroll bar, 1 page', value: 0%
+                            Other, 0x110bbb200, {{396.0, 129.0}, {3.0, 172.0}}
+                          Other, 0x110bbb0c0, {{0.0, 658.3}, {402.0, 30.0}}, label: 'Horizontal scroll bar, 1 page', value: 0%
+                            Other, 0x110bbae40, {{3.0, 685.3}, {393.0, 3.0}}
+                          Other, 0x110bbaf80, {{369.0, 126.0}, {30.0, 565.3}}, label: 'Vertical scroll bar, 1 page', value: 0%
+                            Other, 0x110bba940, {{396.0, 129.0}, {3.0, 172.0}}
+                          Other, 0x110bbaa80, {{0.0, 658.3}, {402.0, 30.0}}, label: 'Horizontal scroll bar, 1 page', value: 0%
+                            Other, 0x110bba1c0, {{3.0, 685.3}, {393.0, 3.0}}
+                      Other, 0x110bba300, {{0.0, 691.3}, {402.0, 69.0}}
+                      Other, 0x110bba080, {{0.0, 692.3}, {402.0, 68.0}}, identifier: 'screen-footer'
+                      Button, 0x110bb9f40, {{16.0, 702.3}, {370.0, 48.0}}, identifier: 'start-mock-timed', label: '실전 모드 시작 · 90분'
+                      Other, 0x110bb9e00, {{0.0, 760.3}, {402.0, 79.7}}
+                      Other, 0x110bb9cc0, {{0.0, 761.3}, {402.0, 78.7}}
+                      Other, 0x108158f00, {{16.0, 769.3}, {74.0, 62.7}}, identifier: 'tab-today', label: '홈'
+                      Other, 0x108159900, {{90.0, 769.3}, {74.0, 62.7}}, identifier: 'tab-learn', label: '교재'
+                      Other, 0x1081583c0, {{164.0, 769.3}, {74.0, 62.7}}, identifier: 'tab-review', label: '문제'
+                      Other, 0x10815a800, {{238.0, 769.3}, {74.0, 62.7}}, identifier: 'tab-exams', label: '실전', Selected
+                      Other, 0x108159180, {{312.0, 769.3}, {74.0, 62.7}}, identifier: 'tab-records', label: '기록'
+Path to element:
+ →Application, 0x110bb8f00, pid: 45827, label: 'SQLD Pass'
+Query chain:
+ →Find: Application 'com.sqldpass.app.adsqa'
+  Output: {
+    Application, 0x108158280, pid: 45827, label: 'SQLD Pass'
+  }

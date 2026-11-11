@@ -40,7 +40,7 @@ export function renderTextbook(c:MonetizedController):Node{
  else if(r==='welcome')body=[h('표에서 시작하는 SQLD 학습'),t('5개 Part · 18개 Chapter · 216개 학습 절'),t('개념을 읽고, SQL 결과를 살펴보고, 확인 문제로 이해를 점검하세요.'),small('학습 기록은 이 기기에 저장됩니다. 실전 탭에서 20회 모의고사를 이용하세요.'),primary('학습 시작',go('setup'),'textbook-start')];
  else if(r==='setup'||r==='settings'||r==='appearance'){
   title=r==='setup'?'학습 설정':'설정';
-  body=[h('학습 계획'),small('목표일까지 남은 날짜와 읽지 않은 절 수로 오늘 분량을 안내합니다. 날짜 없이도 순서대로 학습할 수 있습니다.'),{kind:'date',value:c.draftSettings.targetDate,label:'목표 시험일',onChange:v=>c.setTargetDate(v)},...(c.draftSettings.targetDate?[act('목표일 지우기',()=>c.setTargetDate(''))]:[]),
+  body=[h('학습 계획'),small('목표일까지 남은 날짜와 읽지 않은 절 수로 오늘 분량을 안내합니다. 날짜 없이도 순서대로 학습할 수 있습니다.'),{kind:'date',value:c.draftSettings.targetDate,label:'목표 시험일',onChange:v=>c.setTargetDate(v)},
    h('화면 설정'),small('설정 저장을 누르면 적용됩니다. 기기의 글자 크기 설정도 함께 반영합니다.'),small('테마'),segments((['light','dark','system'] as const).map((theme,i)=>act(['밝게','어둡게','기기 설정'][i],()=>{c.draftSettings.theme=theme;c.notify();},undefined,c.draftSettings.theme===theme))),small('글자 크기'),segments([1,1.15,1.3].map(v=>act(`${Math.round(v*100)}%`,()=>{c.draftSettings.fontScale=v;c.notify();},undefined,c.draftSettings.fontScale===v))),
    card([small('글자 크기 미리보기'),text('매일 한 절씩, SQL을 이해하는 학습',{fontSize:16*c.draftSettings.fontScale/s.settings.fontScale,lineHeight:27*c.draftSettings.fontScale/s.settings.fontScale,color:p.ink})]),...(c.settingsError?[{...t(c.settingsError),alert:true}]:[]),
    ...(r==='setup'?[]:[h('앱 관리'),link('학습 알림',go('reminderSettings')),link('개인정보 안내',go('privacy')),link('도움말과 출처',go('help')),link('데이터 관리',go('data'))])];

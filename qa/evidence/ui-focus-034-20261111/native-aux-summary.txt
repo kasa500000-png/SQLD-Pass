@@ -1,0 +1,2 @@
+Test Case '-[CaptureTests.CaptureTests testAuxiliaryJourneys]' passed (54.992 seconds).
+** TEST SUCCEEDED **

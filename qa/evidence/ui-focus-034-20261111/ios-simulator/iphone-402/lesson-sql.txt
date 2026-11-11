@@ -1,0 +1,193 @@
+Attributes: Application, 0x104be5400, pid: 45827, label: 'SQLD Pass'
+Element subtree:
+ →Application, 0x104be5400, pid: 45827, label: 'SQLD Pass'
+    Window (Main), 0x104be5040, {{0.0, 0.0}, {402.0, 874.0}}
+      Other, 0x104be5cc0, {{0.0, 0.0}, {402.0, 874.0}}
+        Other, 0x104be5180, {{0.0, 0.0}, {402.0, 874.0}}
+          Other, 0x104be5f40, {{0.0, 0.0}, {402.0, 874.0}}
+            Other, 0x104be6300, {{0.0, 0.0}, {402.0, 874.0}}
+              Other, 0x104be6440, {{0.0, 0.0}, {402.0, 874.0}}
+                Other, 0x104be6800, {{0.0, 0.0}, {402.0, 874.0}}
+                  Other, 0x104be6080, {{0.0, 0.0}, {402.0, 874.0}}
+                    Other, 0x104be66c0, {{0.0, 62.0}, {402.0, 778.0}}
+                      Other, 0x104be61c0, {{0.0, 62.0}, {402.0, 64.0}}
+                      Other, 0x104be6580, {{0.0, 62.0}, {402.0, 64.0}}
+                      Other, 0x104be6bc0, {{0.0, 62.0}, {402.0, 778.0}}
+                      Button, 0x104be7200, {{16.0, 70.0}, {48.0, 48.0}}, label: '뒤로'
+                      Button, 0x104be70c0, {{338.0, 70.0}, {48.0, 48.0}}, label: '설정'
+                      StaticText, 0x104be5a40, {{74.0, 79.3}, {254.0, 29.0}}, label: '교재 읽기'
+                        StaticText, 0x104be7340, {{74.0, 79.3}, {254.0, 29.0}}, label: '교재 읽기'
+                      Other, 0x104be5900, {{0.0, 126.0}, {402.0, 565.3}}
+                        ScrollView, 0x104be4c80, {{0.0, 126.0}, {402.0, 565.3}}
+                          Other, 0x104be6f80, {{0.0, -692.0}, {402.0, 1771.7}}
+                            Other, 0x104be6940, {{0.0, -692.0}, {402.0, 1771.7}}
+                              Button, 0x104be5b80, {{308.0, -676.0}, {78.0, 48.0}}, identifier: 'bookmark-section', label: '이 절 저장'
+                              StaticText, 0x104be7c00, {{16.0, -662.0}, {64.7, 20.0}}, label: '1장 · 5 / 6절'
+                                StaticText, 0x104be6d00, {{16.0, -662.0}, {64.7, 20.0}}, label: '1장 · 5 / 6절'
+                              StaticText, 0x104be57c0, {{16.0, -616.0}, {370.0, 28.0}}, label: '첫 SELECT를 한국어로 읽기'
+                                StaticText, 0x104be7ac0, {{16.0, -616.0}, {370.0, 28.0}}, label: '첫 SELECT를 한국어로 읽기'
+                              StaticText, 0x104be52c0, {{16.0, -576.0}, {370.0, 56.0}}, label: '직접 코딩하기 전에, 어떤 표가 결과로 나오는지 읽어 봅니다.'
+                                StaticText, 0x104be4500, {{16.0, -576.0}, {370.0, 56.0}}, label: '직접 코딩하기 전에, 어떤 표가 결과로 나오는지 읽어 봅니다.'
+                              StaticText, 0x104be43c0, {{16.0, -508.0}, {370.0, 14.3}}, label: '실습용 주문 데이터 · 3행 × 3열'
+                                StaticText, 0x104be4a00, {{16.0, -508.0}, {370.0, 14.3}}, label: '실습용 주문 데이터 · 3행 × 3열'
+                              Other, 0x104be7d40, {{16.0, -487.7}, {370.0, 165.0}}, label: '실습용 주문 데이터'
+                                ScrollView, 0x104be7980, {{16.0, -487.7}, {370.0, 165.0}}
+                                  Other, 0x104be7e80, {{16.0, -487.7}, {369.0, 164.0}}
+                                    Other, 0x104be5e00, {{17.0, -486.7}, {368.0, 163.0}}
+                                      Other, 0x104be6a80, {{17.0, -486.7}, {368.0, 40.0}}
+                                      Other, 0x104be7700, {{17.0, -486.7}, {122.7, 40.0}}
+                                      Other, 0x104be75c0, {{139.7, -486.7}, {122.7, 40.0}}
+                                      Other, 0x104be7840, {{262.3, -486.7}, {122.7, 40.0}}
+                                      StaticText, 0x104be7480, {{25.0, -478.3}, {105.7, 23.0}}, label: '주문번호'
+                                        StaticText, 0x104be6e40, {{25.0, -478.3}, {105.7, 23.0}}, label: '주문번호'
+                                      StaticText, 0x108159900, {{147.7, -478.3}, {105.7, 23.0}}, label: '고객번호'
+                                        StaticText, 0x108158c80, {{147.7, -478.3}, {105.7, 23.0}}, label: '고객번호'
+                                      StaticText, 0x108158b40, {{270.3, -478.3}, {105.7, 23.0}}, label: '주문금액'
+                                        StaticText, 0x10815a1c0, {{270.3, -478.3}, {105.7, 23.0}}, label: '주문금액'
+                                      Other, 0x10815a080, {{17.0, -446.7}, {368.0, 41.0}}
+                                      Other, 0x10815a440, {{17.0, -445.7}, {122.7, 40.0}}
+                                      Other, 0x10815a300, {{139.7, -445.7}, {122.7, 40.0}}
+                                      Other, 0x10815aa80, {{262.3, -445.7}, {122.7, 40.0}}
+                                      StaticText, 0x10815a580, {{25.0, -437.3}, {105.7, 23.0}}, label: '주문번호: O101'
+                                        StaticText, 0x10815abc0, {{25.0, -437.3}, {105.7, 23.0}}, label: '주문번호: O101'
+                                      StaticText, 0x10815b340, {{147.7, -437.3}, {105.7, 23.0}}, label: '고객번호: C01'
+                                        StaticText, 0x10815b200, {{147.7, -437.3}, {105.7, 23.0}}, label: '고객번호: C01'
+                                      StaticText, 0x10815b5c0, {{270.3, -437.3}, {105.7, 23.0}}, label: '주문금액: 12,000'
+                                        StaticText, 0x10815b840, {{270.3, -437.3}, {105.7, 23.0}}, label: '주문금액: 12,000'
+                                      Other, 0x108159a40, {{17.0, -405.7}, {368.0, 41.0}}
+                                      Other, 0x1081588c0, {{17.0, -404.7}, {122.7, 40.0}}
+                                      Other, 0x108158780, {{139.7, -404.7}, {122.7, 40.0}}
+                                      Other, 0x108158a00, {{262.3, -404.7}, {122.7, 40.0}}
+                                      StaticText, 0x108158140, {{25.0, -396.3}, {105.7, 23.0}}, label: '주문번호: O102'
+                                        StaticText, 0x1081597c0, {{25.0, -396.3}, {105.7, 23.0}}, label: '주문번호: O102'
+                                      StaticText, 0x1081583c0, {{147.7, -396.3}, {105.7, 23.0}}, label: '고객번호: C02'
+                                        StaticText, 0x108159f40, {{147.7, -396.3}, {105.7, 23.0}}, label: '고객번호: C02'
+                                      StaticText, 0x108158280, {{270.3, -396.3}, {105.7, 23.0}}, label: '주문금액: 30,000'
+                                        StaticText, 0x108158f00, {{270.3, -396.3}, {105.7, 23.0}}, label: '주문금액: 30,000'
+                                      Other, 0x108159e00, {{17.0, -364.7}, {368.0, 41.0}}
+                                      Other, 0x108158dc0, {{17.0, -363.7}, {122.7, 40.0}}
+                                      Other, 0x108159b80, {{139.7, -363.7}, {122.7, 40.0}}
+                                      Other, 0x108158000, {{262.3, -363.7}, {122.7, 40.0}}
+                                      StaticText, 0x10815be80, {{25.0, -355.3}, {105.7, 23.0}}, label: '주문번호: O103'
+                                        StaticText, 0x108158640, {{25.0, -355.3}, {105.7, 23.0}}, label: '주문번호: O103'
+                                      StaticText, 0x108158500, {{147.7, -355.3}, {105.7, 23.0}}, label: '고객번호: C01'
+                                        StaticText, 0x10815a940, {{147.7, -355.3}, {105.7, 23.0}}, label: '고객번호: C01'
+                                      StaticText, 0x10815a800, {{270.3, -355.3}, {105.7, 23.0}}, label: '주문금액: 20,000'
+                                        StaticText, 0x10815bc00, {{270.3, -355.3}, {105.7, 23.0}}, label: '주문금액: 20,000'
+                                  Other, 0x10815bd40, {{353.0, -487.7}, {30.0, 165.0}}, label: 'Vertical scroll bar, 1 page', value: 0%
+                                    Other, 0x1081592c0, {{380.0, -483.7}, {3.0, 158.0}}
+                                  Other, 0x108159180, {{16.0, -355.7}, {370.0, 30.0}}, label: 'Horizontal scroll bar, 1 page', value: 0%
+                                    Other, 0x10815bac0, {{124.0, -328.7}, {259.0, 3.0}}
+                                  Other, 0x10815b980, {{353.0, -487.7}, {30.0, 165.0}}, label: 'Vertical scroll bar, 1 page', value: 0%
+                                    Other, 0x10815b480, {{380.0, -483.7}, {3.0, 158.0}}
+                                  Other, 0x10815b700, {{16.0, -355.7}, {370.0, 30.0}}, label: 'Horizontal scroll bar, 1 page', value: 0%
+                                    Other, 0x108159540, {{124.0, -328.7}, {259.0, 3.0}}
+                              StaticText, 0x108159400, {{16.0, -310.7}, {370.0, 20.0}}, label: 'SQL · 읽기 예제'
+                                StaticText, 0x10815af80, {{16.0, -310.7}, {370.0, 20.0}}, label: 'SQL · 읽기 예제'
+                              Other, 0x10815b0c0, {{16.0, -284.7}, {370.0, 154.0}}
+                                Button, 0x10815ad00, {{322.0, -284.7}, {64.0, 48.0}}, label: 'SQL 자동 줄바꿈'
+                                StaticText, 0x10815ae40, {{30.0, -268.0}, {86.7, 14.3}}, label: 'SQL · 좌우 스크롤'
+                                  StaticText, 0x10815a6c0, {{30.0, -268.0}, {86.7, 14.3}}, label: 'SQL · 좌우 스크롤'
+                                Other, 0x108159680, {{16.0, -236.7}, {370.0, 106.0}}, label: 'SQL 코드'
+                                  ScrollView, 0x104a7f0c0, {{16.0, -236.7}, {370.0, 106.0}}
+                                    Other, 0x104a7c780, {{16.0, -236.7}, {222.0, 106.0}}
+                                      Other, 0x104a7cf00, {{16.0, -236.7}, {222.0, 106.0}}
+                                        StaticText, 0x104a7f980, {{30.0, -236.7}, {194.0, 92.0}}, label: 'SELECT order_id, amount
+FROM orders
+WHERE amount >= 20000
+ORDER BY order_id;'
+                                          StaticText, 0x104a7f5c0, {{30.0, -236.7}, {194.0, 92.0}}, label: 'SELECT order_id, amount
+FROM orders
+WHERE amount >= 20000
+ORDER BY order_id;'
+                                    Other, 0x104a7ed00, {{353.0, -236.7}, {30.0, 106.0}}, label: 'Vertical scroll bar, 1 page', value: 0%
+                                      Other, 0x104a7f840, {{380.0, -233.7}, {3.0, 100.0}}
+                                    Other, 0x104a7f340, {{16.0, -163.7}, {370.0, 30.0}}, label: 'Horizontal scroll bar, 1 page', value: 0%
+                                      Other, 0x104a7f480, {{167.0, -136.7}, {216.0, 3.0}}
+                                    Other, 0x104a7f700, {{353.0, -236.7}, {30.0, 106.0}}, label: 'Vertical scroll bar, 1 page', value: 0%
+                                      Other, 0x1109bc000, {{380.0, -233.7}, {3.0, 100.0}}
+                                    Other, 0x1109bc140, {{16.0, -163.7}, {370.0, 30.0}}, label: 'Horizontal scroll bar, 1 page', value: 0%
+                                      Other, 0x1109bc280, {{167.0, -136.7}, {216.0, 3.0}}
+                              StaticText, 0x1109bc3c0, {{16.0, -118.7}, {370.0, 140.0}}, label: '여기서 orders는 주문 테이블, order_id는 주문번호, amount는 주문금액을 뜻합니다. 읽을 때는 “orders에서 → 금액이 20,000 이상인 행을 고르고 → 주문번호와 금액을 보여 주고 → 주문번호로 정렬한다”라고 해석합니다.'
+                                StaticText, 0x1109bc500, {{16.0, -118.7}, {370.0, 140.0}}, label: '여기서 orders는 주문 테이블, order_id는 주문번호, amount는 주문금액을 뜻합니다. 읽을 때는 “orders에서 → 금액이 20,000 이상인 행을 고르고 → 주문번호와 금액을 보여 주고 → 주문번호로 정렬한다”라고 해석합니다.'
+                              StaticText, 0x1109bc640, {{16.0, 33.3}, {370.0, 14.3}}, label: '예측 결과 · 2행'
+                                StaticText, 0x1109bc780, {{16.0, 33.3}, {370.0, 14.3}}, label: '예측 결과 · 2행'
+                              Other, 0x1109bc8c0, {{16.0, 53.7}, {370.0, 124.0}}, label: '예측 결과 · 2행'
+                                ScrollView, 0x1109bca00, {{16.0, 53.7}, {370.0, 124.0}}
+                                  Other, 0x1109bcb40, {{16.0, 53.7}, {369.0, 123.0}}
+                                    Other, 0x1109bcc80, {{17.0, 54.7}, {368.0, 122.0}}
+                                      Other, 0x1109bcdc0, {{17.0, 54.7}, {368.0, 40.0}}
+                                      Other, 0x1109bcf00, {{17.0, 54.7}, {190.0, 40.0}}
+                                      Other, 0x1109bd040, {{207.0, 54.7}, {178.0, 40.0}}
+                                      StaticText, 0x1109bd180, {{25.0, 63.0}, {173.0, 23.0}}, label: 'order_id'
+                                        StaticText, 0x1109bd2c0, {{25.0, 63.0}, {173.0, 23.0}}, label: 'order_id'
+                                      StaticText, 0x1109bd400, {{215.0, 63.0}, {161.0, 23.0}}, label: 'amount'
+                                        StaticText, 0x1109bd540, {{215.0, 63.0}, {161.0, 23.0}}, label: 'amount'
+                                      Other, 0x1109bd680, {{17.0, 94.7}, {368.0, 41.0}}
+                                      Other, 0x1109bd7c0, {{17.0, 95.7}, {190.0, 40.0}}
+                                      Other, 0x1109bd900, {{207.0, 95.7}, {178.0, 40.0}}
+                                      StaticText, 0x1109bda40, {{25.0, 104.0}, {173.0, 23.0}}, label: 'order_id: O102'
+                                        StaticText, 0x1109bdb80, {{25.0, 104.0}, {173.0, 23.0}}, label: 'order_id: O102'
+                                      StaticText, 0x1109bdcc0, {{215.0, 104.0}, {161.0, 23.0}}, label: 'amount: 30000'
+                                        StaticText, 0x1109bde00, {{215.0, 104.0}, {161.0, 23.0}}, label: 'amount: 30000'
+                                      Other, 0x1109bdf40, {{17.0, 135.7}, {368.0, 41.0}}
+                                      Other, 0x1109be080, {{17.0, 136.7}, {190.0, 40.0}}
+                                      Other, 0x1109be1c0, {{207.0, 136.7}, {178.0, 40.0}}
+                                      StaticText, 0x1109be300, {{25.0, 145.0}, {173.0, 23.0}}, label: 'order_id: O103'
+                                        StaticText, 0x1109be440, {{25.0, 145.0}, {173.0, 23.0}}, label: 'order_id: O103'
+                                      StaticText, 0x1109be580, {{215.0, 145.0}, {161.0, 23.0}}, label: 'amount: 20000'
+                                        StaticText, 0x1109be6c0, {{215.0, 145.0}, {161.0, 23.0}}, label: 'amount: 20000'
+                                  Other, 0x1109be800, {{353.0, 53.7}, {30.0, 121.7}}, label: 'Vertical scroll bar, 1 page', value: 0%
+                                    Other, 0x1109be940, {{380.0, 57.7}, {3.0, 114.7}}
+                                  Other, 0x1109bea80, {{18.3, 144.7}, {365.3, 30.0}}, label: 'Horizontal scroll bar, 1 page', value: 0%
+                                    Other, 0x1109bebc0, {{202.3, 171.7}, {178.3, 3.0}}
+                                  Other, 0x1109bed00, {{353.0, 53.7}, {30.0, 121.7}}, label: 'Vertical scroll bar, 1 page', value: 0%
+                                    Other, 0x1109bee40, {{380.0, 57.7}, {3.0, 114.7}}
+                                  Other, 0x1109bef80, {{18.3, 144.7}, {365.3, 30.0}}, label: 'Horizontal scroll bar, 1 page', value: 0%
+                                    Other, 0x1109bf0c0, {{202.3, 171.7}, {178.3, 3.0}}
+                              Other, 0x1109bf200, {{16.0, 189.7}, {370.0, 236.0}}
+                              StaticText, 0x1109bf340, {{31.0, 204.7}, {340.0, 28.0}}, label: '행 선택과 열 선택을 구분'
+                                StaticText, 0x1109bf480, {{31.0, 204.7}, {340.0, 28.0}}, label: '행 선택과 열 선택을 구분'
+                              StaticText, 0x1109bf5c0, {{31.0, 242.7}, {340.0, 168.0}}, label: 'WHERE는 어떤 행을 남길지 정하고, SELECT 목록은 어떤 항목을 보여 줄지 정합니다. SELECT가 앞에 적혀 있어도 이해할 때는 FROM → WHERE → SELECT → ORDER BY 흐름으로 읽으면 쉽습니다. 이 흐름은 논리적 해석 순서이며 DBMS 내부의 실제 실행 계획과 동일하다는 뜻은 아닙니다.'
+                                StaticText, 0x1109bf700, {{31.0, 242.7}, {340.0, 168.0}}, label: 'WHERE는 어떤 행을 남길지 정하고, SELECT 목록은 어떤 항목을 보여 줄지 정합니다. SELECT가 앞에 적혀 있어도 이해할 때는 FROM → WHERE → SELECT → ORDER BY 흐름으로 읽으면 쉽습니다. 이 흐름은 논리적 해석 순서이며 DBMS 내부의 실제 실행 계획과 동일하다는 뜻은 아닙니다.'
+                              StaticText, 0x1109bf840, {{16.0, 437.3}, {370.0, 140.0}}, label: '영문 이름을 외우는 것이 목적은 아닙니다. order_id와 amount가 각각 어떤 속성인지 먼저 연결하면 됩니다. 이 교재의 SQL 예시는 읽기와 결과 해석용이며, HTML 안에서 임의 SQL을 실제 DB에 실행하는 기능은 제공하지 않습니다.'
+                                StaticText, 0x1109bf980, {{16.0, 437.3}, {370.0, 140.0}}, label: '영문 이름을 외우는 것이 목적은 아닙니다. order_id와 amount가 각각 어떤 속성인지 먼저 연결하면 됩니다. 이 교재의 SQL 예시는 읽기와 결과 해석용이며, HTML 안에서 임의 SQL을 실제 DB에 실행하는 기능은 제공하지 않습니다.'
+                              Other, 0x1109bfac0, {{16.0, 589.7}, {370.0, 78.0}}
+                              Button, 0x1109bfc00, {{31.0, 604.7}, {340.0, 48.0}}, identifier: 'TB20261109:c1-s5:6', label: '스스로 점검하기'
+                              Other, 0x1109bfd40, {{16.0, 679.7}, {370.0, 124.0}}
+                              StaticText, 0x1109bfe80, {{31.0, 694.7}, {340.0, 28.0}}, label: '핵심 정리'
+                                StaticText, 0x110bb8000, {{31.0, 694.7}, {340.0, 28.0}}, label: '핵심 정리'
+                              StaticText, 0x110bb8140, {{31.0, 732.7}, {340.0, 56.0}}, label: 'FROM은 대상, WHERE는 행 조건, SELECT는 출력 항목입니다.'
+                                StaticText, 0x110bb8280, {{31.0, 732.7}, {340.0, 56.0}}, label: 'FROM은 대상, WHERE는 행 조건, SELECT는 출력 항목입니다.'
+                              Button, 0x110bb83c0, {{16.0, 815.7}, {370.0, 48.0}}, identifier: 'section-practice-end', label: '확인 문제 풀기'
+                              Button, 0x110bb8500, {{16.0, 875.7}, {370.0, 68.0}}, identifier: 'lesson-toc', label: '이 장의 목차
+데이터베이스, 표에서 출발하기'
+                              Button, 0x110bb8640, {{16.0, 955.7}, {182.0, 48.0}}, identifier: 'previous-section', label: '이전 절'
+                              Button, 0x110bb8780, {{204.0, 955.7}, {182.0, 48.0}}, identifier: 'next-section', label: '다음 절'
+                              Button, 0x110bb88c0, {{16.0, 1015.7}, {370.0, 48.0}}, label: '이 절의 출처'
+                          Other, 0x110bb8a00, {{369.0, 126.0}, {30.0, 565.3}}, label: 'Vertical scroll bar, 4 pages', value: 68%
+                            Other, 0x110bb8b40, {{396.0, 387.3}, {3.0, 178.3}}
+                          Other, 0x110bb8c80, {{0.0, 658.3}, {402.0, 30.0}}, label: 'Horizontal scroll bar, 1 page', value: 0%
+                            Other, 0x110bb8dc0, {{3.0, 685.3}, {393.0, 3.0}}
+                          Other, 0x110bb8f00, {{369.0, 126.0}, {30.0, 565.3}}, label: 'Vertical scroll bar, 4 pages', value: 68%
+                            Other, 0x110bb9040, {{396.0, 387.3}, {3.0, 178.3}}
+                          Other, 0x110bb9180, {{0.0, 658.3}, {402.0, 30.0}}, label: 'Horizontal scroll bar, 1 page', value: 0%
+                            Other, 0x110bb92c0, {{3.0, 685.3}, {393.0, 3.0}}
+                      Other, 0x110bb9400, {{0.0, 691.3}, {402.0, 69.0}}
+                      Other, 0x110bb9540, {{0.0, 692.3}, {402.0, 68.0}}, identifier: 'screen-footer'
+                      Button, 0x110bb9680, {{16.0, 702.3}, {182.0, 48.0}}, identifier: 'mark-section', label: '✓ 읽음 완료', Selected
+                      Button, 0x110bb97c0, {{204.0, 702.3}, {182.0, 48.0}}, identifier: 'section-practice', label: '확인 문제'
+                      Other, 0x110bb9900, {{0.0, 760.3}, {402.0, 79.7}}
+                      Other, 0x110bb9a40, {{0.0, 761.3}, {402.0, 78.7}}
+                      Other, 0x110bb9b80, {{16.0, 769.3}, {74.0, 62.7}}, identifier: 'tab-today', label: '홈'
+                      Other, 0x110bb9cc0, {{90.0, 769.3}, {74.0, 62.7}}, identifier: 'tab-learn', label: '교재', Selected
+                      Other, 0x110bb9e00, {{164.0, 769.3}, {74.0, 62.7}}, identifier: 'tab-review', label: '문제'
+                      Other, 0x110bb9f40, {{238.0, 769.3}, {74.0, 62.7}}, identifier: 'tab-exams', label: '실전'
+                      Other, 0x110bba080, {{312.0, 769.3}, {74.0, 62.7}}, identifier: 'tab-records', label: '기록'
+Path to element:
+ →Application, 0x104be5400, pid: 45827, label: 'SQLD Pass'
+Query chain:
+ →Find: Application 'com.sqldpass.app.adsqa'
+  Output: {
+    Application, 0x110bba1c0, pid: 45827, label: 'SQLD Pass'
+  }

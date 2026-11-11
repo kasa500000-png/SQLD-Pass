@@ -1,0 +1,2 @@
+Test Case '-[CaptureTests.CaptureTests testLargeTextJourney]' passed (53.262 seconds).
+** TEST SUCCEEDED **

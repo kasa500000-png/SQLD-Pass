@@ -1,0 +1,2 @@
+Test Case '-[CaptureTests.CaptureTests testTabletLandscape]' passed (17.460 seconds).
+** TEST SUCCEEDED **

@@ -1,0 +1,23 @@
+{
+  "observedAt": "2026-11-11T12:43:48.841Z",
+  "versions": [
+    {
+      "id": "5a921f1b-09d4-482b-a075-484def168e6e",
+      "version": "0.3.3",
+      "state": "READY_FOR_SALE",
+      "releaseType": "AFTER_APPROVAL"
+    },
+    {
+      "id": "fd872a91-16bb-45ed-b3bf-58ee5a371a12",
+      "version": "0.2.0",
+      "state": "READY_FOR_SALE",
+      "releaseType": "AFTER_APPROVAL"
+    },
+    {
+      "id": "b6a1f3ac-09c3-41aa-9656-940e12c921fa",
+      "version": "0.1.0",
+      "state": "READY_FOR_SALE",
+      "releaseType": "AFTER_APPROVAL"
+    }
+  ]
+}

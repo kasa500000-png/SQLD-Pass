@@ -1,0 +1,203 @@
+Attributes: Application, 0x10f9f3d40, pid: 54730, label: 'SQLD Pass'
+Element subtree:
+ →Application, 0x10f9f3d40, pid: 54730, label: 'SQLD Pass'
+    Window (Main), 0x10f9f2800, {{0.0, 0.0}, {375.0, 667.0}}
+      Other, 0x10f9f3840, {{0.0, 0.0}, {375.0, 667.0}}
+        Other, 0x10f9f3980, {{0.0, 0.0}, {375.0, 667.0}}
+          Other, 0x10f9f3ac0, {{0.0, 0.0}, {375.0, 667.0}}
+            Other, 0x10f9f3c00, {{0.0, 0.0}, {375.0, 667.0}}
+              Other, 0x10f9f35c0, {{0.0, 0.0}, {375.0, 667.0}}
+                Other, 0x10f9f2940, {{0.0, 0.0}, {375.0, 667.0}}
+                  Other, 0x10f9f2a80, {{0.0, 0.0}, {375.0, 667.0}}
+                    Other, 0x10f9f2bc0, {{0.0, 20.0}, {375.0, 647.0}}
+                      Other, 0x10f9f2d00, {{0.0, 20.0}, {375.0, 64.0}}
+                      Other, 0x10f9f2440, {{0.0, 20.0}, {375.0, 64.0}}
+                      Other, 0x10f9f0000, {{0.0, 20.0}, {375.0, 647.0}}
+                      Button, 0x10f9f0140, {{16.0, 28.0}, {76.0, 48.0}}, identifier: 'leave-exam', label: '일시정지'
+                      StaticText, 0x10f9f0280, {{102.0, 37.5}, {257.0, 29.0}}, label: '제01회 · 실전'
+                        StaticText, 0x10f9f03c0, {{102.0, 37.5}, {257.0, 29.0}}, label: '제01회 · 실전'
+                      Other, 0x10f9f0500, {{0.0, 84.0}, {375.0, 64.0}}
+                      Other, 0x10f9f1900, {{0.0, 84.0}, {375.0, 64.0}}, identifier: 'screen-header'
+                      Button, 0x10f9f1a40, {{106.0, 92.0}, {50.0, 48.0}}, identifier: 'flag-mock', label: '검토'
+                      StaticText, 0x10f9f1b80, {{16.0, 106.0}, {82.0, 20.0}}, label: '50 / 50 · 2과목'
+                        StaticText, 0x10f9f1cc0, {{16.0, 106.0}, {82.0, 20.0}}, label: '50 / 50 · 2과목'
+                      StaticText, 0x10f9f1e00, {{291.0, 102.0}, {68.0, 28.0}}, label: '01:29:44'
+                        StaticText, 0x10f9f1f40, {{291.0, 102.0}, {68.0, 28.0}}, label: '01:29:44'
+                      Other, 0x10f9f2080, {{0.0, 148.0}, {375.0, 450.0}}
+                        ScrollView, 0x10f9f21c0, {{0.0, 148.0}, {375.0, 450.0}}
+                          Other, 0x10f9f2300, {{0.0, 148.0}, {375.0, 920.5}}
+                            Other, 0x10f4be1c0, {{0.0, 148.0}, {375.0, 920.5}}
+                              Other, 0x10f4bed00, {{16.0, 164.0}, {343.0, 111.0}}
+                              StaticText, 0x10f4be300, {{28.0, 176.0}, {319.0, 87.0}}, label: '다음 SQL의 실행 결과로 옳은 것은? 여러 행은 SQL의 ORDER BY 순서이며, 괄호 안의 값은 SELECT 목록 순서이다.'
+                                StaticText, 0x10f4bebc0, {{28.0, 176.0}, {319.0, 87.0}}, label: '다음 SQL의 실행 결과로 옳은 것은? 여러 행은 SQL의 ORDER BY 순서이며, 괄호 안의 값은 SELECT 목록 순서이다.'
+                              StaticText, 0x10f4bf200, {{16.0, 287.0}, {343.0, 14.5}}, label: 'T · 6행 × 5열 · 좌우로 이동'
+                                StaticText, 0x10f4bee40, {{16.0, 287.0}, {343.0, 14.5}}, label: 'T · 6행 × 5열 · 좌우로 이동'
+                              Other, 0x10f4be080, {{16.0, 307.5}, {343.0, 288.0}}, label: 'T'
+                                ScrollView, 0x10f4bef80, {{16.0, 307.5}, {343.0, 288.0}}
+                                  Other, 0x10f4bea80, {{16.0, 307.5}, {441.0, 287.0}}
+                                    Other, 0x10f4be6c0, {{17.0, 308.5}, {440.0, 286.0}}
+                                      Other, 0x10f4bf480, {{17.0, 308.5}, {440.0, 40.0}}
+                                      Other, 0x10f4bf0c0, {{17.0, 308.5}, {88.0, 40.0}}
+                                      Other, 0x10f4be580, {{105.0, 308.5}, {88.0, 40.0}}
+                                      Other, 0x10f4bf340, {{193.0, 308.5}, {88.0, 40.0}}
+                                      Other, 0x10f4be800, {{281.0, 308.5}, {88.0, 40.0}}
+                                      Other, 0x10f4be440, {{369.0, 308.5}, {88.0, 40.0}}
+                                      StaticText, 0x10f4bdf40, {{25.0, 317.0}, {71.0, 23.0}}, label: 'ID'
+                                        StaticText, 0x10f4bf5c0, {{25.0, 317.0}, {71.0, 23.0}}, label: 'ID'
+                                      StaticText, 0x10f4be940, {{113.0, 317.0}, {71.0, 23.0}}, label: 'G'
+                                        StaticText, 0x10693fe80, {{113.0, 317.0}, {71.0, 23.0}}, label: 'G'
+                                      StaticText, 0x10693ef80, {{201.0, 317.0}, {71.0, 23.0}}, label: 'X'
+                                        StaticText, 0x10f4ba1c0, {{201.0, 317.0}, {71.0, 23.0}}, label: 'X'
+                                      StaticText, 0x10f4ba300, {{289.0, 317.0}, {71.0, 23.0}}, label: 'Y'
+                                        StaticText, 0x10f4ba080, {{289.0, 317.0}, {71.0, 23.0}}, label: 'Y'
+                                      StaticText, 0x10f4b8000, {{377.0, 317.0}, {71.0, 23.0}}, label: 'TXT'
+                                        StaticText, 0x10f4ba440, {{377.0, 317.0}, {71.0, 23.0}}, label: 'TXT'
+                                      Other, 0x10f4ba580, {{17.0, 348.5}, {440.0, 41.0}}
+                                      Other, 0x10f4b8280, {{17.0, 349.5}, {88.0, 40.0}}
+                                      Other, 0x10f4b83c0, {{105.0, 349.5}, {88.0, 40.0}}
+                                      Other, 0x10f4b8140, {{193.0, 349.5}, {88.0, 40.0}}
+                                      Other, 0x10f4b9f40, {{281.0, 349.5}, {88.0, 40.0}}
+                                      Other, 0x10f4ba6c0, {{369.0, 349.5}, {88.0, 40.0}}
+                                      StaticText, 0x10f4b9cc0, {{25.0, 358.0}, {71.0, 23.0}}, label: 'ID: 1'
+                                        StaticText, 0x10f4b8780, {{25.0, 358.0}, {71.0, 23.0}}, label: 'ID: 1'
+                                      StaticText, 0x10f4b8500, {{113.0, 358.0}, {71.0, 23.0}}, label: 'G: A'
+                                        StaticText, 0x10f4bb980, {{113.0, 358.0}, {71.0, 23.0}}, label: 'G: A'
+                                      StaticText, 0x10f4b8640, {{201.0, 358.0}, {71.0, 23.0}}, label: 'X: 10'
+                                        StaticText, 0x10f4b9e00, {{201.0, 358.0}, {71.0, 23.0}}, label: 'X: 10'
+                                      StaticText, 0x10fa00000, {{289.0, 358.0}, {71.0, 23.0}}, label: 'Y: 2'
+                                        StaticText, 0x10fa00140, {{289.0, 358.0}, {71.0, 23.0}}, label: 'Y: 2'
+                                      StaticText, 0x10fa00280, {{377.0, 358.0}, {71.0, 23.0}}, label: 'TXT: AB_1'
+                                        StaticText, 0x10fa003c0, {{377.0, 358.0}, {71.0, 23.0}}, label: 'TXT: AB_1'
+                                      Other, 0x10fa00500, {{17.0, 389.5}, {440.0, 41.0}}
+                                      Other, 0x10fa00640, {{17.0, 390.5}, {88.0, 40.0}}
+                                      Other, 0x10fa00780, {{105.0, 390.5}, {88.0, 40.0}}
+                                      Other, 0x10fa008c0, {{193.0, 390.5}, {88.0, 40.0}}
+                                      Other, 0x10fa00a00, {{281.0, 390.5}, {88.0, 40.0}}
+                                      Other, 0x10fa00b40, {{369.0, 390.5}, {88.0, 40.0}}
+                                      StaticText, 0x10fa00c80, {{25.0, 399.0}, {71.0, 23.0}}, label: 'ID: 2'
+                                        StaticText, 0x10fa00dc0, {{25.0, 399.0}, {71.0, 23.0}}, label: 'ID: 2'
+                                      StaticText, 0x10fa00f00, {{113.0, 399.0}, {71.0, 23.0}}, label: 'G: A'
+                                        StaticText, 0x10fa01040, {{113.0, 399.0}, {71.0, 23.0}}, label: 'G: A'
+                                      StaticText, 0x10fa01180, {{201.0, 399.0}, {71.0, 23.0}}, label: 'X: 20'
+                                        StaticText, 0x10fa012c0, {{201.0, 399.0}, {71.0, 23.0}}, label: 'X: 20'
+                                      StaticText, 0x10fa01400, {{289.0, 399.0}, {71.0, 23.0}}, label: 'Y: NULL'
+                                        StaticText, 0x10fa01540, {{289.0, 399.0}, {71.0, 23.0}}, label: 'Y: NULL'
+                                      StaticText, 0x10fa01680, {{377.0, 399.0}, {71.0, 23.0}}, label: 'TXT: AX12'
+                                        StaticText, 0x10fa017c0, {{377.0, 399.0}, {71.0, 23.0}}, label: 'TXT: AX12'
+                                      Other, 0x10fa01900, {{17.0, 430.5}, {440.0, 41.0}}
+                                      Other, 0x10fa01a40, {{17.0, 431.5}, {88.0, 40.0}}
+                                      Other, 0x10fa01b80, {{105.0, 431.5}, {88.0, 40.0}}
+                                      Other, 0x10fa01cc0, {{193.0, 431.5}, {88.0, 40.0}}
+                                      Other, 0x10fa01e00, {{281.0, 431.5}, {88.0, 40.0}}
+                                      Other, 0x10fa01f40, {{369.0, 431.5}, {88.0, 40.0}}
+                                      StaticText, 0x10fa02080, {{25.0, 440.0}, {71.0, 23.0}}, label: 'ID: 3'
+                                        StaticText, 0x10fa021c0, {{25.0, 440.0}, {71.0, 23.0}}, label: 'ID: 3'
+                                      StaticText, 0x10fa02300, {{113.0, 440.0}, {71.0, 23.0}}, label: 'G: B'
+                                        StaticText, 0x10fa02440, {{113.0, 440.0}, {71.0, 23.0}}, label: 'G: B'
+                                      StaticText, 0x10fa02580, {{201.0, 440.0}, {71.0, 23.0}}, label: 'X: 20'
+                                        StaticText, 0x10fa026c0, {{201.0, 440.0}, {71.0, 23.0}}, label: 'X: 20'
+                                      StaticText, 0x10fa02800, {{289.0, 440.0}, {71.0, 23.0}}, label: 'Y: 4'
+                                        StaticText, 0x10fa02940, {{289.0, 440.0}, {71.0, 23.0}}, label: 'Y: 4'
+                                      StaticText, 0x10fa02a80, {{377.0, 440.0}, {71.0, 23.0}}, label: 'TXT: B_20'
+                                        StaticText, 0x10fa02bc0, {{377.0, 440.0}, {71.0, 23.0}}, label: 'TXT: B_20'
+                                      Other, 0x10fa02d00, {{17.0, 471.5}, {440.0, 41.0}}
+                                      Other, 0x10fa02e40, {{17.0, 472.5}, {88.0, 40.0}}
+                                      Other, 0x10fa02f80, {{105.0, 472.5}, {88.0, 40.0}}
+                                      Other, 0x10fa030c0, {{193.0, 472.5}, {88.0, 40.0}}
+                                      Other, 0x10fa03200, {{281.0, 472.5}, {88.0, 40.0}}
+                                      Other, 0x10fa03340, {{369.0, 472.5}, {88.0, 40.0}}
+                                      StaticText, 0x10fa03480, {{25.0, 481.0}, {71.0, 23.0}}, label: 'ID: 4'
+                                        StaticText, 0x10fa035c0, {{25.0, 481.0}, {71.0, 23.0}}, label: 'ID: 4'
+                                      StaticText, 0x10fa03700, {{113.0, 481.0}, {71.0, 23.0}}, label: 'G: B'
+                                        StaticText, 0x10fa03840, {{113.0, 481.0}, {71.0, 23.0}}, label: 'G: B'
+                                      StaticText, 0x10fa03980, {{201.0, 481.0}, {71.0, 23.0}}, label: 'X: NULL'
+                                        StaticText, 0x10fa03ac0, {{201.0, 481.0}, {71.0, 23.0}}, label: 'X: NULL'
+                                      StaticText, 0x10fa03c00, {{289.0, 481.0}, {71.0, 23.0}}, label: 'Y: 0'
+                                        StaticText, 0x10fa03d40, {{289.0, 481.0}, {71.0, 23.0}}, label: 'Y: 0'
+                                      StaticText, 0x10fa03e80, {{377.0, 481.0}, {71.0, 23.0}}, label: 'TXT: AB%2'
+                                        StaticText, 0x10f4c0000, {{377.0, 481.0}, {71.0, 23.0}}, label: 'TXT: AB%2'
+                                      Other, 0x10f4c0140, {{17.0, 512.5}, {440.0, 41.0}}
+                                      Other, 0x10f4c0280, {{17.0, 513.5}, {88.0, 40.0}}
+                                      Other, 0x10f4c03c0, {{105.0, 513.5}, {88.0, 40.0}}
+                                      Other, 0x10f4c0500, {{193.0, 513.5}, {88.0, 40.0}}
+                                      Other, 0x10f4c0640, {{281.0, 513.5}, {88.0, 40.0}}
+                                      Other, 0x10f4c0780, {{369.0, 513.5}, {88.0, 40.0}}
+                                      StaticText, 0x10f4c08c0, {{25.0, 522.0}, {71.0, 23.0}}, label: 'ID: 5'
+                                        StaticText, 0x10f4c0a00, {{25.0, 522.0}, {71.0, 23.0}}, label: 'ID: 5'
+                                      StaticText, 0x10f4c0b40, {{113.0, 522.0}, {71.0, 23.0}}, label: 'G: C'
+                                        StaticText, 0x10f4c0c80, {{113.0, 522.0}, {71.0, 23.0}}, label: 'G: C'
+                                      StaticText, 0x10f4c0dc0, {{201.0, 522.0}, {71.0, 23.0}}, label: 'X: -10'
+                                        StaticText, 0x10f4c0f00, {{201.0, 522.0}, {71.0, 23.0}}, label: 'X: -10'
+                                      StaticText, 0x10f4c1040, {{289.0, 522.0}, {71.0, 23.0}}, label: 'Y: 5'
+                                        StaticText, 0x10f4c1180, {{289.0, 522.0}, {71.0, 23.0}}, label: 'Y: 5'
+                                      StaticText, 0x10f4c12c0, {{377.0, 522.0}, {71.0, 23.0}}, label: 'TXT: b303'
+                                        StaticText, 0x10f4c1400, {{377.0, 522.0}, {71.0, 23.0}}, label: 'TXT: b303'
+                                      Other, 0x10f4c1540, {{17.0, 553.5}, {440.0, 41.0}}
+                                      Other, 0x10f4c1680, {{17.0, 554.5}, {88.0, 40.0}}
+                                      Other, 0x10f4c17c0, {{105.0, 554.5}, {88.0, 40.0}}
+                                      Other, 0x10f4c1900, {{193.0, 554.5}, {88.0, 40.0}}
+                                      Other, 0x10f4c1a40, {{281.0, 554.5}, {88.0, 40.0}}
+                                      Other, 0x10f4c1b80, {{369.0, 554.5}, {88.0, 40.0}}
+                                      StaticText, 0x10f4c1cc0, {{25.0, 563.0}, {71.0, 23.0}}, label: 'ID: 6'
+                                        StaticText, 0x10f4c1e00, {{25.0, 563.0}, {71.0, 23.0}}, label: 'ID: 6'
+                                      StaticText, 0x10f4c1f40, {{113.0, 563.0}, {71.0, 23.0}}, label: 'G: NULL'
+                                        StaticText, 0x10f4c2080, {{113.0, 563.0}, {71.0, 23.0}}, label: 'G: NULL'
+                                      StaticText, 0x10f4c21c0, {{201.0, 563.0}, {71.0, 23.0}}, label: 'X: 0'
+                                        StaticText, 0x10f4c2300, {{201.0, 563.0}, {71.0, 23.0}}, label: 'X: 0'
+                                      StaticText, 0x10f4c2440, {{289.0, 563.0}, {71.0, 23.0}}, label: 'Y: NULL'
+                                        StaticText, 0x10f4c2580, {{289.0, 563.0}, {71.0, 23.0}}, label: 'Y: NULL'
+                                      StaticText, 0x10f4c26c0, {{377.0, 563.0}, {71.0, 23.0}}, label: 'TXT: NULL'
+                                        StaticText, 0x10f4c2800, {{377.0, 563.0}, {71.0, 23.0}}, label: 'TXT: NULL'
+                                  Other, 0x10f4c2940, {{326.0, 307.5}, {30.0, 288.0}}, label: 'Vertical scroll bar, 1 page', value: 0%
+                                    Other, 0x10f4c2a80, {{353.0, 310.5}, {3.0, 262.0}}
+                                  Other, 0x10f4c2bc0, {{16.0, 562.5}, {343.0, 30.0}}, label: 'Horizontal scroll bar, 2 pages', value: 0%
+                                    Other, 0x10f4c2d00, {{19.0, 589.5}, {337.0, 3.0}}
+                                  Other, 0x10f4c2e40, {{326.0, 307.5}, {30.0, 288.0}}, label: 'Vertical scroll bar, 1 page', value: 0%
+                                    Other, 0x10f4c2f80, {{353.0, 310.5}, {3.0, 262.0}}
+                                  Other, 0x10f4c30c0, {{16.0, 562.5}, {343.0, 30.0}}, label: 'Horizontal scroll bar, 2 pages', value: 0%
+                                    Other, 0x10f4c3200, {{19.0, 589.5}, {337.0, 3.0}}
+                              Button, 0x10f4c3340, {{16.0, 601.5}, {343.0, 48.0}}, label: '표 확대 보기'
+                              StaticText, 0x10f4c3480, {{16.0, 661.5}, {343.0, 20.0}}, label: 'Oracle 19c · 표시된 표가 전체 데이터이며 문항끼리 독립적입니다'
+                                StaticText, 0x10f4c35c0, {{16.0, 661.5}, {343.0, 20.0}}, label: 'Oracle 19c · 표시된 표가 전체 데이터이며 문항끼리 독립적입니다'
+                              Other, 0x10f4c3700, {{16.0, 687.5}, {343.0, 85.0}}
+                                Button, 0x10f4c3840, {{295.0, 687.5}, {64.0, 48.0}}, label: 'SQL 자동 줄바꿈'
+                                StaticText, 0x10f4c3980, {{30.0, 704.0}, {86.5, 14.5}}, label: 'SQL · 좌우 스크롤'
+                                  StaticText, 0x10f4c3ac0, {{30.0, 704.0}, {86.5, 14.5}}, label: 'SQL · 좌우 스크롤'
+                                Other, 0x10f4c3c00, {{16.0, 735.5}, {343.0, 37.0}}, label: 'SQL 코드'
+                                  ScrollView, 0x10f4c3d40, {{16.0, 735.5}, {343.0, 37.0}}
+                                    Other, 0x10f4c3e80, {{16.0, 735.5}, {559.5, 37.0}}
+                                      Other, 0x10fc70000, {{16.0, 735.5}, {559.5, 37.0}}
+                                        StaticText, 0x10fc70140, {{30.0, 735.5}, {531.5, 23.0}}, label: 'SELECT COUNT(CASE WHEN Y IS NULL THEN 1 ELSE 0 END) AS V FROM T'
+                                          StaticText, 0x10fc70280, {{30.0, 735.5}, {531.5, 23.0}}, label: 'SELECT COUNT(CASE WHEN Y IS NULL THEN 1 ELSE 0 END) AS V FROM T'
+                                    Other, 0x10fc703c0, {{326.0, 735.5}, {30.0, 37.0}}, label: 'Vertical scroll bar, 2 pages', value: 0%
+                                      Other, 0x10fc70500, {{353.0, 739.5}, {3.0, 158.0}}
+                                    Other, 0x10fc70640, {{16.0, 751.0}, {343.0, 18.5}}, label: 'Horizontal scroll bar, 2 pages', value: 0%
+                                      Other, 0x10fc70780, {{97.0, 766.5}, {259.0, 3.0}}
+                                    Other, 0x10fc708c0, {{326.0, 735.5}, {30.0, 37.0}}, label: 'Vertical scroll bar, 2 pages', value: 0%
+                                      Other, 0x10fc70a00, {{353.0, 739.5}, {3.0, 158.0}}
+                                    Other, 0x10fc70b40, {{16.0, 751.0}, {343.0, 18.5}}, label: 'Horizontal scroll bar, 2 pages', value: 0%
+                                      Other, 0x10fc70c80, {{97.0, 766.5}, {259.0, 3.0}}
+                              Other, 0x10fc70dc0, {{16.0, 784.5}, {343.0, 58.0}}, identifier: 'mock-option-1', label: '1. 9', value: radio button, unch...
+                              Other, 0x10fc70f00, {{16.0, 854.5}, {343.0, 58.0}}, identifier: 'mock-option-2', label: '2. 4', value: radio button, unch...
+                              Other, 0x10fc71040, {{16.0, 924.5}, {343.0, 58.0}}, identifier: 'mock-option-3', label: '3. 5', value: radio button, unch...
+                              Other, 0x10fc71180, {{16.0, 994.5}, {343.0, 58.0}}, identifier: 'mock-option-4', label: '4. 6', value: radio button, unch...
+                          Other, 0x10fc712c0, {{342.0, 148.0}, {30.0, 450.0}}, label: 'Vertical scroll bar, 3 pages', value: 0%
+                            Other, 0x10fc71400, {{369.0, 151.0}, {3.0, 275.5}}
+                          Other, 0x10fc71540, {{0.0, 565.0}, {375.0, 30.0}}, label: 'Horizontal scroll bar, 1 page', value: 0%
+                            Other, 0x10fc71680, {{3.0, 592.0}, {366.0, 3.0}}
+                          Other, 0x10fc717c0, {{342.0, 148.0}, {30.0, 450.0}}, label: 'Vertical scroll bar, 3 pages', value: 0%
+                            Other, 0x10fc71900, {{369.0, 151.0}, {3.0, 275.5}}
+                          Other, 0x10fc71a40, {{0.0, 565.0}, {375.0, 30.0}}, label: 'Horizontal scroll bar, 1 page', value: 0%
+                            Other, 0x10fc71b80, {{3.0, 592.0}, {366.0, 3.0}}
+                      Other, 0x10fc71cc0, {{0.0, 598.0}, {375.0, 69.0}}
+                      Other, 0x10fc71e00, {{0.0, 599.0}, {375.0, 68.0}}, identifier: 'screen-footer'
+                      Button, 0x10fc71f40, {{16.0, 609.0}, {50.0, 48.0}}, identifier: 'mock-previous', label: '이전'
+                      Button, 0x10fc72080, {{141.5, 609.0}, {63.0, 48.0}}, identifier: 'mock-sheet', label: '답안표'
+                      Button, 0x10fc721c0, {{279.5, 609.0}, {79.5, 48.0}}, identifier: 'submit-mock', label: '최종 제출'
+Path to element:
+ →Application, 0x10f9f3d40, pid: 54730, label: 'SQLD Pass'
+Query chain:
+ →Find: Application 'com.sqldpass.app.adsqa'
+  Output: {
+    Application, 0x10fc72300, pid: 54730, label: 'SQLD Pass'
+  }

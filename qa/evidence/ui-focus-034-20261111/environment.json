@@ -1,0 +1,26 @@
+{
+  "date": "2026-11-11",
+  "version": "0.3.4",
+  "androidBuild": 20,
+  "iosBuild": 14,
+  "physicalAndroid": {
+    "model": "SM-F721N",
+    "os": "Android16",
+    "px": [
+      1080,
+      2640
+    ],
+    "logicalWidthDp": 360,
+    "package": "com.sqldpass.app.adsqa",
+    "productionPackageUntouched": true
+  },
+  "iosSimulatorWidthsPt": [
+    375,
+    402,
+    1032
+  ],
+  "iosPhysical": "unavailable; no current physical test performed",
+  "contentSha256": "1f7a60245d9b75a19ad733dca7fc281539d73ebdc0fcfa25fd5a959ebd7d589d",
+  "testApkSha256": "d0c72df8a429ec14284fe2fa00dd409b2749fc4d0975dcb9c391e75004794ce1",
+  "testCounts": 436
+}

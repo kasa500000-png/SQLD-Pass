@@ -1,0 +1,56 @@
+Attributes: Application, 0x111b05040, pid: 59731, label: 'SQLD Pass'
+Element subtree:
+ →Application, 0x111b05040, pid: 59731, label: 'SQLD Pass'
+    Window (Main), 0x111b04f00, {{0.0, 0.0}, {375.0, 667.0}}
+      Other, 0x111b04dc0, {{0.0, 0.0}, {375.0, 667.0}}
+        Other, 0x111b04c80, {{0.0, 0.0}, {375.0, 667.0}}
+          Other, 0x111b04b40, {{0.0, 0.0}, {375.0, 667.0}}
+            Other, 0x111b048c0, {{0.0, 0.0}, {375.0, 667.0}}
+              Other, 0x111b04a00, {{0.0, 0.0}, {375.0, 667.0}}
+                Other, 0x111b04640, {{0.0, 0.0}, {375.0, 667.0}}
+                  Other, 0x111b04780, {{0.0, 0.0}, {375.0, 667.0}}
+                    Other, 0x111b043c0, {{0.0, 20.0}, {375.0, 647.0}}
+                      Other, 0x111b04500, {{0.0, 20.0}, {375.0, 74.0}}
+                      Other, 0x111b04140, {{0.0, 20.0}, {375.0, 74.0}}
+                      Other, 0x111b04280, {{0.0, 20.0}, {375.0, 647.0}}
+                      StaticText, 0x111b04000, {{16.0, 28.0}, {343.0, 58.0}}, label: '일시정지'
+                        StaticText, 0x111b05180, {{16.0, 28.0}, {343.0, 58.0}}, label: '일시정지'
+                      Other, 0x111b052c0, {{0.0, 94.0}, {375.0, 379.0}}
+                        ScrollView, 0x111b05400, {{0.0, 94.0}, {375.0, 379.0}}
+                          Other, 0x111b05540, {{0.0, 94.0}, {375.0, 1602.0}}
+                            Other, 0x111b05680, {{0.0, 94.0}, {375.0, 1602.0}}
+                              StaticText, 0x111b057c0, {{16.0, 110.0}, {343.0, 143.0}}, label: '제03회 실전 모의고사'
+                                StaticText, 0x111b05900, {{16.0, 110.0}, {343.0, 143.0}}, label: '제03회 실전 모의고사'
+                              StaticText, 0x111b05a40, {{16.0, 265.0}, {343.0, 200.0}}, label: '잠시 쉬어도 괜찮아요'
+                                StaticText, 0x111b05b80, {{16.0, 265.0}, {343.0, 200.0}}, label: '잠시 쉬어도 괜찮아요'
+                              StaticText, 0x111b05cc0, {{16.0, 477.0}, {343.0, 300.0}}, label: '문항 위치와 답안을 저장했습니다.'
+                                StaticText, 0x111b07840, {{16.0, 477.0}, {343.0, 300.0}}, label: '문항 위치와 답안을 저장했습니다.'
+                              Other, 0x111b06e40, {{16.0, 789.0}, {343.0, 593.0}}
+                              StaticText, 0x111b06f80, {{31.0, 804.0}, {313.0, 143.0}}, label: '학습 모드 · 시간 제한 없음'
+                                StaticText, 0x111b070c0, {{31.0, 804.0}, {313.0, 143.0}}, label: '학습 모드 · 시간 제한 없음'
+                              StaticText, 0x111b07200, {{31.0, 957.0}, {313.0, 200.0}}, label: '1번부터 이어서'
+                                StaticText, 0x111b07e80, {{31.0, 957.0}, {313.0, 200.0}}, label: '1번부터 이어서'
+                              StaticText, 0x111b07c00, {{31.0, 1167.0}, {313.0, 200.0}}, label: '응답 1 · 미응답 49'
+                                StaticText, 0x111b07d40, {{31.0, 1167.0}, {313.0, 200.0}}, label: '응답 1 · 미응답 49'
+                              StaticText, 0x111b07980, {{16.0, 1394.0}, {343.0, 286.0}}, label: '진행 중인 회차를 제출하면 다른 모의고사를 시작할 수 있습니다.'
+                                StaticText, 0x111b07ac0, {{16.0, 1394.0}, {343.0, 286.0}}, label: '진행 중인 회차를 제출하면 다른 모의고사를 시작할 수 있습니다.'
+                          Other, 0x111b07700, {{342.0, 94.0}, {30.0, 379.0}}, label: 'Vertical scroll bar, 5 pages', value: 0%
+                            Other, 0x111b075c0, {{369.0, 97.0}, {3.0, 36.0}}
+                          Other, 0x111b07340, {{0.0, 440.0}, {375.0, 30.0}}, label: 'Horizontal scroll bar, 1 page', value: 0%
+                            Other, 0x111b06bc0, {{3.0, 467.0}, {366.0, 3.0}}
+                          Other, 0x111b06d00, {{342.0, 94.0}, {30.0, 379.0}}, label: 'Vertical scroll bar, 5 pages', value: 0%
+                            Other, 0x111b06940, {{369.0, 97.0}, {3.0, 36.0}}
+                          Other, 0x111b06a80, {{0.0, 440.0}, {375.0, 30.0}}, label: 'Horizontal scroll bar, 1 page', value: 0%
+                            Other, 0x111b06800, {{3.0, 467.0}, {366.0, 3.0}}
+                      Other, 0x111b066c0, {{0.0, 473.0}, {375.0, 194.0}}
+                      Other, 0x111b06580, {{0.0, 474.0}, {375.0, 193.0}}, identifier: 'screen-footer'
+                      Button, 0x111b06440, {{16.0, 484.0}, {343.0, 56.0}}, identifier: 'resume-paused-mock', label: '이어서 풀기'
+                      Button, 0x111b061c0, {{16.0, 548.0}, {343.0, 51.5}}, identifier: 'pause-home', label: '홈으로'
+                      Button, 0x111b06300, {{16.0, 605.5}, {343.0, 51.5}}, identifier: 'pause-submit', label: '여기까지 제출'
+Path to element:
+ →Application, 0x111b05040, pid: 59731, label: 'SQLD Pass'
+Query chain:
+ →Find: Application 'com.sqldpass.app.adsqa'
+  Output: {
+    Application, 0x111b07480, pid: 59731, label: 'SQLD Pass'
+  }

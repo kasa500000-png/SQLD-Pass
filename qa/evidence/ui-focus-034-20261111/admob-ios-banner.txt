@@ -1,0 +1,39 @@
+메인 콘텐츠로 건너뛰기
+close
+광고 단위 수정
+more_vert
+SQLD Pass
+무료 | iOS
+광고 단위 설정
+구현 안내
+광고 단위 이름
+help_outline
+
+SQLDPass_iOS_Banner_Home_My
+create
+광고 형식
+help_outline
+
+배너
+광고 단위 ID
+help_outline
+
+ca-app-pub-9314207769680999/4355019185
+expand_less
+고급 설정
+광고 유형
+help_outline
+
+텍스트, 이미지, 리치 미디어 | 동영상
+create
+자동 새로고침
+help_outline
+
+사용중지됨
+create
+최소 eCPM
+help_outline
+
+Google 최적화(전체)
+create
+© 2026 Google 개인정보처리방침 약관

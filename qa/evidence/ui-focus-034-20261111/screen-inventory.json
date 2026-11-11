@@ -1,0 +1,766 @@
+[
+  {
+    "id": "A01",
+    "name": "첫 실행",
+    "entry": "최초 설치",
+    "status": "이전 0.3.3 실기기 근거 및 코드 검토; 새 native 오류 주입/전체 상태 미확인",
+    "purpose": "학습 범위·시작",
+    "connectsTo": "A02",
+    "components": "renderTextbook",
+    "limitation": "",
+    "recommendation": "학습 시작 1개 행동과 로컬 저장 안내 유지.",
+    "disposition": "검토 후 핵심 동작 유지",
+    "baselineEvidence": [
+      "../android-ui-audit-033-20261111/A01-welcome.png"
+    ],
+    "evidence": []
+  },
+  {
+    "id": "A02",
+    "name": "학습 설정",
+    "entry": "A01",
+    "status": "이전 0.3.3 실기기 근거 및 코드 검토; 새 native 오류 주입/전체 상태 미확인",
+    "purpose": "목표일·화면 설정",
+    "connectsTo": "H01",
+    "components": "DateField/renderTextbook",
+    "limitation": "",
+    "recommendation": "기본값으로 바로 시작 가능. 선택 설정의 반복 설명 축소.",
+    "disposition": "검토 후 핵심 동작 유지",
+    "baselineEvidence": [
+      "../android-ui-audit-033-20261111/A02-setup.png"
+    ],
+    "evidence": []
+  },
+  {
+    "id": "H01",
+    "name": "홈",
+    "entry": "홈 탭",
+    "status": "Android 0.3.4 실기기 대표 상태 확인",
+    "purpose": "재개·오늘 분량 확인",
+    "connectsTo": "T03/P02/M05",
+    "components": "renderTextbook",
+    "limitation": "",
+    "recommendation": "이어 학습 우선, 통계·반복 진입 압축.",
+    "disposition": "개선 적용",
+    "baselineEvidence": [
+      "../android-ui-audit-033-20261111/H01-dark-large.png",
+      "../android-ui-audit-033-20261111/H01-final.png",
+      "../android-ui-audit-033-20261111/H01-first-use.png",
+      "../android-ui-audit-033-20261111/H01-home-lower.png",
+      "../android-ui-audit-033-20261111/H01-home-top.png",
+      "../android-ui-audit-033-20261111/H01-paused-home.png"
+    ],
+    "evidence": [
+      "android/02-after-update-home.png"
+    ]
+  },
+  {
+    "id": "T01",
+    "name": "목차·검색·저장 필터",
+    "entry": "교재 탭",
+    "status": "Android 0.3.4 실기기 대표 상태 확인",
+    "purpose": "절 찾기·초기화",
+    "connectsTo": "T02/T03",
+    "components": "CatalogScrollView",
+    "limitation": "",
+    "recommendation": "검색창 내 지우기·저장 필터 통합.",
+    "disposition": "개선 적용",
+    "baselineEvidence": [
+      "../android-ui-audit-033-20261111/T01-bookmarks.png",
+      "../android-ui-audit-033-20261111/T01-catalog.png",
+      "../android-ui-audit-033-20261111/T01-search.png"
+    ],
+    "evidence": [
+      "android/21-catalog.png"
+    ]
+  },
+  {
+    "id": "T02",
+    "name": "장별 목차",
+    "entry": "T01",
+    "status": "Android 0.3.4 실기기 대표 상태 확인",
+    "purpose": "절·학습 목표 선택",
+    "connectsTo": "T03/P02",
+    "components": "renderTextbook",
+    "limitation": "",
+    "recommendation": "장 소개·학습 목표를 간결하게.",
+    "disposition": "개선 적용",
+    "baselineEvidence": [
+      "../android-ui-audit-033-20261111/T02-chapter-goals.png",
+      "../android-ui-audit-033-20261111/T02-chapter.png"
+    ],
+    "evidence": [
+      "android/23-chapter.png"
+    ]
+  },
+  {
+    "id": "T03",
+    "name": "교재 본문",
+    "entry": "목차/해설",
+    "status": "Android 0.3.4 실기기 대표 상태 확인",
+    "purpose": "읽기·저장·완료·이동",
+    "connectsTo": "T02/P02/T03",
+    "components": "ReadingScrollView/StudyReadables",
+    "limitation": "대표 본문·표·SQL·학습 도구만 확인. 전체 216절/37개 도구의 모든 상태는 미확인.",
+    "recommendation": "본문 우선, 읽는 중 확인 문제 강조 완화.",
+    "disposition": "개선 적용",
+    "baselineEvidence": [
+      "../android-ui-audit-033-20261111/T03-dark-large.png",
+      "../android-ui-audit-033-20261111/T03-navigation-end.png",
+      "../android-ui-audit-033-20261111/T03-reading-end.png",
+      "../android-ui-audit-033-20261111/T03-reading-table-lower.png",
+      "../android-ui-audit-033-20261111/T03-reading-table-top.png",
+      "../android-ui-audit-033-20261111/T03-sql-lower.png",
+      "../android-ui-audit-033-20261111/T03-sql-reading.png",
+      "../android-ui-audit-033-20261111/T03-table-before-widget.png",
+      "../android-ui-audit-033-20261111/T03-widget-controls.png",
+      "../android-ui-audit-033-20261111/T03-widget-native.png"
+    ],
+    "evidence": [
+      "android/24-lesson-restored.png"
+    ]
+  },
+  {
+    "id": "T04",
+    "name": "용어 사전",
+    "entry": "홈/교재",
+    "status": "Android 0.3.4 실기기 대표 상태 확인",
+    "purpose": "검색·설명·관련 절",
+    "connectsTo": "T03",
+    "components": "renderTextbook",
+    "limitation": "",
+    "recommendation": "검색 도구·정의 중복 정리.",
+    "disposition": "개선 적용",
+    "baselineEvidence": [
+      "../android-ui-audit-033-20261111/T04-expanded.png",
+      "../android-ui-audit-033-20261111/T04-glossary.png",
+      "../android-ui-audit-033-20261111/T04-list-restored.png",
+      "../android-ui-audit-033-20261111/T04-search.png"
+    ],
+    "evidence": [
+      "android/55-glossary-search.png"
+    ]
+  },
+  {
+    "id": "T05",
+    "name": "핵심 카드",
+    "entry": "홈/교재",
+    "status": "Android 0.3.4 실기기 대표 상태 확인",
+    "purpose": "답·알고 있음·이동",
+    "connectsTo": "T03",
+    "components": "renderTextbook",
+    "limitation": "",
+    "recommendation": "답과 알고 있음·다음 카드 연결 개선.",
+    "disposition": "개선 적용",
+    "baselineEvidence": [
+      "../android-ui-audit-033-20261111/T05-answer.png",
+      "../android-ui-audit-033-20261111/T05-card.png",
+      "../android-ui-audit-033-20261111/T05-unknown-filter.png"
+    ],
+    "evidence": [
+      "android/53-card-answer.png"
+    ]
+  },
+  {
+    "id": "T06",
+    "name": "출처·범위",
+    "entry": "교재/도움말",
+    "status": "이전 0.3.3 실기기 근거 및 코드 검토; 새 native 오류 주입/전체 상태 미확인",
+    "purpose": "출처 확인",
+    "connectsTo": "외부/T03",
+    "components": "renderTextbook",
+    "limitation": "",
+    "recommendation": "출처 유지; 외부 링크 전체 미검증.",
+    "disposition": "검토 후 핵심 동작 유지",
+    "baselineEvidence": [
+      "../android-ui-audit-033-20261111/T06-sources.png"
+    ],
+    "evidence": []
+  },
+  {
+    "id": "P01",
+    "name": "연습·복습 선택",
+    "entry": "문제 탭",
+    "status": "iOS 0.3.4 시뮬레이터 대표 상태 확인; Android 새 캡처 보완 중",
+    "purpose": "범위·문항 수 선택",
+    "connectsTo": "P02",
+    "components": "renderTextbook",
+    "limitation": "",
+    "recommendation": "문항 수 중복과 빈 복습 행 정리.",
+    "disposition": "개선 적용",
+    "baselineEvidence": [
+      "../android-ui-audit-033-20261111/P01-practice-hub.png"
+    ],
+    "evidence": [
+      "ios-simulator/iphone-375/practice-list.png"
+    ]
+  },
+  {
+    "id": "P02",
+    "name": "문제풀이·해설",
+    "entry": "P01/T03",
+    "status": "Android 0.3.4 실기기 대표 상태 확인",
+    "purpose": "선택·확인·다음",
+    "connectsTo": "P03/T03",
+    "components": "questionPrompt/answerSummary",
+    "limitation": "",
+    "recommendation": "풀이 집중과 채점 후 해설 접근 우선.",
+    "disposition": "개선 적용",
+    "baselineEvidence": [
+      "../android-ui-audit-033-20261111/P02-explanation.png",
+      "../android-ui-audit-033-20261111/P02-feedback.png",
+      "../android-ui-audit-033-20261111/P02-last-submitted.png",
+      "../android-ui-audit-033-20261111/P02-question.png",
+      "../android-ui-audit-033-20261111/P02-question2-correct.png",
+      "../android-ui-audit-033-20261111/P02-selected.png"
+    ],
+    "evidence": [
+      "android/14-practice-feedback.png"
+    ]
+  },
+  {
+    "id": "P03",
+    "name": "연습 결과",
+    "entry": "P02 마지막",
+    "status": "Android 0.3.4 실기기 대표 상태 확인",
+    "purpose": "결과·다시 풀기",
+    "connectsTo": "P02/T03/H01",
+    "components": "renderTextbook",
+    "limitation": "",
+    "recommendation": "정오 요약·관련 교재 그룹 구분.",
+    "disposition": "개선 적용",
+    "baselineEvidence": [
+      "../android-ui-audit-033-20261111/P03-result.png"
+    ],
+    "evidence": [
+      "android/15-practice-result.png"
+    ]
+  },
+  {
+    "id": "M01",
+    "name": "모의고사 목록",
+    "entry": "실전 탭",
+    "status": "Android 0.3.4 실기기 대표 상태 확인",
+    "purpose": "회차·응시 필터",
+    "connectsTo": "M02/M08/M09/M11",
+    "components": "renderMockScreen",
+    "limitation": "",
+    "recommendation": "현재 목록/필터는 유지, 반복 광고 안내 간결화.",
+    "disposition": "개선 적용",
+    "baselineEvidence": [
+      "../android-ui-audit-033-20261111/M01-completed-filter.png",
+      "../android-ui-audit-033-20261111/M01-exams.png",
+      "../android-ui-audit-033-20261111/M01-first-use.png",
+      "../android-ui-audit-033-20261111/M01-locked.png"
+    ],
+    "evidence": [
+      "android/45-final-build-history-preserved.png"
+    ]
+  },
+  {
+    "id": "M02",
+    "name": "응시·광고 안내",
+    "entry": "M01",
+    "status": "Android 0.3.4 실기기 대표 상태 확인",
+    "purpose": "모드·시작·광고 선택",
+    "connectsTo": "M03/D05",
+    "components": "renderMockScreen",
+    "limitation": "",
+    "recommendation": "시간·중지·해설 조건을 짧게.",
+    "disposition": "개선 적용",
+    "baselineEvidence": [
+      "../android-ui-audit-033-20261111/M02-intro-study.png",
+      "../android-ui-audit-033-20261111/M02-intro-timed.png",
+      "../android-ui-audit-033-20261111/M02-locked-details.png",
+      "../android-ui-audit-033-20261111/M02-rules.png",
+      "../android-ui-audit-033-20261111/M02-test-unlocked.png"
+    ],
+    "evidence": [
+      "android/33-locked-intro.png"
+    ]
+  },
+  {
+    "id": "M03",
+    "name": "실전/학습 풀이",
+    "entry": "M02/M05",
+    "status": "Android 0.3.4 실기기 대표 상태 확인",
+    "purpose": "선택·검토·이동",
+    "connectsTo": "M04/M05",
+    "components": "questionPrompt/NativeView",
+    "limitation": "",
+    "recommendation": "문제·보기 공간 확대, 검토를 질문 가까이에.",
+    "disposition": "개선 적용",
+    "baselineEvidence": [
+      "../android-ui-audit-033-20261111/M03-bottom-actions.png",
+      "../android-ui-audit-033-20261111/M03-last-question.png",
+      "../android-ui-audit-033-20261111/M03-question.png",
+      "../android-ui-audit-033-20261111/M03-selected.png",
+      "../android-ui-audit-033-20261111/M03-study.png"
+    ],
+    "evidence": [
+      "android/25-wide-table-question.png"
+    ]
+  },
+  {
+    "id": "M04",
+    "name": "답안표",
+    "entry": "M03",
+    "status": "Android 0.3.4 실기기 대표 상태 확인",
+    "purpose": "미응답·검토·제출",
+    "connectsTo": "M03/D01",
+    "components": "ResponsiveTiles",
+    "limitation": "",
+    "recommendation": "통계·범례 간결화, 타일 경계 명확화.",
+    "disposition": "개선 적용",
+    "baselineEvidence": [
+      "../android-ui-audit-033-20261111/M04-answer-sheet.png",
+      "../android-ui-audit-033-20261111/M04-flagged-empty.png",
+      "../android-ui-audit-033-20261111/M04-unanswered.png"
+    ],
+    "evidence": [
+      "android/06-answer-sheet.png"
+    ]
+  },
+  {
+    "id": "M05",
+    "name": "일시정지·저장 실패",
+    "entry": "중지/뒤로/앱 전환",
+    "status": "Android 0.3.4 실기기 대표 상태 확인",
+    "purpose": "저장·재개·홈·제출",
+    "connectsTo": "M03/H01/D01",
+    "components": "Controller/renderMockScreen",
+    "limitation": "일시정지·홈·복귀 확인. 저장 실패 UI는 주입하지 않음.",
+    "recommendation": "명시적 재개·저장 안내 유지.",
+    "disposition": "검토 후 핵심 동작 유지",
+    "baselineEvidence": [
+      "../android-ui-audit-033-20261111/M05-paused.png",
+      "../android-ui-audit-033-20261111/M05-resume-gate.png",
+      "../android-ui-audit-033-20261111/M05-study-paused.png"
+    ],
+    "evidence": [
+      "android/28-notification-paused.png"
+    ]
+  },
+  {
+    "id": "M06",
+    "name": "모의고사 결과",
+    "entry": "제출/기록",
+    "status": "Android 0.3.4 실기기 대표 상태 확인",
+    "purpose": "점수·미응답·중지 이력",
+    "connectsTo": "M07/M01",
+    "components": "renderMockScreen",
+    "limitation": "",
+    "recommendation": "점수와 정오를 묶고 중지 정보는 보존.",
+    "disposition": "개선 적용",
+    "baselineEvidence": [
+      "../android-ui-audit-033-20261111/M06-result.png",
+      "../android-ui-audit-033-20261111/M06-study-result.png"
+    ],
+    "evidence": [
+      "android/08-mock-result.png"
+    ]
+  },
+  {
+    "id": "M07",
+    "name": "회차별 해설",
+    "entry": "M06",
+    "status": "Android 0.3.4 실기기 대표 상태 확인",
+    "purpose": "정오 비교·메모·개념",
+    "connectsTo": "T03/M06/D02",
+    "components": "answerSummary/CatalogScrollView",
+    "limitation": "",
+    "recommendation": "해설을 앞에, 결과/저장/메모 조작 간결화.",
+    "disposition": "개선 적용",
+    "baselineEvidence": [
+      "../android-ui-audit-033-20261111/M07-evidence.png",
+      "../android-ui-audit-033-20261111/M07-explanation-actions.png",
+      "../android-ui-audit-033-20261111/M07-explanation.png",
+      "../android-ui-audit-033-20261111/M07-note-edit.png",
+      "../android-ui-audit-033-20261111/M07-note-input.png",
+      "../android-ui-audit-033-20261111/M07-note-saved.png",
+      "../android-ui-audit-033-20261111/M07-unanswered-explanation.png"
+    ],
+    "evidence": [
+      "android/09-explanation-first.png"
+    ]
+  },
+  {
+    "id": "M08",
+    "name": "오답·미응답 복습",
+    "entry": "M01",
+    "status": "Android 0.3.4 실기기 대표 상태 확인",
+    "purpose": "검색·주제·재풀이",
+    "connectsTo": "P02/M10",
+    "components": "renderMockScreen",
+    "limitation": "",
+    "recommendation": "주제·회차 중심의 작은 목록.",
+    "disposition": "개선 적용",
+    "baselineEvidence": [
+      "../android-ui-audit-033-20261111/M08-empty.png",
+      "../android-ui-audit-033-20261111/M08-review-list.png"
+    ],
+    "evidence": [
+      "android/56-wrong-list.png"
+    ]
+  },
+  {
+    "id": "M09",
+    "name": "저장 문항",
+    "entry": "M01",
+    "status": "Android 0.3.4 실기기 대표 상태 확인",
+    "purpose": "검색·주제·재풀이",
+    "connectsTo": "P02/M10",
+    "components": "renderMockScreen",
+    "limitation": "",
+    "recommendation": "목록 1개 진입 후 상세 행동.",
+    "disposition": "개선 적용",
+    "baselineEvidence": [
+      "../android-ui-audit-033-20261111/M09-empty.png",
+      "../android-ui-audit-033-20261111/M09-saved-list.png"
+    ],
+    "evidence": [
+      "android/11-saved-list.png"
+    ]
+  },
+  {
+    "id": "M10",
+    "name": "저장/복습 해설",
+    "entry": "M08/M09",
+    "status": "Android 0.3.4 실기기 대표 상태 확인",
+    "purpose": "해설·저장·메모·개념",
+    "connectsTo": "T03",
+    "components": "renderMockScreen",
+    "limitation": "",
+    "recommendation": "회차 해설과 공통 표현.",
+    "disposition": "개선 적용",
+    "baselineEvidence": [
+      "../android-ui-audit-033-20261111/M10-saved-explanation.png"
+    ],
+    "evidence": [
+      "android/12-saved-detail.png"
+    ]
+  },
+  {
+    "id": "M11",
+    "name": "모의고사 기록",
+    "entry": "실전/기록",
+    "status": "Android 0.3.4 실기기 대표 상태 확인",
+    "purpose": "모드별 통계·결과",
+    "connectsTo": "M06",
+    "components": "renderMockScreen",
+    "limitation": "",
+    "recommendation": "중복 집계 설명 압축, 최근 기록 우선.",
+    "disposition": "개선 적용",
+    "baselineEvidence": [
+      "../android-ui-audit-033-20261111/M11-empty.png",
+      "../android-ui-audit-033-20261111/M11-history.png"
+    ],
+    "evidence": [
+      "android/16-exam-history.png"
+    ]
+  },
+  {
+    "id": "M12",
+    "name": "모의고사 출처",
+    "entry": "M01",
+    "status": "이전 0.3.3 실기기 근거 및 코드 검토; 새 native 오류 주입/전체 상태 미확인",
+    "purpose": "근거·범위 확인",
+    "connectsTo": "외부",
+    "components": "renderMockScreen",
+    "limitation": "",
+    "recommendation": "출처/범위 안내 유지.",
+    "disposition": "검토 후 핵심 동작 유지",
+    "baselineEvidence": [
+      "../android-ui-audit-033-20261111/M12-sources.png"
+    ],
+    "evidence": []
+  },
+  {
+    "id": "R01",
+    "name": "학습 기록",
+    "entry": "기록 탭",
+    "status": "Android 0.3.4 실기기 대표 상태 확인",
+    "purpose": "진도·정답률·최근 결과",
+    "connectsTo": "P03/M11/S01",
+    "components": "renderTextbook",
+    "limitation": "",
+    "recommendation": "Part 진도 행 압축, 지표 정의는 정보 안내.",
+    "disposition": "개선 적용",
+    "baselineEvidence": [
+      "../android-ui-audit-033-20261111/R01-empty.png",
+      "../android-ui-audit-033-20261111/R01-records.png"
+    ],
+    "evidence": [
+      "android/17-records.png"
+    ]
+  },
+  {
+    "id": "S01",
+    "name": "설정",
+    "entry": "헤더/기록",
+    "status": "Android 0.3.4 실기기 대표 상태 확인",
+    "purpose": "목표일·화면·저장",
+    "connectsTo": "S02–05/호출 화면",
+    "components": "DateField/renderTextbook",
+    "limitation": "",
+    "recommendation": "변경 시 저장 활성, 불필요한 목표일 제거 행동 숨김.",
+    "disposition": "개선 적용",
+    "baselineEvidence": [
+      "../android-ui-audit-033-20261111/S01-settings-lower.png",
+      "../android-ui-audit-033-20261111/S01-settings-top.png"
+    ],
+    "evidence": [
+      "android/18-settings.png"
+    ]
+  },
+  {
+    "id": "S02",
+    "name": "학습 알림",
+    "entry": "S01",
+    "status": "Android 0.3.4 실기기 대표 상태 확인",
+    "purpose": "권한·시간·요일",
+    "connectsTo": "S01/OS",
+    "components": "ReminderSettings",
+    "limitation": "",
+    "recommendation": "알림 기능 유지; 실제 도착은 미확인.",
+    "disposition": "검토 후 핵심 동작 유지",
+    "baselineEvidence": [
+      "../android-ui-audit-033-20261111/S02-reminders.png"
+    ],
+    "evidence": [
+      "android/57-reminders.png"
+    ]
+  },
+  {
+    "id": "S03",
+    "name": "데이터 관리",
+    "entry": "S01",
+    "status": "Android 0.3.4 실기기 대표 상태 확인",
+    "purpose": "삭제 범위 확인",
+    "connectsTo": "D03",
+    "components": "renderTextbook",
+    "limitation": "",
+    "recommendation": "삭제 범위 구분 유지.",
+    "disposition": "검토 후 핵심 동작 유지",
+    "baselineEvidence": [
+      "../android-ui-audit-033-20261111/S03-data.png"
+    ],
+    "evidence": [
+      "android/58-data.png"
+    ]
+  },
+  {
+    "id": "S04",
+    "name": "개인정보",
+    "entry": "S01",
+    "status": "Android 0.3.4 실기기 대표 상태 확인",
+    "purpose": "저장·광고·동의",
+    "connectsTo": "D05/외부",
+    "components": "renderTextbook",
+    "limitation": "",
+    "recommendation": "정책·동의 진입 유지.",
+    "disposition": "검토 후 핵심 동작 유지",
+    "baselineEvidence": [
+      "../android-ui-audit-033-20261111/S04-privacy.png"
+    ],
+    "evidence": [
+      "android/60-privacy.png"
+    ]
+  },
+  {
+    "id": "S05",
+    "name": "도움말",
+    "entry": "S01",
+    "status": "Android 0.3.4 실기기 대표 상태 확인",
+    "purpose": "중단·해설·기록 안내",
+    "connectsTo": "T06/고객지원",
+    "components": "renderTextbook",
+    "limitation": "",
+    "recommendation": "FAQ 유지, 펼침 아이콘 개선.",
+    "disposition": "검토 후 핵심 동작 유지",
+    "baselineEvidence": [
+      "../android-ui-audit-033-20261111/S05-help-expanded.png",
+      "../android-ui-audit-033-20261111/S05-help.png"
+    ],
+    "evidence": [
+      "android/61-help.png"
+    ]
+  },
+  {
+    "id": "D01",
+    "name": "최종 제출 확인",
+    "entry": "M04/M05/마지막",
+    "status": "Android 0.3.4 실기기 대표 상태 확인",
+    "purpose": "미응답·제출·취소",
+    "connectsTo": "M06/호출 화면",
+    "components": "NativeView Modal",
+    "limitation": "",
+    "recommendation": "미응답·제출 후 변경 불가·취소 유지.",
+    "disposition": "개선 적용",
+    "baselineEvidence": [
+      "../android-ui-audit-033-20261111/D01-submit-confirm.png"
+    ],
+    "evidence": [
+      "android/07b-submit-while-solving.png"
+    ]
+  },
+  {
+    "id": "D02",
+    "name": "해설 문항 선택",
+    "entry": "M07",
+    "status": "iOS 0.3.4 시뮬레이터 대표 상태 확인; Android 새 캡처 보완 중",
+    "purpose": "문항·닫기",
+    "connectsTo": "M07",
+    "components": "ResponsiveTiles/Modal",
+    "limitation": "",
+    "recommendation": "문항 선택 유지. 닫기 중복은 코드상 추가 보완 후보.",
+    "disposition": "개선 적용",
+    "baselineEvidence": [
+      "../android-ui-audit-033-20261111/D02-question-picker.png"
+    ],
+    "evidence": [
+      "ios-simulator/iphone-375/review-picker.png"
+    ]
+  },
+  {
+    "id": "D03",
+    "name": "초기화·전체 삭제 확인",
+    "entry": "S03",
+    "status": "Android 0.3.4 실기기 대표 상태 확인",
+    "purpose": "범위 확인·취소",
+    "connectsTo": "H01/A01",
+    "components": "Controller/Modal",
+    "limitation": "",
+    "recommendation": "전체 삭제 제목을 학습 기록 초기화와 명확히 구분.",
+    "disposition": "검토 후 핵심 동작 유지",
+    "baselineEvidence": [
+      "../android-ui-audit-033-20261111/D03-delete-confirm.png",
+      "../android-ui-audit-033-20261111/D03-reset-confirm.png"
+    ],
+    "evidence": [
+      "android/59-delete-confirm.png"
+    ]
+  },
+  {
+    "id": "D04",
+    "name": "표 확대·SQL 줄바꿈·날짜",
+    "entry": "교재/문제/설정",
+    "status": "Android 0.3.4 실기기 대표 상태 확인",
+    "purpose": "확대·표시·날짜 선택",
+    "connectsTo": "호출 화면",
+    "components": "StudyReadables/DateField",
+    "limitation": "",
+    "recommendation": "표 확대 의미·캡션 중복 개선. 날짜 기본 동작 유지.",
+    "disposition": "개선 적용",
+    "baselineEvidence": [
+      "../android-ui-audit-033-20261111/D04-date-picker.png",
+      "../android-ui-audit-033-20261111/D04-table-expanded.png"
+    ],
+    "evidence": [
+      "android/26-table-expanded.png"
+    ]
+  },
+  {
+    "id": "D05",
+    "name": "광고 연령·UMP·보상 SDK",
+    "entry": "홈/잠긴 회차/개인정보",
+    "status": "Android 0.3.4 실기기 대표 상태 확인",
+    "purpose": "시청·취소·동의",
+    "connectsTo": "M02/호출 화면",
+    "components": "nativeAds/UMP",
+    "limitation": "앱 자체 연령 안내 및 테스트 광고 범위. 지역별 UMP 전체 분기는 미확인.",
+    "recommendation": "동의·보상 조건은 시각 단순화와 별개로 유지.",
+    "disposition": "개선 적용",
+    "baselineEvidence": [
+      "../android-ui-audit-033-20261111/D05-privacy-choice.png",
+      "../android-ui-audit-033-20261111/D05-reward-completed.png",
+      "../android-ui-audit-033-20261111/D05-reward-test.png"
+    ],
+    "evidence": [
+      "android/35b-reward-earned.png"
+    ]
+  },
+  {
+    "id": "D06",
+    "name": "미저장 설정 확인",
+    "entry": "S01 변경 후 이동",
+    "status": "Android 0.3.4 실기기 대표 상태 확인",
+    "purpose": "수정·변경 취소",
+    "connectsTo": "S01/요청 화면",
+    "components": "Controller/Modal",
+    "limitation": "",
+    "recommendation": "저장하고 이동 우선, 취소의 두 의미 제거.",
+    "disposition": "개선 적용",
+    "baselineEvidence": [
+      "../android-ui-audit-033-20261111/D06-unsaved-settings.png"
+    ],
+    "evidence": [
+      "android/19-settings-exit.png"
+    ]
+  },
+  {
+    "id": "X01",
+    "name": "시작 로딩·실패·재시도",
+    "entry": "앱 시작",
+    "status": "실패 복구 단위 검사 통과; 실제 native NPE 재발·복구 주입 미확인",
+    "purpose": "원본 유지·재시도",
+    "connectsTo": "A01/H01",
+    "components": "initialize/renderTextbook",
+    "limitation": "시작 오류·재시도 실패·재실행 회복 확인. 모든 로딩/오류 원인 검증 아님.",
+    "recommendation": "P0: 연결 재생성 재시도와 원인 조사.",
+    "disposition": "개선 적용",
+    "baselineEvidence": [
+      "../android-ui-audit-033-20261111/X01-restart-recovered.png",
+      "../android-ui-audit-033-20261111/X01-retry.png",
+      "../android-ui-audit-033-20261111/X01-startup-error.png"
+    ],
+    "evidence": []
+  },
+  {
+    "id": "X02",
+    "name": "빈 상태·검색 없음",
+    "entry": "목차/복습/기록",
+    "status": "Android 0.3.4 실기기 대표 상태 확인",
+    "purpose": "조건 변경·시작",
+    "connectsTo": "해당 목록",
+    "components": "화면 renderer",
+    "limitation": "",
+    "recommendation": "빈 상태 안내와 학습 시작/조건 초기화 제공.",
+    "disposition": "개선 적용",
+    "baselineEvidence": [
+      "../android-ui-audit-033-20261111/X02-exams-empty.png",
+      "../android-ui-audit-033-20261111/X02-glossary-empty.png"
+    ],
+    "evidence": [
+      "android/22-empty-search.png"
+    ]
+  },
+  {
+    "id": "X03",
+    "name": "저장·외부·광고 실패",
+    "entry": "각 작업",
+    "status": "저장 실패/광고 취소 회귀 검사; 모든 실제 실패 주입 미확인",
+    "purpose": "안내·재시도",
+    "connectsTo": "호출 화면",
+    "components": "Controller/nativeAds",
+    "limitation": "저장·외부 링크·광고 네트워크 실패를 이번 실기기에 주입하지 않음.",
+    "recommendation": "미확인; 정상 캡처로 오류 복구 통과를 주장하지 않음.",
+    "disposition": "개선 적용",
+    "baselineEvidence": [],
+    "evidence": []
+  },
+  {
+    "id": "X04",
+    "name": "교재 전환·출시 게이트",
+    "entry": "업그레이드/내부 빌드",
+    "status": "동일 콘텐츠 해시; 호환 업데이트 보존 확인; 출시 상태 별도 기록",
+    "purpose": "전환 확인",
+    "connectsTo": "H01",
+    "components": "migration/App",
+    "limitation": "현재 교재 버전에서 구교재 전환/출시 차단을 강제로 만들지 않음.",
+    "recommendation": "현 버전 비대상; 강제 데이터 전환 없음.",
+    "disposition": "검토 후 핵심 동작 유지",
+    "baselineEvidence": [],
+    "evidence": []
+  }
+]
