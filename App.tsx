@@ -1,3 +1,4 @@
+import {LearningModalHost} from './src/platform/LearningModal';
 import React, {Component, useEffect, useMemo, useSyncExternalStore} from 'react';
 import {AppState as NativeAppState, BackHandler, KeyboardAvoidingView, Platform, View, useColorScheme} from 'react-native';
 import {AppText as Text} from './src/platform/Typography';
@@ -69,8 +70,10 @@ function LearnerApp(){
     <StatusBar style={isDark?'light':'dark'} />
     <KeyboardAvoidingView style={{flex:1}} behavior={Platform.OS==='ios'?'padding':undefined}>
       <ResponsiveLayoutProvider appScale={c.state.settings.fontScale}>
+        <LearningModalHost>
         {c.ready&&c.route.name==='reminderSettings'?<ReminderSettings c={c} reminders={reminders}/>:
           <NativeView node={render(c)} scale={c.state.settings.fontScale} dark={isDark} />}
+      </LearningModalHost>
       </ResponsiveLayoutProvider>
     </KeyboardAvoidingView>
   </SafeAreaView>;

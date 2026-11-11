@@ -1,7 +1,8 @@
+import {LearningModal} from './LearningModal';
 import {TextbookWidget} from './TextbookWidget';
 import React,{useState} from 'react';
 import {
-  Modal, Platform, Pressable, ScrollView, View,
+  Platform, Pressable, ScrollView, View,
   type TextStyle, type ViewStyle
 } from 'react-native';
 import {dark as darkPalette, light as lightPalette, learningType, type Node, type Style} from '../ui/nodes';
@@ -123,13 +124,13 @@ export function NativeView({node: n, scale, dark, path = '0',maxSystemFontMultip
     accessibilityValue={{min: 0, max: 100, now: Math.round((n.progress ?? 0) * 100)}} style={{height: 8, backgroundColor: line, borderRadius: 8, overflow: 'hidden'}}>
     <View style={{height:8,width:`${Math.round((n.progress??0)*100)}%`,backgroundColor:String(n.style?.backgroundColor??'#2457D6')}} />
   </View>;
-  if (n.kind === 'modal') return <Modal transparent visible animationType="none" onRequestClose={n.close}>
+  if (n.kind === 'modal') return <LearningModal transparent visible animationType="none" onRequestClose={n.close}>
     <SafeAreaView accessibilityViewIsModal onAccessibilityEscape={n.close} style={{flex:1,backgroundColor:'rgba(10,20,40,0.5)',justifyContent:layout.compactHeight?'center':'flex-end',paddingHorizontal:layout.horizontalPadding,paddingVertical:12}}>
       <ScrollView style={{maxHeight:Math.max(160,layout.height-32),flexGrow:0,width:'100%',maxWidth:560,alignSelf:'center'}} contentContainerStyle={{flexGrow:0,alignItems:'center'}} keyboardShouldPersistTaps="handled">
         {children}
       </ScrollView>
     </SafeAreaView>
-  </Modal>;
+  </LearningModal>;
   if(n.layout==='segments')return <ResponsiveSegments node={n} scale={scale} dark={dark} path={path} maxSystemFontMultiplier={maxSystemFontMultiplier}/>;
   if(n.layout==='dashboard'||n.layout==='question-grid')return <ResponsiveTiles node={n} scale={scale} dark={dark} path={path} maxSystemFontMultiplier={maxSystemFontMultiplier}/>;
   if(n.layout==='lesson-sections')return <LessonSections node={n} scale={scale} dark={dark} path={path} maxSystemFontMultiplier={maxSystemFontMultiplier}/>;

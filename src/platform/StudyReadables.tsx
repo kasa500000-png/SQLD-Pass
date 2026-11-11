@@ -1,6 +1,7 @@
+import {LearningModal} from './LearningModal';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import React,{useState} from 'react';
-import {Modal,Platform,Pressable,ScrollView,View,useWindowDimensions} from 'react-native';
+import {Platform,Pressable,ScrollView,View,useWindowDimensions} from 'react-native';
 import {AppText as Text} from './Typography';
 import {dark as darkPalette,light as lightPalette,type Node} from '../ui/nodes';
 import {displayCell} from '../ui/learning-format';
@@ -43,10 +44,10 @@ export function StudyTable({node,scale,dark,expanded=false}:{node:Node;scale:num
       {rows.map((r,i)=><View key={i} style={{flexDirection:'row',borderTopWidth:1,borderColor:line}}>{cols.map((_,j)=>cell(r[j],j,false,`${i}:${j}`))}</View>)}</View>
     </ScrollView>
     {!expanded&&overflow?<Pressable accessibilityRole="button" onPress={()=>setLarge(true)} style={{minHeight:48,justifyContent:'center'}}><Text style={{color:(dark?darkPalette:lightPalette).blue}}>표 확대 보기</Text></Pressable>:null}
-    <Modal visible={large} onRequestClose={()=>setLarge(false)} animationType="none"><SafeAreaView accessibilityViewIsModal onAccessibilityEscape={()=>setLarge(false)} style={{flex:1,backgroundColor:(dark?darkPalette:lightPalette).bg,padding:16}}>
+    <LearningModal visible={large} onRequestClose={()=>setLarge(false)} animationType="none"><SafeAreaView accessibilityViewIsModal onAccessibilityEscape={()=>setLarge(false)} style={{flex:1,backgroundColor:(dark?darkPalette:lightPalette).bg,padding:16}}>
       <Pressable accessibilityRole="button" accessibilityLabel="표 닫기" onPress={()=>setLarge(false)} style={{minHeight:48,justifyContent:'center'}}><Text style={{color:(dark?darkPalette:lightPalette).blue}}>닫기</Text></Pressable>
       {large?<ScrollView><StudyTable node={node} scale={scale*1.2} dark={dark} expanded/></ScrollView>:null}
-    </SafeAreaView></Modal>
+    </SafeAreaView></LearningModal>
     {!rows.length?<Text allowFontScaling style={{fontSize:14*scale,lineHeight:23*scale,color:ink}}>결과 0행 · 표시할 행이 없습니다.</Text>:null}
   </View>;
 }
