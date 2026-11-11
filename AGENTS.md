@@ -17,6 +17,15 @@ Use the 2026-11-11 UI refinement document for current screen hierarchy and token
 The owner authorized implementation, TestFlight update and both production submissions;
 this does not replace actual build/consent/device evidence. Additional mock volumes remain deferred.
 
+### Scoped owner exception — iOS 0.3.3(13), 2026-11-11
+
+After the iPad connection blocker was reported, the owner explicitly instructed:
+“검증없이 앱스토어 정식 출시 진행, testflight도 업데이트”. For this candidate only,
+proceed with TestFlight and App Store submission without additional physical-device or
+consent reruns. Record the unperformed checks and existing evidence separately; do not
+claim they passed. Preserve runtime consent, earned-reward, content and signing gates.
+This exception does not authorize skipping validation for future versions.
+
 ## Latest content direction — 2026-11-09 textbook replacement
 
 Use the supplied Part 1–5 textbook as the sole runtime learning source. The approved

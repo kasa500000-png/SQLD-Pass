@@ -1,0 +1,9 @@
+{
+  "recordedAt": "2026-11-11T10:13:23.234Z",
+  "oldVersion": "0.3.2",
+  "oldSubmissionId": "b7c04070-48c8-40ff-8638-63fa5db2fc80",
+  "newVersion": "0.3.3",
+  "newBuild": "13",
+  "cancelState": "CANCELING",
+  "reason": "Replace with owner-authorized new UI/pause build after successful Apple ingestion"
+}

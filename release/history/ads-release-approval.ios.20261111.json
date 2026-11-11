@@ -1,0 +1,17 @@
+{
+  "platform": "ios",
+  "policyVersion": "2026-09-30.1",
+  "codeSha256": "d0211865589c532648b32f12560aeff47665ccbe1ecbc5d4c7b7dc74ab87b741",
+  "iosDeviceEvidence": "New 0.3.3(13) physical iPad verification NOT performed: device unavailable. Owner explicitly instructed on 2026-11-11 to proceed with App Store release and TestFlight without further validation. This is a scoped waiver, not a claim of passed device QA. Earlier iPad owner-observed textbook test-ad checks remain historical only; qa/RELEASE_TEXTBOOK_20261109.md.",
+  "consentAndATTEvidence": "Current ad/UMP/ATT runtime is unchanged. Historical iOS simulator published EEA reject/accept/withdraw and test-ad evidence are recorded in qa/RELEASE_TEXTBOOK_20261109.md; not repeated for build13. No consent or earned-event bypass is implemented. Current simulator UI, pause and persistence coverage is qa/UI_UX_20261111.md; owner waived additional native/consent repetition for this release.",
+  "adPlacementEvidence": "Current 0.3.3 iOS simulator pause/restart and active-attempt UI coverage across375/402/1032pt; Android physical active timed/study home suppression. Both AdMob banner auto-refresh disabled verified 2026-11-11. No new physical iOS serving assertion.",
+  "sdkCompatibilityEvidence": "0.3.3 iOS Release simulator and signed physical test app builds succeeded; 431 automated tests and type checks passed before waiver. App Store archive/export and Apple ingestion must succeed before submission and are separately recorded.",
+  "appAdsTxtEvidence": "2026-11-11 AdMob both SQLD Pass apps Ready/serving enabled; public app-ads.txt returns google.com pub-9314207769680999 DIRECT f08c47fec0942fa0.",
+  "privacyDisclosureEvidence": "UI/pause release adds only local pause metadata. SDK collection/consent/ad targeting unchanged; retain existing published Apple ad privacy disclosure recorded qa/evidence/release-textbook-20261109/apple-privacy-published.txt. Public support/privacy v14 records local pause state and existing Google data processing.",
+  "privacyUrl": "https://sqld-pass-support.shk1122.chatgpt.site/privacy.html",
+  "supportUrl": "https://sqld-pass-support.shk1122.chatgpt.site/support.html",
+  "approvedBy": "Owner latest explicit instruction: 검증없이 앱스토어 정식 출시 진행, testflight도 업데이트. Supersedes additional device/consent repetition gate for iOS0.3.3 only; preserves content approval and runtime consent/earned-event rules.",
+  "approvedAt": "2026-11-11T10:04:26.043Z",
+  "additionalValidationWaived": true,
+  "waiverScope": "iOS 0.3.3(13) additional physical device, accessibility and regional consent rerun; previous evidence is not relabeled current."
+}
