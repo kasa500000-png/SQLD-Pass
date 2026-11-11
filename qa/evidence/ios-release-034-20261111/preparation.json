@@ -1,0 +1,45 @@
+{
+  "observedAt": "2026-11-11T13:14:19.114Z",
+  "candidateVersion": "0.3.4",
+  "plannedBuild": "14",
+  "versionId": "c237d65d-9bd9-46df-82b6-5052a12ce25b",
+  "appStoreState": "PREPARE_FOR_SUBMISSION",
+  "releaseType": "AFTER_APPROVAL",
+  "latestUploadedBuilds": [
+    {
+      "id": "6ad2dfae-481b-4001-af79-79bcb6159e1f",
+      "version": "13",
+      "processingState": "VALID"
+    },
+    {
+      "id": "753ec483-1849-4e6d-bf60-f465e6e79449",
+      "version": "12",
+      "processingState": "VALID"
+    },
+    {
+      "id": "27d52287-cf19-496e-9895-9e9f6b3656d1",
+      "version": "11",
+      "processingState": "VALID"
+    },
+    {
+      "id": "46e4adff-3886-4dc1-bc1f-c1eed2efb091",
+      "version": "10",
+      "processingState": "VALID"
+    }
+  ],
+  "testAppInstall": {
+    "version": "0.3.4",
+    "build": "14",
+    "bundleId": "com.sqldpass.app.internal",
+    "succeeded": true
+  },
+  "physicalTest": {
+    "started": false,
+    "passed": false,
+    "error": "Device locked while waiting for runner launch; lost pending connection to the test runner before launch.",
+    "testAppDataCleared": false
+  },
+  "testFlightUpdated": false,
+  "appStoreSubmitted": false,
+  "blocker": "iPad unlock and physical advertising/consent validation pending. No scoped validation waiver for0.3.4 has been received."
+}
