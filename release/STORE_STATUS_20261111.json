@@ -1,0 +1,22 @@
+{
+  "observedAt": "2026-11-11T09:18:31.124506+00:00",
+  "android": {
+    "version": "0.3.3",
+    "versionCode": 19,
+    "track": "production",
+    "state": "changes_in_review",
+    "rollout": 1.0,
+    "managedPublishing": false,
+    "adsMode": "live",
+    "publicVersionAtSubmission": "0.3.2 (18)"
+  },
+  "ios": {
+    "candidateVersion": "0.3.3",
+    "candidateBuild": "13",
+    "candidateState": "physical_device_validation_pending_not_uploaded",
+    "existingReviewVersion": "0.3.2",
+    "existingReviewState": "WAITING_FOR_REVIEW",
+    "publicVersion": "0.2.0",
+    "testFlightCandidateUploaded": false
+  }
+}
