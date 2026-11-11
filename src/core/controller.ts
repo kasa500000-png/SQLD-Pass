@@ -60,7 +60,12 @@ export class Controller {
   }
   async dismissTextbookMigration(){await this.commit(s=>s.textbookMigration?{...s,textbookMigration:{...s.textbookMigration,noticePending:false}}:s);}
   async toggleKnownCard(id:string){if(!this.content.textbook?.flashcards.some(f=>f.id===id))return;await this.commit(s=>({...s,knownCards:(s.knownCards??[]).includes(id)?s.knownCards!.filter(x=>x!==id):[...(s.knownCards??[]),id]}));}
+  private guardSettingsExit(action:()=>void):boolean{
+    if(!this.content.textbook||!['settings','appearance'].includes(this.route.name)||JSON.stringify(this.draftSettings)===JSON.stringify(this.state.settings))return false;
+    this.confirm('설정을 저장하지 않고 나갈까요?','변경한 설정은 적용되지 않습니다. 저장하려면 취소한 뒤 설정 저장을 눌러 주세요.','변경 취소하고 나가기',()=>{this.draftSettings={...this.state.settings};action();});return true;
+  }
   navigate(route:Route){
+    if(this.guardSettingsExit(()=>this.navigate(route)))return;
     if(this.isExamPausePending&&route.name!=='examPause')return;
     if(this.content.mockPack&&['exam','sheet'].includes(this.route.name)&&!['exam','sheet','examPause'].includes(route.name)){void this.pauseExam().then(ok=>{if(ok)this.navigate(route);});return;}
     const e=this.examAttempt(route.id);
@@ -68,6 +73,7 @@ export class Controller {
     this.stack.push(this.route);this.route=route;this.notice='';this.supportNotice='';this.settingsError='';this.reviewPickerOpen=false;if(route.name==='settings'||route.name==='setup')this.draftSettings={...this.state.settings};this.notify();
   }
   tab(tab:Tab){
+    if(this.guardSettingsExit(()=>this.tab(tab)))return;
     if(this.isExamPausePending)return;
     if(this.content.mockPack&&['exam','sheet'].includes(this.route.name)){void this.pauseExam().then(ok=>{if(ok)this.tab(tab);});return;}
     this.stack=[];this.route={name:({today:'home',learn:'catalog',review:'review',exams:'exams',records:'stats'} as const)[tab]};this.notice='';this.supportNotice='';this.reviewPickerOpen=false;this.notify();
@@ -75,6 +81,7 @@ export class Controller {
   back(){
     if(this.dialog){this.dialog=null;this.notify();return;}
     if(this.reviewPickerOpen){this.closeReviewPicker();return;}
+    if(this.guardSettingsExit(()=>this.back()))return;
     if(this.route.name==='practiceResult'){void this.returnPracticeHome();return;}
     if(this.route.name==='examPause'){if(!this.isExamPausePending)this.tab('today');return;}
     if(this.content.mockPack&&(this.route.name==='exam'||this.route.name==='sheet')){void this.pauseExam();return;}
