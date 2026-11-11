@@ -35,7 +35,7 @@ export function renderTextbook(c:MonetizedController):Node{
  const mockUi={t,small,h,card,act,primary,link,choice,go,blocks};
  const mockScreen=c.ready?renderMockScreen(c,mockUi):undefined;
  let body:Node[]=[],footer:Node[]=[],header:Node[]=[];let title='SQLD Pass';const r=c.route.name;
- if(!c.ready)body=[h(c.startupError?'기록을 불러오지 못했습니다':'교재를 준비하고 있습니다'),t(c.startupError||'잠시 기다려 주세요.'),...(c.startupError?[act('다시 시도',()=>c.initialize())]:[])];
+ if(!c.ready)body=[h(c.startupError?'기록을 불러오지 못했습니다':'교재를 준비하고 있습니다'),t(c.startupError?'저장된 기록을 삭제하지 않았습니다. 다시 불러오기를 시도해 주세요.':'잠시 기다려 주세요.'),...(c.startupError?[primary('다시 시도',()=>c.initialize(),'retry-startup'),act(c.expanded.has('startup-details')?'오류 정보 접기':'오류 정보 보기',()=>c.toggleExpanded('startup-details'),'startup-details'),...(c.expanded.has('startup-details')?[small(c.startupError)]:[])]:[])];
  else if(mockScreen){title=mockScreen.title;body=mockScreen.body;footer=mockScreen.footer??[];header=mockScreen.header??[];}
  else if(r==='welcome')body=[h('표에서 시작하는 SQLD 학습'),t('5개 Part · 18개 Chapter · 216개 학습 절'),t('개념을 읽고, SQL 결과를 살펴보고, 확인 문제로 이해를 점검하세요.'),small('학습 기록은 이 기기에 저장됩니다. 실전 탭에서 20회 모의고사를 이용하세요.'),primary('학습 시작',go('setup'),'textbook-start')];
  else if(r==='setup'||r==='settings'||r==='appearance'){
