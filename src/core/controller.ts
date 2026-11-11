@@ -1,5 +1,6 @@
 import {withDailyPlan} from '../textbook/learning';
-import type {AppState,Content,Dialog,ExamAttempt,ExamMode,LibraryItem,PracticeResult,Question,ReadingOffset,Route,Services,Settings,Tab} from './types';
+import type {AppState,Clock,Content,Dialog,ExamAttempt,ExamMode,LibraryItem,PracticeResult,Question,ReadingOffset,Route,Services,Settings,Tab} from './types';
+import {isExamPaused,pauseExam as pauseAttempt,resumeExam as resumeAttempt} from './domain/exam';
 import {validReadingOffset} from './domain/reading';
 import {libraryItemKey,resolveLibraryItem,validCollections} from './domain/library';
 import {advanceClock,applyPractice,assertContent,canStudyQuestion,completedPracticeResult,dayKey,dueReviews,eligibleDay,homeRecommendation,initialState,isReviewStudyDay,migrateLearningState,nextConcept as findNextConcept,parseState,planCompletedDays,practiceQuestionIds,shortSession,startExam,submitExam,validTargetDate,type PracticeOptions} from './domain';
@@ -12,6 +13,10 @@ export class Controller {
   draftSettings:Settings; settingsError=''; supportText=''; supportNotice=''; reviewLimit=20; reviewPickerOpen=false; private listeners=new Set<()=>void>(); private serial:Promise<void>=Promise.resolve();
   private version=0; private checkpointAt=0; private expiryInFlight=false; private lastExpiryTry=0;
   get isExamSubmitting(){return this.expiryInFlight;}
+  private pauseRequest?:{id:string;clock:Clock};
+  private pauseInFlight?:Promise<boolean>;
+  private examAppActive=true;
+  get isExamPausePending(){return this.pauseRequest?.id===this.activeExam()?.id&&!!this.pauseRequest;}
   private systemAppearance:'light'|'dark'='light';
   private screenScroll=new Map<string,ReadingOffset>();
   screenPosition(context:string){return this.screenScroll.get(context);}
@@ -35,7 +40,7 @@ export class Controller {
       if(this.content.textbook&&!await this.commit(s=>withDailyPlan(s,this.content,this.services.clock().wall)))throw new Error('오늘 학습 계획을 저장하지 못했습니다.');
       await this.prepareStartup();
       this.route=this.state.onboarded?(this.state.lastPracticeResultId&&!this.state.practice?{name:'practiceResult',id:this.state.lastPracticeResultId}:{name:'home'}):{name:'welcome'};this.ready=true;const active=this.activeExam();
-      if(active)await this.checkpoint();this.notify();await this.pulse();
+      if(active){if(this.content.mockPack)await this.pauseExam(false);else await this.checkpoint();}this.notify();await this.pulse();
     }catch(e){this.startupError=e instanceof Error?e.message:String(e);this.ready=false;this.notify();}
   }
   async commit(reducer:(state:AppState)=>AppState):Promise<boolean>{
@@ -54,12 +59,24 @@ export class Controller {
   }
   async dismissTextbookMigration(){await this.commit(s=>s.textbookMigration?{...s,textbookMigration:{...s.textbookMigration,noticePending:false}}:s);}
   async toggleKnownCard(id:string){if(!this.content.textbook?.flashcards.some(f=>f.id===id))return;await this.commit(s=>({...s,knownCards:(s.knownCards??[]).includes(id)?s.knownCards!.filter(x=>x!==id):[...(s.knownCards??[]),id]}));}
-  navigate(route:Route){this.stack.push(this.route);this.route=route;this.notice='';this.supportNotice='';this.settingsError='';this.reviewPickerOpen=false;if(route.name==='settings'||route.name==='setup')this.draftSettings={...this.state.settings};this.notify();}
-  tab(tab:Tab){this.stack=[];this.route={name:({today:'home',learn:'catalog',review:'review',exams:'exams',records:'stats'} as const)[tab]};this.notice='';this.supportNotice='';this.reviewPickerOpen=false;this.notify();}
+  navigate(route:Route){
+    if(this.isExamPausePending&&route.name!=='examPause')return;
+    if(this.content.mockPack&&['exam','sheet'].includes(this.route.name)&&!['exam','sheet','examPause'].includes(route.name)){void this.pauseExam().then(ok=>{if(ok)this.navigate(route);});return;}
+    const e=this.examAttempt(route.id);
+    if(['exam','sheet'].includes(route.name)&&e&&isExamPaused(e))route={name:'examPause',id:e.id};
+    this.stack.push(this.route);this.route=route;this.notice='';this.supportNotice='';this.settingsError='';this.reviewPickerOpen=false;if(route.name==='settings'||route.name==='setup')this.draftSettings={...this.state.settings};this.notify();
+  }
+  tab(tab:Tab){
+    if(this.isExamPausePending)return;
+    if(this.content.mockPack&&['exam','sheet'].includes(this.route.name)){void this.pauseExam().then(ok=>{if(ok)this.tab(tab);});return;}
+    this.stack=[];this.route={name:({today:'home',learn:'catalog',review:'review',exams:'exams',records:'stats'} as const)[tab]};this.notice='';this.supportNotice='';this.reviewPickerOpen=false;this.notify();
+  }
   back(){
     if(this.dialog){this.dialog=null;this.notify();return;}
     if(this.reviewPickerOpen){this.closeReviewPicker();return;}
     if(this.route.name==='practiceResult'){void this.returnPracticeHome();return;}
+    if(this.route.name==='examPause'){if(!this.isExamPausePending)this.tab('today');return;}
+    if(this.content.mockPack&&(this.route.name==='exam'||this.route.name==='sheet')){void this.pauseExam();return;}
     if(this.route.name==='exam'||this.route.name==='sheet'){this.confirm('시험 화면을 나갈까요?',this.activeExam()?.mode==='study'?'답안은 기기에 저장되며 시간 제한 없이 이어서 풀 수 있습니다.':'답안은 기기에 저장되며 남은 시간은 계속 흐릅니다. 종료 시각이 지나면 자동 제출합니다.','저장 후 나가기',async()=>{if(await this.checkpoint())this.tab('exams');});return;}
     this.supportNotice='';this.route=this.stack.pop()??{name:this.state.onboarded?'home':'welcome'};this.notify();
   }
@@ -265,21 +282,52 @@ export class Controller {
   async beginExam(examId:string,mode:ExamMode='timed'){
     const exam=this.content.exams.find(e=>e.id===examId);if(!exam)return;
     if(!this.ready||!this.state.onboarded)return;
-    const id=this.services.uuid();if(await this.commit(s=>{if(s.practice?.questionIds.some(qid=>this.content.questions[qid]?.examId===examId))throw new Error('이 회차의 진행 중 복습을 먼저 마쳐 주세요.');return {...s,lastPracticeResultId:null,exams:[...s.exams,startExam(s,exam,this.content,this.services.clock(),id,mode)]};})){this.stack=[];this.route={name:'exam',id};this.checkpointAt=this.services.clock().wall;this.notify();}
+    const id=this.services.uuid();if(await this.commit(s=>{if(s.practice?.questionIds.some(qid=>this.content.questions[qid]?.examId===examId))throw new Error('이 회차의 진행 중 복습을 먼저 마쳐 주세요.');return {...s,lastPracticeResultId:null,exams:[...s.exams,startExam(s,exam,this.content,this.services.clock(),id,mode)]};})){this.stack=[];this.route={name:'exam',id};this.checkpointAt=this.services.clock().wall;this.notify();if(!this.examAppActive)await this.pauseExam();}
   }
-  remaining(){const e=this.activeExam();return e?(advanceClock(e,this.services.clock()).remainingMs??0):0;}
-  async checkpoint():Promise<boolean>{return this.commit(s=>{const active=s.exams.find(e=>e.status==='active');if(!active)return s;return {...s,exams:s.exams.map(e=>e.id===active.id?advanceClock(e,this.services.clock()):e)};});}
-  async updateExamAnswer(option:string|null){await this.commit(s=>{
-    const e=s.exams.find(x=>x.status==='active');if(!e)return s;const a=advanceClock(e,this.services.clock());if(a.mode!=='study'&&(a.remainingMs??0)<=0)throw new Error('시험 시간이 끝났습니다');
-    const q=a.snapshots[a.index];if(option&&!q.options.some(o=>o.id===option))throw new Error('유효하지 않은 보기');
+  remaining(){const e=this.activeExam();return e?(advanceClock(e,this.isExamPausePending?this.pauseRequest!.clock:this.services.clock()).remainingMs??0):0;}
+  async pauseExam(showScreen=true):Promise<boolean>{
+    const active=this.activeExam();if(!active)return true;
+    if(showScreen){this.dialog=null;this.stack=[];this.route={name:'examPause',id:active.id};this.notify();}
+    if(isExamPaused(active))return true;
+    if(!this.pauseRequest)this.pauseRequest={id:active.id,clock:this.services.clock()};
+    if(this.pauseInFlight)return this.pauseInFlight;
+    const request=this.pauseRequest;
+    this.pauseInFlight=(async()=>{
+      const ok=await this.commit(s=>{
+        const e=s.exams.find(e=>e.id===request.id&&e.status==='active');if(!e)return s;
+        return {...s,exams:s.exams.map(a=>a.id===e.id?pauseAttempt(a,request.clock):a)};
+      });
+      if(ok||this.activeExam()?.id!==request.id)this.pauseRequest=undefined;
+      if(!ok){this.route={name:'examPause',id:request.id};this.notice='일시정지 내용을 저장하지 못했습니다. 앱을 닫지 말고 저장을 다시 시도해 주세요. 마지막 저장 기록은 유지됩니다.';}
+      const e=this.activeExam();
+      if(ok&&e?.id===request.id&&!isExamPaused(e)&&e.mode!=='study'&&(e.remainingMs??0)<=0)await this.finishExam('expired');
+      this.notify();return ok;
+    })();
+    try{return await this.pauseInFlight;}finally{this.pauseInFlight=undefined;}
+  }
+  async resumeExam():Promise<boolean>{
+    const active=this.activeExam();if(!active||this.isExamPausePending||!this.examAppActive)return false;
+    const ok=await this.commit(s=>({...s,exams:s.exams.map(e=>e.id===active.id?resumeAttempt(e,this.services.clock()):e)}));
+    if(ok&&this.activeExam()?.id===active.id){
+      if(!this.examAppActive)return this.pauseExam();
+      this.stack=[];this.route={name:'exam',id:active.id};this.notice='';this.checkpointAt=this.services.clock().wall;this.notify();
+    }
+    return ok;
+  }
+  async onAppBackground(){this.examAppActive=false;if(this.content.mockPack){const e=this.activeExam();if(e&&(!isExamPaused(e)||this.isExamPausePending))await this.pauseExam();}else await this.checkpoint();}
+  onAppForeground(){this.examAppActive=true;this.notify();}
+  async checkpoint():Promise<boolean>{return this.commit(s=>{const active=s.exams.find(e=>e.status==='active');if(!active||isExamPaused(active)||this.isExamPausePending)return s;return {...s,exams:s.exams.map(e=>e.id===active.id?advanceClock(e,this.services.clock()):e)};});}
+  async updateExamAnswer(option:string|null){const target=this.activeExam();if(!target||isExamPaused(target)||this.isExamPausePending)return;const questionId=target.snapshots[target.index].id;await this.commit(s=>{
+    const e=s.exams.find(x=>x.id===target.id&&x.status==='active');if(!e||isExamPaused(e))return s;const a=advanceClock(e,this.services.clock());if(a.mode!=='study'&&(a.remainingMs??0)<=0)throw new Error('시험 시간이 끝났습니다');
+    const q=a.snapshots.find(q=>q.id===questionId)!;if(option&&!q.options.some(o=>o.id===option))throw new Error('유효하지 않은 보기');
     const answers={...a.answers};if(option)answers[q.id]=option;else delete answers[q.id];
     return {...s,exams:s.exams.map(x=>x.id===a.id?{...a,answers}:x)};
   });}
-  async moveExam(index:number){const ok=await this.commit(s=>{const e=s.exams.find(x=>x.status==='active');if(!e)return s;return {...s,exams:s.exams.map(x=>x.id===e.id?{...advanceClock(e,this.services.clock()),index:Math.max(0,Math.min(49,index))}:x)};});if(ok&&this.route.name==='sheet'){this.route={name:'exam',id:this.activeExam()?.id};this.notify();}}
-  async flagExam(){await this.commit(s=>{const e=s.exams.find(x=>x.status==='active');if(!e)return s;const q=e.snapshots[e.index];return {...s,exams:s.exams.map(x=>x.id===e.id?{...advanceClock(e,this.services.clock()),flagged:e.flagged.includes(q.id)?e.flagged.filter(id=>id!==q.id):[...e.flagged,q.id]}:x)};});}
-  requestSubmit(){const e=this.activeExam();if(!e)return;const n=50-Object.keys(e.answers).length;this.confirm('답안을 제출할까요?',`미응답 ${n}문항은 0점으로 채점합니다. 제출 후 답안을 변경할 수 없습니다.`,'제출하고 결과 보기',()=>this.finishExam('manual'));}
+  async moveExam(index:number){const target=this.activeExam();if(!target||isExamPaused(target)||this.isExamPausePending||!Number.isInteger(index))return;const ok=await this.commit(s=>{const e=s.exams.find(x=>x.id===target.id&&x.status==='active');if(!e||isExamPaused(e))return s;return {...s,exams:s.exams.map(x=>x.id===e.id?{...advanceClock(e,this.services.clock()),index:Math.max(0,Math.min(49,index))}:x)};});if(ok&&this.route.name==='sheet'){this.route={name:'exam',id:this.activeExam()?.id};this.notify();}}
+  async flagExam(){const target=this.activeExam();if(!target||isExamPaused(target)||this.isExamPausePending)return;const questionId=target.snapshots[target.index].id;await this.commit(s=>{const e=s.exams.find(x=>x.id===target.id&&x.status==='active');if(!e||isExamPaused(e))return s;return {...s,exams:s.exams.map(x=>x.id===e.id?{...advanceClock(e,this.services.clock()),flagged:e.flagged.includes(questionId)?e.flagged.filter(id=>id!==questionId):[...e.flagged,questionId]}:x)};});}
+  requestSubmit(){const e=this.activeExam();if(!e||this.isExamPausePending)return;const n=50-Object.keys(e.answers).length;this.confirm('답안을 제출할까요?',`응답 ${50-n}문항 · 미응답 ${n}문항\n미응답은 0점입니다. 제출 후에는 답안을 바꿀 수 없으며 정답과 해설이 열립니다.`,'제출하고 결과 보기',()=>this.finishExam('manual'));}
   async finishExam(reason:'manual'|'expired'){
-    if(this.expiryInFlight)return;const active=this.activeExam();if(!active)return;this.expiryInFlight=true;
+    if(this.expiryInFlight||this.isExamPausePending)return;const active=this.activeExam();if(!active||reason==='expired'&&(isExamPaused(active)||this.remaining()>0))return;this.expiryInFlight=true;
     const ok=await this.commit(s=>{
       const e=s.exams.find(x=>x.id===active.id);if(!e||e.status==='submitted')return s;
       const submitted=submitExam(e,this.services.clock(),reason);const reviews={...s.reviews};const mastered={...s.mockStudy?.mastered};
@@ -291,7 +339,7 @@ export class Controller {
     if(ok&&this.state.exams.some(e=>e.id===active.id&&e.status==='submitted')){this.mockResultFilter='all';this.dialog=null;this.stack=[];this.route={name:'result',id:active.id};this.notify();}
   }
   async pulse(){
-    const active=this.activeExam();if(!active)return;const now=this.services.clock();
+    const active=this.activeExam();if(!active||isExamPaused(active)||this.isExamPausePending)return;const now=this.services.clock();
     if(active.mode!=='study'&&this.remaining()<=0&&now.wall-this.lastExpiryTry>5000){this.lastExpiryTry=now.wall;await this.finishExam('expired');}
     else if(now.wall-this.checkpointAt>15000){this.checkpointAt=now.wall;await this.checkpoint();}else if(this.route.name==='exam'||this.route.name==='sheet')this.notify();
   }

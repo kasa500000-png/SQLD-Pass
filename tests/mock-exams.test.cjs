@@ -43,7 +43,7 @@ test('bookmarks and bounded explicit notes persist across restart; learning rese
  const e=await ready(),ctrl=e.ctrl;await ctrl.beginExam('SQLD-M05','study');await ctrl.finishExam('manual');const q=ctrl.state.exams[0].snapshots[0];await ctrl.bookmarkMock(q.id);await ctrl.saveMockNote(q.id,'메'.repeat(10001));a.equal(ctrl.state.mockStudy.notes[q.id].length,10000);const r=await ready(e.stored());a.deepEqual(r.ctrl.state.mockStudy,ctrl.state.mockStudy);r.ctrl.mockNoteDrafts[q.id]='unsaved';r.ctrl.requestLearningReset();await r.ctrl.acceptDialog();a.equal(r.ctrl.state.mockStudy,undefined);a.deepEqual(r.ctrl.mockNoteDrafts,{});a.equal(r.ctrl.hasAccess('SQLD-M05'),true);
 });
 test('one earned test reward opens both modes and retakes; all active modes suppress home banners',async()=>{
- const e=await ready(null,'test','rewarded'),ctrl=e.ctrl;await ctrl.beginExam('SQLD-M05','study');a.equal(ctrl.activeExam(),undefined);a.equal(ctrl.dialog,null);a.equal(ctrl.route.name,'examIntro');a.equal(e.shows(),0);await ctrl.watchAdToUnlock('SQLD-M05');a.equal(e.shows(),1);a.equal(ctrl.hasAccess('SQLD-M05'),true);for(const mode of ['study','timed','study']){await ctrl.beginExam('SQLD-M05',mode);a.equal(ctrl.activeExam().mode,mode);ctrl.tab('today');a.equal(ctrl.showBanner,false);ctrl.offerUnlock('SQLD-M06');a.equal(ctrl.dialog,null);await ctrl.finishExam('manual');}a.equal(e.shows(),1);
+ const e=await ready(null,'test','rewarded'),ctrl=e.ctrl;await ctrl.beginExam('SQLD-M05','study');a.equal(ctrl.activeExam(),undefined);a.equal(ctrl.dialog,null);a.equal(ctrl.route.name,'examIntro');a.equal(e.shows(),0);await ctrl.watchAdToUnlock('SQLD-M05');a.equal(e.shows(),1);a.equal(ctrl.hasAccess('SQLD-M05'),true);for(const mode of ['study','timed','study']){await ctrl.beginExam('SQLD-M05',mode);a.equal(ctrl.activeExam().mode,mode);await ctrl.pauseExam();ctrl.tab('today');a.equal(ctrl.showBanner,false);ctrl.offerUnlock('SQLD-M06');a.equal(ctrl.dialog,null);await ctrl.finishExam('manual');}a.equal(e.shows(),1);
 });
 test('reward card discloses eligibility and reward, then one tap opens the ad without a dialog',async()=>{
  const e=await ready(null,'test','rewarded'),ctrl=e.ctrl;ctrl.tab('exams');
@@ -76,7 +76,7 @@ test('focused exam keeps timer and navigation outside scrolling content and pres
  const root=renderTextbook(ctrl),nodes=flat(root),scroll=nodes.find(n=>n.scroll),footer=nodes.find(n=>n.testId==='screen-footer');
  a.ok(footer);a.ok(!flat(scroll).some(n=>n.testId==='mock-next'));a.ok(flat(footer).some(n=>n.testId==='mock-next'));
  a.equal(nodes.filter(n=>n.role==='tab').length,0);a.ok(nodes.some(n=>n.testId==='screen-header'));
- ctrl.route={name:'sheet',id:ctrl.activeExam().id};ctrl.back();a.ok(ctrl.dialog);await ctrl.acceptDialog();a.equal(ctrl.route.name,'exams');a.equal(Object.keys(ctrl.activeExam().answers).length,1);
+ ctrl.route={name:'sheet',id:ctrl.activeExam().id};ctrl.back();await ctrl.pauseExam();a.equal(ctrl.dialog,null);a.equal(ctrl.route.name,'examPause');a.equal(Object.keys(ctrl.activeExam().answers).length,1);ctrl.tab('today');a.equal(ctrl.route.name,'home');
 });
 test('result summary opens immutable explanations and question picker without changing score',async()=>{
  const {ctrl}=await ready();await ctrl.beginExam('SQLD-M01','study');await ctrl.finishExam('manual');

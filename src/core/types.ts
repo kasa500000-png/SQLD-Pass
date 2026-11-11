@@ -34,6 +34,8 @@ export interface ExamAttempt {
   id:string; examId:string; contentVersion:string; examVersion:string; title:string;
   status:'active'|'submitted'; startedAt:number; submittedAt?:number; durationSeconds:number|null;
   remainingMs:number|null; checkpoint:Clock; timeTrusted:boolean; timeIssues:string[];
+  /** Absent on historical records. A paused attempt remains active for access/ad policy. */
+  pausedAt?:number|null; pauseCount?:number;
   snapshots:Question[]; answers:Record<string,string>; flagged:string[]; index:number;
   score?:Score; isFirstAttempt:boolean; exposedFamilyCount:number; submitReason?:'manual'|'expired';
 }
@@ -71,7 +73,7 @@ export interface AppState {
   practiceResults?:PracticeResult[]; lastPracticeResultId?:string|null; collections?:StudyCollection[];
 }
 export type Tab = 'today'|'learn'|'review'|'exams'|'records';
-export type Route = { name: 'mockReview'|'mockSaved'|'mockQuestion'|'mockSources'|'chapter'|'glossary'|'flashcards'|'sources'|'welcome'|'setup'|'home'|'plan'|'day'|'catalog'|'lesson'|'lessonSummary'|'library'|'collection'|'savedQuestion'|'practiceSetup'|'practice'|'practiceResult'|'review'|'exams'|'examIntro'|'exam'|'sheet'|'result'|'examReview'|'stats'|'calendar'|'examHistory'|'appearance'|'data'|'settings'|'reminderSettings'|'help'|'report'|'notices'|'privacy'; id?:string; index?:number; };
+export type Route = { name: 'mockReview'|'mockSaved'|'mockQuestion'|'mockSources'|'chapter'|'glossary'|'flashcards'|'sources'|'welcome'|'setup'|'home'|'plan'|'day'|'catalog'|'lesson'|'lessonSummary'|'library'|'collection'|'savedQuestion'|'practiceSetup'|'practice'|'practiceResult'|'review'|'exams'|'examIntro'|'exam'|'examPause'|'sheet'|'result'|'examReview'|'stats'|'calendar'|'examHistory'|'appearance'|'data'|'settings'|'reminderSettings'|'help'|'report'|'notices'|'privacy'; id?:string; index?:number; };
 export interface Dialog { title:string; body:string; confirmLabel:string; destructive?:boolean; onConfirm:()=>void|Promise<void>; }
 export interface Repository { load():Promise<unknown|null>; save(state:AppState):Promise<void>; clear():Promise<void>; }
 export interface Services {

@@ -2,7 +2,7 @@ import type {MonetizedController} from '../monetization/controller';
 import type {Question,Route} from '../core/types';
 import type {ContentBlock} from '../textbook/types';
 import {box,row,adaptiveRow,segments,table,type Node} from '../ui/nodes';
-import {canStudyQuestion,formatTime,publicQuestion} from '../core/domain/exam';
+import {canStudyQuestion,formatTime,isExamPaused,publicQuestion} from '../core/domain/exam';
 import {latestMocks,mockStats,mockWrongQuestions,modeName} from './domain';
 import {REWARD_ACTION,REWARD_DISCLOSURE,REWARD_AGE_DISCLOSURE,REWARD_STORAGE_DISCLOSURE} from '../monetization/policy';
 interface UI{
@@ -43,10 +43,15 @@ export function renderMockScreen(c:MonetizedController,u:UI):{title:string;body:
   const mode=c.expanded.has('intro:study')?'study':'timed';
   return {title:'응시 안내',body:[h(e.title),small('50문항 · 1과목 10문항 / 2과목 40문항'),
    segments([act('실전 · 90분',()=>{c.expanded.delete('intro:study');c.notify();},'mode-timed',mode==='timed'),act('학습 · 무제한',()=>{c.expanded.add('intro:study');c.notify();},'mode-study',mode==='study')]),
-   card([t(mode==='timed'?'실제 시험처럼 90분 동안 풀어보세요. 화면을 나가도 시간은 계속 흐릅니다.':'시간 제한 없이 풀어보세요. 답안은 기기에 저장됩니다.'),small('두 모드 모두 최종 제출 후 정답과 해설을 확인합니다.'),small('미응답은 0점입니다. 제출한 답안은 변경할 수 없습니다.')]),
+   card([t(mode==='timed'?'풀이 시간은 총 90분입니다. 일시정지하거나 앱을 벗어나면 남은 시간을 저장합니다.':'시간 제한 없이 풀어보세요. 중단한 문항과 답안을 저장합니다.'),small('돌아오면 이어서 풀기를 눌러 재개합니다. 일시정지 이력은 결과에 표시됩니다.'),small('두 모드 모두 최종 제출 후 정답과 해설을 확인합니다.'),small('미응답은 0점입니다. 제출한 답안은 변경할 수 없습니다.')]),
    act('응시 기준 자세히',()=>c.toggleExpanded('intro:rules'),'exam-rules',c.expanded.has('intro:rules')),
    ...(c.expanded.has('intro:rules')?[t('문항당 2점. 총점 60점 이상, 1과목 4문항·2과목 16문항 이상 정답을 연습 기준으로 사용합니다. 실제 시험의 합격을 보장하지 않습니다.'),...pack.assumptions.map(small)]:[])],
    footer:active?[primary('진행 중 모의고사 이어하기',go('exam',active.id),'resume-mock')]:c.hasAccess(e.id)?[primary(mode==='timed'?'실전 모드 시작 · 90분':'학습 모드 시작',()=>c.beginExam(e.id,mode),mode==='timed'?'start-mock-timed':'start-mock-study')]:[...rewardInfo(true),primary(REWARD_ACTION,()=>c.watchAdToUnlock(e.id),'unlock-mock',c.rewardBusy||c.ads.mode==='off')]};
+ }
+ if(r.name==='examPause'||(['exam','sheet'].includes(r.name)&&active&&isExamPaused(active))){
+  const e=c.examAttempt(r.id);if(!e||e.status!=='active')return {title:'일시정지',body:[t('진행 중인 모의고사가 없습니다.'),link('회차 목록',go('exams'))]};
+  const pending=c.isExamPausePending;
+  return {title:'일시정지',focus:true,body:[small(e.title),h(pending?'일시정지 저장 확인이 필요합니다':'잠시 쉬어도 괜찮아요'),t(pending?'앱을 닫기 전에 저장을 다시 시도해 주세요.':e.mode==='study'?'문항 위치와 답안을 저장했습니다.':'답안과 남은 시간을 저장했습니다. 쉬는 동안 시간은 줄어들지 않습니다.'),card([small(e.mode==='study'?'학습 모드 · 시간 제한 없음':'남은 풀이 시간'),h(e.mode==='study'?`${e.index+1}번부터 이어서`:formatTime(c.remaining())),t(`응답 ${Object.keys(e.answers).length} · 미응답 ${50-Object.keys(e.answers).length}`)]),small('진행 중인 회차를 제출하면 다른 모의고사를 시작할 수 있습니다.')],footer:pending?[primary('일시정지 저장 다시 시도',async()=>{await c.pauseExam();},'retry-pause')]:[primary('이어서 풀기',async()=>{await c.resumeExam();},'resume-paused-mock'),segments([act('홈으로',()=>c.tab('today'),'pause-home'),act('여기까지 제출',()=>c.requestSubmit(),'pause-submit')])]};
  }
  if(r.name==='exam'||r.name==='sheet'){
   const e=c.examAttempt(r.id);if(!e||e.status!=='active')return {title:'실전',body:[t('진행 중인 응시를 찾을 수 없습니다.'),link('회차 목록',go('exams'))]};
