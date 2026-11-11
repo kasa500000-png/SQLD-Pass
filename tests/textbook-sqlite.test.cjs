@@ -28,3 +28,10 @@ test('compatible textbook upgrade preserves previous slot and snapshot rows even
 test('native repository reloads both mock modes with their immutable complete snapshots',async t=>{
  const x=setup(t);await x.repo.load();const {startExam,submitExam}=require('../.build/core/domain');const clock={wall:10000,mono:10000,runtimeId:'sqlite'};let s={...initialState(content),revision:1};const first=submitExam(startExam(s,content.exams[0],content,clock,'timed','timed'),clock,'manual');s.exams=[first,startExam({...s,exams:[first]},content.exams[1],content,clock,'study','study')];await x.repo.save(s);const restored=await x.repo.load();a.deepEqual(restored.exams,s.exams);a.equal(x.db.prepare('SELECT count(*) AS n FROM exam_snapshot').get().n,2);a.doesNotThrow(()=>parseState(restored,content));
 });
+test('pause transaction preserves immutable snapshot and prior state when a write fails',async t=>{
+ const x=setup(t);await x.repo.load();const {startExam,pauseExam}=require('../.build/core/domain');const clock={wall:10000,mono:10000,runtimeId:'sqlite'};
+ let s={...initialState(content),revision:1,onboarded:true};const attempt=startExam(s,content.exams[0],content,clock,'paused-snapshot');attempt.answers[attempt.snapshots[0].id]='2';s.exams=[attempt];await x.repo.save(s);
+ const snapshot=x.db.prepare('SELECT payload FROM exam_snapshot').get().payload;
+ const paused={...s,revision:2,exams:[pauseExam(attempt,{...clock,wall:15000,mono:15000})]};x.fail(true);await a.rejects(x.repo.save(paused));a.equal((await x.repo.load()).exams[0].pausedAt,null);a.equal(x.db.prepare('SELECT payload FROM exam_snapshot').get().payload,snapshot);
+ x.fail(false);await x.repo.save(paused);const loaded=parseState(await x.repo.load(),content);a.equal(loaded.exams[0].remainingMs,5395000);a.equal(loaded.exams[0].pauseCount,1);a.equal(loaded.exams[0].pausedAt,15000);a.deepEqual(loaded.exams[0].answers,attempt.answers);a.equal(x.db.prepare('SELECT payload FROM exam_snapshot').get().payload,snapshot);
+});

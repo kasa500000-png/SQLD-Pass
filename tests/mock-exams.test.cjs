@@ -95,3 +95,8 @@ test('settings save returns to caller and leaves textbook records intact',async(
  const {ctrl}=await ready();await ctrl.markLesson(c.lessons[0].id);ctrl.navigate({name:'chapter',id:c.textbook.chapters[0].id});ctrl.navigate({name:'settings'});ctrl.draftSettings.fontScale=1.15;await ctrl.saveSettings();
  a.equal(ctrl.route.name,'chapter');a.equal(ctrl.state.settings.fontScale,1.15);a.ok(ctrl.state.readLessons.includes(c.lessons[0].id));
 });
+test('leaving changed settings offers discard; cancel retains draft and save retains learning',async()=>{
+ const {ctrl}=await ready();ctrl.navigate({name:'settings'});ctrl.draftSettings.fontScale=1.3;ctrl.tab('today');a.equal(ctrl.route.name,'settings');a.ok(ctrl.dialog);ctrl.cancelDialog();a.equal(ctrl.draftSettings.fontScale,1.3);a.equal(ctrl.state.settings.fontScale,1);
+ ctrl.back();await ctrl.acceptDialog();a.equal(ctrl.route.name,'home');a.equal(ctrl.draftSettings.fontScale,1);a.equal(ctrl.state.settings.fontScale,1);
+ ctrl.navigate({name:'settings'});ctrl.back();a.equal(ctrl.dialog,null);a.equal(ctrl.route.name,'home');
+});
