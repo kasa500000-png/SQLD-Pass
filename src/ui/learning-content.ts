@@ -3,9 +3,8 @@ import {box,text,learningType,type Node,type Palette} from './nodes';
 /** Presentation only: never rewrites authored stems, SQL or answer strings. */
 export function questionPrompt(stem:string,p:Palette):Node {
   return box([
-    text('문제',{...learningType.meta,color:p.muted}),
     {...text(stem,{...learningType.question,color:p.ink}),heading:true},
-  ],{padding:16,gap:8,borderRadius:16,backgroundColor:p.surface});
+  ],{padding:12,gap:8,borderRadius:12,backgroundColor:p.surface});
 }
 export function answerSummary(selected:string|undefined,answer:string,p:Palette):Node {
   const correct=selected===answer;

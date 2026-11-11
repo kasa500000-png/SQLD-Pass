@@ -62,8 +62,8 @@ test('new content cannot reuse previous store approval',()=>{
 test('daily assignment stays fixed after completing a section and is recalculated on a new day',async()=>{
  const {controller:ctrl}=setup();await ctrl.initialize();await ctrl.saveSettings(true);const before=structuredClone(ctrl.state.textbookDay);await ctrl.markLesson(before.sectionIds[0]);a.deepEqual(ctrl.state.textbookDay,before);const {withDailyPlan}=require('../.build/textbook/learning');const next=withDailyPlan(ctrl.state,c,ctrl.services.clock().wall+86400000);a.notEqual(next.textbookDay.day,before.day);a.ok(!next.textbookDay.sectionIds.includes(before.sectionIds[0]));
 });
-test('lesson and practice screens retain their parent tab selection',async()=>{
- const {controller:ctrl}=setup();await ctrl.initialize();await ctrl.saveSettings(true);ctrl.route={name:'lesson',id:c.lessons[0].id};a.equal(flat(renderTextbook(ctrl)).find(n=>n.testId==='tab-learn').selected,true);await ctrl.beginPractice([Object.keys(c.questions)[0]]);a.equal(flat(renderTextbook(ctrl)).find(n=>n.testId==='tab-review').selected,true);
+test('lesson retains its tab and active practice uses focused navigation',async()=>{
+ const {controller:ctrl}=setup();await ctrl.initialize();await ctrl.saveSettings(true);ctrl.route={name:'lesson',id:c.lessons[0].id};a.equal(flat(renderTextbook(ctrl)).find(n=>n.testId==='tab-learn').selected,true);await ctrl.beginPractice([Object.keys(c.questions)[0]]);a.equal(flat(renderTextbook(ctrl)).filter(n=>n.role==='tab').length,0);
 });
 test('screen navigation offsets are isolated, validated and never persisted as learning',async()=>{
  const env=setup(),ctrl=env.controller;await ctrl.initialize();const before=JSON.stringify(env.stored());

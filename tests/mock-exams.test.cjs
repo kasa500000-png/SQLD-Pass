@@ -100,3 +100,10 @@ test('leaving changed settings offers discard; cancel retains draft and save ret
  ctrl.back();await ctrl.acceptDialog();a.equal(ctrl.route.name,'home');a.equal(ctrl.draftSettings.fontScale,1);a.equal(ctrl.state.settings.fontScale,1);
  ctrl.navigate({name:'settings'});ctrl.back();a.equal(ctrl.dialog,null);a.equal(ctrl.route.name,'home');
 });
+
+test('focused practice exits and resumes its durable selection without showing answers early',async()=>{
+ const {ctrl}=await ready(),q=Object.values(c.questions).find(q=>q.pool==='chapter');await ctrl.beginPractice([q.id]);await ctrl.selectPractice('1');
+ const nodes=flat(renderTextbook(ctrl));a.equal(nodes.filter(n=>n.role==='tab').length,0);a.ok(!text(ctrl).includes(q.explanation));
+ await nodes.find(n=>n.testId==='leave-practice').action();a.notEqual(ctrl.route.name,'practice');await ctrl.resumePractice();a.equal(ctrl.state.practice.selected,'1');a.equal(ctrl.state.practice.submitted,false);
+ await ctrl.answerPractice();const after=flat(renderTextbook(ctrl));a.ok(after.findIndex(n=>n.text===q.explanation)<after.findIndex(n=>n.testId==='option-1'));
+});
