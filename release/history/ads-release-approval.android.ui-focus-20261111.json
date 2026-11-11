@@ -1,0 +1,15 @@
+{
+  "platform": "android",
+  "policyVersion": "2026-09-30.1",
+  "codeSha256": "ae1519839ec8ee6de0289bf6a4a864cf588580ce8deef5adecab63201ffebc5f",
+  "androidDeviceEvidence": "qa/UI_FOCUS_034_20261111.md and qa/evidence/ui-focus-034-20261111/android: physical SM-F721N Android16 official-test build0.3.4(20). 0.3.3 upgrade preserved answers, flag, position, frozen01:29:50 and old exam history. Submit while solving, cancel/re-submit, correct1/wrong1/unanswered48, original score preserved after review. Final date-clear delta rebuilt and installed.",
+  "androidConsentEvidence": "Current0.3.4 physical Korean-region flow: adult eligibility cancel produces no banner; confirm invokes UMP and official test banner renders (30-32). EEA allow/reject/withdraw is historical evidence in qa/RELEASE_TEXTBOOK_20261109.md; no new regional rerun claimed. Consent, SDK and policy unchanged.",
+  "adPlacementEvidence": "Current physical test reward M05 earned then unlocked (33-36); final test APK reinstall preserves M05 grant (45). Interrupted unearned M09 stays locked (46). Active paused timed/study suppress home banner. Native app-owned dialogs do not falsely pause; notification shade does pause. Both AdMob automatic banner refresh disabled verified2026-11-11.",
+  "sdkCompatibilityEvidence": "Android release test20 APK built/installed/operated on SM-F721N. 436tests and core/native types passed, Expo doctor21/21. AdMob both SQLD apps Ready/serving enabled. Signed production artifact verification recorded separately before upload.",
+  "appAdsTxtEvidence": "2026-11-11 browser public app-ads.txt displays google.com pub-9314207769680999 DIRECT f08c47fec0942fa0; AdMob both SQLD apps Ready. qa/evidence/ui-focus-034-20261111/app-ads.txt and admob-status.json.",
+  "privacyDisclosureEvidence": "SDK, collection, targeting, consent and entitlement policy unchanged. Preserve Google Play Ads YES/Data Safety inventory reviewed2026-11-09, current public privacy and local-only learner data. New UI disclosure remains visible. No new privacy category introduced.",
+  "privacyUrl": "https://sqld-pass-support.shk1122.chatgpt.site/privacy.html",
+  "supportUrl": "https://sqld-pass-support.shk1122.chatgpt.site/support.html",
+  "approvedBy": "Owner explicitly authorized per-task PRs, commits and both production releases2026-11-11, with existing live-ad authorization. Android-specific current build/device evidence; this file does not authorize iOS.",
+  "approvedAt": "2026-11-11T12:48:02.785Z"
+}

@@ -1,0 +1,173 @@
+Attributes: Application, 0x10fc75a40, pid: 55803, label: 'SQLD Pass'
+Element subtree:
+ →Application, 0x10fc75a40, pid: 55803, label: 'SQLD Pass'
+    Window (Main), 0x10fc75900, {{0.0, 0.0}, {375.0, 667.0}}
+      Other, 0x10fc757c0, {{0.0, 0.0}, {375.0, 667.0}}
+        Other, 0x10fc75680, {{0.0, 0.0}, {375.0, 667.0}}
+          Other, 0x10fc75540, {{0.0, 0.0}, {375.0, 667.0}}
+            Other, 0x10fc75400, {{0.0, 0.0}, {375.0, 667.0}}
+              Other, 0x10fc752c0, {{0.0, 0.0}, {375.0, 667.0}}
+                Other, 0x10fc75180, {{0.0, 0.0}, {375.0, 667.0}}
+                  Other, 0x10fc75040, {{0.0, 0.0}, {375.0, 667.0}}
+                    Other, 0x10fc74f00, {{0.0, 20.0}, {375.0, 647.0}}
+                      Other, 0x10fc74dc0, {{0.0, 20.0}, {375.0, 64.0}}
+                      Other, 0x10fc74b40, {{0.0, 20.0}, {375.0, 64.0}}
+                      Other, 0x10fc74c80, {{0.0, 20.0}, {375.0, 647.0}}
+                      Button, 0x10fc748c0, {{16.0, 28.0}, {48.0, 48.0}}, label: '뒤로'
+                      Button, 0x10fc74a00, {{311.0, 28.0}, {48.0, 48.0}}, label: '설정'
+                      StaticText, 0x10fc74640, {{74.0, 37.5}, {227.0, 29.0}}, label: '문항 해설'
+                        StaticText, 0x10fc74780, {{74.0, 37.5}, {227.0, 29.0}}, label: '문항 해설'
+                      Other, 0x10fc743c0, {{0.0, 84.0}, {375.0, 64.0}}
+                      Other, 0x10fc74500, {{0.0, 84.0}, {375.0, 64.0}}, identifier: 'screen-header'
+                      Button, 0x10fc74280, {{16.0, 92.0}, {110.5, 48.0}}, identifier: 'mock-result-all', label: '전체'
+                      Button, 0x10fc74140, {{132.5, 92.0}, {110.0, 48.0}}, identifier: 'mock-result-wrong', label: '오답·미응답', Selected
+                      Button, 0x10fc74000, {{248.5, 92.0}, {110.5, 48.0}}, identifier: 'mock-result-flagged', label: '검토'
+                      Other, 0x10fc77840, {{0.0, 148.0}, {375.0, 370.0}}
+                        ScrollView, 0x10fc770c0, {{0.0, 148.0}, {375.0, 370.0}}
+                          Other, 0x10fc77200, {{0.0, -620.0}, {375.0, 1308.0}}
+                            Other, 0x10fc77340, {{0.0, -620.0}, {375.0, 1308.0}}
+                              Other, 0x10fc77480, {{0.0, -620.0}, {375.0, 667.0}}
+                              Button, 0x10fc77e80, {{279.0, -604.0}, {80.0, 48.0}}, identifier: 'result-summary', label: '결과 요약'
+                              StaticText, 0x10fc77c00, {{16.0, -590.0}, {72.0, 20.0}}, label: '문항 3 · 2/49'
+                                StaticText, 0x10fc77d40, {{16.0, -590.0}, {72.0, 20.0}}, label: '문항 3 · 2/49'
+                              StaticText, 0x10fc77980, {{16.0, -532.0}, {343.0, 28.0}}, label: '미응답 문항입니다'
+                                StaticText, 0x10fc77ac0, {{16.0, -532.0}, {343.0, 28.0}}, label: '미응답 문항입니다'
+                              StaticText, 0x10fc766c0, {{16.0, -496.0}, {343.0, 28.0}}, label: '내 답: 미응답 · 정답: 2번'
+                                StaticText, 0x10fc775c0, {{16.0, -496.0}, {343.0, 28.0}}, label: '내 답: 미응답 · 정답: 2번'
+                              StaticText, 0x10fc75b80, {{16.0, -444.0}, {343.0, 28.0}}, label: '해설'
+                                StaticText, 0x10fc75cc0, {{16.0, -444.0}, {343.0, 28.0}}, label: '해설'
+                              StaticText, 0x10fc75e00, {{16.0, -404.0}, {343.0, 168.0}}, label: 'ㄱ. 틀림 — 인조키의 유일성과 업무 값 조합의 유일성은 다릅니다.
+ㄴ. 틀림 — 주식별자로 사용하려면 유일성을 만족해야 합니다.
+ㄷ. 옳음 — 참조 편의와 업무 무결성은 모두 중요합니다.'
+                                StaticText, 0x10fc75f40, {{16.0, -404.0}, {343.0, 168.0}}, label: 'ㄱ. 틀림 — 인조키의 유일성과 업무 값 조합의 유일성은 다릅니다.
+ㄴ. 틀림 — 주식별자로 사용하려면 유일성을 만족해야 합니다.
+ㄷ. 옳음 — 참조 편의와 업무 무결성은 모두 중요합니다.'
+                              Button, 0x10fc76080, {{16.0, -224.0}, {343.0, 48.0}}, identifier: 'review-original', label: '문제와 제출한 답안'
+                                Other, 0x10fc761c0, {{331.0, -209.5}, {18.0, 18.0}}
+                                  Other, 0x10fc76300, {{331.0, -209.5}, {18.0, 18.0}}
+                                    Other, 0x10fc76440, {{334.8, -203.5}, {10.5, 6.0}}
+                                      Other, 0x10fc76580, {{334.8, -203.5}, {10.5, 6.0}}
+                              StaticText, 0x10fc76e40, {{16.0, -164.0}, {343.0, 28.0}}, label: '보기별 판단 근거'
+                                StaticText, 0x10fc76f80, {{16.0, -164.0}, {343.0, 28.0}}, label: '보기별 판단 근거'
+                              StaticText, 0x10fc76d00, {{16.0, -116.0}, {343.0, 20.0}}, label: '1번 · 오답'
+                                StaticText, 0x10fc76bc0, {{16.0, -116.0}, {343.0, 20.0}}, label: '1번 · 오답'
+                              StaticText, 0x10fc76a80, {{16.0, -90.0}, {343.0, 84.0}}, label: 'ㄴ은 틀립니다: 주식별자로 사용하려면 유일성을 만족해야 합니다. ㄷ도 옳습니다: 참조 편의와 업무 무결성은 모두 중요합니다.'
+                                StaticText, 0x10fc76940, {{16.0, -90.0}, {343.0, 84.0}}, label: 'ㄴ은 틀립니다: 주식별자로 사용하려면 유일성을 만족해야 합니다. ㄷ도 옳습니다: 참조 편의와 업무 무결성은 모두 중요합니다.'
+                              StaticText, 0x10fc76800, {{16.0, 22.0}, {343.0, 20.0}}, label: '2번 · 정답'
+                                StaticText, 0x10f4b9cc0, {{16.0, 22.0}, {343.0, 20.0}}, label: '2번 · 정답'
+                              StaticText, 0x10f4ba6c0, {{16.0, 48.0}, {343.0, 168.0}}, label: 'ㄱ. 틀림 — 인조키의 유일성과 업무 값 조합의 유일성은 다릅니다.
+ㄴ. 틀림 — 주식별자로 사용하려면 유일성을 만족해야 합니다.
+ㄷ. 옳음 — 참조 편의와 업무 무결성은 모두 중요합니다.'
+                                StaticText, 0x10f4b8500, {{16.0, 48.0}, {343.0, 168.0}}, label: 'ㄱ. 틀림 — 인조키의 유일성과 업무 값 조합의 유일성은 다릅니다.
+ㄴ. 틀림 — 주식별자로 사용하려면 유일성을 만족해야 합니다.
+ㄷ. 옳음 — 참조 편의와 업무 무결성은 모두 중요합니다.'
+                              StaticText, 0x10f4b9e00, {{16.0, 244.0}, {343.0, 20.0}}, label: '3번 · 오답'
+                                StaticText, 0x10f4bb980, {{16.0, 244.0}, {343.0, 20.0}}, label: '3번 · 오답'
+                              StaticText, 0x10f4b8780, {{16.0, 270.0}, {343.0, 56.0}}, label: 'ㄱ은 틀립니다: 인조키의 유일성과 업무 값 조합의 유일성은 다릅니다.'
+                                StaticText, 0x10f4b8640, {{16.0, 270.0}, {343.0, 56.0}}, label: 'ㄱ은 틀립니다: 인조키의 유일성과 업무 값 조합의 유일성은 다릅니다.'
+                              StaticText, 0x10f4b9f40, {{16.0, 354.0}, {343.0, 20.0}}, label: '4번 · 오답'
+                                StaticText, 0x10f4b83c0, {{16.0, 354.0}, {343.0, 20.0}}, label: '4번 · 오답'
+                              StaticText, 0x10f4ba1c0, {{16.0, 380.0}, {343.0, 84.0}}, label: 'ㄱ은 틀립니다: 인조키의 유일성과 업무 값 조합의 유일성은 다릅니다. ㄷ도 옳습니다: 참조 편의와 업무 무결성은 모두 중요합니다.'
+                                StaticText, 0x10f4ba440, {{16.0, 380.0}, {343.0, 84.0}}, label: 'ㄱ은 틀립니다: 인조키의 유일성과 업무 값 조합의 유일성은 다릅니다. ㄷ도 옳습니다: 참조 편의와 업무 무결성은 모두 중요합니다.'
+                              Button, 0x10f4ba080, {{16.0, 484.0}, {343.0, 68.0}}, identifier: 'mock-theory', label: '관련 교재 읽기
+본질·인조식별자와 무결성의 연결'
+                              Button, 0x10f4ba580, {{16.0, 564.0}, {168.5, 48.0}}, identifier: 'save-mock-question', label: '문항 저장'
+                              Button, 0x10f4b8000, {{190.5, 564.0}, {168.5, 48.0}}, identifier: 'toggle-mock-note', label: '오답 메모'
+                              Button, 0x10f4ba300, {{16.0, 624.0}, {343.0, 48.0}}, identifier: 'mock-evidence', label: '근거 자료·검산 방식'
+                          Other, 0x10f4bf5c0, {{342.0, 148.0}, {30.0, 370.0}}, label: 'Vertical scroll bar, 4 pages', value: 82%
+                            Other, 0x10f4be800, {{369.0, 364.5}, {3.0, 103.0}}
+                          Other, 0x10f4bf0c0, {{0.0, 485.0}, {375.0, 30.0}}, label: 'Horizontal scroll bar, 1 page', value: 0%
+                            Other, 0x10f4bdf40, {{3.0, 512.0}, {366.0, 3.0}}
+                          Other, 0x10f4bee40, {{342.0, 148.0}, {30.0, 370.0}}, label: 'Vertical scroll bar, 4 pages', value: 82%
+                            Other, 0x10f4bea80, {{369.0, 364.5}, {3.0, 103.0}}
+                          Other, 0x10f4be080, {{0.0, 485.0}, {375.0, 30.0}}, label: 'Horizontal scroll bar, 1 page', value: 0%
+                            Other, 0x10f4be440, {{3.0, 512.0}, {366.0, 3.0}}
+                      Other, 0x10f4bf480, {{0.0, 518.0}, {375.0, 69.0}}
+                      Other, 0x10f4bed00, {{0.0, 519.0}, {375.0, 68.0}}, identifier: 'screen-footer'
+                      Button, 0x10f9f2a80, {{16.0, 529.0}, {50.0, 48.0}}, identifier: 'mock-review-previous', label: '이전'
+                      Button, 0x10f9f1f40, {{147.5, 529.0}, {80.0, 48.0}}, identifier: 'review-picker', label: '문항 선택'
+                      Button, 0x10f9f1a40, {{309.0, 529.0}, {50.0, 48.0}}, identifier: 'mock-review-next', label: '다음'
+                      Other, 0x10f9f1900, {{0.0, 587.0}, {375.0, 80.0}}
+                      Other, 0x10f9f3c00, {{0.0, 588.0}, {375.0, 79.0}}
+                      Other, 0x10f9f1e00, {{16.0, 596.0}, {68.5, 63.0}}, identifier: 'tab-today', label: '홈'
+                      Other, 0x10f9f1b80, {{84.5, 596.0}, {68.5, 63.0}}, identifier: 'tab-learn', label: '교재'
+                      Other, 0x10f9f0000, {{153.0, 596.0}, {69.0, 63.0}}, identifier: 'tab-review', label: '문제'
+                      Other, 0x10f9f1cc0, {{222.0, 596.0}, {68.5, 63.0}}, identifier: 'tab-exams', label: '실전', Selected
+                      Other, 0x10f9f0140, {{290.5, 596.0}, {68.5, 63.0}}, identifier: 'tab-records', label: '기록'
+      Other, 0x10f9f2940, {{0.0, 0.0}, {375.0, 667.0}}
+        Other, 0x10693ef80, {{0.0, 0.0}, {375.0, 667.0}}
+          Other, 0x10693fe80, {{0.0, 0.0}, {375.0, 667.0}}
+            Other, 0x10fc721c0, {{0.0, 0.0}, {375.0, 667.0}}
+              Other, 0x10fc72300, {{16.0, 40.0}, {343.0, 615.0}}
+                ScrollView, 0x10fc72080, {{16.0, 40.0}, {343.0, 615.0}}
+                  Other, 0x10fc71a40, {{16.0, 40.0}, {343.0, 1018.0}}
+                    Other, 0x10fc71900, {{16.0, 40.0}, {343.0, 1018.0}}
+                      Other, 0x10fc717c0, {{16.0, 40.0}, {343.0, 1018.0}}
+                      Button, 0x10fc73c00, {{294.0, 55.0}, {50.0, 48.0}}, label: '닫기'
+                      StaticText, 0x10fc70dc0, {{31.0, 65.0}, {70.5, 28.0}}, label: '문항 선택'
+                        StaticText, 0x10fc70c80, {{31.0, 65.0}, {70.5, 28.0}}, label: '문항 선택'
+                      Button, 0x10fc73980, {{31.0, 113.0}, {69.5, 56.0}}, identifier: 'review-jump-2', label: '2번, 오답'
+                      Button, 0x10fc73d40, {{112.5, 113.0}, {69.0, 56.0}}, identifier: 'review-jump-3', label: '3번, 미응답', Selected
+                      Button, 0x10fc73700, {{193.5, 113.0}, {69.5, 56.0}}, identifier: 'review-jump-4', label: '4번, 미응답'
+                      Button, 0x10fc73e80, {{275.0, 113.0}, {69.0, 56.0}}, identifier: 'review-jump-5', label: '5번, 미응답'
+                      Button, 0x10fc73480, {{31.0, 181.0}, {69.5, 56.0}}, identifier: 'review-jump-6', label: '6번, 미응답'
+                      Button, 0x10fc708c0, {{112.5, 181.0}, {69.0, 56.0}}, identifier: 'review-jump-7', label: '7번, 미응답'
+                      Button, 0x10fc70a00, {{193.5, 181.0}, {69.5, 56.0}}, identifier: 'review-jump-8', label: '8번, 미응답'
+                      Button, 0x10fc70780, {{275.0, 181.0}, {69.0, 56.0}}, identifier: 'review-jump-9', label: '9번, 미응답'
+                      Button, 0x10fc70640, {{31.0, 249.0}, {69.5, 56.0}}, identifier: 'review-jump-10', label: '10번, 미응답'
+                      Button, 0x10fc735c0, {{112.5, 249.0}, {69.0, 56.0}}, identifier: 'review-jump-11', label: '11번, 미응답'
+                      Button, 0x10fc70000, {{193.5, 249.0}, {69.5, 56.0}}, identifier: 'review-jump-12', label: '12번, 미응답'
+                      Button, 0x10fc730c0, {{275.0, 249.0}, {69.0, 56.0}}, identifier: 'review-jump-13', label: '13번, 미응답'
+                      Button, 0x10fc73200, {{31.0, 317.0}, {69.5, 56.0}}, identifier: 'review-jump-14', label: '14번, 미응답'
+                      Button, 0x10fc703c0, {{112.5, 317.0}, {69.0, 56.0}}, identifier: 'review-jump-15', label: '15번, 미응답'
+                      Button, 0x10fc70140, {{193.5, 317.0}, {69.5, 56.0}}, identifier: 'review-jump-16', label: '16번, 미응답'
+                      Button, 0x10fc70500, {{275.0, 317.0}, {69.0, 56.0}}, identifier: 'review-jump-17', label: '17번, 미응답'
+                      Button, 0x10fc70280, {{31.0, 385.0}, {69.5, 56.0}}, identifier: 'review-jump-18', label: '18번, 미응답'
+                      Button, 0x10fc73340, {{112.5, 385.0}, {69.0, 56.0}}, identifier: 'review-jump-19', label: '19번, 미응답'
+                      Button, 0x10fa00000, {{193.5, 385.0}, {69.5, 56.0}}, identifier: 'review-jump-20', label: '20번, 미응답'
+                      Button, 0x10fa00140, {{275.0, 385.0}, {69.0, 56.0}}, identifier: 'review-jump-21', label: '21번, 미응답'
+                      Button, 0x10fa00280, {{31.0, 453.0}, {69.5, 56.0}}, identifier: 'review-jump-22', label: '22번, 미응답'
+                      Button, 0x10fa003c0, {{112.5, 453.0}, {69.0, 56.0}}, identifier: 'review-jump-23', label: '23번, 미응답'
+                      Button, 0x10fa00500, {{193.5, 453.0}, {69.5, 56.0}}, identifier: 'review-jump-24', label: '24번, 미응답'
+                      Button, 0x10fa00640, {{275.0, 453.0}, {69.0, 56.0}}, identifier: 'review-jump-25', label: '25번, 미응답'
+                      Button, 0x10fa00780, {{31.0, 521.0}, {69.5, 56.0}}, identifier: 'review-jump-26', label: '26번, 미응답'
+                      Button, 0x10fa008c0, {{112.5, 521.0}, {69.0, 56.0}}, identifier: 'review-jump-27', label: '27번, 미응답'
+                      Button, 0x10fa00a00, {{193.5, 521.0}, {69.5, 56.0}}, identifier: 'review-jump-28', label: '28번, 미응답'
+                      Button, 0x10fa00b40, {{275.0, 521.0}, {69.0, 56.0}}, identifier: 'review-jump-29', label: '29번, 미응답'
+                      Button, 0x10fa00c80, {{31.0, 589.0}, {69.5, 56.0}}, identifier: 'review-jump-30', label: '30번, 미응답'
+                      Button, 0x10fa00dc0, {{112.5, 589.0}, {69.0, 56.0}}, identifier: 'review-jump-31', label: '31번, 미응답'
+                      Button, 0x10fa00f00, {{193.5, 589.0}, {69.5, 56.0}}, identifier: 'review-jump-32', label: '32번, 미응답'
+                      Button, 0x10fa01040, {{275.0, 589.0}, {69.0, 56.0}}, identifier: 'review-jump-33', label: '33번, 미응답'
+                      Button, 0x10fa01180, {{31.0, 657.0}, {69.5, 56.0}}, identifier: 'review-jump-34', label: '34번, 미응답'
+                      Button, 0x10fa012c0, {{112.5, 657.0}, {69.0, 56.0}}, identifier: 'review-jump-35', label: '35번, 미응답'
+                      Button, 0x10fa01400, {{193.5, 657.0}, {69.5, 56.0}}, identifier: 'review-jump-36', label: '36번, 미응답'
+                      Button, 0x10fa01540, {{275.0, 657.0}, {69.0, 56.0}}, identifier: 'review-jump-37', label: '37번, 미응답'
+                      Button, 0x10fa01680, {{31.0, 725.0}, {69.5, 56.0}}, identifier: 'review-jump-38', label: '38번, 미응답'
+                      Button, 0x10fa017c0, {{112.5, 725.0}, {69.0, 56.0}}, identifier: 'review-jump-39', label: '39번, 미응답'
+                      Button, 0x10fa01900, {{193.5, 725.0}, {69.5, 56.0}}, identifier: 'review-jump-40', label: '40번, 미응답'
+                      Button, 0x10fa01a40, {{275.0, 725.0}, {69.0, 56.0}}, identifier: 'review-jump-41', label: '41번, 미응답'
+                      Button, 0x10fa01b80, {{31.0, 793.0}, {69.5, 56.0}}, identifier: 'review-jump-42', label: '42번, 미응답'
+                      Button, 0x10fa01cc0, {{112.5, 793.0}, {69.0, 56.0}}, identifier: 'review-jump-43', label: '43번, 미응답'
+                      Button, 0x10fa01e00, {{193.5, 793.0}, {69.5, 56.0}}, identifier: 'review-jump-44', label: '44번, 미응답'
+                      Button, 0x10fa01f40, {{275.0, 793.0}, {69.0, 56.0}}, identifier: 'review-jump-45', label: '45번, 미응답'
+                      Button, 0x10fa02080, {{31.0, 861.0}, {69.5, 56.0}}, identifier: 'review-jump-46', label: '46번, 미응답'
+                      Button, 0x10fa021c0, {{112.5, 861.0}, {69.0, 56.0}}, identifier: 'review-jump-47', label: '47번, 미응답'
+                      Button, 0x10fa02300, {{193.5, 861.0}, {69.5, 56.0}}, identifier: 'review-jump-48', label: '48번, 미응답'
+                      Button, 0x10fa02440, {{275.0, 861.0}, {69.0, 56.0}}, identifier: 'review-jump-49', label: '49번, 미응답'
+                      Button, 0x10fa02580, {{31.0, 929.0}, {69.5, 56.0}}, identifier: 'review-jump-50', label: '50번, 미응답'
+                      Button, 0x10fa026c0, {{31.0, 995.0}, {313.0, 48.0}}, label: '닫기'
+                  Other, 0x10fa02800, {{326.0, 40.0}, {30.0, 615.0}}, label: 'Vertical scroll bar, 2 pages', value: 0%
+                    Other, 0x10fa02940, {{353.0, 38.0}, {3.0, 36.0}}
+                  Other, 0x10fa02a80, {{16.0, 622.0}, {343.0, 30.0}}, label: 'Horizontal scroll bar, 1 page', value: 0%
+                    Other, 0x10fa02bc0, {{19.0, 649.0}, {206.5, 3.0}}
+                  Other, 0x10fa02d00, {{326.0, 40.0}, {30.0, 615.0}}, label: 'Vertical scroll bar, 2 pages', value: 0%
+                    Other, 0x10fa02e40, {{353.0, 38.0}, {3.0, 36.0}}
+                  Other, 0x10fa02f80, {{16.0, 622.0}, {343.0, 30.0}}, label: 'Horizontal scroll bar, 1 page', value: 0%
+                    Other, 0x10fa030c0, {{19.0, 649.0}, {206.5, 3.0}}
+Path to element:
+ →Application, 0x10fc75a40, pid: 55803, label: 'SQLD Pass'
+Query chain:
+ →Find: Application 'com.sqldpass.app.adsqa'
+  Output: {
+    Application, 0x10fa03200, pid: 55803, label: 'SQLD Pass'
+  }

@@ -1,0 +1,38 @@
+{
+  "version": "0.3.4",
+  "versionCode": 20,
+  "package": "com.kasa500000.sqldpass",
+  "extra": {
+    "appEnvironment": "production",
+    "contentReleaseReady": true,
+    "productionContentApproval": {
+      "schemaVersion": 1,
+      "approved": true,
+      "contentSha256": "1f7a60245d9b75a19ad733dca7fc281539d73ebdc0fcfa25fd5a959ebd7d589d",
+      "contentVersion": "textbook.20261109.2"
+    },
+    "adsRuntimeEnabled": true,
+    "adsMode": "live",
+    "examAccessPolicy": "rewarded",
+    "remoteAnalyticsEnabled": false,
+    "eas": {
+      "projectId": "9c3d6489-bfb8-426a-9a6c-8673fa3c07f0"
+    }
+  },
+  "androidAdMobAppId": "ca-app-pub-9314207769680999~2504786470",
+  "adIdPermissionPresent": false,
+  "uploadCertificateSha256": "ea1e8482b51d7a905271eecdabf840e244adcfaaed7da559329cb929e7171942",
+  "files": [
+    {
+      "name": "SQLDPass20.apk",
+      "sha256": "8f301524ded8372220248c4b5558c5ffaeb42f64b978cc2100cc25242159f128",
+      "bytes": 97951884
+    },
+    {
+      "name": "SQLDPass20.aab",
+      "sha256": "fba5e897a32ef3e399ee1d4093697c6dea654ba72d73ae514910875c72cafc8c",
+      "bytes": 66237434
+    }
+  ],
+  "alignment": "36 libraries checked; no failures"
+}

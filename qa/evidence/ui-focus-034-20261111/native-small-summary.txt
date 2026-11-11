@@ -1,0 +1,2 @@
+Test Case '-[CaptureTests.CaptureTests testLearningJourneys]' passed (174.399 seconds).
+** TEST SUCCEEDED **

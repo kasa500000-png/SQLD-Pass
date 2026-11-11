@@ -1,0 +1,61 @@
+Attributes: Application, 0x11101f980, pid: 47048, label: 'SQLD Pass'
+Element subtree:
+ →Application, 0x11101f980, pid: 47048, label: 'SQLD Pass'
+    Window (Main), 0x11101ebc0, {{0.0, 0.0}, {402.0, 874.0}}
+      Other, 0x11101ed00, {{0.0, 0.0}, {402.0, 874.0}}
+        Other, 0x11101ee40, {{0.0, 0.0}, {402.0, 874.0}}
+          Other, 0x11101ef80, {{0.0, 0.0}, {402.0, 874.0}}
+            Other, 0x11101f0c0, {{0.0, 0.0}, {402.0, 874.0}}
+              Other, 0x11101f200, {{0.0, 0.0}, {402.0, 874.0}}
+                Other, 0x11101f340, {{0.0, 0.0}, {402.0, 874.0}}
+                  Other, 0x11101f480, {{0.0, 0.0}, {402.0, 874.0}}
+                    Other, 0x11101f5c0, {{0.0, 62.0}, {402.0, 778.0}}
+                      Other, 0x11101fac0, {{0.0, 62.0}, {402.0, 64.0}}
+                      Other, 0x11101fc00, {{0.0, 62.0}, {402.0, 64.0}}
+                      Other, 0x11101fe80, {{0.0, 62.0}, {402.0, 778.0}}
+                      Button, 0x11101fd40, {{16.0, 70.0}, {63.0, 48.0}}, identifier: 'leave-practice', label: '나가기'
+                      StaticText, 0x11101f700, {{89.0, 79.3}, {297.0, 29.0}}, label: '문제풀이'
+                        StaticText, 0x11101f840, {{89.0, 79.3}, {297.0, 29.0}}, label: '문제풀이'
+                      Other, 0x11101e800, {{0.0, 126.0}, {402.0, 64.0}}
+                      Other, 0x11101e940, {{0.0, 126.0}, {402.0, 64.0}}, identifier: 'screen-header'
+                      Button, 0x11101ea80, {{323.0, 134.0}, {63.0, 48.0}}, identifier: 'uncertain', label: '헷갈림'
+                      StaticText, 0x11101d040, {{16.0, 148.0}, {47.0, 20.0}}, label: '1 / 5문항'
+                        StaticText, 0x11101d180, {{16.0, 148.0}, {47.0, 20.0}}, label: '1 / 5문항'
+                      StaticText, 0x11101d2c0, {{279.0, 148.0}, {34.0, 20.0}}, label: '선택됨'
+                        StaticText, 0x11101d400, {{279.0, 148.0}, {34.0, 20.0}}, label: '선택됨'
+                      Other, 0x11101c8c0, {{0.0, 190.0}, {402.0, 581.0}}
+                        ScrollView, 0x11101ca00, {{0.0, 190.0}, {402.0, 581.0}}
+                          Other, 0x11101cb40, {{0.0, 190.0}, {402.0, 420.0}}
+                            Other, 0x11101cc80, {{0.0, 190.0}, {402.0, 420.0}}
+                              Other, 0x11101cdc0, {{16.0, 206.0}, {370.0, 82.0}}
+                              StaticText, 0x11101c280, {{28.0, 218.0}, {346.0, 58.0}}, label: '다음 중 논리적 모델링의 작업으로 가장 적절한 것은?'
+                                StaticText, 0x11101cf00, {{28.0, 218.0}, {346.0, 58.0}}, label: '다음 중 논리적 모델링의 작업으로 가장 적절한 것은?'
+                              Other, 0x11101e580, {{16.0, 300.0}, {370.0, 58.0}}, identifier: 'option-1', label: '1. 앱 버튼의 그림자를 조정한다.', value: radio button, unch...
+                                Other, 0x11101e440, {{29.0, 315.0}, {28.0, 28.0}}
+                              Other, 0x11101e300, {{16.0, 370.0}, {370.0, 84.0}}, identifier: 'option-2', label: '2. 업무 식별자와 속성을 구체화하고 N:M 관계를 분석한다.', value: radio button, chec..., Selected
+                                Other, 0x11101e1c0, {{30.0, 386.0}, {28.0, 28.0}}
+                              Other, 0x11101e080, {{16.0, 466.0}, {370.0, 58.0}}, identifier: 'option-3', label: '3. 데이터 파일을 어떤 디스크에 둘지 정한다.', value: radio button, unch...
+                                Other, 0x11101df40, {{29.0, 481.0}, {28.0, 28.0}}
+                              Other, 0x11101dcc0, {{16.0, 536.0}, {370.0, 58.0}}, identifier: 'option-4', label: '4. 서버의 전원 케이블을 교체한다.', value: radio button, unch...
+                                Other, 0x11101de00, {{29.0, 551.0}, {28.0, 28.0}}
+                          Other, 0x11101da40, {{369.0, 190.0}, {30.0, 581.0}}, label: 'Vertical scroll bar, 1 page', value: 0%
+                            Other, 0x11101db80, {{396.0, 193.0}, {3.0, 36.0}}
+                          Other, 0x11101d7c0, {{0.0, 738.0}, {402.0, 30.0}}, label: 'Horizontal scroll bar, 1 page', value: 0%
+                            Other, 0x11101d900, {{3.0, 765.0}, {393.0, 3.0}}
+                          Other, 0x11101d540, {{369.0, 190.0}, {30.0, 581.0}}, label: 'Vertical scroll bar, 1 page', value: 0%
+                            Other, 0x11101d680, {{396.0, 193.0}, {3.0, 36.0}}
+                          Other, 0x11101c3c0, {{0.0, 738.0}, {402.0, 30.0}}, label: 'Horizontal scroll bar, 1 page', value: 0%
+                            Other, 0x11101c500, {{3.0, 765.0}, {393.0, 3.0}}
+                      Other, 0x11101c640, {{0.0, 771.0}, {402.0, 69.0}}
+                      Other, 0x11101c780, {{0.0, 772.0}, {402.0, 68.0}}, identifier: 'screen-footer'
+                      Button, 0x11101c000, {{16.0, 782.0}, {370.0, 48.0}}, identifier: 'submit-question', label: '답안 확인'
+    Window, 0x11101c140, {{0.0, 0.0}, {402.0, 874.0}}
+      Other, 0x1109bdf40, {{0.0, 0.0}, {402.0, 874.0}}
+        Other, 0x1109bfe80, {{0.0, 0.0}, {402.0, 874.0}}
+Path to element:
+ →Application, 0x11101f980, pid: 47048, label: 'SQLD Pass'
+Query chain:
+ →Find: Application 'com.sqldpass.app.adsqa'
+  Output: {
+    Application, 0x1109bf980, pid: 47048, label: 'SQLD Pass'
+  }

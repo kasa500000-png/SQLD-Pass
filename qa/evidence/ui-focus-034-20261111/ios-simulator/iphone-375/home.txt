@@ -1,0 +1,63 @@
+Attributes: Application, 0x10693c140, pid: 54730, label: 'SQLD Pass'
+Element subtree:
+ →Application, 0x10693c140, pid: 54730, label: 'SQLD Pass'
+    Window (Main), 0x10693c000, {{0.0, 0.0}, {375.0, 667.0}}
+      Other, 0x10693db80, {{0.0, 0.0}, {375.0, 667.0}}
+        Other, 0x10693de00, {{0.0, 0.0}, {375.0, 667.0}}
+          Other, 0x10693cdc0, {{0.0, 0.0}, {375.0, 667.0}}
+            Other, 0x10693cf00, {{0.0, 0.0}, {375.0, 667.0}}
+              Other, 0x10693e800, {{0.0, 0.0}, {375.0, 667.0}}
+                Other, 0x10693e940, {{0.0, 0.0}, {375.0, 667.0}}
+                  Other, 0x10693c500, {{0.0, 0.0}, {375.0, 667.0}}
+                    Other, 0x10693c640, {{0.0, 20.0}, {375.0, 647.0}}
+                      Other, 0x10693c780, {{0.0, 20.0}, {375.0, 64.0}}
+                      Other, 0x10693c8c0, {{0.0, 20.0}, {375.0, 64.0}}
+                      Other, 0x10693da40, {{0.0, 20.0}, {375.0, 647.0}}
+                      Button, 0x10693c280, {{311.0, 28.0}, {48.0, 48.0}}, label: '설정'
+                      StaticText, 0x10693c3c0, {{16.0, 37.5}, {285.0, 29.0}}, label: '홈'
+                        StaticText, 0x10693df40, {{16.0, 37.5}, {285.0, 29.0}}, label: '홈'
+                      Other, 0x10693d180, {{0.0, 84.0}, {375.0, 503.0}}
+                        ScrollView, 0x10693d2c0, {{0.0, 84.0}, {375.0, 503.0}}
+                          Other, 0x10693d400, {{0.0, 84.0}, {375.0, 566.0}}
+                            Other, 0x10693d540, {{0.0, 84.0}, {375.0, 566.0}}
+                              StaticText, 0x10693d680, {{16.0, 100.0}, {343.0, 28.0}}, label: '오늘의 학습'
+                                StaticText, 0x10693d7c0, {{16.0, 100.0}, {343.0, 28.0}}, label: '오늘의 학습'
+                              Other, 0x10693d900, {{16.0, 140.0}, {343.0, 214.0}}
+                              StaticText, 0x10693cb40, {{31.0, 155.0}, {313.0, 20.0}}, label: '교재 순서대로 학습'
+                                StaticText, 0x10693cc80, {{31.0, 155.0}, {313.0, 20.0}}, label: '교재 순서대로 학습'
+                              StaticText, 0x10693e080, {{31.0, 185.0}, {313.0, 28.0}}, label: '오늘 분량 0 / 1절 완료'
+                                StaticText, 0x10693e1c0, {{31.0, 185.0}, {313.0, 28.0}}, label: '오늘 분량 0 / 1절 완료'
+                              StaticText, 0x10693e300, {{31.0, 223.0}, {313.0, 28.0}}, label: '본질·인조식별자와 무결성의 연결'
+                                StaticText, 0x10693e440, {{31.0, 223.0}, {313.0, 28.0}}, label: '본질·인조식별자와 무결성의 연결'
+                              Button, 0x10693e580, {{31.0, 261.0}, {313.0, 48.0}}, identifier: 'section-TB20261109:c4-s9', label: '이어서 읽기'
+                              StaticText, 0x10693e6c0, {{31.0, 319.0}, {313.0, 20.0}}, label: '읽은 뒤 직접 읽음 완료를 표시해 주세요.'
+                                StaticText, 0x10693ea80, {{31.0, 319.0}, {313.0, 20.0}}, label: '읽은 뒤 직접 읽음 완료를 표시해 주세요.'
+                              Button, 0x10693ebc0, {{16.0, 366.0}, {343.0, 68.0}}, identifier: 'home-wrong', label: '오답·헷갈린 문제 복습
+2문항 중 2문항부터'
+                              Button, 0x10693ed00, {{16.0, 446.0}, {343.0, 68.0}}, identifier: 'home-records', label: '학습 기록
+읽음 1/216절 · 풀이 5/340문항'
+                              Button, 0x10693ee40, {{16.0, 526.0}, {168.5, 48.0}}, label: '핵심 카드'
+                              Button, 0x10693ef80, {{190.5, 526.0}, {168.5, 48.0}}, label: '용어 사전'
+                              Button, 0x10693f0c0, {{16.0, 586.0}, {343.0, 48.0}}, identifier: 'home-ad-settings', label: '광고 표시 설정'
+                          Other, 0x10693f200, {{342.0, 84.0}, {30.0, 503.0}}, label: 'Vertical scroll bar, 2 pages', value: 0%
+                            Other, 0x10693f340, {{369.0, 87.0}, {3.0, 222.5}}
+                          Other, 0x10693f480, {{0.0, 554.0}, {375.0, 30.0}}, label: 'Horizontal scroll bar, 1 page', value: 0%
+                            Other, 0x10693f5c0, {{3.0, 581.0}, {369.0, 3.0}}
+                          Other, 0x10693f700, {{342.0, 84.0}, {30.0, 503.0}}, label: 'Vertical scroll bar, 2 pages', value: 0%
+                            Other, 0x10693f840, {{369.0, 87.0}, {3.0, 222.5}}
+                          Other, 0x10693f980, {{0.0, 554.0}, {375.0, 30.0}}, label: 'Horizontal scroll bar, 1 page', value: 0%
+                            Other, 0x10693fac0, {{3.0, 581.0}, {369.0, 3.0}}
+                      Other, 0x10693fc00, {{0.0, 587.0}, {375.0, 80.0}}
+                      Other, 0x10693fd40, {{0.0, 588.0}, {375.0, 79.0}}
+                      Other, 0x10693fe80, {{16.0, 596.0}, {68.5, 63.0}}, identifier: 'tab-today', label: '홈', Selected
+                      Other, 0x1033e8a00, {{84.5, 596.0}, {68.5, 63.0}}, identifier: 'tab-learn', label: '교재'
+                      Other, 0x1033e83c0, {{153.0, 596.0}, {69.0, 63.0}}, identifier: 'tab-review', label: '문제'
+                      Other, 0x1033e88c0, {{222.0, 596.0}, {68.5, 63.0}}, identifier: 'tab-exams', label: '실전'
+                      Other, 0x1033ebe80, {{290.5, 596.0}, {68.5, 63.0}}, identifier: 'tab-records', label: '기록'
+Path to element:
+ →Application, 0x10693c140, pid: 54730, label: 'SQLD Pass'
+Query chain:
+ →Find: Application 'com.sqldpass.app.adsqa'
+  Output: {
+    Application, 0x1033ebd40, pid: 54730, label: 'SQLD Pass'
+  }

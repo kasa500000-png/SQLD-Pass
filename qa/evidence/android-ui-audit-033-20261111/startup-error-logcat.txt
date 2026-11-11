@@ -1,0 +1,255 @@
+--------- beginning of main
+11-11 19:58:51.241 32437 32437 I BLASTBufferQueue_Java: new BLASTBufferQueue, mName= VRI[MainActivity]@74ad8b9 mNativeObject= 0xb400007a4b505fb0 caller= android.view.ViewRootImpl.updateBlastSurfaceIfNeeded:3585 android.view.ViewRootImpl.relayoutWindow:11685 android.view.ViewRootImpl.performTraversals:4804 android.view.ViewRootImpl.doTraversal:3924 android.view.ViewRootImpl$TraversalRunnable.run:12903 android.view.Choreographer$CallbackRecord.run:1901 android.view.Choreographer$CallbackRecord.run:1910 android.view.Choreographer.doCallbacks:1367 android.view.Choreographer.doFrame:1292 android.view.Choreographer$FrameDisplayEventReceiver.run:1870
+11-11 19:58:51.241 32437 32437 I BLASTBufferQueue_Java: update, w= 1080 h= 2640 mName = VRI[MainActivity]@74ad8b9 mNativeObject= 0xb400007a4b505fb0 sc.mNativeObject= 0xb40000787b482d50 format= -1 caller= android.view.ViewRootImpl.updateBlastSurfaceIfNeeded:3590 android.view.ViewRootImpl.relayoutWindow:11685 android.view.ViewRootImpl.performTraversals:4804 android.view.ViewRootImpl.doTraversal:3924 android.view.ViewRootImpl$TraversalRunnable.run:12903 android.view.Choreographer$CallbackRecord.run:1901
+11-11 19:58:51.241 32437 32437 W libc    : Access denied finding property "vendor.display.enable_optimal_refresh_rate"
+11-11 19:58:51.242 32437 32437 I VRI[MainActivity]@74ad8b9: Relayout returned: old=(0,0,2640,1080) new=(0,0,1080,2640) relayoutAsync=false req=(2640,1080)0 dur=8 res=0x3 s={true 0xb400007aab4f3f90} ch=true seqId=0
+11-11 19:58:51.242 32437 32437 D VRI[MainActivity]@74ad8b9: mThreadedRenderer.initialize() mSurface={isValid=true 0xb400007aab4f3f90} hwInitialized=true
+11-11 19:58:51.250 32437 32437 D VRI[MainActivity]@74ad8b9: reportNextDraw android.view.ViewRootImpl.performTraversals:5443 android.view.ViewRootImpl.doTraversal:3924 android.view.ViewRootImpl$TraversalRunnable.run:12903 android.view.Choreographer$CallbackRecord.run:1901 android.view.Choreographer$CallbackRecord.run:1910
+11-11 19:58:51.250 32437 32437 D VRI[MainActivity]@74ad8b9: Canceling draw. cancelDueToPreDrawListener=true cancelDueToSync=false
+11-11 19:58:51.251 32437 32437 D VRI[MainActivity]@74ad8b9: Setup new sync=wmsSync-VRI[MainActivity]@74ad8b9#40
+11-11 19:58:51.251 32437 32437 I VRI[MainActivity]@74ad8b9: Creating new active sync group VRI[MainActivity]@74ad8b9#41
+11-11 19:58:51.251 32437 32437 D VRI[MainActivity]@74ad8b9: Draw frame after cancel
+11-11 19:58:51.252 32437 32437 D VRI[MainActivity]@74ad8b9: registerCallbacksForSync syncBuffer=false
+11-11 19:58:51.254 32437 32466 D VRI[MainActivity]@74ad8b9: Received frameDrawingCallback syncResult=0 frameNum=1.
+11-11 19:58:51.255 32437 32466 I VRI[MainActivity]@74ad8b9: mWNT: t=0xb40000792b544350 mBlastBufferQueue=0xb400007a4b505fb0 fn= 1 HdrRenderState mRenderHdrSdrRatio=1.0 caller= android.view.ViewRootImpl$12.onFrameDraw:15441 android.view.ThreadedRenderer$1.onFrameDraw:718 <bottom of call stack>
+11-11 19:58:51.255 32437 32466 I VRI[MainActivity]@74ad8b9: Setting up sync and frameCommitCallback
+11-11 19:58:51.258 32437 32459 I BLASTBufferQueue: [VRI[MainActivity]@74ad8b9#16](f:0,a:0,s:0) onFrameAvailable the first frame is available
+11-11 19:58:51.258 32437 32459 I SurfaceComposerClient: apply transaction with the first frame. layerId: 2698, bufferData(ID: 139315854181237, frameNumber: 1)
+11-11 19:58:51.258 32437 32459 I VRI[MainActivity]@74ad8b9: Received frameCommittedCallback lastAttemptedDrawFrameNum=1 didProduceBuffer=true
+11-11 19:58:51.259 32437 32437 D VRI[MainActivity]@74ad8b9: reportDrawFinished seqId=0
+11-11 19:58:51.259 32437 32437 I VRI[MainActivity]@74ad8b9: handleResized, frames=ClientWindowFrames{frame=[0,0][1080,2640] display=[0,0][1080,2640] parentFrame=[0,0][0,0]} displayId=0 dragResizing=false compatScale=1.0 frameChanged=false attachedFrameChanged=false configChanged=false displayChanged=false compatScaleChanged=false dragResizingChanged=false
+11-11 19:58:51.259 32437 32437 I VRI[MainActivity]@74ad8b9: handleResized mSyncSeqId = 0
+11-11 19:58:51.259 32437 32437 D VRI[MainActivity]@74ad8b9: reportNextDraw android.view.ViewRootImpl.handleResized:2983 android.view.ViewRootImpl.-$$Nest$mhandleResized:0 android.view.ViewRootImpl$W.resized:14082 android.app.servertransaction.WindowStateResizeItem.execute:93 android.app.servertransaction.WindowStateTransactionItem.execute:62
+11-11 19:58:51.259 32437 32437 I InsetsSourceConsumer: applyRequestedVisibilityToControl: visible=true, type=navigationBars, host=com.sqldpass.app.adsqa/com.sqldpass.app.adsqa.MainActivity
+11-11 19:58:51.261 32437 32437 I InsetsSourceConsumer: applyRequestedVisibilityToControl: visible=true, type=statusBars, host=com.sqldpass.app.adsqa/com.sqldpass.app.adsqa.MainActivity
+11-11 19:58:51.266 32437 32437 D VRI[MainActivity]@74ad8b9: Setup new sync=wmsSync-VRI[MainActivity]@74ad8b9#42
+11-11 19:58:51.266 32437 32437 I VRI[MainActivity]@74ad8b9: Creating new active sync group VRI[MainActivity]@74ad8b9#43
+11-11 19:58:51.266 32437 32437 D VRI[MainActivity]@74ad8b9: registerCallbacksForSync syncBuffer=false
+11-11 19:58:51.267 32437 32467 D VRI[MainActivity]@74ad8b9: Received frameDrawingCallback syncResult=0 frameNum=2.
+11-11 19:58:51.267 32437 32467 I VRI[MainActivity]@74ad8b9: Setting up sync and frameCommitCallback
+11-11 19:58:51.272 32437 32459 I VRI[MainActivity]@74ad8b9: Received frameCommittedCallback lastAttemptedDrawFrameNum=2 didProduceBuffer=true
+11-11 19:58:51.272 32437 32437 D VRI[MainActivity]@74ad8b9: reportDrawFinished seqId=0
+11-11 19:58:51.324 32437 32437 W unknown:BridgelessReact: ReactHost{0}.onUserLeaveHint(activity)
+11-11 19:58:51.324 32437 32437 W unknown:BridgelessReact: ReactHost{0}.onHostPause(activity)
+11-11 19:58:51.324 32437 32437 W unknown:BridgelessReact: ReactHost{0}.ReactContext.onHostPause()
+11-11 19:58:51.381 32437 32437 D VRI[MainActivity]@74ad8b9: mThreadedRenderer.initializeIfNeeded()#2 mSurface={isValid=true 0xb400007aab4f3f90}
+11-11 19:58:51.381 32437 32437 D InputMethodManagerUtils: startInputInner - Id : 0
+11-11 19:58:51.381 32437 32437 I InputMethodManager: startInputInner - IInputMethodManagerGlobalInvoker.startInputOrWindowGainedFocus
+11-11 19:58:51.385 32437 32464 W unknown:ReactNative: StatusBarModule: Ignored status bar change, current activity is edge-to-edge.
+11-11 19:58:51.393 32437 32437 I ImeFocusController: onPreWindowFocus: skipped hasWindowFocus=false mHasImeFocus=true
+11-11 19:58:51.393 32437 32437 I ImeFocusController: onPostWindowFocus: skipped hasWindowFocus=false mHasImeFocus=true
+11-11 19:58:51.923 32437 32437 I VRI[MainActivity]@74ad8b9: handleAppVisibility mAppVisible = true visible = false
+11-11 19:58:51.924 32437 32437 D VRI[MainActivity]@74ad8b9: visibilityChanged oldVisibility=true newVisibility=false
+11-11 19:58:51.931 32437 32459 D HWUI    : CacheManager::trimMemory(20)
+11-11 19:58:51.935 32437 32437 I VRI[MainActivity]@74ad8b9: Relayout returned: old=(0,0,1080,2640) new=(0,0,1080,2640) relayoutAsync=false req=(1080,2640)8 dur=3 res=0x2 s={false 0x0} ch=true seqId=0
+11-11 19:58:51.936 32437 32437 D VRI[MainActivity]@74ad8b9: Not drawing due to not visible. Reason=!mAppVisible && !mForceDecorViewVisibility
+11-11 19:58:51.936 32437 32459 D HWUI    : CacheManager::trimMemory(20)
+11-11 19:58:51.937 32437 32437 I VRI[MainActivity]@74ad8b9: stopped(true) old = false
+11-11 19:58:51.937 32437 32437 D VRI[MainActivity]@74ad8b9: WindowStopped on com.sqldpass.app.adsqa/com.sqldpass.app.adsqa.MainActivity set to true
+11-11 19:58:51.937 32437 32459 D HWUI    : CacheManager::trimMemory(20)
+11-11 19:58:51.941 32437 32437 D BBA2    : setIsFg isFg = false; delayValue 4080ms
+11-11 19:59:30.863 32437 32437 I VRI[MainActivity]@74ad8b9: handleAppVisibility mAppVisible = false visible = true
+11-11 19:59:30.867 32437 32437 I VRI[MainActivity]@74ad8b9: stopped(false) old = true
+11-11 19:59:30.867 32437 32437 D VRI[MainActivity]@74ad8b9: WindowStopped on com.sqldpass.app.adsqa/com.sqldpass.app.adsqa.MainActivity set to false
+11-11 19:59:30.868 32437 32437 D ViewRootImpl: Skipping stats log for color mode
+11-11 19:59:30.868 32437 32437 D BBA2    : setIsFg isFg = true
+11-11 19:59:30.868 32437 32437 W WindowOnBackDispatcher: OnBackInvokedCallback is not enabled for the application.
+11-11 19:59:30.868 32437 32437 W WindowOnBackDispatcher: Set 'android:enableOnBackInvokedCallback="true"' in the application manifest.
+11-11 19:59:30.870 32437 32437 W unknown:BridgelessReact: ReactHost{0}.onHostResume(activity)
+11-11 19:59:30.870 32437 32437 W unknown:BridgelessReact: ReactHost{0}.ReactContext.onHostResume()
+11-11 19:59:30.879 32437 32464 W unknown:ReactNative: StatusBarModule: Ignored status bar change, current activity is edge-to-edge.
+11-11 19:59:30.885 32437 32437 W libc    : Access denied finding property "vendor.display.enable_optimal_refresh_rate"
+11-11 19:59:30.885 32437 32437 I BufferQueueProducer: [](id:7eb50000001d,api:0,p:114,c:32437) setDequeueTimeout:2077252342
+11-11 19:59:30.885 32437 32437 I BLASTBufferQueue_Java: new BLASTBufferQueue, mName= VRI[MainActivity]@74ad8b9 mNativeObject= 0xb400007a4b505fb0 caller= android.view.ViewRootImpl.updateBlastSurfaceIfNeeded:3585 android.view.ViewRootImpl.relayoutWindow:11685 android.view.ViewRootImpl.performTraversals:4804 android.view.ViewRootImpl.doTraversal:3924 android.view.ViewRootImpl$TraversalRunnable.run:12903 android.view.Choreographer$CallbackRecord.run:1901 android.view.Choreographer$CallbackRecord.run:1910 android.view.Choreographer.doCallbacks:1367 android.view.Choreographer.doFrame:1292 android.view.Choreographer$FrameDisplayEventReceiver.run:1870
+11-11 19:59:30.886 32437 32437 I BLASTBufferQueue_Java: update, w= 1080 h= 2640 mName = VRI[MainActivity]@74ad8b9 mNativeObject= 0xb400007a4b505fb0 sc.mNativeObject= 0xb40000787b482d50 format= -1 caller= android.view.ViewRootImpl.updateBlastSurfaceIfNeeded:3590 android.view.ViewRootImpl.relayoutWindow:11685 android.view.ViewRootImpl.performTraversals:4804 android.view.ViewRootImpl.doTraversal:3924 android.view.ViewRootImpl$TraversalRunnable.run:12903 android.view.Choreographer$CallbackRecord.run:1901
+11-11 19:59:30.886 32437 32437 W libc    : Access denied finding property "vendor.display.enable_optimal_refresh_rate"
+11-11 19:59:30.886 32437 32437 I VRI[MainActivity]@74ad8b9: Relayout returned: old=(0,0,1080,2640) new=(0,0,1080,2640) relayoutAsync=false req=(1080,2640)0 dur=7 res=0x3 s={true 0xb400007aab4aa580} ch=true seqId=0
+11-11 19:59:30.886 32437 32437 D VRI[MainActivity]@74ad8b9: mThreadedRenderer.initialize() mSurface={isValid=true 0xb400007aab4aa580} hwInitialized=true
+11-11 19:59:30.886 32437 32437 D VRI[MainActivity]@74ad8b9: reportNextDraw android.view.ViewRootImpl.performTraversals:5443 android.view.ViewRootImpl.doTraversal:3924 android.view.ViewRootImpl$TraversalRunnable.run:12903 android.view.Choreographer$CallbackRecord.run:1901 android.view.Choreographer$CallbackRecord.run:1910
+11-11 19:59:30.886 32437 32437 D VRI[MainActivity]@74ad8b9: Setup new sync=wmsSync-VRI[MainActivity]@74ad8b9#44
+11-11 19:59:30.887 32437 32437 I VRI[MainActivity]@74ad8b9: Creating new active sync group VRI[MainActivity]@74ad8b9#45
+11-11 19:59:30.887 32437 32437 D VRI[MainActivity]@74ad8b9: Start draw after previous draw not visible
+11-11 19:59:30.887 32437 32437 D VRI[MainActivity]@74ad8b9: registerCallbacksForSync syncBuffer=false
+11-11 19:59:30.892 32437 32466 D VRI[MainActivity]@74ad8b9: Received frameDrawingCallback syncResult=0 frameNum=1.
+11-11 19:59:30.892 32437 32466 I VRI[MainActivity]@74ad8b9: mWNT: t=0xb40000792b4e8550 mBlastBufferQueue=0xb400007a4b505fb0 fn= 1 HdrRenderState mRenderHdrSdrRatio=1.0 caller= android.view.ViewRootImpl$12.onFrameDraw:15441 android.view.ThreadedRenderer$1.onFrameDraw:718 <bottom of call stack>
+11-11 19:59:30.892 32437 32466 I VRI[MainActivity]@74ad8b9: Setting up sync and frameCommitCallback
+11-11 19:59:30.894 32437 32459 I BLASTBufferQueue: [VRI[MainActivity]@74ad8b9#17](f:0,a:0,s:0) onFrameAvailable the first frame is available
+11-11 19:59:30.894 32437 32459 I SurfaceComposerClient: apply transaction with the first frame. layerId: 2745, bufferData(ID: 139315854181238, frameNumber: 1)
+11-11 19:59:30.895 32437 32459 I VRI[MainActivity]@74ad8b9: Received frameCommittedCallback lastAttemptedDrawFrameNum=1 didProduceBuffer=true
+11-11 19:59:30.896 32437 32437 D VRI[MainActivity]@74ad8b9: reportDrawFinished seqId=0
+11-11 19:59:30.913 32437 32437 I InsetsSourceConsumer: applyRequestedVisibilityToControl: visible=true, type=navigationBars, host=com.sqldpass.app.adsqa/com.sqldpass.app.adsqa.MainActivity
+11-11 19:59:30.913 32437 32437 I InsetsSourceConsumer: applyRequestedVisibilityToControl: visible=true, type=statusBars, host=com.sqldpass.app.adsqa/com.sqldpass.app.adsqa.MainActivity
+11-11 19:59:30.920 32437 32437 D VRI[MainActivity]@74ad8b9: mThreadedRenderer.initializeIfNeeded()#2 mSurface={isValid=true 0xb400007aab4aa580}
+11-11 19:59:30.920 32437 32437 D InputMethodManagerUtils: startInputInner - Id : 0
+11-11 19:59:30.920 32437 32437 I InputMethodManager: startInputInner - IInputMethodManagerGlobalInvoker.startInputOrWindowGainedFocus
+11-11 19:59:30.922 32437 32464 W unknown:ReactNative: StatusBarModule: Ignored status bar change, current activity is edge-to-edge.
+11-11 19:59:30.925 32437 32437 I InputMethodManager: handleMessage: setImeVisibility visible=false
+11-11 19:59:30.925 32437 32437 D InsetsController: hide(ime(), fromIme=false)
+11-11 19:59:30.925 32437 32437 I ImeTracker: com.sqldpass.app.adsqa:99c55b45: onCancelled at PHASE_CLIENT_ALREADY_HIDDEN
+11-11 19:59:30.929 32437 32449 D InputTransport: Input channel constructed: 'ClientS', fd=165
+11-11 19:59:31.445 32437 32437 W unknown:BridgelessReact: ReactHost{0}.onUserLeaveHint(activity)
+11-11 19:59:31.445 32437 32437 W unknown:BridgelessReact: ReactHost{0}.onHostPause(activity)
+11-11 19:59:31.445 32437 32437 W unknown:BridgelessReact: ReactHost{0}.ReactContext.onHostPause()
+11-11 19:59:31.460 32437 32437 I ImeFocusController: onPreWindowFocus: skipped hasWindowFocus=false mHasImeFocus=true
+11-11 19:59:31.461 32437 32437 I ImeFocusController: onPostWindowFocus: skipped hasWindowFocus=false mHasImeFocus=true
+11-11 19:59:31.633 32437 32437 D InputTransport: Input channel destroyed: 'ClientS', fd=165
+11-11 19:59:31.972 32437 32437 I VRI[MainActivity]@74ad8b9: handleAppVisibility mAppVisible = true visible = false
+11-11 19:59:31.972 32437 32437 D VRI[MainActivity]@74ad8b9: visibilityChanged oldVisibility=true newVisibility=false
+11-11 19:59:31.976 32437 32459 D HWUI    : CacheManager::trimMemory(20)
+11-11 19:59:31.982 32437 32437 I VRI[MainActivity]@74ad8b9: Relayout returned: old=(0,0,1080,2640) new=(0,0,1080,2640) relayoutAsync=false req=(1080,2640)8 dur=3 res=0x2 s={false 0x0} ch=true seqId=0
+11-11 19:59:31.983 32437 32437 D VRI[MainActivity]@74ad8b9: Not drawing due to not visible. Reason=!mAppVisible && !mForceDecorViewVisibility
+11-11 19:59:31.983 32437 32437 I VRI[MainActivity]@74ad8b9: stopped(true) old = false
+11-11 19:59:31.983 32437 32437 D VRI[MainActivity]@74ad8b9: WindowStopped on com.sqldpass.app.adsqa/com.sqldpass.app.adsqa.MainActivity set to true
+11-11 19:59:31.983 32437 32459 D HWUI    : CacheManager::trimMemory(20)
+11-11 19:59:31.983 32437 32459 D HWUI    : CacheManager::trimMemory(20)
+11-11 19:59:31.992 32437 32437 D BBA2    : setIsFg isFg = false; delayValue 4080ms
+11-11 20:00:31.976 32437 32481 D Choreographer: BBA2 receive callback when in bg : 4
+11-11 20:00:31.989 32437 32459 D HWUI    : CacheManager::trimMemory(40)
+11-11 20:00:58.221 32437 32437 I VRI[MainActivity]@74ad8b9: handleAppVisibility mAppVisible = false visible = true
+11-11 20:00:58.227 32437 32437 I VRI[MainActivity]@74ad8b9: stopped(false) old = true
+11-11 20:00:58.227 32437 32437 D VRI[MainActivity]@74ad8b9: WindowStopped on com.sqldpass.app.adsqa/com.sqldpass.app.adsqa.MainActivity set to false
+11-11 20:00:58.230 32437 32437 D ViewRootImpl: Skipping stats log for color mode
+11-11 20:00:58.232 32437 32437 W WindowOnBackDispatcher: OnBackInvokedCallback is not enabled for the application.
+11-11 20:00:58.232 32437 32437 W WindowOnBackDispatcher: Set 'android:enableOnBackInvokedCallback="true"' in the application manifest.
+11-11 20:00:58.237 32437 32437 W unknown:BridgelessReact: ReactHost{0}.onHostResume(activity)
+11-11 20:00:58.237 32437 32437 W unknown:BridgelessReact: ReactHost{0}.ReactContext.onHostResume()
+11-11 20:00:58.289 32437 32437 I InsetsController: onStateChanged: host=com.sqldpass.app.adsqa/com.sqldpass.app.adsqa.MainActivity, from=android.view.ViewRootImpl.onInsetsStateChanged:3026, state=InsetsState: {mDisplayFrame=Rect(0, 0 - 1080, 2640), mDisplayCutout=DisplayCutout{insets=Rect(0, 94 - 0, 0) waterfall=Insets{left=0, top=0, right=0, bottom=0} boundingRect={Bounds=[Rect(0, 0 - 0, 0), Rect(505, 0 - 576, 94), Rect(0, 0 - 0, 0), Rect(0, 0 - 0, 0)]} cutoutPathParserInfo={CutoutPathParserInfo{displayWidth=1080 displayHeight=2640 physicalDisplayWidth=1080 physicalDisplayHeight=2640 density={3.0} cutoutSpec={M 0,0 H -11.83333333333333 V 31.33333333333333 H 11.83333333333333 V 0 H 0 Z @dp} rotation={0} scale={1.0} physicalPixelDisplaySizeRatio={1.0}}} sideOverrides={}}, mRoundedCorners=RoundedCorners{[RoundedCorner{position=TopLeft, radius=114, center=Point(114, 114)}, RoundedCorner{position=TopRight, radius=114, center=Point(966, 114)}, RoundedCorner{position=BottomRight, radius=114, center=Point(966, 2526)}, RoundedCorner{position=BottomLeft, radius=114, center=Point(114, 2526)}]}  mRoundedCornerFrame=Rect(0, 0 - 1080, 2640), mPrivacyIndicatorBounds=PrivacyIndicatorBounds {static bounds=Rect(948, 0 - 1080, 94) rotation=0}, mDisplayShape=DisplayShape{ spec=-311912193 displayWidth=1080 displayHeight=2640 physicalPixelDisplaySizeRatio=1.0 rotation=0 offsetX=0 offsetY=0 scale=1.0}, mSources= { InsetsSource: {fb430000 mType=statusBars mFrame=[0,0][1080,94] mVisible=true mFlags= mSideHint=TOP mBoundingRects=null}, InsetsSource: {fb430005 mType=mandatorySystemGestures mFrame=[0,0][1080,130] mVisible=true mFlags= mSideHint=TOP mBoundingRects=null}, InsetsSource: {fb430006 mType=tappableElement mFrame=[0,0][1080,94] mVisible=true mFlags= mSideHint=TOP mBoundingRects=null}, InsetsSource: {3 mType=ime mFrame=[0,0][0,0] mVisible=false mFlags= mSideHint=NONE mBoundingRects=null}, InsetsSource: {27 mType=displayCutout mFrame=[0,0][1080,94] mVisible=true mFlags= mSideHint=TOP mBoundingRects=null}, InsetsSource: {d010001 mType=navigationBars mFrame=[0,2496][1080,2640] mVisible=true mFlags= mSideHint=BOTTOM mBoundingRects=null}, InsetsSource: {d010004 mType=systemGestures mFrame=[0,0][0,0] mVisible=true mFlags= mSideHint=NONE mBoundingRects=null}, InsetsSource: {d010005 mType=mandatorySystemGestures mFrame=[0,2496][1080,2640] mVisible=true mFlags= mSideHint=BOTTOM mBoundingRects=null}, InsetsSource: {d010006 mType=tappableElement mFrame=[0,2496][1080,2640] mVisible=true mFlags= mSideHint=BOTTOM mBoundingRects=null}, InsetsSource: {d010024 mType=systemGestures mFrame=[0,0][0,0] mVisible=true mFlags= mSideHint=NONE mBoundingRects=null} }
+11-11 20:00:58.290 32437 32437 W libc    : Access denied finding property "vendor.display.enable_optimal_refresh_rate"
+11-11 20:00:58.290 32437 32437 I BufferQueueProducer: [](id:7eb50000001e,api:0,p:5374059,c:32437) setDequeueTimeout:2077252342
+11-11 20:00:58.291 32437 32437 I BLASTBufferQueue_Java: new BLASTBufferQueue, mName= VRI[MainActivity]@74ad8b9 mNativeObject= 0xb400007a4b505fb0 caller= android.view.ViewRootImpl.updateBlastSurfaceIfNeeded:3585 android.view.ViewRootImpl.relayoutWindow:11685 android.view.ViewRootImpl.performTraversals:4804 android.view.ViewRootImpl.doTraversal:3924 android.view.ViewRootImpl$TraversalRunnable.run:12903 android.view.Choreographer$CallbackRecord.run:1901 android.view.Choreographer$CallbackRecord.run:1910 android.view.Choreographer.doCallbacks:1367 android.view.Choreographer.doFrame:1292 android.view.Choreographer$FrameDisplayEventReceiver.run:1870
+11-11 20:00:58.291 32437 32437 I BLASTBufferQueue_Java: update, w= 1080 h= 2640 mName = VRI[MainActivity]@74ad8b9 mNativeObject= 0xb400007a4b505fb0 sc.mNativeObject= 0xb40000787b482d50 format= -1 caller= android.view.ViewRootImpl.updateBlastSurfaceIfNeeded:3590 android.view.ViewRootImpl.relayoutWindow:11685 android.view.ViewRootImpl.performTraversals:4804 android.view.ViewRootImpl.doTraversal:3924 android.view.ViewRootImpl$TraversalRunnable.run:12903 android.view.Choreographer$CallbackRecord.run:1901
+11-11 20:00:58.291 32437 32437 W libc    : Access denied finding property "vendor.display.enable_optimal_refresh_rate"
+11-11 20:00:58.292 32437 32437 I VRI[MainActivity]@74ad8b9: Relayout returned: old=(0,0,1080,2640) new=(0,0,1080,2640) relayoutAsync=false req=(1080,2640)0 dur=11 res=0x3 s={true 0xb400007aab470010} ch=true seqId=0
+11-11 20:00:58.292 32437 32437 D VRI[MainActivity]@74ad8b9: mThreadedRenderer.initialize() mSurface={isValid=true 0xb400007aab470010} hwInitialized=true
+11-11 20:00:58.292 32437 32437 D VRI[MainActivity]@74ad8b9: reportNextDraw android.view.ViewRootImpl.performTraversals:5443 android.view.ViewRootImpl.doTraversal:3924 android.view.ViewRootImpl$TraversalRunnable.run:12903 android.view.Choreographer$CallbackRecord.run:1901 android.view.Choreographer$CallbackRecord.run:1910
+11-11 20:00:58.293 32437 32437 D VRI[MainActivity]@74ad8b9: Setup new sync=wmsSync-VRI[MainActivity]@74ad8b9#46
+11-11 20:00:58.293 32437 32437 I VRI[MainActivity]@74ad8b9: Creating new active sync group VRI[MainActivity]@74ad8b9#47
+11-11 20:00:58.293 32437 32437 D VRI[MainActivity]@74ad8b9: Start draw after previous draw not visible
+11-11 20:00:58.293 32437 32437 D VRI[MainActivity]@74ad8b9: registerCallbacksForSync syncBuffer=false
+11-11 20:00:58.294 32437 32464 W unknown:ReactNative: StatusBarModule: Ignored status bar change, current activity is edge-to-edge.
+11-11 20:00:58.301 32437 32467 D VRI[MainActivity]@74ad8b9: Received frameDrawingCallback syncResult=0 frameNum=1.
+11-11 20:00:58.301 32437 32467 I VRI[MainActivity]@74ad8b9: mWNT: t=0xb40000792b4a5d50 mBlastBufferQueue=0xb400007a4b505fb0 fn= 1 HdrRenderState mRenderHdrSdrRatio=1.0 caller= android.view.ViewRootImpl$12.onFrameDraw:15441 android.view.ThreadedRenderer$1.onFrameDraw:718 <bottom of call stack>
+11-11 20:00:58.301 32437 32467 I VRI[MainActivity]@74ad8b9: Setting up sync and frameCommitCallback
+11-11 20:00:58.312 32437 32459 I BLASTBufferQueue: [VRI[MainActivity]@74ad8b9#18](f:0,a:0,s:0) onFrameAvailable the first frame is available
+11-11 20:00:58.312 32437 32459 I SurfaceComposerClient: apply transaction with the first frame. layerId: 2809, bufferData(ID: 139315854181242, frameNumber: 1)
+11-11 20:00:58.312 32437 32459 I VRI[MainActivity]@74ad8b9: Received frameCommittedCallback lastAttemptedDrawFrameNum=1 didProduceBuffer=true
+11-11 20:00:58.313 32437 32437 D VRI[MainActivity]@74ad8b9: reportDrawFinished seqId=0
+11-11 20:00:58.315 32437 32437 I InsetsSourceConsumer: applyRequestedVisibilityToControl: visible=true, type=navigationBars, host=com.sqldpass.app.adsqa/com.sqldpass.app.adsqa.MainActivity
+11-11 20:00:58.316 32437 32437 I InsetsSourceConsumer: applyRequestedVisibilityToControl: visible=true, type=statusBars, host=com.sqldpass.app.adsqa/com.sqldpass.app.adsqa.MainActivity
+11-11 20:00:58.317 32437 32437 W unknown:BridgelessReact: ReactHost{0}.onUserLeaveHint(activity)
+11-11 20:00:58.317 32437 32437 W unknown:BridgelessReact: ReactHost{0}.onHostPause(activity)
+11-11 20:00:58.317 32437 32437 W unknown:BridgelessReact: ReactHost{0}.ReactContext.onHostPause()
+11-11 20:00:58.838 32437 32437 I VRI[MainActivity]@74ad8b9: stopped(true) old = false
+11-11 20:00:58.838 32437 32437 D VRI[MainActivity]@74ad8b9: WindowStopped on com.sqldpass.app.adsqa/com.sqldpass.app.adsqa.MainActivity set to true
+11-11 20:00:58.838 32437 32459 D HWUI    : CacheManager::trimMemory(20)
+11-11 20:00:58.848 32437 32459 D HWUI    : CacheManager::trimMemory(20)
+11-11 20:00:58.853 32437 32437 I VRI[MainActivity]@74ad8b9: Relayout returned: old=(0,0,1080,2640) new=(0,0,1080,2640) relayoutAsync=false req=(1080,2640)4 dur=5 res=0x2 s={false 0x0} ch=false seqId=0
+11-11 20:00:58.853 32437 32437 D VRI[MainActivity]@74ad8b9: Not drawing due to not visible. Reason=View.INVISIBLE
+11-11 20:00:58.854 32437 32459 D HWUI    : CacheManager::trimMemory(20)
+11-11 20:00:58.858 32437 32437 I VRI[MainActivity]@74ad8b9: handleAppVisibility mAppVisible = true visible = false
+11-11 20:00:58.861 32437 32437 D BBA2    : setIsFg isFg = false; delayValue 3999ms
+11-11 20:00:58.868 32437 32459 D HWUI    : CacheManager::trimMemory(40)
+11-11 20:00:59.097 32437 32443 W dpass.app.adsqa: Reducing the number of considered missed Gc histogram windows from 120 to 100
+11-11 20:00:59.129 32437 32444 D InputTransport: Input channel destroyed: 'ClientS', fd=131
+11-11 20:22:29.294 32437 32447 D Choreographer: BBA2 receive callback when in bg : 4
+11-11 20:22:29.301 32437 32437 I VRI[MainActivity]@74ad8b9: handleAppVisibility mAppVisible = false visible = true
+11-11 20:22:29.306 32437 32437 I VRI[MainActivity]@74ad8b9: stopped(false) old = true
+11-11 20:22:29.306 32437 32437 D VRI[MainActivity]@74ad8b9: WindowStopped on com.sqldpass.app.adsqa/com.sqldpass.app.adsqa.MainActivity set to false
+11-11 20:22:29.310 32437 32437 W WindowOnBackDispatcher: OnBackInvokedCallback is not enabled for the application.
+11-11 20:22:29.310 32437 32437 W WindowOnBackDispatcher: Set 'android:enableOnBackInvokedCallback="true"' in the application manifest.
+11-11 20:22:29.312 32437 32437 W unknown:BridgelessReact: ReactHost{0}.onHostResume(activity)
+11-11 20:22:29.312 32437 32437 W unknown:BridgelessReact: ReactHost{0}.ReactContext.onHostResume()
+11-11 20:22:29.325 32437 32437 W unknown:BridgelessReact: ReactHost{0}.onUserLeaveHint(activity)
+11-11 20:22:29.325 32437 32437 W unknown:BridgelessReact: ReactHost{0}.onHostPause(activity)
+11-11 20:22:29.325 32437 32437 W unknown:BridgelessReact: ReactHost{0}.ReactContext.onHostPause()
+11-11 20:22:29.333 32437 32437 I VRI[MainActivity]@74ad8b9: onDisplayChanged oldDisplayState=2 newDisplayState=1
+11-11 20:22:29.333 32437 32437 I VRI[MainActivity]@74ad8b9: onDisplayChanged oldDisplayState=1 newDisplayState=1
+11-11 20:22:29.333 32437 32437 I VRI[MainActivity]@74ad8b9: onDisplayChanged oldDisplayState=1 newDisplayState=1
+11-11 20:22:29.334 32437 32437 I VRI[MainActivity]@74ad8b9: onDisplayChanged oldDisplayState=1 newDisplayState=1
+11-11 20:22:29.336 32437 32437 I VRI[MainActivity]@74ad8b9: onDisplayChanged oldDisplayState=1 newDisplayState=1
+11-11 20:22:29.336 32437 32437 I VRI[MainActivity]@74ad8b9: onDisplayChanged oldDisplayState=1 newDisplayState=1
+11-11 20:22:29.336 32437 32437 I VRI[MainActivity]@74ad8b9: onDisplayChanged oldDisplayState=1 newDisplayState=1
+11-11 20:22:29.336 32437 32437 I VRI[MainActivity]@74ad8b9: onDisplayChanged oldDisplayState=1 newDisplayState=1
+11-11 20:22:29.336 32437 32437 I VRI[MainActivity]@74ad8b9: onDisplayChanged oldDisplayState=1 newDisplayState=1
+11-11 20:22:29.336 32437 32437 I VRI[MainActivity]@74ad8b9: onDisplayChanged oldDisplayState=1 newDisplayState=1
+11-11 20:22:29.336 32437 32437 I VRI[MainActivity]@74ad8b9: onDisplayChanged oldDisplayState=1 newDisplayState=1
+11-11 20:22:29.336 32437 32437 I VRI[MainActivity]@74ad8b9: onDisplayChanged oldDisplayState=1 newDisplayState=1
+11-11 20:22:29.336 32437 32437 I VRI[MainActivity]@74ad8b9: onDisplayChanged oldDisplayState=1 newDisplayState=1
+11-11 20:22:29.336 32437 32437 I VRI[MainActivity]@74ad8b9: onDisplayChanged oldDisplayState=1 newDisplayState=1
+11-11 20:22:29.337 32437 32437 I VRI[MainActivity]@74ad8b9: onDisplayChanged oldDisplayState=1 newDisplayState=1
+11-11 20:22:29.346 32437 32464 W unknown:ReactNative: StatusBarModule: Ignored status bar change, current activity is edge-to-edge.
+11-11 20:22:29.354 32437 32437 I InsetsController: onStateChanged: host=com.sqldpass.app.adsqa/com.sqldpass.app.adsqa.MainActivity, from=android.view.ViewRootImpl.onInsetsStateChanged:3026, state=InsetsState: {mDisplayFrame=Rect(0, 0 - 1080, 2640), mDisplayCutout=DisplayCutout{insets=Rect(0, 94 - 0, 0) waterfall=Insets{left=0, top=0, right=0, bottom=0} boundingRect={Bounds=[Rect(0, 0 - 0, 0), Rect(505, 0 - 576, 94), Rect(0, 0 - 0, 0), Rect(0, 0 - 0, 0)]} cutoutPathParserInfo={CutoutPathParserInfo{displayWidth=1080 displayHeight=2640 physicalDisplayWidth=1080 physicalDisplayHeight=2640 density={3.0} cutoutSpec={M 0,0 H -11.83333333333333 V 31.33333333333333 H 11.83333333333333 V 0 H 0 Z @dp} rotation={0} scale={1.0} physicalPixelDisplaySizeRatio={1.0}}} sideOverrides={}}, mRoundedCorners=RoundedCorners{[RoundedCorner{position=TopLeft, radius=114, center=Point(114, 114)}, RoundedCorner{position=TopRight, radius=114, center=Point(966, 114)}, RoundedCorner{position=BottomRight, radius=114, center=Point(966, 2526)}, RoundedCorner{position=BottomLeft, radius=114, center=Point(114, 2526)}]}  mRoundedCornerFrame=Rect(0, 0 - 1080, 2640), mPrivacyIndicatorBounds=PrivacyIndicatorBounds {static bounds=Rect(948, 0 - 1080, 94) rotation=0}, mDisplayShape=DisplayShape{ spec=-311912193 displayWidth=1080 displayHeight=2640 physicalPixelDisplaySizeRatio=1.0 rotation=0 offsetX=0 offsetY=0 scale=1.0}, mSources= { InsetsSource: {fb430000 mType=statusBars mFrame=[0,0][1080,94] mVisible=true mFlags= mSideHint=TOP mBoundingRects=null}, InsetsSource: {fb430005 mType=mandatorySystemGestures mFrame=[0,0][1080,130] mVisible=true mFlags= mSideHint=TOP mBoundingRects=null}, InsetsSource: {fb430006 mType=tappableElement mFrame=[0,0][1080,94] mVisible=true mFlags= mSideHint=TOP mBoundingRects=null}, InsetsSource: {3 mType=ime mFrame=[0,0][0,0] mVisible=false mFlags= mSideHint=NONE mBoundingRects=null}, InsetsSource: {27 mType=displayCutout mFrame=[0,0][1080,94] mVisible=true mFlags= mSideHint=TOP mBoundingRects=null}, InsetsSource: {48300001 mType=navigationBars mFrame=[0,2496][1080,2640] mVisible=false mFlags= mSideHint=BOTTOM mBoundingRects=null}, InsetsSource: {48300004 mType=systemGestures mFrame=[0,0][0,0] mVisible=true mFlags= mSideHint=NONE mBoundingRects=null}, InsetsSource: {48300005 mType=mandatorySystemGestures mFrame=[0,2496][1080,2640] mVisible=true mFlags= mSideHint=BOTTOM mBoundingRects=null}, InsetsSource: {48300006 mType=tappableElement mFrame=[0,2496][1080,2640] mVisible=true mFlags= mSideHint=BOTTOM mBoundingRects=null}, InsetsSource: {48300024 mType=systemGestures mFrame=[0,0][0,0] mVisible=true mFlags= mSideHint=NONE mBoundingRects=null} }
+11-11 20:22:29.357 32437 32437 W libc    : Access denied finding property "vendor.display.enable_optimal_refresh_rate"
+11-11 20:22:29.357 32437 32437 I BufferQueueProducer: [](id:7eb50000001f,api:0,p:1,c:32437) setDequeueTimeout:2077252342
+11-11 20:22:29.357 32437 32437 I BLASTBufferQueue_Java: new BLASTBufferQueue, mName= VRI[MainActivity]@74ad8b9 mNativeObject= 0xb400007a4b5f3e80 caller= android.view.ViewRootImpl.updateBlastSurfaceIfNeeded:3585 android.view.ViewRootImpl.relayoutWindow:11685 android.view.ViewRootImpl.performTraversals:4804 android.view.ViewRootImpl.doTraversal:3924 android.view.ViewRootImpl$TraversalRunnable.run:12903 android.view.Choreographer$CallbackRecord.run:1901 android.view.Choreographer$CallbackRecord.run:1910 android.view.Choreographer.doCallbacks:1367 android.view.Choreographer.doFrame:1292 android.view.Choreographer$FrameDisplayEventReceiver.run:1870
+11-11 20:22:29.357 32437 32437 I BLASTBufferQueue_Java: update, w= 1080 h= 2640 mName = VRI[MainActivity]@74ad8b9 mNativeObject= 0xb400007a4b5f3e80 sc.mNativeObject= 0xb40000787b43ef50 format= -1 caller= android.view.ViewRootImpl.updateBlastSurfaceIfNeeded:3590 android.view.ViewRootImpl.relayoutWindow:11685 android.view.ViewRootImpl.performTraversals:4804 android.view.ViewRootImpl.doTraversal:3924 android.view.ViewRootImpl$TraversalRunnable.run:12903 android.view.Choreographer$CallbackRecord.run:1901
+11-11 20:22:29.358 32437 32437 W libc    : Access denied finding property "vendor.display.enable_optimal_refresh_rate"
+11-11 20:22:29.359 32437 32437 I VRI[MainActivity]@74ad8b9: Relayout returned: old=(0,0,1080,2640) new=(0,0,1080,2640) relayoutAsync=false req=(1080,2640)0 dur=7 res=0x3 s={true 0xb400007aab4aa580} ch=true seqId=0
+11-11 20:22:29.360 32437 32437 D VRI[MainActivity]@74ad8b9: mThreadedRenderer.initialize() mSurface={isValid=true 0xb400007aab4aa580} hwInitialized=true
+11-11 20:22:29.362 32437 32437 D VRI[MainActivity]@74ad8b9: reportNextDraw android.view.ViewRootImpl.performTraversals:5443 android.view.ViewRootImpl.doTraversal:3924 android.view.ViewRootImpl$TraversalRunnable.run:12903 android.view.Choreographer$CallbackRecord.run:1901 android.view.Choreographer$CallbackRecord.run:1910
+11-11 20:22:29.364 32437 32437 D VRI[MainActivity]@74ad8b9: Canceling draw. cancelDueToPreDrawListener=true cancelDueToSync=false
+11-11 20:22:29.365 32437 32437 I VRI[MainActivity]@74ad8b9: stopped(true) old = false
+11-11 20:22:29.365 32437 32437 D VRI[MainActivity]@74ad8b9: WindowStopped on com.sqldpass.app.adsqa/com.sqldpass.app.adsqa.MainActivity set to true
+11-11 20:22:29.365 32437 32459 D HWUI    : CacheManager::trimMemory(20)
+11-11 20:22:29.366 32437 32459 D HWUI    : CacheManager::trimMemory(20)
+11-11 20:22:29.373 32437 32459 D HWUI    : CacheManager::trimMemory(20)
+11-11 20:22:29.375 32437 32437 I VRI[MainActivity]@74ad8b9: Relayout returned: old=(0,0,1080,2640) new=(0,0,1080,2640) relayoutAsync=false req=(1080,2640)4 dur=2 res=0x2 s={false 0x0} ch=false seqId=0
+11-11 20:22:29.376 32437 32437 D VRI[MainActivity]@74ad8b9: applyTransactionOnDraw applyImmediately
+11-11 20:22:29.377 32437 32437 D VRI[MainActivity]@74ad8b9: Setup new sync=wmsSync-VRI[MainActivity]@74ad8b9#48
+11-11 20:22:29.377 32437 32437 I VRI[MainActivity]@74ad8b9: Creating new active sync group VRI[MainActivity]@74ad8b9#49
+11-11 20:22:29.377 32437 32437 D VRI[MainActivity]@74ad8b9: Not drawing due to not visible. Reason=View.INVISIBLE
+11-11 20:22:29.377 32437 32437 D VRI[MainActivity]@74ad8b9: reportDrawFinished seqId=0
+11-11 20:22:29.379 32437 32437 I VRI[MainActivity]@74ad8b9: handleAppVisibility mAppVisible = true visible = false
+11-11 20:22:57.579 32437 32437 I VRI[MainActivity]@74ad8b9: handleAppVisibility mAppVisible = false visible = true
+11-11 20:22:57.589 32437 32437 I VRI[MainActivity]@74ad8b9: stopped(false) old = true
+11-11 20:22:57.589 32437 32437 D VRI[MainActivity]@74ad8b9: WindowStopped on com.sqldpass.app.adsqa/com.sqldpass.app.adsqa.MainActivity set to false
+11-11 20:22:57.590 32437 32437 W WindowOnBackDispatcher: OnBackInvokedCallback is not enabled for the application.
+11-11 20:22:57.590 32437 32437 W WindowOnBackDispatcher: Set 'android:enableOnBackInvokedCallback="true"' in the application manifest.
+11-11 20:22:57.599 32437 32437 W unknown:BridgelessReact: ReactHost{0}.onHostResume(activity)
+11-11 20:22:57.599 32437 32437 W unknown:BridgelessReact: ReactHost{0}.ReactContext.onHostResume()
+11-11 20:22:57.616 32437 32464 W unknown:ReactNative: StatusBarModule: Ignored status bar change, current activity is edge-to-edge.
+11-11 20:22:57.625 32437 32437 W libc    : Access denied finding property "vendor.display.enable_optimal_refresh_rate"
+11-11 20:22:57.625 32437 32437 I BufferQueueProducer: [](id:7eb500000020,api:0,p:114,c:32437) setDequeueTimeout:2077252342
+11-11 20:22:57.625 32437 32437 I BLASTBufferQueue_Java: new BLASTBufferQueue, mName= VRI[MainActivity]@74ad8b9 mNativeObject= 0xb400007a4b506fc0 caller= android.view.ViewRootImpl.updateBlastSurfaceIfNeeded:3585 android.view.ViewRootImpl.relayoutWindow:11685 android.view.ViewRootImpl.performTraversals:4804 android.view.ViewRootImpl.doTraversal:3924 android.view.ViewRootImpl$TraversalRunnable.run:12903 android.view.Choreographer$CallbackRecord.run:1901 android.view.Choreographer$CallbackRecord.run:1910 android.view.Choreographer.doCallbacks:1367 android.view.Choreographer.doFrame:1292 android.view.Choreographer$FrameDisplayEventReceiver.run:1870
+11-11 20:22:57.625 32437 32437 I BLASTBufferQueue_Java: update, w= 1080 h= 2640 mName = VRI[MainActivity]@74ad8b9 mNativeObject= 0xb400007a4b506fc0 sc.mNativeObject= 0xb40000787b45b390 format= -1 caller= android.view.ViewRootImpl.updateBlastSurfaceIfNeeded:3590 android.view.ViewRootImpl.relayoutWindow:11685 android.view.ViewRootImpl.performTraversals:4804 android.view.ViewRootImpl.doTraversal:3924 android.view.ViewRootImpl$TraversalRunnable.run:12903 android.view.Choreographer$CallbackRecord.run:1901
+11-11 20:22:57.628 32437 32437 W libc    : Access denied finding property "vendor.display.enable_optimal_refresh_rate"
+11-11 20:22:57.628 32437 32437 I VRI[MainActivity]@74ad8b9: Relayout returned: old=(0,0,1080,2640) new=(0,0,1080,2640) relayoutAsync=false req=(1080,2640)0 dur=6 res=0x3 s={true 0xb400007aab4611e0} ch=true seqId=0
+11-11 20:22:57.629 32437 32437 D VRI[MainActivity]@74ad8b9: mThreadedRenderer.initialize() mSurface={isValid=true 0xb400007aab4611e0} hwInitialized=true
+11-11 20:22:57.630 32437 32437 D VRI[MainActivity]@74ad8b9: reportNextDraw android.view.ViewRootImpl.performTraversals:5443 android.view.ViewRootImpl.doTraversal:3924 android.view.ViewRootImpl$TraversalRunnable.run:12903 android.view.Choreographer$CallbackRecord.run:1901 android.view.Choreographer$CallbackRecord.run:1910
+11-11 20:22:57.630 32437 32437 D VRI[MainActivity]@74ad8b9: Setup new sync=wmsSync-VRI[MainActivity]@74ad8b9#50
+11-11 20:22:57.630 32437 32437 I VRI[MainActivity]@74ad8b9: Creating new active sync group VRI[MainActivity]@74ad8b9#51
+11-11 20:22:57.630 32437 32437 D VRI[MainActivity]@74ad8b9: Start draw after previous draw not visible
+11-11 20:22:57.631 32437 32437 D VRI[MainActivity]@74ad8b9: registerCallbacksForSync syncBuffer=false
+11-11 20:22:57.647 32437 32466 D VRI[MainActivity]@74ad8b9: Received frameDrawingCallback syncResult=0 frameNum=1.
+11-11 20:22:57.647 32437 32466 I VRI[MainActivity]@74ad8b9: mWNT: t=0xb40000792b49d310 mBlastBufferQueue=0xb400007a4b506fc0 fn= 1 HdrRenderState mRenderHdrSdrRatio=1.0 caller= android.view.ViewRootImpl$12.onFrameDraw:15441 android.view.ThreadedRenderer$1.onFrameDraw:718 <bottom of call stack>
+11-11 20:22:57.647 32437 32466 I VRI[MainActivity]@74ad8b9: Setting up sync and frameCommitCallback
+11-11 20:22:57.655 32437 32459 I BLASTBufferQueue: [VRI[MainActivity]@74ad8b9#20](f:0,a:0,s:0) onFrameAvailable the first frame is available
+11-11 20:22:57.656 32437 32459 I SurfaceComposerClient: apply transaction with the first frame. layerId: 2938, bufferData(ID: 139315854181250, frameNumber: 1)
+11-11 20:22:57.656 32437 32459 I VRI[MainActivity]@74ad8b9: Received frameCommittedCallback lastAttemptedDrawFrameNum=1 didProduceBuffer=true
+11-11 20:22:57.657 32437 32437 D VRI[MainActivity]@74ad8b9: reportDrawFinished seqId=0
+11-11 20:22:57.658 32437 32437 D VRI[MainActivity]@74ad8b9: Not drawing due to screen off
+11-11 20:22:57.660 32437 32437 I VRI[MainActivity]@74ad8b9: onDisplayChanged oldDisplayState=1 newDisplayState=2
+11-11 20:22:57.661 32437 32437 I InsetsController: onStateChanged: host=com.sqldpass.app.adsqa/com.sqldpass.app.adsqa.MainActivity, from=android.view.ViewRootImpl.onInsetsStateChanged:3026, state=InsetsState: {mDisplayFrame=Rect(0, 0 - 1080, 2640), mDisplayCutout=DisplayCutout{insets=Rect(0, 94 - 0, 0) waterfall=Insets{left=0, top=0, right=0, bottom=0} boundingRect={Bounds=[Rect(0, 0 - 0, 0), Rect(505, 0 - 576, 94), Rect(0, 0 - 0, 0), Rect(0, 0 - 0, 0)]} cutoutPathParserInfo={CutoutPathParserInfo{displayWidth=1080 displayHeight=2640 physicalDisplayWidth=1080 physicalDisplayHeight=2640 density={3.0} cutoutSpec={M 0,0 H -11.83333333333333 V 31.33333333333333 H 11.83333333333333 V 0 H 0 Z @dp} rotation={0} scale={1.0} physicalPixelDisplaySizeRatio={1.0}}} sideOverrides={}}, mRoundedCorners=RoundedCorners{[RoundedCorner{position=TopLeft, radius=114, center=Point(114, 114)}, RoundedCorner{position=TopRight, radius=114, center=Point(966, 114)}, RoundedCorner{position=BottomRight, radius=114, center=Point(966, 2526)}, RoundedCorner{position=BottomLeft, radius=114, center=Point(114, 2526)}]}  mRoundedCornerFrame=Rect(0, 0 - 1080, 2640), mPrivacyIndicatorBounds=PrivacyIndicatorBounds {static bounds=Rect(948, 0 - 1080, 94) rotation=0}, mDisplayShape=DisplayShape{ spec=-311912193 displayWidth=1080 displayHeight=2640 physicalPixelDisplaySizeRatio=1.0 rotation=0 offsetX=0 offsetY=0 scale=1.0}, mSources= { InsetsSource: {fb430000 mType=statusBars mFrame=[0,0][1080,94] mVisible=true mFlags= mSideHint=TOP mBoundingRects=null}, InsetsSource: {fb430005 mType=mandatorySystemGestures mFrame=[0,0][1080,130] mVisible=true mFlags= mSideHint=TOP mBoundingRects=null}, InsetsSource: {fb430006 mType=tappableElement mFrame=[0,0][1080,94] mVisible=true mFlags= mSideHint=TOP mBoundingRects=null}, InsetsSource: {3 mType=ime mFrame=[0,0][0,0] mVisible=false mFlags= mSideHint=NONE mBoundingRects=null}, InsetsSource: {27 mType=displayCutout mFrame=[0,0][1080,94] mVisible=true mFlags= mSideHint=TOP mBoundingRects=null}, InsetsSource: {48300001 mType=navigationBars mFrame=[0,2496][1080,2640] mVisible=true mFlags= mSideHint=BOTTOM mBoundingRects=null}, InsetsSource: {48300004 mType=systemGestures mFrame=[0,0][0,0] mVisible=true mFlags= mSideHint=NONE mBoundingRects=null}, InsetsSource: {48300005 mType=mandatorySystemGestures mFrame=[0,2496][1080,2640] mVisible=true mFlags= mSideHint=BOTTOM mBoundingRects=null}, InsetsSource: {48300006 mType=tappableElement mFrame=[0,2496][1080,2640] mVisible=true mFlags= mSideHint=BOTTOM mBoundingRects=null}, InsetsSource: {48300024 mType=systemGestures mFrame=[0,0][0,0] mVisible=true mFlags= mSideHint=NONE mBoundingRects=null} }
+11-11 20:22:57.661 32437 32437 I VRI[MainActivity]@74ad8b9: handleResized, frames=ClientWindowFrames{frame=[0,0][1080,2640] display=[0,0][1080,2640] parentFrame=[0,0][0,0]} displayId=0 dragResizing=false compatScale=1.0 frameChanged=false attachedFrameChanged=false configChanged=false displayChanged=false compatScaleChanged=false dragResizingChanged=false
+11-11 20:22:57.661 32437 32437 I VRI[MainActivity]@74ad8b9: handleResized mSyncSeqId = 0
+11-11 20:22:57.661 32437 32437 D VRI[MainActivity]@74ad8b9: reportNextDraw android.view.ViewRootImpl.handleResized:2983 android.view.ViewRootImpl.-$$Nest$mhandleResized:0 android.view.ViewRootImpl$W.resized:14082 android.app.servertransaction.WindowStateResizeItem.execute:93 android.app.servertransaction.WindowStateTransactionItem.execute:62
+11-11 20:22:57.670 32437 32437 D VRI[MainActivity]@74ad8b9: Canceling draw. cancelDueToPreDrawListener=true cancelDueToSync=false
+11-11 20:22:57.685 32437 32437 D VRI[MainActivity]@74ad8b9: Setup new sync=wmsSync-VRI[MainActivity]@74ad8b9#52
+11-11 20:22:57.685 32437 32437 I VRI[MainActivity]@74ad8b9: Creating new active sync group VRI[MainActivity]@74ad8b9#53
+11-11 20:22:57.685 32437 32437 D VRI[MainActivity]@74ad8b9: Draw frame after cancel
+11-11 20:22:57.685 32437 32437 D VRI[MainActivity]@74ad8b9: Resumed drawing after screen turned on
+11-11 20:22:57.686 32437 32437 D VRI[MainActivity]@74ad8b9: registerCallbacksForSync syncBuffer=false
+11-11 20:22:57.687 32437 32467 D VRI[MainActivity]@74ad8b9: Received frameDrawingCallback syncResult=0 frameNum=2.
+11-11 20:22:57.687 32437 32467 I VRI[MainActivity]@74ad8b9: Setting up sync and frameCommitCallback
+11-11 20:22:57.690 32437 32459 I VRI[MainActivity]@74ad8b9: Received frameCommittedCallback lastAttemptedDrawFrameNum=2 didProduceBuffer=true
+11-11 20:22:57.690 32437 32437 D VRI[MainActivity]@74ad8b9: reportDrawFinished seqId=0
+11-11 20:22:57.945 32437 32437 I InsetsSourceConsumer: applyRequestedVisibilityToControl: visible=true, type=navigationBars, host=com.sqldpass.app.adsqa/com.sqldpass.app.adsqa.MainActivity
+11-11 20:22:57.946 32437 32437 I InsetsSourceConsumer: applyRequestedVisibilityToControl: visible=true, type=statusBars, host=com.sqldpass.app.adsqa/com.sqldpass.app.adsqa.MainActivity
+11-11 20:22:57.948 32437 32437 D VRI[MainActivity]@74ad8b9: mThreadedRenderer.initializeIfNeeded()#2 mSurface={isValid=true 0xb400007aab4611e0}
+11-11 20:22:57.949 32437 32437 D InputMethodManagerUtils: startInputInner - Id : 0
+11-11 20:22:57.949 32437 32437 I InputMethodManager: startInputInner - IInputMethodManagerGlobalInvoker.startInputOrWindowGainedFocus
+11-11 20:22:57.957 32437 32464 W unknown:ReactNative: StatusBarModule: Ignored status bar change, current activity is edge-to-edge.
+11-11 20:22:57.959 32437 32437 I InputMethodManager: handleMessage: setImeVisibility visible=false
+11-11 20:22:57.959 32437 32437 D InsetsController: hide(ime(), fromIme=false)
+11-11 20:22:57.959 32437 32437 I ImeTracker: com.sqldpass.app.adsqa:f95046d7: onCancelled at PHASE_CLIENT_ALREADY_HIDDEN
+11-11 20:22:57.966 32437  5109 D InputTransport: Input channel constructed: 'ClientS', fd=156

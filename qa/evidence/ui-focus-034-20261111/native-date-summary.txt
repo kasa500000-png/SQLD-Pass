@@ -1,0 +1,2 @@
+Test Case '-[CaptureTests.CaptureTests testFinalDateControls]' passed (13.040 seconds).
+** TEST SUCCEEDED **

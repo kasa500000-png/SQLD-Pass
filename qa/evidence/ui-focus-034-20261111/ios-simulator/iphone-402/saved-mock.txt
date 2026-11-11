@@ -1,0 +1,63 @@
+Attributes: Application, 0x111e2ee40, pid: 47048, label: 'SQLD Pass'
+Element subtree:
+ →Application, 0x111e2ee40, pid: 47048, label: 'SQLD Pass'
+    Window (Main), 0x111e2ef80, {{0.0, 0.0}, {402.0, 874.0}}
+      Other, 0x111e2f0c0, {{0.0, 0.0}, {402.0, 874.0}}
+        Other, 0x111e2ed00, {{0.0, 0.0}, {402.0, 874.0}}
+          Other, 0x111e2f5c0, {{0.0, 0.0}, {402.0, 874.0}}
+            Other, 0x111e2f480, {{0.0, 0.0}, {402.0, 874.0}}
+              Other, 0x111e2e580, {{0.0, 0.0}, {402.0, 874.0}}
+                Other, 0x111e2e6c0, {{0.0, 0.0}, {402.0, 874.0}}
+                  Other, 0x111e2ebc0, {{0.0, 0.0}, {402.0, 874.0}}
+                    Other, 0x111e2c000, {{0.0, 62.0}, {402.0, 778.0}}
+                      Other, 0x111e2c140, {{0.0, 62.0}, {402.0, 64.0}}
+                      Other, 0x111e2c280, {{0.0, 62.0}, {402.0, 64.0}}
+                      Other, 0x111e2c3c0, {{0.0, 62.0}, {402.0, 778.0}}
+                      Button, 0x110bb8500, {{16.0, 70.0}, {48.0, 48.0}}, label: '뒤로'
+                      Button, 0x110e20280, {{338.0, 70.0}, {48.0, 48.0}}, label: '설정'
+                      StaticText, 0x110e22580, {{74.0, 79.3}, {254.0, 29.0}}, label: '저장한 문항'
+                        StaticText, 0x110e203c0, {{74.0, 79.3}, {254.0, 29.0}}, label: '저장한 문항'
+                      Other, 0x110e21f40, {{0.0, 126.0}, {402.0, 634.3}}
+                        ScrollView, 0x110e22300, {{0.0, 126.0}, {402.0, 634.3}}
+                          Other, 0x10815b480, {{0.0, 126.0}, {402.0, 390.0}}
+                            Other, 0x1081583c0, {{0.0, 126.0}, {402.0, 390.0}}
+                              StaticText, 0x108158b40, {{16.0, 142.0}, {370.0, 28.0}}, label: '저장한 문항'
+                                StaticText, 0x104be52c0, {{16.0, 142.0}, {370.0, 28.0}}, label: '저장한 문항'
+                              StaticText, 0x110e27c00, {{16.0, 182.0}, {370.0, 40.0}}, label: '제출한 회차에서 저장한 문항입니다. 같은 회차 응시 중에는 해설이 숨겨집니다.'
+                                StaticText, 0x110e27d40, {{16.0, 182.0}, {370.0, 40.0}}, label: '제출한 회차에서 저장한 문항입니다. 같은 회차 응시 중에는 해설이 숨겨집니다.'
+                              Other, 0x110e27e80, {{28.0, 251.3}, {346.0, 17.0}}
+                                TextField, 0x110e27200, {{28.0, 251.3}, {346.0, 17.0}}, identifier: 'mock-review-search', label: '모의고사 복습 검색', placeholderValue: '주제 · 지문 · SQL 검색'
+                              Button, 0x110e26bc0, {{16.0, 298.0}, {370.0, 48.0}}, label: '주제 선택'
+                              StaticText, 0x110e26940, {{16.0, 358.0}, {370.0, 20.0}}, label: '1문항'
+                                StaticText, 0x110e27980, {{16.0, 358.0}, {370.0, 20.0}}, label: '1문항'
+                              Button, 0x110e27ac0, {{16.0, 390.0}, {370.0, 110.0}}, identifier: 'review-question-ME20261109:new-s08-05', label: 'CASE·NULL 대체 함수
+제01회 · 50번 · 다음 SQL의 실행 결과로 옳은 것은? 여러 행은 SQL의 ORDER BY 순서이며, 괄호 안의 값은 SELECT 목록 순서이다.'
+                                Other, 0x110e26a80, {{358.0, 435.7}, {18.0, 18.0}}
+                                  Other, 0x110e27840, {{358.0, 435.7}, {18.0, 18.0}}
+                                    Other, 0x110e27480, {{364.0, 439.4}, {6.0, 10.5}}
+                                      Other, 0x112865f40, {{364.0, 439.4}, {6.0, 10.5}}
+                          Other, 0x112864dc0, {{369.0, 126.0}, {30.0, 634.3}}, label: 'Vertical scroll bar, 1 page', value: 0%
+                            Other, 0x112864f00, {{396.0, 129.0}, {3.0, 36.0}}
+                          Other, 0x112865040, {{0.0, 727.3}, {402.0, 30.0}}, label: 'Horizontal scroll bar, 1 page', value: 0%
+                            Other, 0x112865180, {{3.0, 754.3}, {393.0, 3.0}}
+                          Other, 0x1128652c0, {{369.0, 126.0}, {30.0, 634.3}}, label: 'Vertical scroll bar, 1 page', value: 0%
+                            Other, 0x112865400, {{396.0, 129.0}, {3.0, 36.0}}
+                          Other, 0x112865540, {{0.0, 727.3}, {402.0, 30.0}}, label: 'Horizontal scroll bar, 1 page', value: 0%
+                            Other, 0x112865680, {{3.0, 754.3}, {393.0, 3.0}}
+                      Other, 0x1128657c0, {{0.0, 760.3}, {402.0, 79.7}}
+                      Other, 0x112865900, {{0.0, 761.3}, {402.0, 78.7}}
+                      Other, 0x112865a40, {{16.0, 769.3}, {74.0, 62.7}}, identifier: 'tab-today', label: '홈'
+                      Other, 0x112865b80, {{90.0, 769.3}, {74.0, 62.7}}, identifier: 'tab-learn', label: '교재'
+                      Other, 0x112865cc0, {{164.0, 769.3}, {74.0, 62.7}}, identifier: 'tab-review', label: '문제'
+                      Other, 0x112865e00, {{238.0, 769.3}, {74.0, 62.7}}, identifier: 'tab-exams', label: '실전', Selected
+                      Other, 0x112866440, {{312.0, 769.3}, {74.0, 62.7}}, identifier: 'tab-records', label: '기록'
+    Window, 0x112867d40, {{0.0, 0.0}, {402.0, 874.0}}
+      Other, 0x112867e80, {{0.0, 0.0}, {402.0, 874.0}}
+        Other, 0x1109bfe80, {{0.0, 0.0}, {402.0, 874.0}}
+Path to element:
+ →Application, 0x111e2ee40, pid: 47048, label: 'SQLD Pass'
+Query chain:
+ →Find: Application 'com.sqldpass.app.adsqa'
+  Output: {
+    Application, 0x1109bdf40, pid: 47048, label: 'SQLD Pass'
+  }
