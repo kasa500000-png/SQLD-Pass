@@ -1,5 +1,5 @@
 import {renderMockScreen,mockExplanation} from '../mocks/views';
-import {canStudyQuestion} from '../core/domain/exam';
+import {canStudyQuestion,formatTime,isExamPaused} from '../core/domain/exam';
 import type {MonetizedController} from '../monetization/controller';
 import type {ContentBlock} from './types';
 import type {Route} from '../core/types';
@@ -51,18 +51,20 @@ export function renderTextbook(c:MonetizedController):Node{
    card([h('전체 데이터 삭제'),small('학습 기록과 설정, 광고로 연 회차의 이용 권한을 모두 삭제합니다.'),{...act('전체 데이터 삭제',()=>c.requestReset()),buttonKind:'danger'}])];
  }
  else if(r==='home'){
-  title='홈';const today=dailySections(s,c.content,c.services.clock().wall),last=c.lastReadingLesson();
+  title='홈';const today=dailySections(s,c.content,c.services.clock().wall),last=c.lastReadingLesson(),active=c.activeExam();
   const latest=new Map(s.responses.filter(a=>!c.content.questions[a.questionId]?.examId).map(a=>[a.questionId,a]));
   const wrong=[...latest.values()].filter(a=>!a.correct||a.uncertain).map(a=>a.questionId);
-  body=[h('오늘의 학습'),
-   ...(c.activeExam()?[card([small('진행 중인 모의고사'),t(`${c.activeExam()!.title} · ${c.activeExam()!.mode==='study'?'학습 모드':'실전 모드'}`),primary('모의고사 이어하기',go('exam',c.activeExam()!.id),'resume-mock')])]:[]),
-   ...(s.practice?[link('문제풀이 이어하기',()=>c.resumePractice(),'resume-textbook-practice')]:[]),
-   card([small(s.settings.targetDate?`목표일 ${s.settings.targetDate}`:'교재 순서대로 학습'),h(today.length?today.every(l=>s.readLessons.includes(l.id))?'오늘 분량 완료':`오늘 ${today.length}개 절`:'전체 교재를 읽었습니다'),
-    ...today.slice(0,1).map(l=>(c.activeExam()?link:primary)(l.title,go('lesson',l.id),`section-${l.id}`)),
-    ...(today.length>1?[link(`남은 ${today.length-1}개 절 · 전체 목차`,go('catalog'))]:[])]),
-   ...(last&&!today.some(l=>l.id===last.id)?[link(`이어서 읽기\n${last.title}`,go('lesson',last.id))]:[]),
-   ...(wrong.length?[link(`오답 ${Math.min(5,wrong.length)}문항 복습\n다시 확인할 문제 ${wrong.length}개`,()=>c.beginPractice(wrong.slice(0,5),'review'))]:[]),
-   h('학습 현황'),small(`읽음 ${m.read}/${m.sections}절 · 풀이 ${m.attempted}/${m.questions}문항 · 정답률 ${m.accuracy===null?'—':m.accuracy+'%'}`),progress(m.read/m.sections,p.blue),
+  const next=last&&!s.readLessons.includes(last.id)?last:today.find(l=>!s.readLessons.includes(l.id))??today[0];
+  const continuing=next&&!!c.readingPosition(next.id),completedToday=today.filter(l=>s.readLessons.includes(l.id)).length;
+  body=[h(active||s.practice?'이어서 학습하기':'오늘의 학습'),
+   ...(active?[card([small(isExamPaused(active)?'일시정지한 모의고사':'진행 중인 모의고사'),h(active.title),t(active.mode==='study'?'학습 모드 · 시간 제한 없음':`남은 시간 ${formatTime(c.remaining())}`),primary('모의고사 이어하기',go('exam',active.id),'resume-mock')])]:s.practice?[card([h('풀던 문제부터 이어서'),small(`${s.practice.index+1} / ${s.practice.questionIds.length}문항 · 답안을 저장했습니다`),primary('문제풀이 이어하기',()=>c.resumePractice(),'resume-textbook-practice')])]:[]),
+   card([small(s.settings.targetDate?`목표일 ${s.settings.targetDate}`:'교재 순서대로 학습'),
+    h(today.length?`오늘 분량 ${completedToday} / ${today.length}절 완료`:'전체 교재 읽음 완료'),
+    ...(next?[t(next.title),(active||s.practice?link:primary)(continuing?'이어서 읽기':'교재 공부 시작',go('lesson',next.id),`section-${next.id}`)]:[t('확인 문제와 모의고사로 이해한 내용을 점검해 보세요.'),link('확인 문제 풀기',go('review'))]),
+    link('전체 교재 목차',go('catalog'),'home-textbook')]),
+   ...(wrong.length?[link(`오답·헷갈린 문제 복습\n${wrong.length}문항 중 ${Math.min(5,wrong.length)}문항부터`,()=>c.beginPractice(wrong.slice(0,5),'review'),'home-wrong')]:[]),
+   h('나의 학습 현황'),row([box([h(`${m.read} / ${m.sections}`),small('읽음 완료한 절')],{flex:1}),box([h(`${m.attempted} / ${m.questions}`),small('풀어본 문제')],{flex:1}),box([h(m.accuracy===null?'—':m.accuracy+'%'),small('최근 답안 정답률')],{flex:1})],{flexWrap:'wrap',gap:16}),progress(m.read/m.sections,p.blue),
+   small('열어본 절은 자동으로 완료되지 않습니다. 읽음 완료를 직접 표시해 주세요.'),
    h('학습 도구'),segments([act('핵심 카드',go('flashcards')),act('용어 사전',go('glossary')),act('모의고사',go('exams'))]),
    ...(c.showBanner?[act('광고 표시 설정',()=>c.openAdPrivacy(),'home-ad-settings')]:[])];
  }
