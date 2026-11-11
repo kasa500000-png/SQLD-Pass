@@ -21,6 +21,8 @@ export function StudyCode({node,scale,dark}:{node:Node;scale:number;dark:boolean
 }
 export function StudyTable({node,scale,dark,expanded=false}:{node:Node;scale:number;dark:boolean;expanded?:boolean}){
   const [large,setLarge]=useState(false);
+  const caption=node.label?.trim()||'데이터 표';
+  const dimensions=/\d+\s*행/.test(caption)?'':` · ${(node.rows??[]).length}행 × ${(node.columns??[]).length}열`;
   const [availableWidth,setAvailableWidth]=useState(0);
   const {fontScale}=useWindowDimensions();
   const cols=node.columns??[],rows=node.rows??[],ink=(dark?darkPalette:lightPalette).ink,line=(dark?darkPalette:lightPalette).line;
@@ -35,15 +37,15 @@ export function StudyTable({node,scale,dark,expanded=false}:{node:Node;scale:num
     <Text selectable allowFontScaling accessibilityLabel={`${node.highlight?.some(([r,c])=>`${r}:${c}`===key)?'강조된 셀. ':''}${header?'':cols[i]+': '}${displayCell(v)}`} style={{fontSize:14*scale,lineHeight:23*scale,color:ink,fontWeight:header?'600':'400',textAlign:!header&&/^-?[\d,.]+$/.test(displayCell(v))?'right':'left'}}>{displayCell(v)}</Text>
   </View>;
   return <View style={{gap:6}} onLayout={e=>setAvailableWidth(Math.max(0,e.nativeEvent.layout.width-2))}>
-    <Text allowFontScaling style={{fontSize:12*scale,color:(dark?darkPalette:lightPalette).muted}}>{node.label??'데이터 표'} · {rows.length}행{overflow?' · 좌우로 이동':''}</Text>
+    <Text allowFontScaling style={{fontSize:12*scale,color:(dark?darkPalette:lightPalette).muted}}>{caption}{dimensions}{overflow?' · 좌우로 이동':''}</Text>
     <ScrollView horizontal showsHorizontalScrollIndicator accessibilityLabel={node.label} style={{borderWidth:1,borderColor:line,borderRadius:12,flexGrow:0}}>
-      <View><View style={{flexDirection:'row',backgroundColor:(dark?darkPalette:lightPalette).blueSoft}}>{cols.map((v,i)=>cell(v,i,true,`-1:${i}`))}</View>
+      <View><View style={{flexDirection:'row',backgroundColor:(dark?darkPalette:lightPalette).code}}>{cols.map((v,i)=>cell(v,i,true,`-1:${i}`))}</View>
       {rows.map((r,i)=><View key={i} style={{flexDirection:'row',borderTopWidth:1,borderColor:line}}>{cols.map((_,j)=>cell(r[j],j,false,`${i}:${j}`))}</View>)}</View>
     </ScrollView>
-    {!expanded&&overflow?<Pressable accessibilityRole="button" onPress={()=>setLarge(true)} style={{minHeight:48,justifyContent:'center'}}><Text style={{color:(dark?darkPalette:lightPalette).blue}}>표 크게 보기 · 좌우 이동</Text></Pressable>:null}
+    {!expanded&&overflow?<Pressable accessibilityRole="button" onPress={()=>setLarge(true)} style={{minHeight:48,justifyContent:'center'}}><Text style={{color:(dark?darkPalette:lightPalette).blue}}>표 확대 보기</Text></Pressable>:null}
     <Modal visible={large} onRequestClose={()=>setLarge(false)} animationType="none"><SafeAreaView accessibilityViewIsModal onAccessibilityEscape={()=>setLarge(false)} style={{flex:1,backgroundColor:(dark?darkPalette:lightPalette).bg,padding:16}}>
       <Pressable accessibilityRole="button" accessibilityLabel="표 닫기" onPress={()=>setLarge(false)} style={{minHeight:48,justifyContent:'center'}}><Text style={{color:(dark?darkPalette:lightPalette).blue}}>닫기</Text></Pressable>
-      {large?<ScrollView><StudyTable node={node} scale={scale} dark={dark} expanded/></ScrollView>:null}
+      {large?<ScrollView><StudyTable node={node} scale={scale*1.2} dark={dark} expanded/></ScrollView>:null}
     </SafeAreaView></Modal>
     {!rows.length?<Text allowFontScaling style={{fontSize:14*scale,lineHeight:23*scale,color:ink}}>결과 0행 · 표시할 행이 없습니다.</Text>:null}
   </View>;
