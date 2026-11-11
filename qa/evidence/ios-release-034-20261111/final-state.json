@@ -1,0 +1,9 @@
+{
+  "observedAt": "2026-11-11T14:56:12.791Z",
+  "version": "0.3.4",
+  "state": "WAITING_FOR_REVIEW",
+  "releaseType": "AFTER_APPROVAL",
+  "attachedBuild": "14",
+  "buildId": "0c86953c-66f7-4bbc-999d-3a4a909e53ab",
+  "internalTestFlight": "IN_BETA_TESTING"
+}

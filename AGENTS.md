@@ -26,6 +26,16 @@ consent reruns. Record the unperformed checks and existing evidence separately; 
 claim they passed. Preserve runtime consent, earned-reward, content and signing gates.
 This exception does not authorize skipping validation for future versions.
 
+### Scoped owner exception — iOS 0.3.4(14), 2026-11-11
+
+After the locked-iPad blocker and the incomplete TestFlight/submission status were
+reported, the owner explicitly instructed: “이번에도 예외로 진행”. For0.3.4(14)
+only, proceed with TestFlight and App Store submission without additional physical
+iPad or consent reruns. Record the unsuccessful runner launch and unperformed
+checks honestly. Preserve actual archive/export/upload validation, content approval,
+runtime consent, earned-reward and signing gates. This exception does not apply to
+future versions.
+
 ## Latest content direction — 2026-11-09 textbook replacement
 
 Use the supplied Part 1–5 textbook as the sole runtime learning source. The approved
