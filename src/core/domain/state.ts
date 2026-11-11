@@ -32,6 +32,10 @@ export function parseState(raw:unknown,content:Content):AppState {
   if(!Number.isInteger(s.revision)||s.revision<0||typeof s.startedDay!=='string'||typeof s.settings.targetDate!=='string')throw new Error('학습 기록의 필수 값이 손상되었습니다.');
   if(s.exams.filter(e=>e.status==='active').length>1)throw new Error('동시에 진행 중인 시험 기록이 여러 개입니다.');
   for(const e of s.exams){if(!Number.isInteger(e.index)||e.index<0||e.index>=50||(e.remainingMs!==null&&e.remainingMs<0)||!e.answers||!Array.isArray(e.flagged)||!Array.isArray(e.timeIssues)||typeof e.timeTrusted!=='boolean')throw new Error('시험 상태가 손상되었습니다.');scoreExam(e.snapshots,e.answers);if(e.status==='submitted'&&!e.score)throw new Error('제출된 시험에 채점 기록이 없습니다.');}
+  for(const e of s.exams){
+    if(e.pauseCount!==undefined&&(!Number.isSafeInteger(e.pauseCount)||e.pauseCount<0))throw new Error('일시정지 기록을 확인할 수 없습니다.');
+    if(e.pausedAt!==undefined&&e.pausedAt!==null&&(!Number.isFinite(e.pausedAt)||e.status!=='active'||!e.pauseCount||(e.mode!=='study'&&(e.remainingMs??0)<=0)))throw new Error('일시정지 상태를 확인할 수 없습니다.');
+  }
   if(content.textbook){
     const ids=new Set(content.lessons.map(l=>l.id));
     if(s.knownCards!==undefined&&(!Array.isArray(s.knownCards)||new Set(s.knownCards).size!==s.knownCards.length||s.knownCards.some(id=>!content.textbook!.flashcards.some(f=>f.id===id))))throw new Error('카드 기록이 손상되었습니다.');

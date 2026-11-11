@@ -53,14 +53,16 @@ function LearnerApp(){
     void c.initialize();
     const timer=setInterval(()=>{void c.pulse();},1000);
     const appSub=NativeAppState.addEventListener('change',state=>{
-      void c.checkpoint();void c.pulse();
+      if(state==='active')c.onAppForeground();else void c.onAppBackground();
       if(state==='active'&&c.ready)void reminders.refresh();
     });
+    const blurSub=Platform.OS==='android'?NativeAppState.addEventListener('blur',()=>{void c.onAppBackground();}):undefined;
+    const focusSub=Platform.OS==='android'?NativeAppState.addEventListener('focus',()=>c.onAppForeground()):undefined;
     const backSub=BackHandler.addEventListener('hardwareBackPress',()=>{
       if(c.rewardBusy||c.dialog||!['home','welcome'].includes(c.route.name)){c.back();return true;}
       void c.checkpoint();return false;
     });
-    return ()=>{clearInterval(timer);appSub.remove();backSub.remove();stop();reminders.dispose();};
+    return ()=>{clearInterval(timer);appSub.remove();blurSub?.remove();focusSub?.remove();backSub.remove();stop();reminders.dispose();};
   },[c,reminders]);
   const isDark=c.isDark;
   return <SafeAreaView style={{flex:1,backgroundColor:isDark?'#0B1220':'#F6F8FC'}} edges={['top','bottom','left','right']}>

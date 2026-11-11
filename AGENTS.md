@@ -4,7 +4,20 @@ This repository is the canonical standalone source for the SQLD Pass Android/iOS
 It is a separate product and codebase from QueryPass. Do not read, edit, merge into, or reuse
 QueryPass or SpicPass as an implicit target unless the owner explicitly requests cross-project work.
 
-## Latest owner direction — 2026-11-09 textbook replacement
+## Latest owner direction — 2026-11-11 interruption and UI refinement
+
+Timed mocks have 90 minutes of active solving time. Explicit pause, saved exit, and
+background/inactive interruptions freeze the remaining time; returning requires explicit
+resume. Paused attempts stay active for one-attempt, explanation and advertising gates.
+Persist answers, position, flags and pause metadata in the existing ordered transaction.
+Never label an unsuccessful save as saved, refund elapsed time, or rewrite old scores.
+Unpaused recovery conservatively accounts for unverifiable elapsed time before pausing.
+Show pause usage on results; missing historic metadata is not evidence of no interruptions.
+Use the 2026-11-11 UI refinement document for current screen hierarchy and tokens.
+The owner authorized implementation, TestFlight update and both production submissions;
+this does not replace actual build/consent/device evidence. Additional mock volumes remain deferred.
+
+## Latest content direction — 2026-11-09 textbook replacement
 
 Use the supplied Part 1–5 textbook as the sole runtime learning source. The approved
 implementation replaces the old 60-lesson pack with 18 chapters / 216 sections and

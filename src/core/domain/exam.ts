@@ -17,18 +17,33 @@ export function startExam(s:AppState,e:Exam,c:Content,clock:Clock,id:string,mode
   const snapshots=e.questionIds.map(id=>JSON.parse(JSON.stringify(c.questions[id])) as Question);
   return {id,mode,examId:e.id,contentVersion:c.manifest.version,examVersion:e.version,title:e.title,status:'active',startedAt:clock.wall,
     durationSeconds:mode==='study'?null:e.durationSeconds,remainingMs:mode==='study'?null:e.durationSeconds*1000,checkpoint:clock,timeTrusted:true,timeIssues:[],snapshots,
-    answers:{},flagged:[],index:0,isFirstAttempt:!s.exams.some(x=>x.examId===e.id&&x.status==='submitted'),exposedFamilyCount:snapshots.filter(q=>seen.has(q.family)).length};
+    answers:{},flagged:[],index:0,pausedAt:null,pauseCount:0,isFirstAttempt:!s.exams.some(x=>x.examId===e.id&&x.status==='submitted'),exposedFamilyCount:snapshots.filter(q=>seen.has(q.family)).length};
 }
+export function isExamPaused(a:ExamAttempt):boolean {return a.status==='active'&&typeof a.pausedAt==='number';}
 export function advanceClock(a:ExamAttempt,c:Clock):ExamAttempt {
-  if(a.status!=='active'||a.mode==='study')return a;
+  if(a.status!=='active'||a.mode==='study'||isExamPaused(a))return a;
   const wall=c.wall-a.checkpoint.wall;const same=c.runtimeId===a.checkpoint.runtimeId;
   const mono=same?c.mono-a.checkpoint.mono:0;const issues=[...a.timeIssues];
   if(!same&&!issues.includes('앱 재시작으로 단조 시계를 연속 검증하지 못했습니다.'))issues.push('앱 재시작으로 단조 시계를 연속 검증하지 못했습니다.');
   if((wall< -2000||(same&&Math.abs(wall-mono)>5000)||mono< -100)&&!issues.includes('기기 시간 변경 또는 시계 불일치가 감지되었습니다.'))issues.push('기기 시간 변경 또는 시계 불일치가 감지되었습니다.');
   const elapsed=Math.max(0,wall,mono);return {...a,remainingMs:Math.max(0,(a.remainingMs??0)-elapsed),checkpoint:c,timeTrusted:a.timeTrusted&&issues.length===0,timeIssues:issues};
 }
+/** Pause is idempotent and never rescues an already expired timed attempt. */
+export function pauseExam(a:ExamAttempt,c:Clock):ExamAttempt {
+  if(a.status!=='active'||isExamPaused(a))return a;
+  // A preceding queued answer may already have checkpointed after the pause tap.
+  // Never rewind that durable checkpoint or misclassify queue latency as clock tampering.
+  const end=c.runtimeId===a.checkpoint.runtimeId&&c.mono<a.checkpoint.mono?a.checkpoint:c;
+  const n=advanceClock(a,end);
+  if(n.mode!=='study'&&(n.remainingMs??0)<=0)return n;
+  return {...n,pausedAt:end.wall,pauseCount:(n.pauseCount??0)+1,checkpoint:end};
+}
+export function resumeExam(a:ExamAttempt,c:Clock):ExamAttempt {
+  if(!isExamPaused(a))return a;
+  return {...a,pausedAt:null,checkpoint:c};
+}
 export function submitExam(a:ExamAttempt,c:Clock,reason:'manual'|'expired'):ExamAttempt {
   if(a.status==='submitted')return a;const n=advanceClock(a,c);
-  return {...n,status:'submitted',submittedAt:c.wall,submitReason:reason,score:scoreExam(n.snapshots,n.answers)};
+  return {...n,status:'submitted',pausedAt:null,submittedAt:c.wall,submitReason:reason,score:scoreExam(n.snapshots,n.answers)};
 }
 export function formatTime(ms:number):string {const n=Math.max(0,Math.ceil(ms/1000));return `${String(Math.floor(n/3600)).padStart(2,'0')}:${String(Math.floor(n%3600/60)).padStart(2,'0')}:${String(n%60).padStart(2,'0')}`;}
