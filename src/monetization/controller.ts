@@ -1,7 +1,7 @@
 import {Controller} from '../core/controller';
 import type {Content, Services, Route, Tab, ExamMode} from '../core/types';
 import {initialState} from '../core/domain';
-import {bannerAllowed,canAccessExam,clearPending,disabledAds,earnReward,grantLaunchFreeAccess,isFreeExam,migrateWallet,prepareReward,validExamId,walletOf,type ExamAccessPolicy,type PendingReward,type RewardDriver} from './policy';
+import {bannerAllowed,canAccessExam,clearPending,disabledAds,earnReward,grantLaunchFreeAccess,isFreeExam,legacyLaunchExam,migrateWallet,prepareReward,validExamId,walletOf,type ExamAccessPolicy,type PendingReward,type RewardDriver} from './policy';
 
 export class MonetizedController extends Controller {
   rewardBusy=false;
@@ -19,7 +19,7 @@ export class MonetizedController extends Controller {
     if(!ok)throw new Error('이용 권한을 저장하지 못했습니다. 저장 상태를 확인 후 다시 시도해 주세요.');
     if(pending&&!this.isLaunchFree)this.notice='이전 광고의 완료 보상을 확인하지 못했습니다. 무료 회차와 이미 열린 회차는 그대로 이용할 수 있습니다.';
   }
-  hasAccess(id:string){return validExamId(id)&&this.content.exams.some(e=>e.id===id)&&(this.isLaunchFree||canAccessExam(this.state,id,this.ads.mode));}
+  hasAccess(id:string){return validExamId(id)&&this.content.exams.some(e=>e.id===id)&&((this.isLaunchFree&&legacyLaunchExam(id))||canAccessExam(this.state,id,this.ads.mode));}
   override examCatalogContext(){return JSON.stringify([super.examCatalogContext(),this.accessPolicy,this.ads.mode,this.content.exams.filter(e=>this.hasAccess(e.id)).map(e=>e.id)]);}
   get needsRewardSave(){return this.unsavedReward!==null;}
   get showBanner(){return !this.isLaunchFree&&this.ads.mode!=='off'&&this.ready&&this.state.onboarded&&bannerAllowed(this.route.name,!!this.activeExam(),!!this.dialog,this.rewardBusy);}

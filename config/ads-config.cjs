@@ -1,6 +1,6 @@
 'use strict';
 const fs=require('node:fs'),path=require('node:path'),crypto=require('node:crypto');
-const POLICY='2026-09-30.1';
+const POLICY='2026-11-12.1';
 const CODE_FILES=['config/ads-config.cjs','src/monetization/policy.ts','src/monetization/controller.ts','src/monetization/views.ts','src/platform/ads.ts','src/platform/MonetizedRoot.tsx','src/platform/NativeView.tsx','src/platform/LearningModal.tsx','app.config.ts','react-native.config.js','package.json','package-lock.json','eas.json','scripts/patch-admob-config-plugin.cjs','plugins/withKotlinVersion.cjs','plugins/withAdPrivacy.cjs','plugins/withInterfaceTheme.cjs','src/mocks/views.ts','src/textbook/views.ts','config/public-support.json','App.tsx','src/core/types.ts','src/core/controller.ts','src/core/domain/library.ts','src/core/domain/exam.ts','src/core/domain/state.ts','src/mocks/domain.ts','src/ui/learning-content.ts','src/ui/responsive-layout.ts','src/platform/StudyReadables.tsx','src/platform/TextbookWidget.tsx','src/platform/ReadingScrollView.tsx','src/platform/CatalogScrollView.tsx','src/ui/views.ts','src/ui/nodes.ts','src/ui/learning-polish.ts','src/ui/question-context.ts'];
 function codeHash(root){const h=crypto.createHash('sha256');for(const p of CODE_FILES)h.update(p+'\0').update(fs.readFileSync(path.join(root,p)));return h.digest('hex');}
 function adsBuildConfig(env=process.env){
@@ -34,7 +34,9 @@ function adsBuildConfig(env=process.env){
   return result;
 }
 function checkAdsRelease(root,env=process.env){
-  const config=adsBuildConfig(env);if(config.mode!=='live')return config;
+  const config=adsBuildConfig(env),lock=path.join(root,'content-pack/content.lock.json');
+  if(env.EXPO_PUBLIC_APP_ENV==='production'&&fs.existsSync(lock)&&JSON.parse(fs.readFileSync(lock)).counts.exams>20&&config.examAccessPolicy!=='rewarded')throw new Error('Expanded mock catalog requires rewarded access; historical launch-free rights stop at20.');
+  if(config.mode!=='live')return config;
   const a=JSON.parse(fs.readFileSync(path.join(root,'ads-release-approval.json'),'utf8'));
   if(a.policyVersion!==POLICY||a.codeSha256!==codeHash(root))throw new Error('Ad approval must bind the reviewed policy and code hash.');
   if(config.target==='android'&&a.platform!=='android')throw new Error('Android-only release requires an Android-scoped approval.');

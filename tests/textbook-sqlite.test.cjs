@@ -46,3 +46,15 @@ test('a failed startup read can reopen the handle; concurrent healthy loads shar
  const x=await seed(t),repo=x.newRepo();x.failRead();await a.rejects(repo.load(),/native read failed/);a.equal(x.counts().closes,1);
  const [first,second]=await Promise.all([repo.load(),repo.load()]);a.deepEqual(first,second);a.equal(first.revision,2);a.equal(x.counts().opens,3);
 });
+
+test('60-exam compatible upgrade rolls back without deleting previous slots or rewriting snapshots',async t=>{
+ const old=require('./fixtures/textbook20.cjs'),nextContent=require('./fixtures/mock60.cjs')(),{startExam,pauseExam,submitExam}=require('../.build/core/domain');
+ for(const mode of ['timed','study']){
+  const x=setup(t),clock={wall:10000,mono:10000,runtimeId:'upgrade'},s={...initialState(old),revision:1,onboarded:true,textbookMigration:{version:1,fromVersion:'phase1.20260908.1',noticePending:false}};
+  const done=submitExam(startExam(s,old.exams[0],old,clock,'done-'+mode,'study'),clock,'manual');
+  let active=startExam({...s,exams:[done]},old.exams[1],old,clock,'active-'+mode,mode);active.answers[active.snapshots[0].id]='2';active.flagged=[active.snapshots[0].id];active.index=7;active=pauseExam(active,{...clock,wall:12000,mono:12000});s.exams=[done,active];
+  await x.repo.save(s);await x.repo.save({...s,revision:2});const before=x.db.prepare('SELECT * FROM learner_state ORDER BY slot').all(),snapshots=x.db.prepare('SELECT * FROM exam_snapshot ORDER BY attempt_id').all();const next={...parseState(await x.repo.load(),nextContent),revision:3};
+  x.fail(true);await a.rejects(x.repo.save(next));a.deepEqual(x.db.prepare('SELECT * FROM learner_state ORDER BY slot').all(),before);a.deepEqual(x.db.prepare('SELECT * FROM exam_snapshot ORDER BY attempt_id').all(),snapshots);
+  x.fail(false);await x.repo.save(next);const loaded=await x.newRepo().load();a.equal(loaded.contentVersion,nextContent.manifest.version);a.deepEqual(loaded.exams,s.exams);a.deepEqual(x.db.prepare('SELECT * FROM exam_snapshot ORDER BY attempt_id').all(),snapshots);a.equal(JSON.parse(x.db.prepare("SELECT payload FROM learner_state WHERE slot='previous'").get().payload).contentVersion,old.manifest.version);
+ }
+});
