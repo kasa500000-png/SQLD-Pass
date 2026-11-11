@@ -8,6 +8,7 @@ export class Controller {
   state:AppState; ready=false; startupError=''; notice=''; busy=false; route:Route={name:'welcome'}; stack:Route[]=[];
   dialog:Dialog|null=null; search=''; subject='all'; bookmarkedOnly=false; filter='all'; expanded=new Set<string>();
   practiceBatchSize=10; flashcardsUnknownOnly=false;
+  examSheetFilter:'all'|'unanswered'|'flagged'='all';
   mockResultFilter:'all'|'wrong'|'flagged'='all'; mockSearch=''; mockTopicFilter=''; mockListLimit=20; mockHistoryLimit=20; mockNoteDrafts:Record<string,string>={};
   libraryEditor:{id?:string;name:string}|null=null; libraryError='';
   draftSettings:Settings; settingsError=''; supportText=''; supportNotice=''; reviewLimit=20; reviewPickerOpen=false; private listeners=new Set<()=>void>(); private serial:Promise<void>=Promise.resolve();
@@ -282,7 +283,7 @@ export class Controller {
   async beginExam(examId:string,mode:ExamMode='timed'){
     const exam=this.content.exams.find(e=>e.id===examId);if(!exam)return;
     if(!this.ready||!this.state.onboarded)return;
-    const id=this.services.uuid();if(await this.commit(s=>{if(s.practice?.questionIds.some(qid=>this.content.questions[qid]?.examId===examId))throw new Error('이 회차의 진행 중 복습을 먼저 마쳐 주세요.');return {...s,lastPracticeResultId:null,exams:[...s.exams,startExam(s,exam,this.content,this.services.clock(),id,mode)]};})){this.stack=[];this.route={name:'exam',id};this.checkpointAt=this.services.clock().wall;this.notify();if(!this.examAppActive)await this.pauseExam();}
+    const id=this.services.uuid();if(await this.commit(s=>{if(s.practice?.questionIds.some(qid=>this.content.questions[qid]?.examId===examId))throw new Error('이 회차의 진행 중 복습을 먼저 마쳐 주세요.');return {...s,lastPracticeResultId:null,exams:[...s.exams,startExam(s,exam,this.content,this.services.clock(),id,mode)]};})){this.stack=[];this.route={name:'exam',id};this.examSheetFilter='all';this.checkpointAt=this.services.clock().wall;this.notify();if(!this.examAppActive)await this.pauseExam();}
   }
   remaining(){const e=this.activeExam();return e?(advanceClock(e,this.isExamPausePending?this.pauseRequest!.clock:this.services.clock()).remainingMs??0):0;}
   async pauseExam(showScreen=true):Promise<boolean>{

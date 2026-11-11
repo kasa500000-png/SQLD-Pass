@@ -1,8 +1,9 @@
 import type {MonetizedController} from '../monetization/controller';
 import type {Question,Route} from '../core/types';
 import type {ContentBlock} from '../textbook/types';
-import {box,row,adaptiveRow,segments,table,type Node} from '../ui/nodes';
+import {box,row,adaptiveRow,segments,table,dark,light,type Node} from '../ui/nodes';
 import {canStudyQuestion,formatTime,isExamPaused,publicQuestion} from '../core/domain/exam';
+import {questionPrompt} from '../ui/learning-content';
 import {latestMocks,mockStats,mockWrongQuestions,modeName} from './domain';
 import {REWARD_ACTION,REWARD_DISCLOSURE,REWARD_AGE_DISCLOSURE,REWARD_STORAGE_DISCLOSURE} from '../monetization/policy';
 interface UI{
@@ -25,17 +26,17 @@ export function mockExplanation(c:MonetizedController,q:Question,u:UI):Node[]{
 }
 export function renderMockScreen(c:MonetizedController,u:UI):{title:string;body:Node[];header?:Node[];footer?:Node[];focus?:boolean}|undefined{
  if(!c.content.mockPack)return;
- const {t,small,h,act,primary,link,choice,go,blocks,card}=u,s=c.state,r=c.route,active=c.activeExam(),pack=c.content.mockPack;
+ const {t,small,h,act,primary,link,choice,go,blocks,card}=u,s=c.state,r=c.route,active=c.activeExam(),pack=c.content.mockPack,p=c.isDark?dark:light;
  const intro=(id:string)=>go('examIntro',id);
  const rewardInfo=(details=false)=>[small(REWARD_DISCLOSURE),small(REWARD_AGE_DISCLOSURE),...(details?[small(REWARD_STORAGE_DISCLOSURE),small('광고 클릭·설치·추적 허용은 필요 없습니다.')]:[]),...(c.ads.mode==='test'?[small('테스트 광고 · 운영 버전으로 해제 이전 안 됨')]:[])];
  if(r.name==='exams')return {title:'실전',body:[h('모의고사 20회'),small('회차당 50문항 · 실전 90분 / 학습 시간 제한 없음'),
- ...(active?[card([h('진행 중인 모의고사'),t(`${active.title} · ${modeName(active.mode)}`),act('모의고사 이어하기',go('exam',active.id),'resume-mock')])]:[]),
+ ...(active?[card([h(isExamPaused(active)?'일시정지한 모의고사':'진행 중인 모의고사'),t(`${active.title} · ${modeName(active.mode)}`),primary('모의고사 이어하기',go('exam',active.id),'resume-mock')])]:[]),
  small(c.isLaunchFree?'이 버전에서는 모든 회차를 무료로 이용할 수 있습니다.':c.ads.mode==='off'?'1~4회와 이미 열린 회차를 이용할 수 있습니다. 추가 회차 광고 해제는 현재 제공하지 않습니다.':'1~4회는 무료입니다. 5~20회는 회차별 선택 광고 1회 완료 후 두 모드를 계속 이용합니다.'),
  segments([act('오답 복습',go('mockReview'),'mock-wrong'),act('저장 문항',go('mockSaved'),'mock-saved'),act('응시 기록',go('examHistory'),'mock-history')]),
  segments((['all','unattempted','completed'] as const).map((f,i)=>act(['전체','미응시','응시 완료'][i],()=>c.setExamProgressFilter(f),'exam-filter-'+f,c.examProgressFilter===f))),
  ...c.content.exams.filter(e=>c.examProgressFilter==='all'||(s.exams.some(a=>a.examId===e.id&&a.status==='submitted')===(c.examProgressFilter==='completed'))).map(e=>{
    const open=c.hasAccess(e.id),history=(['timed','study'] as const).map(mode=>{const a=latestMocks(s,mode).find(a=>a.examId===e.id);return a?` · ${modeName(mode)} ${a.score?.points??0}점`:'';}).join('');
-   if(open||c.ads.mode==='off')return link(`${e.title}\n${open?'이용 가능':'현재 잠김'}${history}`,intro(e.id),'mock-'+e.id);
+   if(open||c.ads.mode==='off')return link(`${e.title}\n${active?.examId===e.id?(isExamPaused(active)?'일시정지 · 이어하기':'진행 중'):open?(e.order<=4?'무료 · 이용 가능':'열림 · 재시청 없음'):'현재 잠김'}${history}`,intro(e.id),'mock-'+e.id);
    return card([h(e.title),...rewardInfo(),primary(REWARD_ACTION,()=>c.watchAdToUnlock(e.id),'mock-'+e.id,!!active||c.rewardBusy),link('광고·저장 안내',intro(e.id),'reward-info-'+e.id)],'reward-'+e.id);
  }),act('모의고사 출처와 기준',go('mockSources'))]};
  if(r.name==='examIntro'){
@@ -56,9 +57,12 @@ export function renderMockScreen(c:MonetizedController,u:UI):{title:string;body:
  if(r.name==='exam'||r.name==='sheet'){
   const e=c.examAttempt(r.id);if(!e||e.status!=='active')return {title:'실전',body:[t('진행 중인 응시를 찾을 수 없습니다.'),link('회차 목록',go('exams'))]};
   const q=publicQuestion(e.snapshots[e.index]);
-  const header=[row([t(`${e.index+1} / 50`),box([],{flex:1}),t(e.mode==='study'?'학습 · 시간 제한 없음':formatTime(c.remaining()))]),small(`응답 ${Object.keys(e.answers).length} · 검토 ${e.flagged.length} · ${q.subject==='S1'?'1과목':'2과목'}`)];
-  if(r.name==='sheet')return {title:'전체 답안표',focus:true,header,body:[small('○ 미응답 / ✓ 응답 / ★ 검토 표시'),{...box(e.snapshots.map((q,i)=>({...act(String(i+1),()=>c.moveExam(i),'mock-sheet-'+(i+1),i===e.index),subtitle:`${e.answers[q.id]?'✓':'○'}${e.flagged.includes(q.id)?' ★':''}`,style:{...act('',()=>{},undefined,i===e.index).style,paddingHorizontal:2,paddingVertical:6,minHeight:56,fontSize:14},label:`${i+1}번, ${e.answers[q.id]?'응답':'미응답'}${e.flagged.includes(q.id)?', 검토 표시':''}`}))),layout:'question-grid'}],footer:[segments([act('문제로 돌아가기',go('exam',e.id),'back-to-mock'),primary('최종 제출',()=>c.requestSubmit(),'submit-mock')])]};
-  return {title:e.title,focus:true,header,body:[t(q.stem),...blocks(q.blocks??[],q.id),...q.options.map(o=>choice(`${o.id}. ${o.text}`,()=>c.updateExamAnswer(o.id),'mock-option-'+o.id,e.answers[q.id]===o.id,c.isExamSubmitting)),segments([act(e.flagged.includes(q.id)?'★ 검토 표시됨':'검토 표시',()=>c.flagExam(),'flag-mock',e.flagged.includes(q.id)),act('답안 지우기',()=>c.updateExamAnswer(null),'clear-mock-answer',false,!e.answers[q.id])])],footer:[row([act('이전',()=>c.moveExam(e.index-1),'mock-previous',false,e.index===0),act('답안표',go('sheet',e.id),'mock-sheet'),primary(e.index===49?'최종 제출':'다음',()=>e.index===49?c.requestSubmit():c.moveExam(e.index+1),e.index===49?'submit-mock':'mock-next')],{justifyContent:'space-between',flexWrap:'wrap'})]};
+  const header=[row([t(`${e.index+1} / 50`),box([],{flex:1}),t(e.mode==='study'?'학습 · 시간 제한 없음':formatTime(c.remaining()))]),small(`${q.subject==='S1'?'1과목':'2과목'} · 응답 ${Object.keys(e.answers).length} · 미응답 ${50-Object.keys(e.answers).length} · 검토 ${e.flagged.length}`)];
+  if(r.name==='sheet'){
+   const visible=e.snapshots.map((q,i)=>({q,i})).filter(({q})=>c.examSheetFilter==='unanswered'?!e.answers[q.id]:c.examSheetFilter==='flagged'?e.flagged.includes(q.id):true);
+   return {title:'전체 답안표',focus:true,header,body:[small('문항을 누르면 해당 문제로 이동합니다.'),segments((['all','unanswered','flagged'] as const).map((f,i)=>act(['전체','미응답','검토 표시'][i],()=>{c.examSheetFilter=f;c.notify();},'sheet-filter-'+f,c.examSheetFilter===f))),small(`○ 미응답 / ✓ 응답 / ★ 검토 · ${visible.length}문항`),{...box(visible.map(({q,i})=>({...act(String(i+1),()=>c.moveExam(i),'mock-sheet-'+(i+1),i===e.index),subtitle:`${e.answers[q.id]?'✓':'○'}${e.flagged.includes(q.id)?' ★':''}`,style:{...act('',()=>{},undefined,i===e.index).style,paddingHorizontal:2,paddingVertical:6,minHeight:56,fontSize:14},label:`${i+1}번, ${e.answers[q.id]?'응답':'미응답'}${e.flagged.includes(q.id)?', 검토 표시':''}`}))),layout:'question-grid'},...(!visible.length?[t('이 조건에 해당하는 문항이 없습니다.'),act('전체 문항 보기',()=>{c.examSheetFilter='all';c.notify();})]:[])],footer:[segments([act('문제로 돌아가기',go('exam',e.id),'back-to-mock'),primary('최종 제출',()=>c.requestSubmit(),'submit-mock')])]};
+  }
+  return {title:e.title,focus:true,header,body:[questionPrompt(q.stem,p),...(q.blocks?.length?[small('제시 자료'),...blocks(q.blocks,q.id)]:[]),small(e.answers[q.id]?`선택한 답: ${e.answers[q.id]}번 · 제출 전 변경 가능`:'답을 하나 선택해 주세요.'),...q.options.map(o=>choice(`${o.id}. ${o.text}`,()=>c.updateExamAnswer(o.id),'mock-option-'+o.id,e.answers[q.id]===o.id,c.isExamSubmitting)),segments([act(e.flagged.includes(q.id)?'★ 검토 표시됨':'검토 표시',()=>c.flagExam(),'flag-mock',e.flagged.includes(q.id)),act('답안 지우기',()=>c.updateExamAnswer(null),'clear-mock-answer',false,!e.answers[q.id])])],footer:[row([act('이전',()=>c.moveExam(e.index-1),'mock-previous',false,e.index===0),act('답안표',go('sheet',e.id),'mock-sheet'),primary(e.index===49?'최종 제출':'다음',()=>e.index===49?c.requestSubmit():c.moveExam(e.index+1),e.index===49?'submit-mock':'mock-next')],{justifyContent:'space-between',flexWrap:'wrap'})]};
  }
  if(r.name==='result'||r.name==='examReview'){
   const e=c.examAttempt(r.id);if(!e||e.status!=='submitted'||!e.score)return {title:'응시 결과',body:[t('제출된 결과를 찾을 수 없습니다.')]};
