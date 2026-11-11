@@ -45,12 +45,11 @@ test('bookmarks and bounded explicit notes persist across restart; learning rese
 test('one earned test reward opens both modes and retakes; all active modes suppress home banners',async()=>{
  const e=await ready(null,'test','rewarded'),ctrl=e.ctrl;await ctrl.beginExam('SQLD-M05','study');a.equal(ctrl.activeExam(),undefined);a.equal(ctrl.dialog,null);a.equal(ctrl.route.name,'examIntro');a.equal(e.shows(),0);await ctrl.watchAdToUnlock('SQLD-M05');a.equal(e.shows(),1);a.equal(ctrl.hasAccess('SQLD-M05'),true);for(const mode of ['study','timed','study']){await ctrl.beginExam('SQLD-M05',mode);a.equal(ctrl.activeExam().mode,mode);await ctrl.pauseExam();ctrl.tab('today');a.equal(ctrl.showBanner,false);ctrl.offerUnlock('SQLD-M06');a.equal(ctrl.dialog,null);await ctrl.finishExam('manual');}a.equal(e.shows(),1);
 });
-test('reward card discloses eligibility and reward, then one tap opens the ad without a dialog',async()=>{
+test('choosing a locked exam does not request ads; its disclosed action opens one ad',async()=>{
  const e=await ready(null,'test','rewarded'),ctrl=e.ctrl;ctrl.tab('exams');
- const card=flat(renderTextbook(ctrl)).find(n=>n.key==='reward-SQLD-M10');
- a.ok(card);const copy=flat(card).map(n=>n.text??'').join(' ');a.match(copy,/만 18세 이상/);a.match(copy,/두 모드·재응시·해설/);
- const button=flat(card).find(n=>n.testId==='mock-SQLD-M10');a.equal(button.text,'광고 1회 보고 회차 열기');
- await button.action();a.equal(ctrl.dialog,null);a.equal(e.shows(),1);a.equal(ctrl.hasAccess('SQLD-M10'),true);a.equal(ctrl.route.name,'examIntro');a.equal(ctrl.activeExam(),undefined);
+ const row=flat(renderTextbook(ctrl)).find(n=>n.testId==='mock-SQLD-M10');a.equal(row.buttonKind,'row');await row.action();a.equal(e.shows(),0);a.equal(ctrl.ads.adultConfirmed,false);a.equal(ctrl.route.name,'examIntro');
+ const copy=text(ctrl);a.match(copy,/만 18세 이상/);a.match(copy,/두 모드·재응시·해설/);a.match(copy,/광고 클릭·설치·추적 허용은 필요 없습니다/);
+ const button=flat(renderTextbook(ctrl)).find(n=>n.testId==='unlock-mock');a.equal(button.text,'광고 1회 보고 회차 열기');await button.action();a.equal(ctrl.dialog,null);a.equal(e.shows(),1);a.equal(ctrl.hasAccess('SQLD-M10'),true);a.equal(ctrl.route.name,'examIntro');a.equal(ctrl.activeExam(),undefined);
  await ctrl.watchAdToUnlock('SQLD-M10');a.equal(e.shows(),1);
 });
 test('ad information navigation and leaving it never opt in or confirm adult eligibility',async()=>{
