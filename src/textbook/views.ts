@@ -3,16 +3,16 @@ import {canStudyQuestion} from '../core/domain/exam';
 import type {MonetizedController} from '../monetization/controller';
 import type {ContentBlock} from './types';
 import type {Route} from '../core/types';
-import {box,button,code,dark,light,progress,row,segments as segmentGroup,table,text,type Node} from '../ui/nodes';
+import {box,button,code,dark,light,learningType,progress,row,segments as segmentGroup,table,text,type Node} from '../ui/nodes';
 import {dailySections,searchSections,textbookMetrics} from './learning';
 
 export function renderTextbook(c:MonetizedController):Node{
  const p=c.isDark?dark:light,tb=c.content.textbook!,s=c.state,m=textbookMetrics(s,c.content);
- const t=(v:string)=>text(v,{fontSize:16,lineHeight:27,color:p.ink});
- const small=(v:string)=>text(v,{fontSize:13,lineHeight:21,color:p.muted});
- const h=(v:string):Node=>({...text(v,{fontSize:19,lineHeight:28,fontWeight:'600',color:p.ink}),heading:true});
+ const t=(v:string)=>text(v,{...learningType.body,color:p.ink});
+ const small=(v:string)=>text(v,{...learningType.meta,color:p.muted});
+ const h=(v:string):Node=>({...text(v,{...learningType.heading,color:p.ink}),heading:true});
  const card=(ns:Node[],key?:string)=>box(ns,{padding:14,gap:10,borderRadius:16,backgroundColor:p.surface,borderWidth:1,borderColor:p.line},key);
- const act=(label:string,action:()=>void|Promise<void>,id?:string,selected=false,disabled=false)=>button(label,action,{backgroundColor:selected?p.blueSoft:'transparent',color:selected?p.blue:p.muted,borderRadius:10,minHeight:48,fontWeight:selected?'600':'500'},{testId:id,selected,disabled:disabled||c.busy||c.rewardBusy});
+ const act=(label:string,action:()=>void|Promise<void>,id?:string,selected=false,disabled=false)=>button(label,action,{backgroundColor:selected?p.blueSoft:'transparent',color:selected?p.blue:p.muted,borderRadius:10,minHeight:48,fontWeight:selected?'600':'400'},{testId:id,selected,disabled:disabled||c.busy||c.rewardBusy});
  const primary=(label:string,action:()=>void|Promise<void>,id?:string,disabled=false):Node=>({...act(label,action,id,false,disabled),buttonKind:'primary'});
  const link=(label:string,action:()=>void|Promise<void>,id?:string):Node=>({...act(label,action,id),text:label.split('\n')[0],subtitle:label.includes('\n')?label.split('\n').slice(1).join(' · '):undefined,buttonKind:'row',style:{...act(label,action).style,paddingRight:30,textAlign:'left'}});
  const choice=(label:string,action:()=>void|Promise<void>,id:string,selected:boolean,disabled=false,feedback?:'correct'|'incorrect'):Node=>({...act(label,action,id,selected,disabled),buttonKind:'choice',feedback,role:'radio',checked:selected});
@@ -130,7 +130,7 @@ export function renderTextbook(c:MonetizedController):Node{
  const activeRoute=['exams','examIntro','exam','examPause','sheet','result','examReview','mockReview','mockSaved','mockQuestion','mockSources'].includes(r)?'exams':r==='examHistory'?'stats':['chapter','lesson','lessonSummary','glossary','flashcards','sources'].includes(r)?'catalog':['practice','practiceSetup','practiceResult'].includes(r)?'review':['settings','appearance','privacy','help','report','data'].includes(r)?'stats':r;
  const nav:Node[]=c.ready&&s.onboarded&&!mockScreen?.focus?[row(([['홈','today','home','home'],['교재','learn','catalog','book'],['문제','review','review','list'],['실전','exams','exams','timer'],['기록','records','stats','chart']] as const).map(([label,tab,route,icon])=>button(label,()=>{c.search='';c.tab(tab);},{flexGrow:0,flexShrink:0,width:'20%',paddingHorizontal:0,color:activeRoute===route?p.blue:p.muted,minHeight:52,fontSize:13},{key:`tab-${tab}`,role:'tab',disabled:c.rewardBusy,icon,iconPosition:'above',selected:activeRoute===route,testId:`tab-${tab}`})),{gap:0,backgroundColor:p.surface,borderTopWidth:1,borderColor:p.line})]:[];
  const chrome=(ns:Node[],id:string)=>({...box(ns,{width:'100%',maxWidth:1160,alignSelf:'center',paddingHorizontal:16,paddingVertical:8,gap:8,backgroundColor:p.surface,borderColor:p.line,borderTopWidth:id==='screen-footer'?1:0}),testId:id,contentWidth:scroll.contentWidth});
- const root=box([row([...(mockScreen?.focus?(r==='examPause'?[]:[act('일시정지',()=>c.back(),'leave-exam')]):c.stack.length?[{...act('',()=>c.back()),label:'뒤로',icon:'chevron-left' as const,style:{minWidth:48,minHeight:48,color:p.ink}}]:[]),text(title,{fontSize:18,fontWeight:'700',color:p.ink,flex:1}),...(s.onboarded&&!mockScreen?.focus&&!['settings','appearance','setup'].includes(r)?[{...act('',go('settings')),label:'설정',icon:'settings' as const,style:{minWidth:48,minHeight:48,color:p.muted}}]:[])],{padding:12,backgroundColor:p.surface}),...(header.length?[chrome(header,'screen-header')]:[]),scroll,...(footer.length?[chrome(footer,'screen-footer')]:[]),...(c.showBanner?[box([],{},'monetization-banner')]:[]),...nav.map(n=>({...n,key:'bottom-tabs'}))],{flex:1,backgroundColor:p.bg});
+ const root=box([row([...(mockScreen?.focus?(r==='examPause'?[]:[act('일시정지',()=>c.back(),'leave-exam')]):c.stack.length?[{...act('',()=>c.back()),label:'뒤로',icon:'chevron-left' as const,style:{minWidth:48,minHeight:48,color:p.ink}}]:[]),text(title,{...learningType.title,color:p.ink,flex:1}),...(s.onboarded&&!mockScreen?.focus&&!['settings','appearance','setup'].includes(r)?[{...act('',go('settings')),label:'설정',icon:'settings' as const,style:{minWidth:48,minHeight:48,color:p.muted}}]:[])],{padding:12,backgroundColor:p.surface}),...(header.length?[chrome(header,'screen-header')]:[]),scroll,...(footer.length?[chrome(footer,'screen-footer')]:[]),...(c.showBanner?[box([],{},'monetization-banner')]:[]),...nav.map(n=>({...n,key:'bottom-tabs'}))],{flex:1,backgroundColor:p.bg});
  if(c.dialog)root.children!.push({kind:'modal',close:()=>c.cancelDialog(),children:[card([h(c.dialog.title),t(c.dialog.body),{...primary(c.dialog.confirmLabel,()=>c.acceptDialog()),buttonKind:c.dialog.destructive?'danger':'primary'},act('취소',()=>c.cancelDialog())])]});
  return root;
 }

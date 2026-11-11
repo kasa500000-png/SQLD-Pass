@@ -18,8 +18,18 @@ export interface Node {
   catalog?:{context:string;position?:ReadingOffset;preserveContentOffset?:boolean;onRemember:(position:ReadingOffset)=>void};
 }
 // SQLD Pass reference design tokens. Keep light/dark semantic roles aligned.
-export const light={bg:'#F6F8FC',surface:'#FFFFFF',ink:'#172033',muted:'#64718A',line:'#E6EAF1',blue:'#2457D6',blueSoft:'#EDF3FF',navy:'#18243B',green:'#16836B',greenSoft:'#EAF7F1',orange:'#A96512',orangeSoft:'#FFF5E6',red:'#C34750',redSoft:'#FFF0F1',code:'#EEF1F6',codeInk:'#24334B'};
-export const dark={bg:'#101A2B',surface:'#182337',ink:'#E8EDF7',muted:'#9BAAC1',line:'#29374C',blue:'#89AAFF',blueSoft:'#253859',navy:'#253859',green:'#6FD1AF',greenSoft:'#1D3935',orange:'#EDBC77',orangeSoft:'#3A3025',red:'#F19A9E',redSoft:'#3E2933',code:'#0C1421',codeInk:'#EBF2FF'};
+export const light={bg:'#F6F8FC',surface:'#FFFFFF',ink:'#172033',muted:'#64718A',line:'#E6EAF1',blue:'#2457D6',blueSoft:'#EDF3FF',navy:'#18243B',green:'#16836B',greenText:'#126B58',greenSoft:'#EAF7F1',orange:'#A96512',orangeText:'#8A530E',orangeSoft:'#FFF5E6',red:'#C34750',redText:'#A53640',redSoft:'#FFF0F1',code:'#EEF1F6',codeInk:'#24334B'};
+export const dark={bg:'#101A2B',surface:'#182337',ink:'#E8EDF7',muted:'#9BAAC1',line:'#29374C',blue:'#89AAFF',blueSoft:'#253859',navy:'#253859',green:'#6FD1AF',greenText:'#6FD1AF',greenSoft:'#1D3935',orange:'#EDBC77',orangeText:'#EDBC77',orangeSoft:'#3A3025',red:'#F19A9E',redText:'#F19A9E',redSoft:'#3E2933',code:'#0C1421',codeInk:'#EBF2FF'};
+export const learningType={
+  title:{fontSize:20,lineHeight:29,fontWeight:'600'},
+  heading:{fontSize:19,lineHeight:28,fontWeight:'600'},
+  body:{fontSize:17,lineHeight:28,fontWeight:'400'},
+  question:{fontSize:18,lineHeight:29,fontWeight:'600'},
+  choice:{fontSize:16,lineHeight:26,fontWeight:'400'},
+  meta:{fontSize:13,lineHeight:20,fontWeight:'400'},
+} as const;
+export const learningSpace={xs:4,sm:8,md:12,lg:16,xl:24,xxl:32} as const;
+export const learningRadius={control:10,button:14,surface:16} as const;
 export type Palette=typeof light;
 export function box(children:Node[]=[],style:Style={},key?:string):Node{return {kind:'box',children,style,key};}
 export function text(value:string,style:Style={},key?:string):Node{return {kind:'text',text:value,style,key};}

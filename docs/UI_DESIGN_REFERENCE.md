@@ -70,3 +70,17 @@ The owner approved qa/ANDROID_PRODUCTION_UI_REVIEW_20261110.md. Use quiet neutra
 Compact segmented controls must fit short labels at 360dp rather than blindly stacking.
 Keep 48dp targets and wrapping at large text. Tab widths remain equal.
 Source content, immutable scores, grants, earned-event and consent gates remain unchanged.
+
+## Current UI refinement — 2026-11-11
+
+The owner-approved interruption and readability plan in
+[UI_UX_REFINEMENT_20261111.md](UI_UX_REFINEMENT_20261111.md) supersedes the earlier
+timed-exit behavior: explicit/background pause saves remaining time and requires explicit
+resume. Keep paused attempts active for advertising, access and explanation gates.
+
+Use `learningType`, `learningSpace`, `learningRadius` and the semantic palette from
+`src/ui/nodes.ts`. Status text has separate contrast-safe greenText/redText/orangeText
+roles. Choices are regular-weight with a separate number; primary actions use semibold.
+Navigation rows use neutral surfaces and separators. Reading widths are bounded at 720
+layout units, including exam questions. Modal transitions have no animation and support
+accessibility escape. Do not reintroduce heavy option text through generic button styles.

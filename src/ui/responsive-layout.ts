@@ -68,7 +68,7 @@ export function getResponsiveLayout(input: ResponsiveLayoutInput): ResponsiveLay
   const possibleColumnWidth = (usableWidth-16)/2;
   const sectionColumns: 1 | 2 = !compact && usableWidth >= 1000 &&
     effectiveFontScale <= 1.3+Number.EPSILON && possibleColumnWidth >= 400 ? 2 : 1;
-  const readingMaxWidth = Math.min(840,760*Math.max(1,effectiveFontScale));
+  const readingMaxWidth = 720;
   return {
     width,height,effectiveFontScale,compact,compactHeight,horizontalPadding,usableWidth,
     contentMaxWidth,readingMaxWidth,
