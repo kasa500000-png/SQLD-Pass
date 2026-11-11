@@ -1,0 +1,13 @@
+{
+  "schemaVersion": 1,
+  "approvedBy": "repository owner (current conversation)",
+  "approvedAt": "2026-11-09T12:31:39.506Z",
+  "contentSha256": "1f7a60245d9b75a19ad733dca7fc281539d73ebdc0fcfa25fd5a959ebd7d589d",
+  "contentVersion": "textbook.20261109.2",
+  "humanContentReview": "Owner directly confirmed new textbook and 20 mock exams review complete on this conversation, bound to the exact version/hash in release/CONTENT_REVIEW_STATUS.json. No separate reviewer, DBMS or syllabus verification inferred.",
+  "androidDeviceQA": "2026-11-09 SM-F721N native internal new textbook/UI installed. Test rewarded M10 unlock and cancellation lock preservation observed. 411 automated tests and native typecheck passed. Final production AAB 0.3.0(16) passed signing, bundletool, embedded-config/content and 16KB checks; submitted to Play official production review. Scope: qa/RELEASE_TEXTBOOK_20261109.md and qa/UX_PRODUCTION_20261109.md.",
+  "iosDeviceQA": "2026-11-10 owner explicitly confirmed M10 available on prepared iPad, following banner/reward/cancel/active-attempt checks. Earlier read-only SQLite copy did not independently corroborate M10 and remains recorded as such. Updated signed one-tap build installed/launched on iPad; current iOS simulator official test ads directly unlocked M07 and M08 and showed introduction without starting exam. Existing EEA consent/withdrawal and ATT-denial evidence retained because native privacy configuration is unchanged. 416 tests and native typecheck pass. App Store IPA 0.3.0(10) archived/exported and statically verified. Scope: qa/RELEASE_TEXTBOOK_20261109.md.",
+  "ownerApproval": "Owner explicitly authorized updating both official stores with the new textbook/UI and enabling iOS live mock-exam ads, subject to actual native/consent QA and the independent advertising gate. New content review explicitly confirmed. This record approves content; it does not override outstanding advertising or final artifact checks.",
+  "privacyUrl": "https://sqld-pass-support.shk1122.chatgpt.site/privacy.html",
+  "supportUrl": "https://sqld-pass-support.shk1122.chatgpt.site/support.html"
+}

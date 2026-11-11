@@ -1,0 +1,17 @@
+{
+  "platform": "ios",
+  "policyVersion": "2026-09-30.1",
+  "codeSha256": "ae1519839ec8ee6de0289bf6a4a864cf588580ce8deef5adecab63201ffebc5f",
+  "iosDeviceEvidence": "0.3.4(14) official-test-ad app installed on physical iPad. XCTest did not launch because the device was locked and then the runner connection timed out. No current physical flow/ad test passed. Owner explicitly instructed 이번에도 예외로 진행 after this blocker was reported; scoped waiver recorded in AGENTS.md and qa/IOS_RELEASE_034_20261111.md.",
+  "consentAndATTEvidence": "Additional iOS0.3.4 physical/regional consent reruns waived by owner. Existing runtime UMP canRequestAds, adult session declaration and earned-reward gates remain unchanged; no ATT request is added. Historical iOS published EEA reject/accept/withdraw and test-ad observations remain separately documented in qa/RELEASE_TEXTBOOK_20261109.md and are not labeled current physical results.",
+  "adPlacementEvidence": "Current0.3.4 iOS simulator learning, pause, restart and active-attempt home suppression coverage at375/402pt and iPad landscape; current Android physical active-attempt and test-ad flow evidence in qa/UI_FOCUS_034_20261111.md. Both AdMob banner refresh settings disabled verified2026-11-11. New physical iOS ad-serving check not performed.",
+  "sdkCompatibilityEvidence": "Current0.3.4 native iOS simulator and signed device test app builds succeeded;436 automated tests, native type checks, content integrity and Expo doctor21/21 passed. App Store archive/export and Apple VALID ingestion must succeed separately before submission.",
+  "appAdsTxtEvidence": "2026-11-11 AdMob both SQLD Pass apps Ready/serving enabled and anonymous browser app-ads.txt direct seller record verified, recorded in qa/UI_FOCUS_034_20261111.md. No current live impression is asserted.",
+  "privacyDisclosureEvidence": "0.3.4 UI refinement adds no SDK collection or data sharing. Existing Apple ad privacy disclosure and public privacy/support pages preserved; no learner answers, notes, progress or identities are sent for ads. Historical published Apple disclosure recorded in qa/evidence/release-textbook-20261109/apple-privacy-published.txt.",
+  "privacyUrl": "https://sqld-pass-support.shk1122.chatgpt.site/privacy.html",
+  "supportUrl": "https://sqld-pass-support.shk1122.chatgpt.site/support.html",
+  "approvedBy": "Owner explicitly instructed 이번에도 예외로 진행 after iOS0.3.4 locked-device blocker report, following TestFlight 업데이트·정식 제출 진행 and 앱스토어 정식 제출도 진행. Release authorization and additional device/consent rerun waiver apply only to0.3.4(14).",
+  "approvedAt": "2026-11-11T14:47:11.778Z",
+  "additionalValidationWaived": true,
+  "waiverScope": "iOS0.3.4(14) additional physical iPad and consent reruns only; failed runner launch is not a passed check. Preserve build, content, runtime consent and earned-event gates."
+}

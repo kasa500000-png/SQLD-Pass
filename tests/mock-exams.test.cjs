@@ -1,5 +1,6 @@
 const test=require('node:test'),a=require('node:assert/strict'),fs=require('node:fs'),zlib=require('node:zlib');
-const c=require('../generated/content.json'),d=require('../.build/core/domain'),{MonetizedController}=require('../.build/monetization/controller'),{renderTextbook}=require('../.build/textbook/views'),{mockWrongQuestions,mockStats}=require('../.build/mocks/domain'),{textbookMetrics}=require('../.build/textbook/learning');
+// Historical 0.3.4 pack: retain the full 20-exam regression contract.
+const c=require('./fixtures/textbook20.cjs'),d=require('../.build/core/domain'),{MonetizedController}=require('../.build/monetization/controller'),{renderTextbook}=require('../.build/textbook/views'),{mockWrongQuestions,mockStats}=require('../.build/mocks/domain'),{textbookMetrics}=require('../.build/textbook/learning');
 const flat=n=>[n,...(n.children??[]).flatMap(flat)],text=ctrl=>flat(renderTextbook(ctrl)).map(n=>n.text??'').join('\n');
 function env(raw=null,mode='off',accessPolicy){let stored=structuredClone(raw),time=Date.parse('2026-11-09T12:00:00+09:00'),seq=0,fail=false,shows=0;const services={repository:{load:async()=>structuredClone(stored),save:async s=>{if(fail)throw Error('disk');stored=structuredClone(s);},clear:async()=>{stored=null;}},clock:()=>({wall:time,mono:time,runtimeId:'mock-test'}),uuid:()=>`mock-${++seq}`,platform:'native',openURL:async()=>{}};
  const ads={mode,adultConfirmed:false,confirmAdult(){this.adultConfirmed=true;},privacyOptions:async()=>{},showReward:async cb=>{shows++;await cb();return 'closed';}};

@@ -1,0 +1,25 @@
+{
+  "contentVersion": "textbook.20261112.1",
+  "contentSha256": "ef14277859237b0a08f5f8b0857e37ff26587cdc0aff6b5d21527787870a1db3",
+  "tests": {
+    "unit": {
+      "passed": 458,
+      "failed": 0
+    },
+    "nativeTypes": "passed",
+    "contentPipeline": "passed",
+    "expoDoctor": "21/21"
+  },
+  "artifacts": [
+    {
+      "name": "SQLDPass-test-0.4.0-21.apk",
+      "sha256": "001722ea3d4c5df50d7724b8625b13fb23b86aa9643729ba9ebac6245f107c99",
+      "kind": "internal official test ads; not store artifact"
+    },
+    {
+      "name": "SQLDPass-consent-test-0.4.0-21.apk",
+      "sha256": "3d8fb744bc603a5f645030671fab3a19fa70b4abf3e04356f98747f191f0579b",
+      "kind": "internal official test ads; not store artifact"
+    }
+  ]
+}

@@ -1,0 +1,23 @@
+{
+  "schemaVersion": 1,
+  "status": "owner-reviewed-complete",
+  "recordedAt": "2026-11-09T12:31:39.506Z",
+  "declaredBy": "repository owner (current conversation)",
+  "ownerStatement": "새 교재·모의고사 내용 검수 완료",
+  "contentSha256": "1f7a60245d9b75a19ad733dca7fc281539d73ebdc0fcfa25fd5a959ebd7d589d",
+  "scope": {
+    "lessons": 216,
+    "questions": 1340,
+    "practiceQuestions": 340,
+    "mockExams": 20,
+    "mockQuestions": 1000
+  },
+  "reviewer": null,
+  "reviewedAt": null,
+  "targetDbmsReview": null,
+  "officialSyllabusReview": null,
+  "evidenceFiles": [],
+  "productionReleaseApproved": true,
+  "note": "Owner directly confirmed completion for the new textbook and separate mock pack in the current conversation on 2026-11-09. Store submission and live advertising were explicitly authorized. This records content review only; native QA and advertising release gates remain independent. No unprovided reviewer, review date, DBMS or syllabus verification details are inferred.",
+  "contentVersion": "textbook.20261109.2"
+}

@@ -52,7 +52,8 @@ function ResponsiveSegments({node,scale,dark,path,maxSystemFontMultiplier}:Nativ
   const layout=useResponsiveLayout(),[measured,setMeasured]=useState(0);
   const width=Math.min(measured||layout.usableWidth,layout.usableWidth),items=node.children??[],minCell=76*layout.effectiveFontScale;
   const count=width/items.length>=minCell?items.length:width/2>=minCell?2:1;
-  const cellWidth=(width-(count-1)*6)/count;
+  // Fractional dp can round each child up on Android and wrap the last tab.
+  const cellWidth=Math.floor((width-(count-1)*6)/count);
   return <View onLayout={event=>setMeasured(event.nativeEvent.layout.width)} style={{width:'100%',flexDirection:'row',flexWrap:'wrap',gap:6}}>{items.map((child,index)=><View key={child.key??index} style={{width:cellWidth}}>
     <NativeView node={{...child,style:{...child.style,flex:undefined,width:'100%',paddingHorizontal:6,fontSize:13,borderRadius:10}}} scale={scale} dark={dark} path={`${path}.${index}`} maxSystemFontMultiplier={maxSystemFontMultiplier}/>
   </View>)}</View>;

@@ -1,0 +1,97 @@
+[p3 "Google AdMob" | space "SQLD Pass 0.4.0 출시 20261112"(21): 3 managed, 0 untracked — p1 "프로덕션 | SQLD Pass", p2 "Google AdMob: 모바일 앱 수익 창출", p3* "Google AdMob"]
+root
+  button
+    text "메인 콘텐츠로 건너뛰기"
+  container [ref=273]
+    container
+      container "SQLD Pass 무료 | iOS"
+        image
+        container
+          text "SQLD Pass"
+          text "무료 | iOS"
+      container
+        heading
+          text "광고 단위 설정"
+        button [ref=313]
+          text "구현 안내"
+      container
+        heading
+          button "광고 단위 이름 광고 단위 이름 help_outline" [ref=314]
+            container "광고 단위 이름"
+              container
+                text "광고 단위 이름"
+                button "광고 단위 이름의 자세한 내용을 확인하려면 이 아이콘 위로 마우스를 올리거나 Enter 키를 누르세요." [ref=315]
+                  image
+                    text "help_outline"
+              paragraph
+            text "SQLDPass_iOS_Banner_Home_My"
+            image
+              text "create"
+        heading "광고 형식 광고 형식 help_outline" [ref=316]
+          container "광고 형식"
+            container
+              text "광고 형식"
+              button "자세히" [ref=317]
+                image
+                  text "help_outline"
+            paragraph
+          text "배너"
+        heading "광고 단위 ID 광고 단위 ID help_outline" [ref=318]
+          container "광고 단위 ID"
+            container
+              text "광고 단위 ID"
+              button "자세히" [ref=319]
+                image
+                  text "help_outline"
+            paragraph
+          text "ca-app-pub-9314207769680999/4355019185"
+      container
+        button [ref=320]
+          image
+            text "expand_less"
+          text "고급 설정"
+        container
+          heading
+            button "광고 유형 광고 유형 help_outline" [ref=321]
+              container "광고 유형"
+                container
+                  text "광고 유형"
+                  button "광고 유형의 자세한 내용을 확인하려면 이 아이콘 위로 마우스를 올리거나 Enter 키를 누르세요." [ref=322]
+                    image
+                      text "help_outline"
+                paragraph
+              text "텍스트, 이미지, 리치 미디어 | 동영상"
+              image
+                text "create"
+          heading
+            button "자동 새로고침 자동 새로고침 help_outline" [ref=323]
+              container "자동 새로고침"
+                container
+                  text "자동 새로고침"
+                  button "자동 새로고침의 자세한 내용을 확인하려면 이 아이콘 위로 마우스를 올리거나 Enter 키를 누르세요." [ref=324]
+                    image
+                      text "help_outline"
+                paragraph
+              text "사용중지됨"
+              image
+                text "create"
+          heading
+            button "최소 eCPM 최소 eCPM help_outline" [ref=325]
+              container "최소 eCPM"
+                container
+                  text "최소 eCPM"
+                  button "최소 eCPM의 자세한 내용을 확인하려면 이 아이콘 위로 마우스를 올리거나 Enter 키를 누르세요." [ref=326]
+                    image
+                      text "help_outline"
+                paragraph
+              text "Google 최적화(전체)"
+              image
+                text "create"
+    container
+      text "© 2026 Google"
+      link [ref=311, loc=href:https://www.google.com/intl/ko/policies/privacy, url=https://www.google.com/intl/ko/policies/privacy]
+        text "개인정보처리방침"
+        text "open_in_new"
+      link [ref=312, loc=href:https://adsense.google.com/adsense/terms, url=https://adsense.google.com/adsense/terms]
+        text "약관"
+        text "open_in_new"

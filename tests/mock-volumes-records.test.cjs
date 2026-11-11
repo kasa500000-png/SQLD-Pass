@@ -7,7 +7,7 @@ test('records scope keeps latest results per mode and preserves every retake',as
  const {c,saved}=await ready();await submit(c,'SQLD-M01','timed',1);await submit(c,'SQLD-M21','timed',2);await submit(c,'SQLD-M21','timed',3);await submit(c,'SQLD-M21','study',4);await submit(c,'SQLD-M41','study',5);const before=structuredClone(saved());
  a.deepEqual(mockStats(c.state,'timed'),{completed:2,average:4,met:0});a.deepEqual(mockStats(c.state,'timed',mockScopeExamIds(content,'vol2')),{completed:1,average:6,met:0});a.equal(mockStats(c.state,'study').average,9);
  c.navigate({name:'examHistory'});a.match(texts(c),/응시 2\/60회차/);c.selectMockRecordVolume('examHistory','vol2');a.match(texts(c),/응시 1\/20회차/);a.equal(nodes(c).filter(n=>n.testId?.startsWith('history-r-')).length,3);
- c.tab('records');a.equal(c.mockRecordVolumes.stats,'all');a.match(texts(c),/응시 2\/60회차/);c.selectMockRecordVolume('stats','vol3');a.match(texts(c),/평균 10점/);a.equal(c.mockRecordVolumes.examHistory,'vol2');a.deepEqual(saved(),before);
+ c.tab('records');a.equal(c.mockRecordVolumes.stats,'all');a.match(texts(c),/응시 2\/60회차/);c.selectMockRecordVolume('stats','vol3');a.match(texts(c),/평균 10점/);a.equal(c.mockRecordVolumes.examHistory,'vol2');c.tab('today');a.ok(nodes(c).some(n=>n.subtitle?.includes('모의고사 3/60회')));a.deepEqual(saved(),before);
 });
 test('review and saved scopes/search remain independent and theory return preserves context',async()=>{
  const {c,saved}=await ready();const attempts=[];for(const id of ['SQLD-M01','SQLD-M21','SQLD-M41']){const e=await submit(c,id,'study');attempts.push(e);await c.bookmarkMock(e.snapshots[0].id);await c.saveMockNote(e.snapshots[0].id,'원래 메모');}const original=structuredClone(saved());

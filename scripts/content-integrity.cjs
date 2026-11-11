@@ -4,7 +4,8 @@ const path = require('node:path');
 const crypto = require('node:crypto');
 const zlib = require('node:zlib');
 const {TextDecoder} = require('node:util');
-const MAX_RAW_BYTES = 8 * 1024 * 1024;
+// The 60-exam pack is 9.4 MB. Keep bounded decompression with room for metadata.
+const MAX_RAW_BYTES = 16 * 1024 * 1024;
 const MAX_ARCHIVE_BYTES = 2 * 1024 * 1024;
 function insist(ok, message) { if (!ok) throw new Error(`CONTENT_INVALID: ${message}`); }
 function object(x) { return x !== null && typeof x === 'object' && !Array.isArray(x); }
