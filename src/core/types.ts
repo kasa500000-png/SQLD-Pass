@@ -74,7 +74,7 @@ export interface AppState {
 }
 export type Tab = 'today'|'learn'|'review'|'exams'|'records';
 export type Route = { name: 'mockReview'|'mockSaved'|'mockQuestion'|'mockSources'|'chapter'|'glossary'|'flashcards'|'sources'|'welcome'|'setup'|'home'|'plan'|'day'|'catalog'|'lesson'|'lessonSummary'|'library'|'collection'|'savedQuestion'|'practiceSetup'|'practice'|'practiceResult'|'review'|'exams'|'examIntro'|'exam'|'examPause'|'sheet'|'result'|'examReview'|'stats'|'calendar'|'examHistory'|'appearance'|'data'|'settings'|'reminderSettings'|'help'|'report'|'notices'|'privacy'; id?:string; index?:number; };
-export interface Dialog { title:string; body:string; confirmLabel:string; destructive?:boolean; onConfirm:()=>void|Promise<void>; }
+export interface Dialog { title:string; body:string; confirmLabel:string; destructive?:boolean; onConfirm:()=>void|Promise<void>; secondaryLabel?:string; onSecondary?:()=>void|Promise<void>; cancelLabel?:string; }
 export interface Repository { load():Promise<unknown|null>; save(state:AppState):Promise<void>; clear():Promise<void>; }
 export interface Services {
   repository:Repository; clock():Clock; uuid():string; openURL(url:string):Promise<void>;

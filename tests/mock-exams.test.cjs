@@ -97,7 +97,7 @@ test('settings save returns to caller and leaves textbook records intact',async(
 });
 test('leaving changed settings offers discard; cancel retains draft and save retains learning',async()=>{
  const {ctrl}=await ready();ctrl.navigate({name:'settings'});ctrl.draftSettings.fontScale=1.3;ctrl.tab('today');a.equal(ctrl.route.name,'settings');a.ok(ctrl.dialog);ctrl.cancelDialog();a.equal(ctrl.draftSettings.fontScale,1.3);a.equal(ctrl.state.settings.fontScale,1);
- ctrl.back();await ctrl.acceptDialog();a.equal(ctrl.route.name,'home');a.equal(ctrl.draftSettings.fontScale,1);a.equal(ctrl.state.settings.fontScale,1);
+ ctrl.back();await ctrl.secondaryDialog();a.equal(ctrl.route.name,'home');a.equal(ctrl.draftSettings.fontScale,1);a.equal(ctrl.state.settings.fontScale,1);
  ctrl.navigate({name:'settings'});ctrl.back();a.equal(ctrl.dialog,null);a.equal(ctrl.route.name,'home');
 });
 
@@ -112,4 +112,10 @@ test('review prioritizes the explanation while keeping submitted originals and s
  const {ctrl}=await ready();await ctrl.beginExam('SQLD-M01','study');await ctrl.updateExamAnswer('2');await ctrl.finishExam('manual');const e=ctrl.state.exams[0],before=structuredClone(e),q=e.snapshots[0];ctrl.route={name:'examReview',id:e.id,index:0};
  let nodes=flat(renderTextbook(ctrl));a.ok(nodes.some(n=>n.text===q.explanation));a.ok(!nodes.some(n=>n.testId==='explanation-option-2'));await nodes.find(n=>n.testId==='review-original').action();nodes=flat(renderTextbook(ctrl));a.equal(nodes.find(n=>n.testId==='explanation-option-2').selected,true);a.ok(nodes.some(n=>n.text===q.stem));a.deepEqual(e,before);
  ctrl.route={name:'mockReview'};await flat(renderTextbook(ctrl)).find(n=>n.testId==='review-question-'+e.snapshots[1].id).action();a.equal(ctrl.route.name,'mockQuestion');await flat(renderTextbook(ctrl)).find(n=>n.testId==='retry-'+e.snapshots[1].id).action();a.equal(ctrl.route.name,'practice');a.deepEqual(e,before);
+});
+
+test('settings save-and-leave respects destination and retains the draft on a failed save',async()=>{
+ const e=await ready(),ctrl=e.ctrl;ctrl.navigate({name:'settings'});a.equal(flat(renderTextbook(ctrl)).find(n=>n.testId==='save-textbook-settings').disabled,true);ctrl.draftSettings.fontScale=1.3;ctrl.tab('learn');a.equal(ctrl.dialog.confirmLabel,'저장하고 이동');e.fail(true);await ctrl.acceptDialog();a.equal(ctrl.route.name,'settings');a.equal(ctrl.state.settings.fontScale,1);a.equal(ctrl.draftSettings.fontScale,1.3);
+ e.fail(false);ctrl.tab('learn');await ctrl.acceptDialog();a.equal(ctrl.route.name,'catalog');a.equal(ctrl.state.settings.fontScale,1.3);a.equal(ctrl.settingsChanged,false);
+ ctrl.navigate({name:'settings'});ctrl.draftSettings.targetDate='invalid';ctrl.back();await ctrl.acceptDialog();a.equal(ctrl.route.name,'settings');a.ok(ctrl.settingsError);a.equal(ctrl.draftSettings.targetDate,'invalid');
 });

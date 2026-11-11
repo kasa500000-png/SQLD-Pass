@@ -60,9 +60,10 @@ export class Controller {
   }
   async dismissTextbookMigration(){await this.commit(s=>s.textbookMigration?{...s,textbookMigration:{...s.textbookMigration,noticePending:false}}:s);}
   async toggleKnownCard(id:string){if(!this.content.textbook?.flashcards.some(f=>f.id===id))return;await this.commit(s=>({...s,knownCards:(s.knownCards??[]).includes(id)?s.knownCards!.filter(x=>x!==id):[...(s.knownCards??[]),id]}));}
+  get settingsChanged(){return JSON.stringify(this.draftSettings)!==JSON.stringify(this.state.settings);}
   private guardSettingsExit(action:()=>void):boolean{
-    if(!this.content.textbook||!['settings','appearance'].includes(this.route.name)||JSON.stringify(this.draftSettings)===JSON.stringify(this.state.settings))return false;
-    this.confirm('설정을 저장하지 않고 나갈까요?','변경한 설정은 적용되지 않습니다. 저장하려면 취소한 뒤 설정 저장을 눌러 주세요.','변경 취소하고 나가기',()=>{this.draftSettings={...this.state.settings};action();});return true;
+    if(!this.content.textbook||!['settings','appearance'].includes(this.route.name)||!this.settingsChanged)return false;
+    this.dialog={title:'변경한 설정을 적용할까요?',body:'저장하면 선택한 설정을 적용한 뒤 이동합니다.',confirmLabel:'저장하고 이동',onConfirm:()=>this.saveSettings(false,action),secondaryLabel:'저장하지 않고 이동',onSecondary:()=>{this.draftSettings={...this.state.settings};action();},cancelLabel:'계속 설정'};this.notify();return true;
   }
   navigate(route:Route){
     if(this.guardSettingsExit(()=>this.navigate(route)))return;
@@ -91,6 +92,7 @@ export class Controller {
   confirm(title:string,body:string,confirmLabel:string,onConfirm:()=>void|Promise<void>,destructive=false){this.dialog={title,body,confirmLabel,onConfirm,destructive};this.notify();}
   cancelDialog(){this.dialog=null;this.notify();}
   async acceptDialog(){const d=this.dialog;this.dialog=null;this.notify();if(d)await d.onConfirm();}
+  async secondaryDialog(){const d=this.dialog;this.dialog=null;this.notify();await d?.onSecondary?.();}
   toggleExpanded(id:string){this.expanded.has(id)?this.expanded.delete(id):this.expanded.add(id);this.notify();}
   setReviewFilter(all:boolean){all?this.expanded.add('review:all'):this.expanded.delete('review:all');this.reviewLimit=20;this.notify();}
   showMoreReviews(){this.reviewLimit+=20;this.notify();}
@@ -143,13 +145,13 @@ export class Controller {
     this.reviewPickerOpen=false;this.route={name:'result',id:e.id};this.notify();
   }
   setTargetDate(value:string){this.draftSettings.targetDate=value;this.settingsError='';this.notify();}
-  async saveSettings(onboard=false){
+  async saveSettings(onboard=false,afterSave?:()=>void){
     const d={...this.draftSettings};
     if(!validTargetDate(d.targetDate,dayKey(this.services.clock().wall))){this.settingsError='오늘 이후의 실제 날짜를 선택하거나 시험일을 비워 주세요.';this.notify();return;}
     if(d.weeklyGoalDays!==undefined&&(!Number.isInteger(d.weeklyGoalDays)||d.weeklyGoalDays<1||d.weeklyGoalDays>7)){this.settingsError='주간 목표는 1~7일 중에서 선택해 주세요.';this.notify();return;}
     if(![15,30,45,60,90].includes(d.minutes))return;
     this.settingsError='';
-    if(await this.commit(s=>({...s,settings:d,onboarded:onboard||s.onboarded}))){if(onboard||this.route.name==='setup'||!this.content.textbook){this.stack=[];this.route={name:'home'};}else this.route=this.stack.pop()??{name:'home'};this.notice='설정을 저장했습니다.';this.notify();}
+    if(await this.commit(s=>({...s,settings:d,onboarded:onboard||s.onboarded}))){if(afterSave){afterSave();}else if(onboard||this.route.name==='setup'||!this.content.textbook){this.stack=[];this.route={name:'home'};}else this.route=this.stack.pop()??{name:'home'};this.notice='설정을 저장했습니다.';this.notify();}
   }
   private async saveLessonRead(id:string):Promise<boolean>{if(!this.ready||!this.state.onboarded||!this.content.lessons.some(l=>l.id===id))return false;const ok=await this.commit(s=>s.onboarded?({...s,readLessons:Array.from(new Set([...s.readLessons,id])),studyDays:Array.from(new Set([...s.studyDays,dayKey(this.services.clock().wall)]))}):s);const recorded=ok&&this.state.onboarded&&this.state.readLessons.includes(id);if(recorded){this.notice='이론 읽음을 기록했습니다. 확인 문제로 이해를 점검해 보세요.';this.notify();}return recorded;}
   async markLesson(id:string):Promise<void>{await this.saveLessonRead(id);}
@@ -366,7 +368,7 @@ export class Controller {
     catch{if(this.route===origin&&(origin.name==='help'||origin.name==='report'))this.supportNotice=`메일 앱을 열지 못했습니다. ${email}로 직접 문의하거나 제보 내용을 공유해 주세요.`;}
     this.notify();
   }
-  requestReset(){this.confirm('기기의 학습 기록을 초기화할까요?','읽은 이론, 북마크, 풀이 기록, 진행 중 시험과 설정을 모두 삭제합니다. 복원할 수 없습니다. SQLD Pass의 로컬 학습 기록만 삭제됩니다.','이 앱 기록 삭제',async()=>{
+  requestReset(){this.confirm('전체 데이터를 삭제할까요?','이 기기의 학습 기록과 설정, 광고로 연 회차의 이용 권한을 모두 삭제합니다. 삭제한 데이터는 복원할 수 없습니다.','전체 데이터 삭제',async()=>{
     let cleared=false;
     const task=this.serial.then(async()=>{
       this.busy=true;this.notify();
