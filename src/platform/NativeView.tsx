@@ -74,7 +74,7 @@ export function NativeView({node: n, scale, dark, path = '0',maxSystemFontMultip
   if(n.kind==='widget'&&n.widget)return <TextbookWidget key={n.key} spec={n.widget} scale={scale} dark={dark} testId={n.testId}/>;
   if (n.kind === 'icon' && n.icon) return <View style={s.view} accessible={!!n.label} accessibilityRole={n.label?'image':undefined} accessibilityLabel={n.label} pointerEvents="none"><LearningIcon name={n.icon} size={n.iconSize??22} color={iconColor}/></View>;
   if (n.kind === 'text') return <Text accessibilityRole={n.heading ? 'header' : n.alert?'alert':undefined} accessibilityLiveRegion={n.alert?'polite':undefined}
-    testID={n.testId} maxFontSizeMultiplier={maxSystemFontMultiplier} style={[s.view, {color: ink, flexShrink: 1}, s.text]}><RichText value={n.text ?? ''} /></Text>;
+    testID={n.testId} numberOfLines={n.numberOfLines} maxFontSizeMultiplier={maxSystemFontMultiplier} style={[s.view, {color: ink, flexShrink: 1}, s.text]}><RichText value={n.text ?? ''} /></Text>;
   if (n.kind === 'button') {
     const choice=n.buttonKind==='choice', list=n.buttonKind==='row';
     const tone=n.feedback==='correct'?palette.greenText:n.feedback==='incorrect'?palette.redText:palette.blue;
@@ -90,17 +90,20 @@ export function NativeView({node: n, scale, dark, path = '0',maxSystemFontMultip
       {n.icon&&n.iconPosition!=='trailing'?<LearningIcon name={n.icon} size={n.iconSize??(n.role==='tab'?23:20)} color={iconColor}/>:null}
       {option?<View accessible={false} style={{minWidth:28,minHeight:28,borderRadius:14,alignSelf:'flex-start',alignItems:'center',justifyContent:'center',backgroundColor:n.feedback?tone:n.selected?palette.blue:palette.code}}><Text style={{fontSize:14*scale,fontWeight:'600',color:n.feedback||n.selected?(dark?palette.bg:'#FFFFFF'):palette.ink}}>{option[1]}</Text></View>:null}
       {n.text ? <Text maxFontSizeMultiplier={maxSystemFontMultiplier} style={[{color: ink, textAlign: 'center', fontSize: 15 * scale, fontWeight:'400', flexShrink: 1}, s.text,roleText]}><RichText value={option?.[2]??n.text} />{n.subtitle?<Text style={{fontSize:13*scale,lineHeight:21*scale,fontWeight:'400',color:palette.muted}}>{'\n'+n.subtitle}</Text>:null}</Text> : null}
-      {n.icon&&n.iconPosition==='trailing'?<LearningIcon name={n.icon} size={n.iconSize??20} color={iconColor}/>:null}
+      {n.icon&&n.iconPosition==='trailing'?<LearningIcon name={n.expanded===undefined?n.icon:n.expanded?'chevron-up':'chevron-down'} size={n.iconSize??20} color={iconColor}/>:null}
     </View>:null}
     {list?<View style={{position:'absolute',right:10}} pointerEvents="none"><LearningIcon name={n.expanded===undefined?'chevron-right':n.expanded?'chevron-up':'chevron-down'} size={18} color={palette.muted}/></View>:null}
     {children}
   </Pressable>;
   }
-  if (n.kind === 'input') return <TextInput testID={n.testId} accessibilityLabel={n.label}
-    value={n.value ?? ''} onChangeText={n.onChange} placeholder={n.placeholder}
-    placeholderTextColor={palette.muted} autoCorrect={false}
-    autoCapitalize="none" multiline={n.multiline} keyboardAppearance={dark?'dark':'light'} keyboardType={n.inputMode === 'numeric' ? 'number-pad' : 'default'}
-    style={[{color: ink}, s.view, s.text]} />;
+  if (n.kind === 'input') return <View style={[s.view,{flexDirection:'row',alignItems:'center'}]}>
+    <TextInput testID={n.testId} accessibilityLabel={n.label} value={n.value ?? ''} onChangeText={n.onChange} placeholder={n.placeholder}
+      placeholderTextColor={palette.muted} autoCorrect={false} autoCapitalize="none" multiline={n.multiline}
+      keyboardAppearance={dark?'dark':'light'} keyboardType={n.inputMode === 'numeric' ? 'number-pad' : 'default'}
+      style={[{color:ink,flex:1,minWidth:0,paddingVertical:0,paddingRight:n.clearable?38:0},s.text]} />
+    {n.clearable&&n.value?<Pressable testID={n.testId?`clear-${n.testId}`:undefined} accessibilityRole="button" accessibilityLabel={`${n.label??'검색어'} 지우기`}
+      onPress={()=>n.onChange?.('')} style={{position:'absolute',right:0,width:48,height:'100%',minHeight:48,alignItems:'center',justifyContent:'center'}}><LearningIcon name="close" size={20} color={palette.muted}/></Pressable>:null}
+  </View>;
   if (n.kind === 'date') return <DateField node={n} scale={scale} dark={dark} />;
   if (n.kind === 'code') return <StudyCode key={n.text} node={n} scale={scale} dark={dark} />;
   if (n.kind === 'table') return <StudyTable node={n} scale={scale} dark={dark} />;

@@ -12,7 +12,7 @@ export interface Node {
   text?:string; subtitle?:string; style?:Style; label?:string; testId?:string; action?:()=>void|Promise<void>;
   icon?:LearningIconName; iconSize?:number; iconPosition?:'leading'|'trailing'|'above';
   disabled?:boolean; selected?:boolean; expanded?:boolean; value?:string; minimumDate?:string; placeholder?:string; onChange?:(v:string)=>void;
-  multiline?:boolean; inputMode?:'text'|'numeric'; progress?:number; columns?:string[]; rows?:(string|number|null)[][];
+  clearable?:boolean; numberOfLines?:number; multiline?:boolean; inputMode?:'text'|'numeric'; progress?:number; columns?:string[]; rows?:(string|number|null)[][];
   scroll?:boolean; heading?:boolean; alert?:boolean; close?:()=>void; role?:'button'|'radio'|'tab'; checked?:boolean;
   reading?:{position?:ReadingOffset;onSave:(position:ReadingOffset)=>Promise<boolean>};
   catalog?:{context:string;position?:ReadingOffset;preserveContentOffset?:boolean;onRemember:(position:ReadingOffset)=>void};
