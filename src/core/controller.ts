@@ -1,4 +1,5 @@
 import {withDailyPlan} from '../textbook/learning';
+import {mockVolumes,mockVolumeForExam} from '../mocks/domain';
 import type {AppState,Clock,Content,Dialog,ExamAttempt,ExamMode,LibraryItem,PracticeResult,Question,ReadingOffset,Route,Services,Settings,Tab} from './types';
 import {isExamPaused,pauseExam as pauseAttempt,resumeExam as resumeAttempt} from './domain/exam';
 import {validReadingOffset} from './domain/reading';
@@ -9,6 +10,8 @@ export class Controller {
   dialog:Dialog|null=null; search=''; subject='all'; bookmarkedOnly=false; filter='all'; expanded=new Set<string>();
   practiceBatchSize=10; flashcardsUnknownOnly=false;
   examSheetFilter:'all'|'unanswered'|'flagged'='all';
+  mockVolumeId='vol1'; mockAvailableOnly=false; mockFiltersOpen=false;
+  mockFilterDraft:{progress:'all'|'unattempted'|'completed';available:boolean}={progress:'all',available:false};
   mockResultFilter:'all'|'wrong'|'flagged'='all'; mockSearch=''; mockTopicFilter=''; mockListLimit=20; mockHistoryLimit=20; mockNoteDrafts:Record<string,string>={};
   libraryEditor:{id?:string;name:string}|null=null; libraryError='';
   draftSettings:Settings; settingsError=''; supportText=''; supportNotice=''; reviewLimit=20; reviewPickerOpen=false; private listeners=new Set<()=>void>(); private serial:Promise<void>=Promise.resolve();
@@ -71,16 +74,18 @@ export class Controller {
     if(this.content.mockPack&&['exam','sheet'].includes(this.route.name)&&!['exam','sheet','examPause'].includes(route.name)){void this.pauseExam().then(ok=>{if(ok)this.navigate(route);});return;}
     const e=this.examAttempt(route.id);
     if(['exam','sheet'].includes(route.name)&&e&&isExamPaused(e))route={name:'examPause',id:e.id};
-    this.stack.push(this.route);this.route=route;this.notice='';this.supportNotice='';this.settingsError='';this.reviewPickerOpen=false;if(route.name==='settings'||route.name==='setup')this.draftSettings={...this.state.settings};this.notify();
+    if(route.name==='examIntro'&&route.id)this.mockVolumeId=mockVolumeForExam(this.content,route.id)?.id??this.mockVolumeId;
+    this.mockFiltersOpen=false;this.stack.push(this.route);this.route=route;this.notice='';this.supportNotice='';this.settingsError='';this.reviewPickerOpen=false;if(route.name==='settings'||route.name==='setup')this.draftSettings={...this.state.settings};this.notify();
   }
   tab(tab:Tab){
     if(this.guardSettingsExit(()=>this.tab(tab)))return;
     if(this.isExamPausePending)return;
     if(this.content.mockPack&&['exam','sheet'].includes(this.route.name)){void this.pauseExam().then(ok=>{if(ok)this.tab(tab);});return;}
-    this.stack=[];this.route={name:({today:'home',learn:'catalog',review:'review',exams:'exams',records:'stats'} as const)[tab]};this.notice='';this.supportNotice='';this.reviewPickerOpen=false;this.notify();
+    this.mockFiltersOpen=false;this.stack=[];this.route={name:({today:'home',learn:'catalog',review:'review',exams:'exams',records:'stats'} as const)[tab]};this.notice='';this.supportNotice='';this.reviewPickerOpen=false;this.notify();
   }
   back(){
     if(this.dialog){this.dialog=null;this.notify();return;}
+    if(this.mockFiltersOpen){this.closeMockFilters();return;}
     if(this.reviewPickerOpen){this.closeReviewPicker();return;}
     if(this.guardSettingsExit(()=>this.back()))return;
     if(this.route.name==='practiceResult'){void this.returnPracticeHome();return;}
@@ -108,7 +113,13 @@ export class Controller {
       this.catalogScroll={context,position:{...position}};
   }
   setExamProgressFilter(value:'all'|'unattempted'|'completed'){if(this.examProgressFilter!==value)this.examCatalogScroll=undefined;this.examProgressFilter=value;this.notify();}
-  examCatalogContext(){return JSON.stringify([this.expanded.has('exams:available'),this.examProgressFilter,this.notice,this.activeExam()?.id??null]);}
+  selectMockVolume(id:string){if(!mockVolumes(this.content).some(v=>v.id===id))return;this.mockVolumeId=id;this.notify();}
+  openMockCatalog(examId?:string){if(examId)this.mockVolumeId=mockVolumeForExam(this.content,examId)?.id??this.mockVolumeId;this.navigate({name:'exams'});}
+  openMockFilters(){this.mockFilterDraft={progress:this.examProgressFilter,available:this.mockAvailableOnly};this.mockFiltersOpen=true;this.notify();}
+  closeMockFilters(){this.mockFiltersOpen=false;this.notify();}
+  applyMockFilters(){this.examProgressFilter=this.mockFilterDraft.progress;this.mockAvailableOnly=this.mockFilterDraft.available;this.mockFiltersOpen=false;this.notify();}
+  clearMockFilters(){this.examProgressFilter='all';this.mockAvailableOnly=false;this.mockFilterDraft={progress:'all',available:false};this.notify();}
+  examCatalogContext(){return JSON.stringify([this.mockVolumeId,this.mockAvailableOnly,this.expanded.has('exams:available'),this.examProgressFilter,this.notice,this.activeExam()?.id??null]);}
   examCatalogPosition(){return this.examCatalogScroll?.context===this.examCatalogContext()?this.examCatalogScroll.position:undefined;}
   rememberExamCatalog(context:string,position:ReadingOffset){
     if(this.ready&&this.state.onboarded&&context===this.examCatalogContext()&&validReadingOffset(position))
