@@ -1,0 +1,48 @@
+{
+  "observedAt": "2026-11-11T12:56:41.292935+00:00",
+  "android": {
+    "version": "0.3.4",
+    "versionCode": 20,
+    "track": "production",
+    "state": "changes_in_review",
+    "rollout": 1.0,
+    "managedPublishing": false,
+    "adsMode": "live",
+    "publicVersionAtSubmission": "0.3.3 (19)",
+    "submittedAt": "2026-11-11T12:55:17.736Z",
+    "evidence": "qa/evidence/ui-focus-034-20261111/play-submitted.txt"
+  },
+  "ios": {
+    "candidateVersion": "0.3.4",
+    "plannedBuild": "14",
+    "versionId": "c237d65d-9bd9-46df-82b6-5052a12ce25b",
+    "candidateState": "PREPARE_FOR_SUBMISSION",
+    "releaseType": "AFTER_APPROVAL",
+    "buildUploaded": false,
+    "testFlightUpdated": false,
+    "publicVersion": "0.3.3 (13)",
+    "publicState": "READY_FOR_SALE",
+    "testFlightCurrentBuild": "13",
+    "blocker": "Physical iPad unavailable; new 0.3.4 physical advertising/consent evidence pending. The owner waiver applied only to0.3.3(13).",
+    "evidence": "qa/evidence/ui-focus-034-20261111/ios-prepared-draft.json"
+  },
+  "implementation": {
+    "prs": [
+      51,
+      52,
+      53,
+      54,
+      55,
+      56,
+      57,
+      58,
+      59,
+      60
+    ],
+    "merged": true,
+    "integrationCommit": "86fab69da30951f533fca843904ec142ca388cc5",
+    "mainMerge": "3138e994eff08529c679ede009bafc0698a2ed5c",
+    "ciRunId": 43024105205,
+    "ciConclusion": "success"
+  }
+}

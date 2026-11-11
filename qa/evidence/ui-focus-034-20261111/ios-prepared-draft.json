@@ -1,0 +1,14 @@
+{
+  "observedAt": "2026-11-11T12:54:34.198Z",
+  "appId": "6818046749",
+  "versionId": "c237d65d-9bd9-46df-82b6-5052a12ce25b",
+  "version": "0.3.4",
+  "plannedBuild": "14",
+  "state": "PREPARE_FOR_SUBMISSION",
+  "releaseType": "AFTER_APPROVAL",
+  "releaseNotesUpdated": true,
+  "inheritedMetadata": true,
+  "buildUploaded": false,
+  "testFlightUpdated": false,
+  "physicalValidation": "blocked: iPad unavailable; 0.3.3-only waiver not reused"
+}
