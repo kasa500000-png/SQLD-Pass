@@ -1,0 +1,111 @@
+Attributes: Application, 0x10aac5e00, pid: 49073, label: 'SQLD Pass'
+Element subtree:
+ →Application, 0x10aac5e00, pid: 49073, label: 'SQLD Pass'
+    Window (Main), 0x10aac5f40, {{0.0, 0.0}, {1032.0, 1376.0}}
+      Other, 0x10aac6080, {{0.0, 0.0}, {1032.0, 1376.0}}
+        Other, 0x10aac5cc0, {{0.0, 0.0}, {1032.0, 1376.0}}
+          Other, 0x10aac5b80, {{0.0, 0.0}, {1032.0, 1376.0}}
+            Other, 0x10aac5a40, {{0.0, 0.0}, {1032.0, 1376.0}}
+              Other, 0x10aac5900, {{0.0, 0.0}, {1032.0, 1376.0}}
+                Other, 0x10aac57c0, {{0.0, 0.0}, {1032.0, 1376.0}}
+                  Other, 0x10aac5680, {{0.0, 0.0}, {1032.0, 1376.0}}
+                    Other, 0x10aac5540, {{0.0, 32.0}, {1032.0, 1324.0}}
+                      Other, 0x10aac4b40, {{0.0, 32.0}, {1032.0, 64.0}}
+                      Other, 0x10aac4c80, {{0.0, 32.0}, {1032.0, 64.0}}
+                      Other, 0x10aac4a00, {{0.0, 32.0}, {1032.0, 1324.0}}
+                      StaticText, 0x10aac48c0, {{28.0, 49.5}, {918.0, 29.0}}, label: '교재'
+                        StaticText, 0x10aac7700, {{28.0, 49.5}, {918.0, 29.0}}, label: '교재'
+                      Button, 0x10aac7840, {{956.0, 40.0}, {48.0, 48.0}}, label: '설정'
+                      Other, 0x10aac7e80, {{0.0, 96.0}, {1032.0, 1180.0}}
+                        ScrollView, 0x10aac70c0, {{0.0, 96.0}, {1032.0, 1180.0}}
+                          Other, 0x10aac7200, {{0.0, 96.0}, {1032.0, 1504.0}}
+                            Other, 0x10aac7340, {{0.0, 96.0}, {1032.0, 1504.0}}
+                              StaticText, 0x10aac7980, {{28.0, 112.0}, {976.0, 28.0}}, label: '전체 목차'
+                                StaticText, 0x10aac7ac0, {{28.0, 112.0}, {976.0, 28.0}}, label: '전체 목차'
+                              Other, 0x10aac66c0, {{28.0, 152.0}, {976.0, 52.0}}
+                                TextField, 0x10aac6800, {{29.0, 153.0}, {974.0, 50.0}}, label: '교재 검색', placeholderValue: '개념 · 용어 · SQL 검색'
+                              Button, 0x10aac6d00, {{28.0, 216.0}, {976.0, 48.0}}, identifier: 'bookmarked-sections', label: '저장한 절'
+                              Other, 0x10aac6440, {{28.0, 276.0}, {482.0, 498.0}}
+                              Other, 0x10aac6a80, {{522.0, 276.0}, {482.0, 498.0}}
+                              StaticText, 0x10aac6bc0, {{43.0, 291.0}, {452.0, 20.0}}, label: 'PART 1'
+                                StaticText, 0x10aac6940, {{43.0, 291.0}, {452.0, 20.0}}, label: 'PART 1'
+                              StaticText, 0x10aac6300, {{537.0, 291.0}, {452.0, 20.0}}, label: 'PART 2'
+                                StaticText, 0x10aac7d40, {{537.0, 291.0}, {452.0, 20.0}}, label: 'PART 2'
+                              Button, 0x10aac6e40, {{43.0, 321.0}, {452.0, 48.0}}, identifier: 'part-part1', label: '입문과 데이터 모델링', value: expanded
+                              Button, 0x10aac7480, {{537.0, 321.0}, {452.0, 48.0}}, identifier: 'part-part2', label: 'SQL 기본', value: expanded
+                              Button, 0x10aac75c0, {{43.0, 379.0}, {452.0, 68.0}}, identifier: 'chapter-1', label: '1. 데이터베이스, 표에서 출발하기
+1 / 6절 읽음'
+                              Button, 0x10aac4280, {{537.0, 379.0}, {452.0, 68.0}}, identifier: 'chapter-6', label: '6. SQL 조회문의 기본 구조
+0 / 8절 읽음'
+                              Button, 0x10aac4000, {{43.0, 457.0}, {452.0, 68.0}}, identifier: 'chapter-2', label: '2. 데이터 모델링의 기본 개념
+0 / 7절 읽음'
+                              Button, 0x10aac4140, {{537.0, 457.0}, {452.0, 68.0}}, identifier: 'chapter-7', label: '7. 조건 검색 — WHERE
+0 / 9절 읽음'
+                              Button, 0x10aac43c0, {{43.0, 535.0}, {452.0, 68.0}}, identifier: 'chapter-3', label: '3. 엔터티와 속성
+0 / 7절 읽음'
+                              Button, 0x10aac4500, {{537.0, 535.0}, {452.0, 68.0}}, identifier: 'chapter-8', label: '8. SQL 함수 — 값을 바꾸고 판단하기
+0 / 13절 읽음'
+                              Button, 0x10aac4780, {{43.0, 613.0}, {452.0, 68.0}}, identifier: 'chapter-4', label: '4. 관계와 식별자
+0 / 9절 읽음'
+                              Button, 0x10aac4640, {{537.0, 613.0}, {452.0, 68.0}}, identifier: 'chapter-9', label: '9. 그룹화와 정렬
+0 / 9절 읽음'
+                              Button, 0x10aac4f00, {{43.0, 691.0}, {452.0, 68.0}}, identifier: 'chapter-5', label: '5. 정규화와 데이터 모델·SQL
+0 / 12절 읽음'
+                              Button, 0x10aac5180, {{537.0, 691.0}, {452.0, 68.0}}, identifier: 'chapter-10', label: '10. JOIN — 여러 테이블 연결
+0 / 10절 읽음'
+                              Other, 0x10aac4dc0, {{28.0, 786.0}, {482.0, 420.0}}
+                              Other, 0x10aac5040, {{522.0, 786.0}, {482.0, 342.0}}
+                              StaticText, 0x10aac5400, {{43.0, 801.0}, {452.0, 20.0}}, label: 'PART 3'
+                                StaticText, 0x10aac52c0, {{43.0, 801.0}, {452.0, 20.0}}, label: 'PART 3'
+                              StaticText, 0x10727b980, {{537.0, 801.0}, {452.0, 20.0}}, label: 'PART 4'
+                                StaticText, 0x107279040, {{537.0, 801.0}, {452.0, 20.0}}, label: 'PART 4'
+                              Button, 0x1072788c0, {{43.0, 831.0}, {452.0, 48.0}}, identifier: 'part-part3', label: 'SQL 활용', value: expanded
+                              Button, 0x10727b840, {{537.0, 831.0}, {452.0, 48.0}}, identifier: 'part-part4', label: 'SQL 관리 구문', value: expanded
+                              Button, 0x10727bac0, {{43.0, 889.0}, {452.0, 68.0}}, identifier: 'chapter-11', label: '11. 서브쿼리 — 질문 안에 질문 넣기
+0 / 12절 읽음'
+                              Button, 0x10727b5c0, {{537.0, 889.0}, {452.0, 68.0}}, identifier: 'chapter-15', label: '15. 데이터 조작어 — DML
+0 / 14절 읽음'
+                              Button, 0x1073eebc0, {{43.0, 967.0}, {452.0, 68.0}}, identifier: 'chapter-12', label: '12. 집합 연산자 — 조회 결과를 합치고 비교하기
+0 / 8절 읽음'
+                              Button, 0x1073eed00, {{537.0, 967.0}, {452.0, 68.0}}, identifier: 'chapter-16', label: '16. 데이터 정의어 — DDL
+0 / 16절 읽음'
+                              Button, 0x1073eee40, {{43.0, 1045.0}, {452.0, 68.0}}, identifier: 'chapter-13', label: '13. 그룹 함수와 윈도우 함수
+0 / 17절 읽음'
+                              Button, 0x1073eef80, {{537.0, 1045.0}, {452.0, 68.0}}, identifier: 'chapter-17', label: '17. 트랜잭션과 권한 — TCL·DCL
+0 / 18절 읽음'
+                              Button, 0x1073ef340, {{43.0, 1123.0}, {452.0, 68.0}}, identifier: 'chapter-14', label: '14. 고급 조회 — 상위 N개부터 계층·형태 변환까지
+0 / 14절 읽음'
+                              Other, 0x1073ef200, {{28.0, 1218.0}, {482.0, 186.0}}
+                              StaticText, 0x1073ef480, {{43.0, 1233.0}, {452.0, 20.0}}, label: 'PART 5'
+                                StaticText, 0x1073ef0c0, {{43.0, 1233.0}, {452.0, 20.0}}, label: 'PART 5'
+                              Button, 0x1073ef840, {{43.0, 1263.0}, {452.0, 48.0}}, identifier: 'part-part5', label: '핵심 정리', value: expanded
+                              Button, 0x1073ef700, {{43.0, 1321.0}, {452.0, 68.0}}, identifier: 'chapter-18', label: '18. 핵심을 연결하고, 실전으로 확인하기
+0 / 27절 읽음'
+                              Button, 0x1073ef5c0, {{28.0, 1416.0}, {976.0, 48.0}}, label: '용어 사전'
+                              Button, 0x1073ef980, {{28.0, 1476.0}, {976.0, 48.0}}, label: '핵심 카드'
+                              Button, 0x1073efc00, {{28.0, 1536.0}, {976.0, 48.0}}, label: '교재 출처와 학습 범위'
+                          Other, 0x1073efd40, {{999.0, 96.0}, {30.0, 1180.0}}, label: 'Vertical scroll bar, 2 pages', value: 0%
+                            Other, 0x1073efac0, {{1026.0, 356.0}, {3.0, 848.0}}
+                          Other, 0x1073efe80, {{0.0, 1243.0}, {1032.0, 30.0}}, label: 'Horizontal scroll bar, 1 page', value: 0%
+                            Other, 0x1073ec640, {{33.0, 1270.0}, {966.0, 3.0}}
+                          Other, 0x1073ec500, {{999.0, 96.0}, {30.0, 1180.0}}, label: 'Vertical scroll bar, 2 pages', value: 0%
+                            Other, 0x1073ee300, {{1026.0, 356.0}, {3.0, 848.0}}
+                          Other, 0x1073edf40, {{0.0, 1243.0}, {1032.0, 30.0}}, label: 'Horizontal scroll bar, 1 page', value: 0%
+                            Other, 0x1073edb80, {{33.0, 1270.0}, {966.0, 3.0}}
+                      Other, 0x1073ede00, {{0.0, 1276.0}, {1032.0, 80.0}}
+                      Other, 0x1073ed2c0, {{96.0, 1277.0}, {840.0, 79.0}}
+                      Other, 0x1073ed040, {{124.0, 1285.0}, {157.0, 63.0}}, identifier: 'tab-today', label: '홈'
+                      Other, 0x1073ee1c0, {{281.0, 1285.0}, {156.5, 63.0}}, identifier: 'tab-learn', label: '교재', Selected
+                      Other, 0x1073ecdc0, {{437.5, 1285.0}, {157.0, 63.0}}, identifier: 'tab-review', label: '문제'
+                      Other, 0x1073ecb40, {{594.5, 1285.0}, {156.5, 63.0}}, identifier: 'tab-exams', label: '실전'
+                      Other, 0x1073ee580, {{751.0, 1285.0}, {157.0, 63.0}}, identifier: 'tab-records', label: '기록'
+    Window, 0x1073ee440, {{0.0, 0.0}, {1032.0, 1376.0}}
+      Other, 0x1073ee080, {{0.0, 0.0}, {1032.0, 1376.0}}
+        Other, 0x1073eda40, {{0.0, 0.0}, {1032.0, 1376.0}}
+Path to element:
+ →Application, 0x10aac5e00, pid: 49073, label: 'SQLD Pass'
+Query chain:
+ →Find: Application 'com.sqldpass.app.adsqa'
+  Output: {
+    Application, 0x1073ed7c0, pid: 49073, label: 'SQLD Pass'
+  }

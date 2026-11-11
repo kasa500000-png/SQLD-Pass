@@ -1,0 +1,72 @@
+Attributes: Application, 0x10981e300, pid: 48211, label: 'SQLD Pass'
+Element subtree:
+ →Application, 0x10981e300, pid: 48211, label: 'SQLD Pass'
+    Window (Main), 0x10981de00, {{0.0, 0.0}, {402.0, 874.0}}
+      Other, 0x10981da40, {{0.0, 0.0}, {402.0, 874.0}}
+        Other, 0x10981db80, {{0.0, 0.0}, {402.0, 874.0}}
+          Other, 0x10981f0c0, {{0.0, 0.0}, {402.0, 874.0}}
+            Other, 0x10981e1c0, {{0.0, 0.0}, {402.0, 874.0}}
+              Other, 0x10981e080, {{0.0, 0.0}, {402.0, 874.0}}
+                Other, 0x10981d040, {{0.0, 0.0}, {402.0, 874.0}}
+                  Other, 0x10981ea80, {{0.0, 0.0}, {402.0, 874.0}}
+                    Other, 0x10981d2c0, {{0.0, 62.0}, {402.0, 778.0}}
+                      Other, 0x10981df40, {{0.0, 62.0}, {402.0, 64.0}}
+                      Other, 0x10981d900, {{0.0, 62.0}, {402.0, 64.0}}
+                      Other, 0x10981d180, {{0.0, 62.0}, {402.0, 778.0}}
+                      Button, 0x10981d680, {{338.0, 70.0}, {48.0, 48.0}}, label: '설정'
+                      StaticText, 0x10981f5c0, {{16.0, 79.3}, {312.0, 29.0}}, label: '응시 결과'
+                        StaticText, 0x10a3b3980, {{16.0, 79.3}, {312.0, 29.0}}, label: '응시 결과'
+                      Other, 0x10a3b21c0, {{0.0, 126.0}, {402.0, 634.3}}
+                        ScrollView, 0x10a3b3c00, {{0.0, 126.0}, {402.0, 634.3}}
+                          Other, 0x10a3b1b80, {{0.0, 126.0}, {402.0, 514.0}}
+                            Other, 0x10a3b3d40, {{0.0, 126.0}, {402.0, 514.0}}
+                              StaticText, 0x10a3b3ac0, {{16.0, 142.0}, {370.0, 20.0}}, label: '제01회 실전 모의고사 · 실전 모드'
+                                StaticText, 0x10a3b1540, {{16.0, 142.0}, {370.0, 20.0}}, label: '제01회 실전 모의고사 · 실전 모드'
+                              StaticText, 0x10a3b1400, {{16.0, 174.0}, {370.0, 28.0}}, label: '2 / 100점'
+                                StaticText, 0x10a3b1680, {{16.0, 174.0}, {370.0, 28.0}}, label: '2 / 100점'
+                              StaticText, 0x10a3b3e80, {{16.0, 214.0}, {370.0, 28.0}}, label: '연습 기준 미충족'
+                                StaticText, 0x10a3b17c0, {{16.0, 214.0}, {370.0, 28.0}}, label: '연습 기준 미충족'
+                              StaticText, 0x10a3b1a40, {{16.0, 254.0}, {370.0, 20.0}}, label: '2026. 11. 11.'
+                                StaticText, 0x10a3b1900, {{16.0, 254.0}, {370.0, 20.0}}, label: '2026. 11. 11.'
+                              StaticText, 0x10a3b1cc0, {{16.0, 286.0}, {370.0, 20.0}}, label: '일시정지 사용 · 2회'
+                                StaticText, 0x10a3b2080, {{16.0, 286.0}, {370.0, 20.0}}, label: '일시정지 사용 · 2회'
+                              Other, 0x10a3b1e00, {{16.0, 318.0}, {370.0, 126.0}}
+                              StaticText, 0x10a3b1f40, {{31.0, 333.0}, {340.0, 28.0}}, label: '1과목 1/10 · 2과목 0/40'
+                                StaticText, 0x112ddd7c0, {{31.0, 333.0}, {340.0, 28.0}}, label: '1과목 1/10 · 2과목 0/40'
+                              StaticText, 0x112dddcc0, {{31.0, 371.0}, {340.0, 28.0}}, label: '정답 1 · 오답 1 · 미응답 48'
+                                StaticText, 0x112ddd400, {{31.0, 371.0}, {340.0, 28.0}}, label: '정답 1 · 오답 1 · 미응답 48'
+                              StaticText, 0x112ddd540, {{31.0, 409.0}, {340.0, 20.0}}, label: '50문항 · 문항당 2점 · 미응답 0점'
+                                StaticText, 0x112ddd180, {{31.0, 409.0}, {340.0, 20.0}}, label: '50문항 · 문항당 2점 · 미응답 0점'
+                              Button, 0x112ddcb40, {{16.0, 456.0}, {370.0, 48.0}}, identifier: 'review-wrong', label: '오답·미응답 복습'
+                              Button, 0x112ddca00, {{16.0, 516.0}, {370.0, 48.0}}, identifier: 'review-all', label: '전체 해설 보기'
+                                Other, 0x112ddcc80, {{358.0, 530.7}, {18.0, 18.0}}
+                                  Other, 0x112ddd040, {{358.0, 530.7}, {18.0, 18.0}}
+                                    Other, 0x112ddcf00, {{364.0, 534.4}, {6.0, 10.5}}
+                                      Other, 0x112ddcdc0, {{364.0, 534.4}, {6.0, 10.5}}
+                              Button, 0x112dddb80, {{16.0, 576.0}, {370.0, 48.0}}, label: '회차 목록'
+                                Other, 0x112ddd900, {{358.0, 590.7}, {18.0, 18.0}}
+                                  Other, 0x112ddda40, {{358.0, 590.7}, {18.0, 18.0}}
+                                    Other, 0x112ddd2c0, {{364.0, 594.4}, {6.0, 10.5}}
+                                      Other, 0x112ddd680, {{364.0, 594.4}, {6.0, 10.5}}
+                          Other, 0x113303200, {{369.0, 126.0}, {30.0, 634.3}}, label: 'Vertical scroll bar, 1 page', value: 0%
+                            Other, 0x113302d00, {{396.0, 407.0}, {3.0, 324.0}}
+                          Other, 0x1133021c0, {{0.0, 727.3}, {402.0, 30.0}}, label: 'Horizontal scroll bar, 1 page', value: 0%
+                            Other, 0x113303340, {{3.0, 754.3}, {396.0, 3.0}}
+                          Other, 0x113301f40, {{369.0, 126.0}, {30.0, 634.3}}, label: 'Vertical scroll bar, 1 page', value: 0%
+                            Other, 0x113302940, {{396.0, 407.0}, {3.0, 324.0}}
+                          Other, 0x113303480, {{0.0, 727.3}, {402.0, 30.0}}, label: 'Horizontal scroll bar, 1 page', value: 0%
+                            Other, 0x113302300, {{3.0, 754.3}, {396.0, 3.0}}
+                      Other, 0x113303700, {{0.0, 760.3}, {402.0, 79.7}}
+                      Other, 0x113303ac0, {{0.0, 761.3}, {402.0, 78.7}}
+                      Other, 0x113303980, {{16.0, 769.3}, {74.0, 62.7}}, identifier: 'tab-today', label: '홈'
+                      Other, 0x113302440, {{90.0, 769.3}, {74.0, 62.7}}, identifier: 'tab-learn', label: '교재'
+                      Other, 0x1133003c0, {{164.0, 769.3}, {74.0, 62.7}}, identifier: 'tab-review', label: '문제'
+                      Other, 0x113300140, {{238.0, 769.3}, {74.0, 62.7}}, identifier: 'tab-exams', label: '실전', Selected
+                      Other, 0x113302a80, {{312.0, 769.3}, {74.0, 62.7}}, identifier: 'tab-records', label: '기록'
+Path to element:
+ →Application, 0x10981e300, pid: 48211, label: 'SQLD Pass'
+Query chain:
+ →Find: Application 'com.sqldpass.app.adsqa'
+  Output: {
+    Application, 0x113300500, pid: 48211, label: 'SQLD Pass'
+  }

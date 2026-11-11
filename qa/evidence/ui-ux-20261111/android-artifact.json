@@ -1,0 +1,17 @@
+{
+  "version": "0.3.3",
+  "versionCode": 19,
+  "aabSha256": "6b5c33b1ebfe2b72858860a6acbe79fa36c2f8d1f1634cf4806c8a59292d040b",
+  "apkSha256": "de824560c1aaa9899cc99dca3d25278b4832b1cb5c72f0cd8b4e545a18718c33",
+  "nativeChecks": "see android-alignment.json",
+  "sdkRuntime": "physical official-test app, not production impression",
+  "uploadCertificateSha256": "ea1e8482b51d7a905271eecdabf840e244adcfaaed7da559329cb929e7171942",
+  "bundletoolValidate": "passed",
+  "bundleAlignment": "PAGE_ALIGNMENT_16K",
+  "package": "com.kasa500000.sqldpass",
+  "appEnvironment": "production",
+  "adsMode": "live",
+  "examAccessPolicy": "rewarded",
+  "contentVersion": "textbook.20261109.2",
+  "contentHash": "1f7a60245d9b75a19ad733dca7fc281539d73ebdc0fcfa25fd5a959ebd7d589d"
+}

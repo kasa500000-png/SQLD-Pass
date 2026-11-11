@@ -1,0 +1,15 @@
+{
+  "platform": "android",
+  "policyVersion": "2026-09-30.1",
+  "codeSha256": "d0211865589c532648b32f12560aeff47665ccbe1ecbc5d4c7b7dc74ab87b741",
+  "androidDeviceEvidence": "qa/UI_UX_20261111.md: SM-F721N physical official test app 0.3.3(19): answer persistence, hardware-back pause, force-stop/relaunch frozen time, background auto-pause, cancel/submit, correct/wrong/unanswered aggregation; earned reward M11 and active study home suppression. No production ad impressions used.",
+  "androidConsentEvidence": "Current SM-F721N 0.3.3(19): adult eligibility cancel has no banner; confirm requests UMP and official test banner renders. EEA accept/reject/withdraw is historical unchanged SDK/policy evidence from qa/RELEASE_TEXTBOOK_20261109.md, not a newly repeated regional test. Policy and SDK unchanged in this UI/pause update.",
+  "adPlacementEvidence": "Current test banner and rewarded SDK on Samsung; paused timed and paused study home have no banner. Both AdMob banner automatic refresh disabled verified 2026-11-11; qa/evidence/ui-ux-20261111/.",
+  "sdkCompatibilityEvidence": "Android release test APK 0.3.3(19) built and installed on physical Samsung, native API execution and reward verified. 431 tests and both type checks pass; Expo doctor 21/21. Signed production artifact verification remains separate before upload.",
+  "appAdsTxtEvidence": "2026-11-11 AdMob both SQLD Pass apps Ready/serving enabled; public app-ads.txt returns google.com pub-9314207769680999 DIRECT f08c47fec0942fa0.",
+  "privacyDisclosureEvidence": "No collection, consent, SDK, targeting or entitlement change. Retain Google Play published Ads YES and Data Safety reviewed 2026-11-09 in qa/evidence/release-textbook-20261109/play-data-safety.txt and current public privacy. Current UI shows local-only records and ad processing; privacy inventory unchanged.",
+  "privacyUrl": "https://sqld-pass-support.shk1122.chatgpt.site/privacy.html",
+  "supportUrl": "https://sqld-pass-support.shk1122.chatgpt.site/support.html",
+  "approvedBy": "Owner approved 2026-11-11 UI/pause implementation and production submission; ongoing explicit authorization for live rewarded ads. New code hash reviewed with current Android physical QA; no iOS scope authorized by this file.",
+  "approvedAt": "2026-11-11T09:10:44.998Z"
+}

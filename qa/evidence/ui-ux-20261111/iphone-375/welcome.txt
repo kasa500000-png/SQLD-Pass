@@ -1,0 +1,45 @@
+Attributes: Application, 0x107c09900, pid: 47075, label: 'SQLD Pass'
+Element subtree:
+ →Application, 0x107c09900, pid: 47075, label: 'SQLD Pass'
+    Window (Main), 0x107c08dc0, {{0.0, 0.0}, {375.0, 667.0}}
+      Other, 0x107c08f00, {{0.0, 0.0}, {375.0, 667.0}}
+        Other, 0x107c08c80, {{0.0, 0.0}, {375.0, 667.0}}
+          Other, 0x107c09180, {{0.0, 0.0}, {375.0, 667.0}}
+            Other, 0x107c09040, {{0.0, 0.0}, {375.0, 667.0}}
+              Other, 0x107c092c0, {{0.0, 0.0}, {375.0, 667.0}}
+                Other, 0x107c09680, {{0.0, 0.0}, {375.0, 667.0}}
+                  Other, 0x107c097c0, {{0.0, 0.0}, {375.0, 667.0}}
+                    Other, 0x107c09b80, {{0.0, 20.0}, {375.0, 647.0}}
+                      Other, 0x107c09cc0, {{0.0, 20.0}, {375.0, 45.0}}
+                      Other, 0x107c09a40, {{0.0, 20.0}, {375.0, 45.0}}
+                      Other, 0x107c09e00, {{0.0, 20.0}, {375.0, 647.0}}
+                      StaticText, 0x107c0a080, {{16.0, 28.0}, {343.0, 29.0}}, label: 'SQLD Pass'
+                        StaticText, 0x107c0a1c0, {{16.0, 28.0}, {343.0, 29.0}}, label: 'SQLD Pass'
+                      Other, 0x107c09f40, {{0.0, 65.0}, {375.0, 602.0}}
+                        ScrollView, 0x107c0a300, {{0.0, 65.0}, {375.0, 602.0}}
+                          Other, 0x107c0a580, {{0.0, 65.0}, {375.0, 280.0}}
+                            Other, 0x107c0a6c0, {{0.0, 65.0}, {375.0, 280.0}}
+                              StaticText, 0x107c0a440, {{16.0, 81.0}, {343.0, 28.0}}, label: '표에서 시작하는 SQLD 학습'
+                                StaticText, 0x107c0a800, {{16.0, 81.0}, {343.0, 28.0}}, label: '표에서 시작하는 SQLD 학습'
+                              StaticText, 0x107c0aa80, {{16.0, 121.0}, {343.0, 28.0}}, label: '5개 Part · 18개 Chapter · 216개 학습 절'
+                                StaticText, 0x107c0abc0, {{16.0, 121.0}, {343.0, 28.0}}, label: '5개 Part · 18개 Chapter · 216개 학습 절'
+                              StaticText, 0x107c0a940, {{16.0, 161.0}, {343.0, 56.0}}, label: '개념을 읽고, SQL 결과를 살펴보고, 확인 문제로 이해를 점검하세요.'
+                                StaticText, 0x107c0ad00, {{16.0, 161.0}, {343.0, 56.0}}, label: '개념을 읽고, SQL 결과를 살펴보고, 확인 문제로 이해를 점검하세요.'
+                              StaticText, 0x107c0af80, {{16.0, 229.0}, {343.0, 40.0}}, label: '학습 기록은 이 기기에 저장됩니다. 실전 탭에서 20회 모의고사를 이용하세요.'
+                                StaticText, 0x107c0b0c0, {{16.0, 229.0}, {343.0, 40.0}}, label: '학습 기록은 이 기기에 저장됩니다. 실전 탭에서 20회 모의고사를 이용하세요.'
+                              Button, 0x107c0ae40, {{16.0, 281.0}, {343.0, 48.0}}, identifier: 'textbook-start', label: '학습 시작'
+                          Other, 0x107c0b200, {{342.0, 65.0}, {30.0, 602.0}}, label: 'Vertical scroll bar, 1 page', value: 0%
+                            Other, 0x107c0b480, {{369.0, 590.0}, {3.0, 94.0}}
+                          Other, 0x107c0b5c0, {{0.0, 634.0}, {375.0, 30.0}}, label: 'Horizontal scroll bar, 1 page', value: 0%
+                            Other, 0x107c0b340, {{3.0, 661.0}, {369.0, 3.0}}
+                          Other, 0x107c0b700, {{342.0, 65.0}, {30.0, 602.0}}, label: 'Vertical scroll bar, 1 page', value: 0%
+                            Other, 0x107c0b980, {{369.0, 590.0}, {3.0, 94.0}}
+                          Other, 0x107c0bac0, {{0.0, 634.0}, {375.0, 30.0}}, label: 'Horizontal scroll bar, 1 page', value: 0%
+                            Other, 0x107c0b840, {{3.0, 661.0}, {369.0, 3.0}}
+Path to element:
+ →Application, 0x107c09900, pid: 47075, label: 'SQLD Pass'
+Query chain:
+ →Find: Application 'com.sqldpass.app.adsqa'
+  Output: {
+    Application, 0x107c088c0, pid: 47075, label: 'SQLD Pass'
+  }

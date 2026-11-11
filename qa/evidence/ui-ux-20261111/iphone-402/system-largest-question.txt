@@ -1,0 +1,78 @@
+Attributes: Application, 0x112d27340, pid: 53075, label: 'SQLD Pass'
+Element subtree:
+ →Application, 0x112d27340, pid: 53075, label: 'SQLD Pass'
+    Window (Main), 0x112d266c0, {{0.0, 0.0}, {402.0, 874.0}}
+      Other, 0x112d26800, {{0.0, 0.0}, {402.0, 874.0}}
+        Other, 0x112d26940, {{0.0, 0.0}, {402.0, 874.0}}
+          Other, 0x112d26300, {{0.0, 0.0}, {402.0, 874.0}}
+            Other, 0x112d26440, {{0.0, 0.0}, {402.0, 874.0}}
+              Other, 0x112d275c0, {{0.0, 0.0}, {402.0, 874.0}}
+                Other, 0x112d27700, {{0.0, 0.0}, {402.0, 874.0}}
+                  Other, 0x112d27840, {{0.0, 0.0}, {402.0, 874.0}}
+                    Other, 0x112d27980, {{0.0, 62.0}, {402.0, 778.0}}
+                      Other, 0x112d27480, {{0.0, 62.0}, {402.0, 132.0}}
+                      Other, 0x112d26a80, {{0.0, 62.0}, {402.0, 132.0}}
+                      Other, 0x112d26bc0, {{0.0, 62.0}, {402.0, 778.0}}
+                      StaticText, 0x112d26d00, {{154.0, 70.0}, {232.0, 116.0}}, label: '제03회 실전 모의고사'
+                        StaticText, 0x112d26e40, {{154.0, 70.0}, {232.0, 116.0}}, label: '제03회 실전 모의고사'
+                      Button, 0x112d26f80, {{16.0, 100.0}, {128.0, 56.0}}, identifier: 'leave-exam', label: '일시정지'
+                      Other, 0x112d270c0, {{0.0, 194.0}, {402.0, 176.0}}
+                      Other, 0x112d27200, {{0.0, 194.0}, {402.0, 176.0}}, identifier: 'screen-header'
+                      StaticText, 0x112d26080, {{16.0, 202.0}, {81.3, 112.0}}, label: '1 / 50'
+                        StaticText, 0x112d24a00, {{16.0, 202.0}, {81.3, 112.0}}, label: '1 / 50'
+                      StaticText, 0x112d26580, {{117.0, 202.0}, {269.0, 112.0}}, label: '학습 · 시간 제한 없음'
+                        StaticText, 0x112d27c00, {{117.0, 202.0}, {269.0, 112.0}}, label: '학습 · 시간 제한 없음'
+                      StaticText, 0x112d27d40, {{16.0, 322.0}, {370.0, 40.0}}, label: '1과목 · 응답 0 · 미응답 50 · 검토 0'
+                        StaticText, 0x112d27e80, {{16.0, 322.0}, {370.0, 40.0}}, label: '1과목 · 응답 0 · 미응답 50 · 검토 0'
+                      Other, 0x112d261c0, {{0.0, 370.0}, {402.0, 393.0}}
+                        ScrollView, 0x112d248c0, {{0.0, 370.0}, {402.0, 393.0}}
+                          Other, 0x10a659f40, {{0.0, 370.0}, {402.0, 3628.7}}
+                            Other, 0x10a659a40, {{0.0, 370.0}, {402.0, 3628.7}}
+                              Other, 0x10a659b80, {{16.0, 386.0}, {370.0, 836.7}}
+                              StaticText, 0x10a658000, {{32.0, 402.0}, {338.0, 71.7}}, label: '문제'
+                                StaticText, 0x10a659e00, {{32.0, 402.0}, {338.0, 71.7}}, label: '문제'
+                              StaticText, 0x10a65a800, {{32.0, 481.7}, {338.0, 725.0}}, label: '데이터 설계 검토 회의에서 다음 의견이 제시되었다. 옳은 의견만 모두 고른 것은?'
+                                StaticText, 0x10a65a6c0, {{32.0, 481.7}, {338.0, 725.0}}, label: '데이터 설계 검토 회의에서 다음 의견이 제시되었다. 옳은 의견만 모두 고른 것은?'
+                              StaticText, 0x10728b340, {{16.0, 1234.7}, {370.0, 71.7}}, label: '제시 자료'
+                                StaticText, 0x10728b480, {{16.0, 1234.7}, {370.0, 71.7}}, label: '제시 자료'
+                              StaticText, 0x10728af80, {{16.0, 1318.3}, {370.0, 1800.0}}, label: 'ㄱ. 본질식별자가 길거나 변동이 많으면 인조식별자를 검토할 이유가 될 수 있다.
+
+ㄴ. 본질식별자와 인조식별자 구분은 식별·비식별 관계 구분과 같은 기준이다.
+
+ㄷ. 모든 시스템에서 인조키는 본질키보다 무조건 우수하다.'
+                                StaticText, 0x10728b0c0, {{16.0, 1318.3}, {370.0, 1800.0}}, label: 'ㄱ. 본질식별자가 길거나 변동이 많으면 인조식별자를 검토할 이유가 될 수 있다.
+
+ㄴ. 본질식별자와 인조식별자 구분은 식별·비식별 관계 구분과 같은 기준이다.
+
+ㄷ. 모든 시스템에서 인조키는 본질키보다 무조건 우수하다.'
+                              StaticText, 0x10a0770c0, {{16.0, 3130.3}, {370.0, 143.0}}, label: '답을 하나 선택해 주세요.'
+                                StaticText, 0x10a075180, {{16.0, 3130.3}, {370.0, 143.0}}, label: '답을 하나 선택해 주세요.'
+                              Other, 0x10a074b40, {{16.0, 3285.3}, {370.0, 123.0}}, identifier: 'mock-option-1', label: '1. ㄱ · ㄷ', value: radio button, unch...
+                                Other, 0x10a076800, {{29.0, 3300.3}, {28.0, 59.7}}
+                              Other, 0x10a077700, {{16.0, 3420.3}, {370.0, 123.0}}, identifier: 'mock-option-2', label: '2. ㄱ · ㄴ · ㄷ', value: radio button, unch...
+                                Other, 0x10a074f00, {{29.0, 3435.3}, {30.3, 59.7}}
+                              Other, 0x10a075040, {{16.0, 3555.3}, {370.0, 123.0}}, identifier: 'mock-option-3', label: '3. ㄴ', value: radio button, unch...
+                              Other, 0x10a076d00, {{16.0, 3690.3}, {370.0, 123.0}}, identifier: 'mock-option-4', label: '4. ㄱ', value: radio button, unch...
+                                Other, 0x10a076440, {{29.0, 3705.3}, {32.3, 59.7}}
+                              Button, 0x10a076940, {{16.0, 3825.3}, {370.0, 75.7}}, identifier: 'flag-mock', label: '검토 표시'
+                              Button, 0x10a0761c0, {{16.0, 3907.0}, {370.0, 75.7}}, identifier: 'clear-mock-answer', label: '답안 지우기', Disabled
+                          Other, 0x10a075e00, {{369.0, 370.0}, {30.0, 393.0}}, label: 'Vertical scroll bar, 10 pages', value: 0%
+                            Other, 0x10a075f40, {{396.0, 373.0}, {3.0, 36.0}}
+                          Other, 0x10a075b80, {{0.0, 730.0}, {402.0, 30.0}}, label: 'Horizontal scroll bar, 1 page', value: 0%
+                            Other, 0x10a0748c0, {{3.0, 757.0}, {393.0, 3.0}}
+                          Other, 0x10a077340, {{369.0, 370.0}, {30.0, 393.0}}, label: 'Vertical scroll bar, 10 pages', value: 0%
+                            Other, 0x1131dc000, {{396.0, 373.0}, {3.0, 36.0}}
+                          Other, 0x1131dc140, {{0.0, 730.0}, {402.0, 30.0}}, label: 'Horizontal scroll bar, 1 page', value: 0%
+                            Other, 0x1131dc280, {{3.0, 757.0}, {393.0, 3.0}}
+                      Other, 0x1131dc3c0, {{0.0, 763.0}, {402.0, 77.0}}
+                      Other, 0x1131dc500, {{0.0, 764.0}, {402.0, 76.0}}, identifier: 'screen-footer'
+                      Button, 0x1131dc640, {{16.0, 774.0}, {76.0, 56.0}}, identifier: 'mock-previous', label: '이전', Disabled
+                      Button, 0x1131dc780, {{150.0, 774.0}, {102.0, 56.0}}, identifier: 'mock-sheet', label: '답안표'
+                      Button, 0x1131dc8c0, {{310.0, 774.0}, {76.0, 56.0}}, identifier: 'mock-next', label: '다음'
+Path to element:
+ →Application, 0x112d27340, pid: 53075, label: 'SQLD Pass'
+Query chain:
+ →Find: Application 'com.sqldpass.app.adsqa'
+  Output: {
+    Application, 0x1131dca00, pid: 53075, label: 'SQLD Pass'
+  }

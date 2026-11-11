@@ -1,0 +1,107 @@
+Attributes: Application, 0x11398c3c0, pid: 49073, label: 'SQLD Pass'
+Element subtree:
+ →Application, 0x11398c3c0, pid: 49073, label: 'SQLD Pass'
+    Window (Main), 0x11398c500, {{0.0, 0.0}, {1032.0, 1376.0}}
+      Other, 0x11398c640, {{0.0, 0.0}, {1032.0, 1376.0}}
+        Other, 0x11398c280, {{0.0, 0.0}, {1032.0, 1376.0}}
+          Other, 0x11398c140, {{0.0, 0.0}, {1032.0, 1376.0}}
+            Other, 0x11398c000, {{0.0, 0.0}, {1032.0, 1376.0}}
+              Other, 0x11398f0c0, {{0.0, 0.0}, {1032.0, 1376.0}}
+                Other, 0x11398f200, {{0.0, 0.0}, {1032.0, 1376.0}}
+                  Other, 0x11398f840, {{0.0, 0.0}, {1032.0, 1376.0}}
+                    Other, 0x11398c8c0, {{0.0, 32.0}, {1032.0, 1324.0}}
+                      Other, 0x11398ed00, {{0.0, 32.0}, {1032.0, 64.0}}
+                      Other, 0x11398c780, {{0.0, 32.0}, {1032.0, 64.0}}
+                      Other, 0x11398ee40, {{0.0, 32.0}, {1032.0, 1324.0}}
+                      Button, 0x11398f700, {{28.0, 40.0}, {76.0, 48.0}}, identifier: 'leave-exam', label: '일시정지'
+                      StaticText, 0x11398e940, {{114.0, 49.5}, {890.0, 29.0}}, label: '전체 답안표'
+                        StaticText, 0x11398fd40, {{114.0, 49.5}, {890.0, 29.0}}, label: '전체 답안표'
+                      Other, 0x11398cb40, {{0.0, 96.0}, {1032.0, 72.0}}
+                      Other, 0x11398cc80, {{156.0, 96.0}, {720.0, 72.0}}, identifier: 'screen-header'
+                      StaticText, 0x11398d2c0, {{184.0, 104.0}, {44.5, 28.0}}, label: '2 / 50'
+                        StaticText, 0x11398e580, {{184.0, 104.0}, {44.5, 28.0}}, label: '2 / 50'
+                      StaticText, 0x11398cf00, {{783.5, 104.0}, {64.5, 28.0}}, label: '01:29:51'
+                        StaticText, 0x11398f5c0, {{783.5, 104.0}, {64.5, 28.0}}, label: '01:29:51'
+                      StaticText, 0x11398fe80, {{184.0, 140.0}, {664.0, 20.0}}, label: '1과목 · 응답 2 · 미응답 48 · 검토 1'
+                        StaticText, 0x11398e800, {{184.0, 140.0}, {664.0, 20.0}}, label: '1과목 · 응답 2 · 미응답 48 · 검토 1'
+                      Other, 0x11398fc00, {{0.0, 168.0}, {1032.0, 1119.0}}
+                        ScrollView, 0x11398f980, {{0.0, 168.0}, {1032.0, 1119.0}}
+                          Other, 0x11398d040, {{0.0, 168.0}, {876.0, 484.0}}
+                            Other, 0x11398d180, {{156.0, 168.0}, {720.0, 484.0}}
+                              StaticText, 0x11398f480, {{184.0, 184.0}, {664.0, 20.0}}, label: '문항을 누르면 해당 문제로 이동합니다.'
+                                StaticText, 0x11398ebc0, {{184.0, 184.0}, {664.0, 20.0}}, label: '문항을 누르면 해당 문제로 이동합니다.'
+                              Button, 0x11398f340, {{184.0, 216.0}, {217.5, 48.0}}, identifier: 'sheet-filter-all', label: '전체'
+                              Button, 0x11398ca00, {{407.5, 216.0}, {217.0, 48.0}}, identifier: 'sheet-filter-unanswered', label: '미응답', Selected
+                              Button, 0x11398ef80, {{630.5, 216.0}, {217.5, 48.0}}, identifier: 'sheet-filter-flagged', label: '검토 표시'
+                              StaticText, 0x11398fac0, {{184.0, 276.0}, {664.0, 20.0}}, label: '○ 미응답 / ✓ 응답 / ★ 검토 · 48문항'
+                                StaticText, 0x11398cdc0, {{184.0, 276.0}, {664.0, 20.0}}, label: '○ 미응답 / ✓ 응답 / ★ 검토 · 48문항'
+                              Button, 0x11398ea80, {{184.0, 308.0}, {55.5, 56.0}}, identifier: 'mock-sheet-3', label: '3번, 미응답'
+                              Button, 0x11398e300, {{251.5, 308.0}, {55.5, 56.0}}, identifier: 'mock-sheet-4', label: '4번, 미응답'
+                              Button, 0x11398e440, {{319.0, 308.0}, {56.0, 56.0}}, identifier: 'mock-sheet-5', label: '5번, 미응답'
+                              Button, 0x11398e080, {{387.0, 308.0}, {55.5, 56.0}}, identifier: 'mock-sheet-6', label: '6번, 미응답'
+                              Button, 0x11398e1c0, {{454.5, 308.0}, {55.5, 56.0}}, identifier: 'mock-sheet-7', label: '7번, 미응답'
+                              Button, 0x11398de00, {{522.0, 308.0}, {55.5, 56.0}}, identifier: 'mock-sheet-8', label: '8번, 미응답'
+                              Button, 0x11398df40, {{589.5, 308.0}, {55.5, 56.0}}, identifier: 'mock-sheet-9', label: '9번, 미응답'
+                              Button, 0x11398dcc0, {{657.0, 308.0}, {56.0, 56.0}}, identifier: 'mock-sheet-10', label: '10번, 미응답'
+                              Button, 0x11398db80, {{725.0, 308.0}, {55.5, 56.0}}, identifier: 'mock-sheet-11', label: '11번, 미응답'
+                              Button, 0x11398d900, {{792.5, 308.0}, {55.5, 56.0}}, identifier: 'mock-sheet-12', label: '12번, 미응답'
+                              Button, 0x11398da40, {{184.0, 376.0}, {55.5, 56.0}}, identifier: 'mock-sheet-13', label: '13번, 미응답'
+                              Button, 0x11398d7c0, {{251.5, 376.0}, {55.5, 56.0}}, identifier: 'mock-sheet-14', label: '14번, 미응답'
+                              Button, 0x11398d680, {{319.0, 376.0}, {56.0, 56.0}}, identifier: 'mock-sheet-15', label: '15번, 미응답'
+                              Button, 0x11398d540, {{387.0, 376.0}, {55.5, 56.0}}, identifier: 'mock-sheet-16', label: '16번, 미응답'
+                              Button, 0x11398d400, {{454.5, 376.0}, {55.5, 56.0}}, identifier: 'mock-sheet-17', label: '17번, 미응답'
+                              Button, 0x1073edb80, {{522.0, 376.0}, {55.5, 56.0}}, identifier: 'mock-sheet-18', label: '18번, 미응답'
+                              Button, 0x1073edf40, {{589.5, 376.0}, {55.5, 56.0}}, identifier: 'mock-sheet-19', label: '19번, 미응답'
+                              Button, 0x1073ef700, {{657.0, 376.0}, {56.0, 56.0}}, identifier: 'mock-sheet-20', label: '20번, 미응답'
+                              Button, 0x1073ec500, {{725.0, 376.0}, {55.5, 56.0}}, identifier: 'mock-sheet-21', label: '21번, 미응답'
+                              Button, 0x1073efd40, {{792.5, 376.0}, {55.5, 56.0}}, identifier: 'mock-sheet-22', label: '22번, 미응답'
+                              Button, 0x1073ed180, {{184.0, 444.0}, {55.5, 56.0}}, identifier: 'mock-sheet-23', label: '23번, 미응답'
+                              Button, 0x1073eebc0, {{251.5, 444.0}, {55.5, 56.0}}, identifier: 'mock-sheet-24', label: '24번, 미응답'
+                              Button, 0x1073ed7c0, {{319.0, 444.0}, {56.0, 56.0}}, identifier: 'mock-sheet-25', label: '25번, 미응답'
+                              Button, 0x1073ef840, {{387.0, 444.0}, {55.5, 56.0}}, identifier: 'mock-sheet-26', label: '26번, 미응답'
+                              Button, 0x1073eed00, {{454.5, 444.0}, {55.5, 56.0}}, identifier: 'mock-sheet-27', label: '27번, 미응답'
+                              Button, 0x1073ee940, {{522.0, 444.0}, {55.5, 56.0}}, identifier: 'mock-sheet-28', label: '28번, 미응답'
+                              Button, 0x1073efc00, {{589.5, 444.0}, {55.5, 56.0}}, identifier: 'mock-sheet-29', label: '29번, 미응답'
+                              Button, 0x1073efe80, {{657.0, 444.0}, {56.0, 56.0}}, identifier: 'mock-sheet-30', label: '30번, 미응답'
+                              Button, 0x1073ef0c0, {{725.0, 444.0}, {55.5, 56.0}}, identifier: 'mock-sheet-31', label: '31번, 미응답'
+                              Button, 0x1073ee800, {{792.5, 444.0}, {55.5, 56.0}}, identifier: 'mock-sheet-32', label: '32번, 미응답'
+                              Button, 0x1073ef5c0, {{184.0, 512.0}, {55.5, 56.0}}, identifier: 'mock-sheet-33', label: '33번, 미응답'
+                              Button, 0x1073ee6c0, {{251.5, 512.0}, {55.5, 56.0}}, identifier: 'mock-sheet-34', label: '34번, 미응답'
+                              Button, 0x1073ec640, {{319.0, 512.0}, {56.0, 56.0}}, identifier: 'mock-sheet-35', label: '35번, 미응답'
+                              Button, 0x1073ee300, {{387.0, 512.0}, {55.5, 56.0}}, identifier: 'mock-sheet-36', label: '36번, 미응답'
+                              Button, 0x1073ef980, {{454.5, 512.0}, {55.5, 56.0}}, identifier: 'mock-sheet-37', label: '37번, 미응답'
+                              Button, 0x10aac4c80, {{522.0, 512.0}, {55.5, 56.0}}, identifier: 'mock-sheet-38', label: '38번, 미응답'
+                              Button, 0x10aac6a80, {{589.5, 512.0}, {55.5, 56.0}}, identifier: 'mock-sheet-39', label: '39번, 미응답'
+                              Button, 0x10aac5b80, {{657.0, 512.0}, {56.0, 56.0}}, identifier: 'mock-sheet-40', label: '40번, 미응답'
+                              Button, 0x10aac4f00, {{725.0, 512.0}, {55.5, 56.0}}, identifier: 'mock-sheet-41', label: '41번, 미응답'
+                              Button, 0x10aac57c0, {{792.5, 512.0}, {55.5, 56.0}}, identifier: 'mock-sheet-42', label: '42번, 미응답'
+                              Button, 0x10aac5180, {{184.0, 580.0}, {55.5, 56.0}}, identifier: 'mock-sheet-43', label: '43번, 미응답'
+                              Button, 0x10aac4b40, {{251.5, 580.0}, {55.5, 56.0}}, identifier: 'mock-sheet-44', label: '44번, 미응답'
+                              Button, 0x10aac7700, {{319.0, 580.0}, {56.0, 56.0}}, identifier: 'mock-sheet-45', label: '45번, 미응답'
+                              Button, 0x10aac5a40, {{387.0, 580.0}, {55.5, 56.0}}, identifier: 'mock-sheet-46', label: '46번, 미응답'
+                              Button, 0x10aac5900, {{454.5, 580.0}, {55.5, 56.0}}, identifier: 'mock-sheet-47', label: '47번, 미응답'
+                              Button, 0x10aac6580, {{522.0, 580.0}, {55.5, 56.0}}, identifier: 'mock-sheet-48', label: '48번, 미응답'
+                              Button, 0x10aac4dc0, {{589.5, 580.0}, {55.5, 56.0}}, identifier: 'mock-sheet-49', label: '49번, 미응답'
+                              Button, 0x10aac6e40, {{657.0, 580.0}, {56.0, 56.0}}, identifier: 'mock-sheet-50', label: '50번, 미응답'
+                          Other, 0x10aac6300, {{999.0, 168.0}, {30.0, 1119.0}}, label: 'Vertical scroll bar, 1 page', value: 0%
+                            Other, 0x10aac5f40, {{1026.0, 171.0}, {3.0, 754.0}}
+                          Other, 0x10aac4500, {{0.0, 1254.0}, {1032.0, 30.0}}, label: 'Horizontal scroll bar, 1 page', value: 0%
+                            Other, 0x10aac4640, {{3.0, 1281.0}, {1026.0, 3.0}}
+                          Other, 0x113989680, {{999.0, 168.0}, {30.0, 1119.0}}, label: 'Vertical scroll bar, 1 page', value: 0%
+                            Other, 0x113989a40, {{1026.0, 171.0}, {3.0, 754.0}}
+                          Other, 0x11398a580, {{0.0, 1254.0}, {1032.0, 30.0}}, label: 'Horizontal scroll bar, 1 page', value: 0%
+                            Other, 0x113989540, {{3.0, 1281.0}, {1026.0, 3.0}}
+                      Other, 0x1139892c0, {{0.0, 1287.0}, {1032.0, 69.0}}
+                      Other, 0x113989400, {{156.0, 1288.0}, {720.0, 68.0}}, identifier: 'screen-footer'
+                      Button, 0x11398a440, {{184.0, 1298.0}, {329.0, 48.0}}, identifier: 'back-to-mock', label: '문제로 돌아가기'
+                      Button, 0x113989e00, {{519.0, 1298.0}, {329.0, 48.0}}, identifier: 'submit-mock', label: '최종 제출'
+    Window, 0x11398a300, {{0.0, 0.0}, {1032.0, 1376.0}}
+      Other, 0x113989cc0, {{0.0, 0.0}, {1032.0, 1376.0}}
+        Other, 0x113989900, {{0.0, 0.0}, {1032.0, 1376.0}}
+Path to element:
+ →Application, 0x11398c3c0, pid: 49073, label: 'SQLD Pass'
+Query chain:
+ →Find: Application 'com.sqldpass.app.adsqa'
+  Output: {
+    Application, 0x113989f40, pid: 49073, label: 'SQLD Pass'
+  }

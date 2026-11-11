@@ -1,0 +1,21 @@
+{
+  "environment": "iPhone 17 iOS simulator, isolated adsqa app",
+  "upgrade": "0.3.2(12) -> 0.3.3(13)",
+  "preserved": {
+    "contentVersion": true,
+    "settings": true,
+    "readLessons": true,
+    "bookmarks": true,
+    "responses": true,
+    "reviews": true,
+    "practice": true,
+    "exams": true,
+    "practiceResults": true,
+    "monetization": true,
+    "reading": true,
+    "mockStudy": true
+  },
+  "immutableSnapshotsPreserved": true,
+  "examCount": 1,
+  "responseCount": 5
+}

@@ -1,0 +1,119 @@
+Attributes: Application, 0x10aac6e40, pid: 50272, label: 'SQLD Pass'
+Element subtree:
+ →Application, 0x10aac6e40, pid: 50272, label: 'SQLD Pass'
+    Window (Main), 0x10aac4dc0, {{0.0, 0.0}, {1032.0, 1376.0}}
+      Other, 0x10aac6a80, {{0.0, 0.0}, {1032.0, 1376.0}}
+        Other, 0x10aac4f00, {{0.0, 0.0}, {1032.0, 1376.0}}
+          Other, 0x10aac4b40, {{0.0, 0.0}, {1032.0, 1376.0}}
+            Other, 0x10aac6580, {{0.0, 0.0}, {1032.0, 1376.0}}
+              Other, 0x10aac4640, {{0.0, 0.0}, {1032.0, 1376.0}}
+                Other, 0x10aac6300, {{0.0, 0.0}, {1032.0, 1376.0}}
+                  Other, 0x10aac4500, {{0.0, 0.0}, {1032.0, 1376.0}}
+                    Other, 0x10aac5180, {{0.0, 32.0}, {1032.0, 1324.0}}
+                      Other, 0x10aac7700, {{0.0, 32.0}, {1032.0, 64.0}}
+                      Other, 0x10aac5900, {{0.0, 32.0}, {1032.0, 64.0}}
+                      Other, 0x10aac5a40, {{0.0, 32.0}, {1032.0, 1324.0}}
+                      Button, 0x10aac5f40, {{28.0, 40.0}, {48.0, 48.0}}, label: '뒤로'
+                      StaticText, 0x10aac57c0, {{86.0, 49.5}, {860.0, 29.0}}, label: '문항 해설'
+                        StaticText, 0x10aac5b80, {{86.0, 49.5}, {860.0, 29.0}}, label: '문항 해설'
+                      Button, 0x113115540, {{956.0, 40.0}, {48.0, 48.0}}, label: '설정'
+                      Other, 0x113115900, {{0.0, 96.0}, {1032.0, 64.0}}
+                      Other, 0x1131157c0, {{156.0, 96.0}, {720.0, 64.0}}, identifier: 'screen-header'
+                      Button, 0x113115680, {{184.0, 104.0}, {217.5, 48.0}}, identifier: 'mock-result-all', label: '전체'
+                      Button, 0x113115400, {{407.5, 104.0}, {217.0, 48.0}}, identifier: 'mock-result-wrong', label: '오답·미응답', Selected
+                      Button, 0x1131175c0, {{630.5, 104.0}, {217.5, 48.0}}, identifier: 'mock-result-flagged', label: '검토'
+                      Other, 0x113117700, {{0.0, 160.0}, {1032.0, 1047.0}}
+                        ScrollView, 0x113117ac0, {{0.0, 160.0}, {1032.0, 1047.0}}
+                          Other, 0x113116e40, {{0.0, 160.0}, {876.0, 1625.0}}
+                            Other, 0x113114dc0, {{156.0, 160.0}, {720.0, 1625.0}}
+                              Button, 0x113117e80, {{184.0, 176.0}, {664.0, 48.0}}, identifier: 'result-summary', label: '결과 요약'
+                              StaticText, 0x113117980, {{184.0, 236.0}, {664.0, 20.0}}, label: '문항 2 · 1/49'
+                                StaticText, 0x113115f40, {{184.0, 236.0}, {664.0, 20.0}}, label: '문항 2 · 1/49'
+                              Other, 0x113114a00, {{184.0, 268.0}, {664.0, 89.0}}
+                              StaticText, 0x113117200, {{200.0, 284.0}, {632.0, 20.0}}, label: '문제'
+                                StaticText, 0x113115e00, {{200.0, 284.0}, {632.0, 20.0}}, label: '문제'
+                              StaticText, 0x113117340, {{200.0, 312.0}, {632.0, 29.0}}, label: '데이터 설계 검토 회의에서 다음 의견이 제시되었다. 옳은 의견만 모두 고른 것은?'
+                                StaticText, 0x113117c00, {{200.0, 312.0}, {632.0, 29.0}}, label: '데이터 설계 검토 회의에서 다음 의견이 제시되었다. 옳은 의견만 모두 고른 것은?'
+                              StaticText, 0x113116580, {{184.0, 381.0}, {664.0, 28.0}}, label: '오답입니다'
+                                StaticText, 0x113117d40, {{184.0, 381.0}, {664.0, 28.0}}, label: '오답입니다'
+                              StaticText, 0x113114b40, {{184.0, 417.0}, {664.0, 28.0}}, label: '내 답: 2번 · 정답: 1번'
+                                StaticText, 0x1131170c0, {{184.0, 417.0}, {664.0, 28.0}}, label: '내 답: 2번 · 정답: 1번'
+                              StaticText, 0x113116d00, {{184.0, 469.0}, {664.0, 140.0}}, label: 'ㄱ. 부모 기본키와 자식 외래키로 조인하면 부모 한 행이 여러 자식에 반복될 수 있다.
+
+ㄴ. 자식 외래키가 NULL인 행은 일반 등호 INNER JOIN에서 부모 NULL과 자동 연결된다.
+
+ㄷ. 부모의 일반 속성으로 연결하면 같은 값의 부모가 여러 개일 수 있는지 확인해야 한다.'
+                                StaticText, 0x113116f80, {{184.0, 469.0}, {664.0, 140.0}}, label: 'ㄱ. 부모 기본키와 자식 외래키로 조인하면 부모 한 행이 여러 자식에 반복될 수 있다.
+
+ㄴ. 자식 외래키가 NULL인 행은 일반 등호 INNER JOIN에서 부모 NULL과 자동 연결된다.
+
+ㄷ. 부모의 일반 속성으로 연결하면 같은 값의 부모가 여러 개일 수 있는지 확인해야 한다.'
+                              Other, 0x113116bc0, {{184.0, 621.0}, {664.0, 60.0}}, identifier: 'explanation-option-1', label: '1. ㄱ · ㄷ · 정답', value: radio button, unch..., Disabled
+                              Other, 0x113116a80, {{184.0, 693.0}, {664.0, 60.0}}, identifier: 'explanation-option-2', label: '2. ㄴ · ㄷ · 내 답', value: radio button, chec..., Selected, Disabled
+                              Other, 0x1131148c0, {{184.0, 765.0}, {664.0, 58.0}}, identifier: 'explanation-option-3', label: '3. ㄱ · ㄴ', value: radio button, unch..., Disabled
+                              Other, 0x113115cc0, {{184.0, 835.0}, {664.0, 58.0}}, identifier: 'explanation-option-4', label: '4. ㄱ · ㄴ · ㄷ', value: radio button, unch..., Disabled
+                              StaticText, 0x113117840, {{184.0, 905.0}, {664.0, 28.0}}, label: '정답 1번'
+                                StaticText, 0x113116800, {{184.0, 905.0}, {664.0, 28.0}}, label: '정답 1번'
+                              StaticText, 0x113114500, {{184.0, 945.0}, {664.0, 84.0}}, label: 'ㄱ. 옳음 — 1:N 관계에서는 부모 값이 자식의 일치 건수만큼 나타납니다.
+ㄴ. 틀림 — NULL과 NULL의 등호 비교는 TRUE가 아닙니다.
+ㄷ. 옳음 — 유일하지 않은 속성의 조인은 의도하지 않은 행 증가를 일으킬 수 있습니다.'
+                                StaticText, 0x113116940, {{184.0, 945.0}, {664.0, 84.0}}, label: 'ㄱ. 옳음 — 1:N 관계에서는 부모 값이 자식의 일치 건수만큼 나타납니다.
+ㄴ. 틀림 — NULL과 NULL의 등호 비교는 TRUE가 아닙니다.
+ㄷ. 옳음 — 유일하지 않은 속성의 조인은 의도하지 않은 행 증가를 일으킬 수 있습니다.'
+                              StaticText, 0x113114780, {{184.0, 1041.0}, {664.0, 28.0}}, label: '보기별 판단 근거'
+                                StaticText, 0x113114640, {{184.0, 1041.0}, {664.0, 28.0}}, label: '보기별 판단 근거'
+                              StaticText, 0x113115040, {{184.0, 1089.0}, {664.0, 20.0}}, label: '1번 · 정답'
+                                StaticText, 0x113114c80, {{184.0, 1089.0}, {664.0, 20.0}}, label: '1번 · 정답'
+                              StaticText, 0x113114f00, {{184.0, 1115.0}, {664.0, 84.0}}, label: 'ㄱ. 옳음 — 1:N 관계에서는 부모 값이 자식의 일치 건수만큼 나타납니다.
+ㄴ. 틀림 — NULL과 NULL의 등호 비교는 TRUE가 아닙니다.
+ㄷ. 옳음 — 유일하지 않은 속성의 조인은 의도하지 않은 행 증가를 일으킬 수 있습니다.'
+                                StaticText, 0x1131143c0, {{184.0, 1115.0}, {664.0, 84.0}}, label: 'ㄱ. 옳음 — 1:N 관계에서는 부모 값이 자식의 일치 건수만큼 나타납니다.
+ㄴ. 틀림 — NULL과 NULL의 등호 비교는 TRUE가 아닙니다.
+ㄷ. 옳음 — 유일하지 않은 속성의 조인은 의도하지 않은 행 증가를 일으킬 수 있습니다.'
+                              StaticText, 0x1131152c0, {{184.0, 1227.0}, {664.0, 20.0}}, label: '2번 · 오답'
+                                StaticText, 0x1131161c0, {{184.0, 1227.0}, {664.0, 20.0}}, label: '2번 · 오답'
+                              StaticText, 0x113114280, {{184.0, 1253.0}, {664.0, 56.0}}, label: 'ㄴ은 틀립니다: NULL과 NULL의 등호 비교는 TRUE가 아닙니다. ㄱ도 옳습니다: 1:N 관계에서는 부모 값이 자식의 일치 건수만큼 나타납니다.'
+                                StaticText, 0x113114140, {{184.0, 1253.0}, {664.0, 56.0}}, label: 'ㄴ은 틀립니다: NULL과 NULL의 등호 비교는 TRUE가 아닙니다. ㄱ도 옳습니다: 1:N 관계에서는 부모 값이 자식의 일치 건수만큼 나타납니다.'
+                              StaticText, 0x113115180, {{184.0, 1337.0}, {664.0, 20.0}}, label: '3번 · 오답'
+                                StaticText, 0x113116440, {{184.0, 1337.0}, {664.0, 20.0}}, label: '3번 · 오답'
+                              StaticText, 0x113114000, {{184.0, 1363.0}, {664.0, 56.0}}, label: 'ㄴ은 틀립니다: NULL과 NULL의 등호 비교는 TRUE가 아닙니다. ㄷ도 옳습니다: 유일하지 않은 속성의 조인은 의도하지 않은 행 증가를 일으킬 수 있습니다.'
+                                StaticText, 0x1131166c0, {{184.0, 1363.0}, {664.0, 56.0}}, label: 'ㄴ은 틀립니다: NULL과 NULL의 등호 비교는 TRUE가 아닙니다. ㄷ도 옳습니다: 유일하지 않은 속성의 조인은 의도하지 않은 행 증가를 일으킬 수 있습니다.'
+                              StaticText, 0x113116300, {{184.0, 1447.0}, {664.0, 20.0}}, label: '4번 · 오답'
+                                StaticText, 0x113115b80, {{184.0, 1447.0}, {664.0, 20.0}}, label: '4번 · 오답'
+                              StaticText, 0x113115a40, {{184.0, 1473.0}, {664.0, 28.0}}, label: 'ㄴ은 틀립니다: NULL과 NULL의 등호 비교는 TRUE가 아닙니다.'
+                                StaticText, 0x1073ef980, {{184.0, 1473.0}, {664.0, 28.0}}, label: 'ㄴ은 틀립니다: NULL과 NULL의 등호 비교는 TRUE가 아닙니다.'
+                              Button, 0x1073edb80, {{184.0, 1521.0}, {664.0, 68.0}}, identifier: 'mock-theory', label: '관련 교재 읽기
+관계와 JOIN: 연결한 만큼 행이 생긴다'
+                              Button, 0x1073edf40, {{184.0, 1601.0}, {664.0, 48.0}}, identifier: 'save-mock-question', label: '문항 저장'
+                              Button, 0x1073ee800, {{184.0, 1661.0}, {664.0, 48.0}}, identifier: 'toggle-mock-note', label: '오답 메모'
+                              Button, 0x1073ef0c0, {{184.0, 1721.0}, {664.0, 48.0}}, identifier: 'mock-evidence', label: '근거 자료·검산 방식'
+                          Other, 0x1073ef840, {{999.0, 160.0}, {30.0, 1047.0}}, label: 'Vertical scroll bar, 2 pages', value: 0%
+                            Other, 0x1073efe80, {{1026.0, 829.0}, {3.0, 508.0}}
+                          Other, 0x1073ec500, {{0.0, 1174.0}, {1032.0, 30.0}}, label: 'Horizontal scroll bar, 1 page', value: 0%
+                            Other, 0x1073eebc0, {{159.0, 1201.0}, {870.0, 3.0}}
+                          Other, 0x1073ee6c0, {{999.0, 160.0}, {30.0, 1047.0}}, label: 'Vertical scroll bar, 2 pages', value: 0%
+                            Other, 0x1073ec640, {{1026.0, 829.0}, {3.0, 508.0}}
+                          Other, 0x1073efd40, {{0.0, 1174.0}, {1032.0, 30.0}}, label: 'Horizontal scroll bar, 1 page', value: 0%
+                            Other, 0x1073eed00, {{159.0, 1201.0}, {870.0, 3.0}}
+                      Other, 0x1073ed7c0, {{0.0, 1207.0}, {1032.0, 69.0}}
+                      Other, 0x1073efc00, {{156.0, 1208.0}, {720.0, 68.0}}, identifier: 'screen-footer'
+                      Button, 0x1073ef5c0, {{184.0, 1218.0}, {50.0, 48.0}}, identifier: 'mock-review-previous', label: '이전', Disabled
+                      Button, 0x1073ef700, {{476.0, 1218.0}, {80.0, 48.0}}, identifier: 'review-picker', label: '문항 선택'
+                      Button, 0x1073ed180, {{798.0, 1218.0}, {50.0, 48.0}}, identifier: 'mock-review-next', label: '다음'
+                      Other, 0x1073ee300, {{0.0, 1276.0}, {1032.0, 80.0}}
+                      Other, 0x1073ee940, {{96.0, 1277.0}, {840.0, 79.0}}
+                      Other, 0x11398a1c0, {{124.0, 1285.0}, {157.0, 63.0}}, identifier: 'tab-today', label: '홈'
+                      Other, 0x11398a080, {{281.0, 1285.0}, {156.5, 63.0}}, identifier: 'tab-learn', label: '교재'
+                      Other, 0x113989e00, {{437.5, 1285.0}, {157.0, 63.0}}, identifier: 'tab-review', label: '문제'
+                      Other, 0x113989900, {{594.5, 1285.0}, {156.5, 63.0}}, identifier: 'tab-exams', label: '실전', Selected
+                      Other, 0x11398a440, {{751.0, 1285.0}, {157.0, 63.0}}, identifier: 'tab-records', label: '기록'
+    Window, 0x11398bac0, {{0.0, 0.0}, {1032.0, 1376.0}}
+      Other, 0x1139897c0, {{0.0, 0.0}, {1032.0, 1376.0}}
+        Other, 0x113989540, {{0.0, 0.0}, {1032.0, 1376.0}}
+Path to element:
+ →Application, 0x10aac6e40, pid: 50272, label: 'SQLD Pass'
+Query chain:
+ →Find: Application 'com.sqldpass.app.adsqa'
+  Output: {
+    Application, 0x11398bc00, pid: 50272, label: 'SQLD Pass'
+  }
