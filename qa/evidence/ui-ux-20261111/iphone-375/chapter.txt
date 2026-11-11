@@ -1,0 +1,96 @@
+Attributes: Application, 0x10ec788c0, pid: 51420, label: 'SQLD Pass'
+Element subtree:
+ →Application, 0x10ec788c0, pid: 51420, label: 'SQLD Pass'
+    Window (Main), 0x10ec78780, {{0.0, 0.0}, {375.0, 667.0}}
+      Other, 0x10ec78640, {{0.0, 0.0}, {375.0, 667.0}}
+        Other, 0x10ec78500, {{0.0, 0.0}, {375.0, 667.0}}
+          Other, 0x10ec783c0, {{0.0, 0.0}, {375.0, 667.0}}
+            Other, 0x10ec78280, {{0.0, 0.0}, {375.0, 667.0}}
+              Other, 0x10ec78140, {{0.0, 0.0}, {375.0, 667.0}}
+                Other, 0x10ec78000, {{0.0, 0.0}, {375.0, 667.0}}
+                  Other, 0x10ec7be80, {{0.0, 0.0}, {375.0, 667.0}}
+                    Other, 0x10ec7bd40, {{0.0, 20.0}, {375.0, 647.0}}
+                      Other, 0x10ec7bc00, {{0.0, 20.0}, {375.0, 64.0}}
+                      Other, 0x10ec7bac0, {{0.0, 20.0}, {375.0, 64.0}}
+                      Other, 0x10ec7b980, {{0.0, 20.0}, {375.0, 647.0}}
+                      Button, 0x10ec7b840, {{16.0, 28.0}, {48.0, 48.0}}, label: '뒤로'
+                      Button, 0x10ec7b5c0, {{311.0, 28.0}, {48.0, 48.0}}, label: '설정'
+                      StaticText, 0x10ec7b700, {{74.0, 37.5}, {227.0, 29.0}}, label: '장별 목차'
+                        StaticText, 0x10ec7b480, {{74.0, 37.5}, {227.0, 29.0}}, label: '장별 목차'
+                      Other, 0x10ec7b340, {{0.0, 84.0}, {375.0, 503.0}}
+                        ScrollView, 0x10ec7b200, {{0.0, 84.0}, {375.0, 503.0}}
+                          Other, 0x10ec7b0c0, {{0.0, 84.0}, {375.0, 1066.0}}
+                            Other, 0x10ec7af80, {{0.0, 84.0}, {375.0, 1066.0}}
+                              StaticText, 0x10ec7ae40, {{16.0, 100.0}, {343.0, 20.0}}, label: 'CHAPTER 1'
+                                StaticText, 0x10ec7aa80, {{16.0, 100.0}, {343.0, 20.0}}, label: 'CHAPTER 1'
+                              StaticText, 0x10ec78a00, {{16.0, 132.0}, {343.0, 28.0}}, label: '데이터베이스, 표에서 출발하기'
+                                StaticText, 0x10ec78b40, {{16.0, 132.0}, {343.0, 28.0}}, label: '데이터베이스, 표에서 출발하기'
+                              StaticText, 0x10ec78c80, {{16.0, 172.0}, {343.0, 56.0}}, label: '엑셀 같은 표를 읽는 감각으로 SQL의 언어를 익힙니다.'
+                                StaticText, 0x10ec78dc0, {{16.0, 172.0}, {343.0, 56.0}}, label: '엑셀 같은 표를 읽는 감각으로 SQL의 언어를 익힙니다.'
+                              Button, 0x10ec78f00, {{16.0, 240.0}, {343.0, 48.0}}, label: '학습 목표'
+                              Button, 0x10ec79040, {{16.0, 300.0}, {343.0, 68.0}}, identifier: 'section-TB20261109:c1-s1', label: '데이터베이스와 DBMS는 다르다
+학습 전'
+                              Button, 0x10ec79180, {{16.0, 380.0}, {343.0, 68.0}}, identifier: 'section-TB20261109:c1-s2', label: '테이블·행·열·값을 정확히 읽기
+학습 전'
+                                Other, 0x10ec792c0, {{331.0, 404.5}, {18.0, 18.0}}
+                                  Other, 0x10ec79400, {{331.0, 404.5}, {18.0, 18.0}}
+                                    Other, 0x10ec79540, {{337.0, 408.2}, {6.0, 10.5}}
+                                      Other, 0x10ec79e00, {{337.0, 408.2}, {6.0, 10.5}}
+                              Button, 0x10ec79f40, {{16.0, 460.0}, {343.0, 68.0}}, identifier: 'section-TB20261109:c1-s3', label: '데이터 타입과 도메인
+학습 전'
+                                Other, 0x10ec7a080, {{331.0, 484.5}, {18.0, 18.0}}
+                                  Other, 0x10ec7a1c0, {{331.0, 484.5}, {18.0, 18.0}}
+                                    Other, 0x10ec7abc0, {{337.0, 488.2}, {6.0, 10.5}}
+                                      Other, 0x10ec7a940, {{337.0, 488.2}, {6.0, 10.5}}
+                              Button, 0x10ec7a800, {{16.0, 540.0}, {343.0, 68.0}}, identifier: 'section-TB20261109:c1-s4', label: 'NULL은 0도, 빈칸 문자도 아니다
+학습 전'
+                                Other, 0x10ec7a580, {{331.0, 564.5}, {18.0, 18.0}}
+                                  Other, 0x10ec7a6c0, {{331.0, 564.5}, {18.0, 18.0}}
+                                    Other, 0x10ec7a300, {{337.0, 568.2}, {6.0, 10.5}}
+                                      Other, 0x10ec7a440, {{337.0, 568.2}, {6.0, 10.5}}
+                              Button, 0x10ec79b80, {{16.0, 620.0}, {343.0, 68.0}}, identifier: 'section-TB20261109:c1-s5', label: '첫 SELECT를 한국어로 읽기
+✓ 읽음 완료'
+                                Other, 0x10ec79cc0, {{331.0, 644.5}, {18.0, 18.0}}
+                                  Other, 0x10ec79a40, {{331.0, 644.5}, {18.0, 18.0}}
+                                    Other, 0x10ec79900, {{337.0, 648.2}, {6.0, 10.5}}
+                                      Other, 0x10ec797c0, {{337.0, 648.2}, {6.0, 10.5}}
+                              Button, 0x10ec79680, {{16.0, 700.0}, {343.0, 68.0}}, identifier: 'section-TB20261109:c1-s6', label: '앞으로 사용할 서점 모델 미리 보기
+학습 전'
+                                Other, 0x1061aa080, {{331.0, 724.5}, {18.0, 18.0}}
+                                  Other, 0x1061aaf80, {{331.0, 724.5}, {18.0, 18.0}}
+                                    Other, 0x1061a9a40, {{337.0, 728.2}, {6.0, 10.5}}
+                                      Other, 0x1061ab340, {{337.0, 728.2}, {6.0, 10.5}}
+                              Other, 0x1061ab0c0, {{16.0, 780.0}, {343.0, 294.0}}
+                              StaticText, 0x1061ab5c0, {{31.0, 795.0}, {313.0, 28.0}}, label: '마무리 점검'
+                                StaticText, 0x1061ab700, {{31.0, 795.0}, {313.0, 28.0}}, label: '마무리 점검'
+                              StaticText, 0x1061aa1c0, {{31.0, 833.0}, {313.0, 56.0}}, label: 'DB / DBMS / SQL의 역할을 한 문장씩 말할 수 있다.'
+                                StaticText, 0x1061aa800, {{31.0, 833.0}, {313.0, 56.0}}, label: 'DB / DBMS / SQL의 역할을 한 문장씩 말할 수 있다.'
+                              StaticText, 0x1061aa6c0, {{31.0, 899.0}, {313.0, 56.0}}, label: '표에서 엔터티·인스턴스·속성·속성값을 구분한다.'
+                                StaticText, 0x1061ab480, {{31.0, 899.0}, {313.0, 56.0}}, label: '표에서 엔터티·인스턴스·속성·속성값을 구분한다.'
+                              StaticText, 0x1061a9900, {{31.0, 965.0}, {313.0, 28.0}}, label: '숫자 0·문자 공백·NULL을 구분한다.'
+                                StaticText, 0x1061a88c0, {{31.0, 965.0}, {313.0, 28.0}}, label: '숫자 0·문자 공백·NULL을 구분한다.'
+                              StaticText, 0x1061a8500, {{31.0, 1003.0}, {313.0, 56.0}}, label: '간단한 SELECT의 행과 열을 직접 그릴 수 있다.'
+                                StaticText, 0x1061a83c0, {{31.0, 1003.0}, {313.0, 56.0}}, label: '간단한 SELECT의 행과 열을 직접 그릴 수 있다.'
+                              Button, 0x1061a8640, {{16.0, 1086.0}, {343.0, 48.0}}, label: '이 장의 확인 문제'
+                          Other, 0x1061a8140, {{342.0, 84.0}, {30.0, 503.0}}, label: 'Vertical scroll bar, 3 pages', value: 0%
+                            Other, 0x1061a8280, {{369.0, 87.0}, {3.0, 208.0}}
+                          Other, 0x1061a8000, {{0.0, 554.0}, {375.0, 30.0}}, label: 'Horizontal scroll bar, 1 page', value: 0%
+                            Other, 0x1061aa440, {{3.0, 581.0}, {366.0, 3.0}}
+                          Other, 0x1061aa940, {{342.0, 84.0}, {30.0, 503.0}}, label: 'Vertical scroll bar, 3 pages', value: 0%
+                            Other, 0x1061aa300, {{369.0, 87.0}, {3.0, 208.0}}
+                          Other, 0x1061a97c0, {{0.0, 554.0}, {375.0, 30.0}}, label: 'Horizontal scroll bar, 1 page', value: 0%
+                            Other, 0x1061abc00, {{3.0, 581.0}, {366.0, 3.0}}
+                      Other, 0x1061abac0, {{0.0, 587.0}, {375.0, 80.0}}
+                      Other, 0x1061ab980, {{0.0, 588.0}, {375.0, 79.0}}
+                      Other, 0x1061ab840, {{16.0, 596.0}, {68.5, 63.0}}, identifier: 'tab-today', label: '홈'
+                      Other, 0x1061aabc0, {{84.5, 596.0}, {68.5, 63.0}}, identifier: 'tab-learn', label: '교재', Selected
+                      Other, 0x1061aad00, {{153.0, 596.0}, {69.0, 63.0}}, identifier: 'tab-review', label: '문제'
+                      Other, 0x1061aaa80, {{222.0, 596.0}, {68.5, 63.0}}, identifier: 'tab-exams', label: '실전'
+                      Other, 0x1061abe80, {{290.5, 596.0}, {68.5, 63.0}}, identifier: 'tab-records', label: '기록'
+Path to element:
+ →Application, 0x10ec788c0, pid: 51420, label: 'SQLD Pass'
+Query chain:
+ →Find: Application 'com.sqldpass.app.adsqa'
+  Output: {
+    Application, 0x1061abd40, pid: 51420, label: 'SQLD Pass'
+  }

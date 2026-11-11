@@ -1,0 +1,22 @@
+{
+  "light": {
+    "ink/bg": 15.3,
+    "ink/surface": 16.27,
+    "muted/bg": 4.62,
+    "muted/surface": 4.92,
+    "blue/blueSoft": 5.53,
+    "greenText/greenSoft": 5.83,
+    "redText/redSoft": 5.93,
+    "orangeText/orangeSoft": 5.85
+  },
+  "dark": {
+    "ink/bg": 14.85,
+    "ink/surface": 13.41,
+    "muted/bg": 7.4,
+    "muted/surface": 6.68,
+    "blue/blueSoft": 5.18,
+    "greenText/greenSoft": 6.76,
+    "redText/redSoft": 6.28,
+    "orangeText/orangeSoft": 7.4
+  }
+}

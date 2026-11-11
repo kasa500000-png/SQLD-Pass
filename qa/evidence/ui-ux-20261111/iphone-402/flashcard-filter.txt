@@ -1,0 +1,61 @@
+Attributes: Application, 0x10a2d43c0, pid: 52119, label: 'SQLD Pass'
+Element subtree:
+ →Application, 0x10a2d43c0, pid: 52119, label: 'SQLD Pass'
+    Window (Main), 0x10a2d4280, {{0.0, 0.0}, {402.0, 874.0}}
+      Other, 0x10a2d4140, {{0.0, 0.0}, {402.0, 874.0}}
+        Other, 0x10a2d4000, {{0.0, 0.0}, {402.0, 874.0}}
+          Other, 0x10a2d4dc0, {{0.0, 0.0}, {402.0, 874.0}}
+            Other, 0x10a2d4f00, {{0.0, 0.0}, {402.0, 874.0}}
+              Other, 0x10a2d7ac0, {{0.0, 0.0}, {402.0, 874.0}}
+                Other, 0x10a2d6bc0, {{0.0, 0.0}, {402.0, 874.0}}
+                  Other, 0x10a2d4500, {{0.0, 0.0}, {402.0, 874.0}}
+                    Other, 0x10a2d4640, {{0.0, 62.0}, {402.0, 778.0}}
+                      Other, 0x10a2d4780, {{0.0, 62.0}, {402.0, 64.0}}
+                      Other, 0x10a2d48c0, {{0.0, 62.0}, {402.0, 64.0}}
+                      Other, 0x10a2d4a00, {{0.0, 62.0}, {402.0, 778.0}}
+                      Button, 0x10a2d4b40, {{16.0, 70.0}, {48.0, 48.0}}, label: '뒤로'
+                      Button, 0x10a2d4c80, {{338.0, 70.0}, {48.0, 48.0}}, label: '설정'
+                      StaticText, 0x10a2d5b80, {{74.0, 79.3}, {254.0, 29.0}}, label: '핵심 카드'
+                        StaticText, 0x10a2d75c0, {{74.0, 79.3}, {254.0, 29.0}}, label: '핵심 카드'
+                      Other, 0x10a2d5040, {{0.0, 126.0}, {402.0, 565.3}}
+                        ScrollView, 0x10a2d5cc0, {{0.0, 126.0}, {402.0, 565.3}}
+                          Other, 0x10a2d7d40, {{0.0, 126.0}, {402.0, 450.0}}
+                            Other, 0x10a2d7c00, {{0.0, 126.0}, {402.0, 450.0}}
+                              Button, 0x10a2d5e00, {{16.0, 142.0}, {182.0, 48.0}}, identifier: 'cards-all', label: '전체 카드'
+                              Button, 0x10a2d6d00, {{204.0, 142.0}, {182.0, 48.0}}, identifier: 'cards-unknown', label: '아직 모르는 카드', Selected
+                              StaticText, 0x10a2d7980, {{16.0, 202.0}, {370.0, 20.0}}, label: '1 / 38 · 알고 있는 카드 0개'
+                                StaticText, 0x10a2d7840, {{16.0, 202.0}, {370.0, 20.0}}, label: '1 / 38 · 알고 있는 카드 0개'
+                              Other, 0x10a2d5a40, {{16.0, 234.0}, {370.0, 326.0}}
+                              StaticText, 0x10a2d7700, {{31.0, 249.0}, {340.0, 28.0}}, label: '모델링의 세 단계는?'
+                                StaticText, 0x10a2d7340, {{31.0, 249.0}, {340.0, 28.0}}, label: '모델링의 세 단계는?'
+                              Button, 0x10a2d7480, {{31.0, 287.0}, {340.0, 48.0}}, identifier: 'flip-card', label: '답 접기'
+                              StaticText, 0x10a2d70c0, {{31.0, 345.0}, {340.0, 84.0}}, label: '개념적→논리적→물리적. 업무 대상·관계에서 식별자·정규화, 마지막으로 DBMS 구현으로 구체화합니다.'
+                                StaticText, 0x10a2d7200, {{31.0, 345.0}, {340.0, 84.0}}, label: '개념적→논리적→물리적. 업무 대상·관계에서 식별자·정규화, 마지막으로 DBMS 구현으로 구체화합니다.'
+                              Button, 0x10a2d6e40, {{31.0, 439.0}, {340.0, 48.0}}, label: '관련 개념'
+                              Button, 0x10a2d6f80, {{31.0, 497.0}, {340.0, 48.0}}, identifier: 'known-card', label: '알고 있는 카드로 표시'
+                          Other, 0x10a2d6940, {{369.0, 126.0}, {30.0, 565.3}}, label: 'Vertical scroll bar, 1 page', value: 0%
+                            Other, 0x10a2d6a80, {{396.0, 129.0}, {3.0, 549.0}}
+                          Other, 0x10a2d6800, {{0.0, 658.3}, {402.0, 30.0}}, label: 'Horizontal scroll bar, 1 page', value: 0%
+                            Other, 0x10a2d6580, {{65.0, 685.3}, {272.0, 3.0}}
+                          Other, 0x10a2d66c0, {{369.0, 126.0}, {30.0, 565.3}}, label: 'Vertical scroll bar, 1 page', value: 0%
+                            Other, 0x10a2d6440, {{396.0, 129.0}, {3.0, 549.0}}
+                          Other, 0x10a2d61c0, {{0.0, 658.3}, {402.0, 30.0}}, label: 'Horizontal scroll bar, 1 page', value: 0%
+                            Other, 0x10a2d6300, {{65.0, 685.3}, {272.0, 3.0}}
+                      Other, 0x10a2d6080, {{0.0, 691.3}, {402.0, 69.0}}
+                      Other, 0x10a2d5f40, {{0.0, 692.3}, {402.0, 68.0}}, identifier: 'screen-footer'
+                      Button, 0x10a2d57c0, {{16.0, 702.3}, {182.0, 48.0}}, label: '이전 카드'
+                      Button, 0x10a2d5900, {{204.0, 702.3}, {182.0, 48.0}}, label: '다음 카드'
+                      Other, 0x10a2d5680, {{0.0, 760.3}, {402.0, 79.7}}
+                      Other, 0x10a2d5540, {{0.0, 761.3}, {402.0, 78.7}}
+                      Other, 0x10a2d5400, {{16.0, 769.3}, {74.0, 62.7}}, identifier: 'tab-today', label: '홈'
+                      Other, 0x10a2d52c0, {{90.0, 769.3}, {74.0, 62.7}}, identifier: 'tab-learn', label: '교재', Selected
+                      Other, 0x10a2d5180, {{164.0, 769.3}, {74.0, 62.7}}, identifier: 'tab-review', label: '문제'
+                      Other, 0x106e84f00, {{238.0, 769.3}, {74.0, 62.7}}, identifier: 'tab-exams', label: '실전'
+                      Other, 0x106e87700, {{312.0, 769.3}, {74.0, 62.7}}, identifier: 'tab-records', label: '기록'
+Path to element:
+ →Application, 0x10a2d43c0, pid: 52119, label: 'SQLD Pass'
+Query chain:
+ →Find: Application 'com.sqldpass.app.adsqa'
+  Output: {
+    Application, 0x106e87980, pid: 52119, label: 'SQLD Pass'
+  }

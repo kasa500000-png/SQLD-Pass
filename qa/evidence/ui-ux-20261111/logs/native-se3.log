@@ -1,0 +1,1728 @@
+Command line invocation:
+    /Applications/Xcode.app/Contents/Developer/usr/bin/xcodebuild test -project /tmp/sqld-ux-native-runner/Capture.xcodeproj -scheme CaptureTests "-only-testing:CaptureTests/CaptureTests/testLearningJourneys" -destination "platform=iOS Simulator,id=059CC336-7945-4066-80DB-79E88AF34B15" -derivedDataPath /tmp/sqld-ux-native-runner/se-build -resultBundlePath /tmp/sqld-ux-native-runner/se-result3.xcresult
+
+Writing result bundle at path:
+	/tmp/sqld-ux-native-runner/se-result3.xcresult
+
+ComputePackagePrebuildTargetDependencyGraph
+
+Prepare packages
+
+CreateBuildRequest
+
+SendProjectDescription
+
+CreateBuildOperation
+
+ComputeTargetDependencyGraph
+note: Building targets in dependency order
+note: Target dependency graph (1 target)
+    Target 'CaptureTests' in project 'Capture' (no dependencies)
+
+GatherProvisioningInputs
+
+CreateBuildDescription
+
+ExecuteExternalTool /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang -v -E -dM -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator27.2.sdk -x c -c /dev/null
+
+ExecuteExternalTool /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/swiftc --version
+
+ExecuteExternalTool /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/ld -version_details
+
+Build description signature: 4db41dbf6b8869e2895908fcbcd1fb1b
+Build description path: /tmp/sqld-ux-native-runner/se-build/Build/Intermediates.noindex/XCBuildData/4db41dbf6b8869e2895908fcbcd1fb1b.xcbuilddata
+ClangStatCache /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang-stat-cache /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator27.2.sdk /tmp/sqld-ux-native-runner/se-build/SDKStatCaches.noindex/iphonesimulator27.2-24B8118-cc78df9d8a9de6526dea716b1c70fd8e.sdkstatcache
+    cd /tmp/sqld-ux-native-runner/Capture.xcodeproj
+    /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang-stat-cache /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator27.2.sdk -o /tmp/sqld-ux-native-runner/se-build/SDKStatCaches.noindex/iphonesimulator27.2-24B8118-cc78df9d8a9de6526dea716b1c70fd8e.sdkstatcache
+
+SwiftDriver CaptureTests normal arm64 com.apple.xcode.tools.swift.compiler (in target 'CaptureTests' from project 'Capture')
+    cd /tmp/sqld-ux-native-runner
+    builtin-SwiftDriver -- /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/swiftc -module-name CaptureTests -Onone @/tmp/sqld-ux-native-runner/se-build/Build/Intermediates.noindex/Capture.build/Debug-iphonesimulator/CaptureTests.build/Objects-normal/arm64/CaptureTests.SwiftFileList -DDEBUG -module-alias Testing\=_Testing_Unavailable -plugin-path /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/host/plugins/testing -enable-bare-slash-regex -enable-experimental-feature DebugDescriptionMacro -sdk /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator27.2.sdk -target arm64-apple-ios16.4-simulator -g -module-cache-path /tmp/sqld-ux-native-runner/se-build/ModuleCache.noindex -Xfrontend -serialize-debugging-options -enable-testing -index-store-path /tmp/sqld-ux-native-runner/se-build/Index.noindex/DataStore -Xcc -D_LIBCPP_HARDENING_MODE\=_LIBCPP_HARDENING_MODE_DEBUG -swift-version 5 -I /tmp/sqld-ux-native-runner/se-build/Build/Products/Debug-iphonesimulator -Isystem /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/usr/lib -F /tmp/sqld-ux-native-runner/se-build/Build/Products/Debug-iphonesimulator -F /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/Library/Frameworks -F /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator27.2.sdk/Developer/Library/Frameworks -parse-as-library -c -j12 -enable-batch-mode -incremental -Xcc -ivfsstatcache -Xcc /tmp/sqld-ux-native-runner/se-build/SDKStatCaches.noindex/iphonesimulator27.2-24B8118-cc78df9d8a9de6526dea716b1c70fd8e.sdkstatcache -output-file-map /tmp/sqld-ux-native-runner/se-build/Build/Intermediates.noindex/Capture.build/Debug-iphonesimulator/CaptureTests.build/Objects-normal/arm64/CaptureTests-OutputFileMap.json -save-temps -no-color-diagnostics -explicit-module-build -module-cache-path /tmp/sqld-ux-native-runner/se-build/Build/Intermediates.noindex/SwiftExplicitPrecompiledModules -clang-scanner-module-cache-path /tmp/sqld-ux-native-runner/se-build/ModuleCache.noindex -sdk-module-cache-path /tmp/sqld-ux-native-runner/se-build/SDKExplicitPrecompiledModules -emit-dependencies -emit-module -emit-module-path /tmp/sqld-ux-native-runner/se-build/Build/Intermediates.noindex/Capture.build/Debug-iphonesimulator/CaptureTests.build/Objects-normal/arm64/CaptureTests.swiftmodule -serialize-diagnostics -dependency-scan-serialize-diagnostics-path /tmp/sqld-ux-native-runner/se-build/Build/Intermediates.noindex/Capture.build/Debug-iphonesimulator/CaptureTests.build/Objects-normal/arm64/CaptureTests-dependency-scan.dia -validate-clang-modules-once -clang-build-session-file /tmp/sqld-ux-native-runner/se-build/ModuleCache.noindex/Session.modulevalidation -Xcc -fmodules-prune-interval\=86400 -Xcc -fmodules-prune-after\=345600 -emit-const-values -const-gather-protocols-list /tmp/sqld-ux-native-runner/se-build/Build/Intermediates.noindex/Capture.build/Debug-iphonesimulator/CaptureTests.build/Objects-normal/arm64/CaptureTests_const_extract_protocols.json -Xcc -iquote -Xcc /tmp/sqld-ux-native-runner/se-build/Build/Intermediates.noindex/Capture.build/Debug-iphonesimulator/CaptureTests.build/CaptureTests-generated-files.hmap -Xcc -I/tmp/sqld-ux-native-runner/se-build/Build/Intermediates.noindex/Capture.build/Debug-iphonesimulator/CaptureTests.build/CaptureTests-own-target-headers.hmap -Xcc -I/tmp/sqld-ux-native-runner/se-build/Build/Intermediates.noindex/Capture.build/Debug-iphonesimulator/CaptureTests.build/CaptureTests-all-target-headers.hmap -Xcc -iquote -Xcc /tmp/sqld-ux-native-runner/se-build/Build/Intermediates.noindex/Capture.build/Debug-iphonesimulator/CaptureTests.build/CaptureTests-project-headers.hmap -Xcc -I/tmp/sqld-ux-native-runner/se-build/Build/Products/Debug-iphonesimulator/include -Xcc -I/tmp/sqld-ux-native-runner/se-build/Build/Intermediates.noindex/Capture.build/Debug-iphonesimulator/CaptureTests.build/DerivedSources-normal/arm64 -Xcc -I/tmp/sqld-ux-native-runner/se-build/Build/Intermediates.noindex/Capture.build/Debug-iphonesimulator/CaptureTests.build/DerivedSources/arm64 -Xcc -I/tmp/sqld-ux-native-runner/se-build/Build/Intermediates.noindex/Capture.build/Debug-iphonesimulator/CaptureTests.build/DerivedSources -Xcc -DDEBUG\=1 -emit-objc-header -emit-objc-header-path /tmp/sqld-ux-native-runner/se-build/Build/Intermediates.noindex/Capture.build/Debug-iphonesimulator/CaptureTests.build/Objects-normal/arm64/CaptureTests-Swift.h -working-directory /tmp/sqld-ux-native-runner -experimental-emit-module-separately -disable-cmo
+
+SwiftEmitModule normal arm64 Emitting\ module\ for\ CaptureTests (in target 'CaptureTests' from project 'Capture')
+
+SwiftCompile normal arm64 (in target 'CaptureTests' from project 'Capture')
+    cd /tmp/sqld-ux-native-runner
+
+
+SwiftCompile normal arm64 Compiling\ CaptureTests.swift /tmp/sqld-ux-native-runner/CaptureTests.swift (in target 'CaptureTests' from project 'Capture')
+
+SwiftCompile normal arm64 /tmp/sqld-ux-native-runner/CaptureTests.swift (in target 'CaptureTests' from project 'Capture')
+    cd /tmp/sqld-ux-native-runner
+    builtin-SwiftPerFileCompile CaptureTests.swift
+
+SwiftDriverJobDiscovery normal arm64 Compiling CaptureTests.swift (in target 'CaptureTests' from project 'Capture')
+
+SwiftDriver\ Compilation CaptureTests normal arm64 com.apple.xcode.tools.swift.compiler (in target 'CaptureTests' from project 'Capture')
+    cd /tmp/sqld-ux-native-runner
+    builtin-Swift-Compilation -- /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/swiftc -module-name CaptureTests -Onone @/tmp/sqld-ux-native-runner/se-build/Build/Intermediates.noindex/Capture.build/Debug-iphonesimulator/CaptureTests.build/Objects-normal/arm64/CaptureTests.SwiftFileList -DDEBUG -module-alias Testing\=_Testing_Unavailable -plugin-path /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/host/plugins/testing -enable-bare-slash-regex -enable-experimental-feature DebugDescriptionMacro -sdk /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator27.2.sdk -target arm64-apple-ios16.4-simulator -g -module-cache-path /tmp/sqld-ux-native-runner/se-build/ModuleCache.noindex -Xfrontend -serialize-debugging-options -enable-testing -index-store-path /tmp/sqld-ux-native-runner/se-build/Index.noindex/DataStore -Xcc -D_LIBCPP_HARDENING_MODE\=_LIBCPP_HARDENING_MODE_DEBUG -swift-version 5 -I /tmp/sqld-ux-native-runner/se-build/Build/Products/Debug-iphonesimulator -Isystem /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/usr/lib -F /tmp/sqld-ux-native-runner/se-build/Build/Products/Debug-iphonesimulator -F /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/Library/Frameworks -F /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator27.2.sdk/Developer/Library/Frameworks -parse-as-library -c -j12 -enable-batch-mode -incremental -Xcc -ivfsstatcache -Xcc /tmp/sqld-ux-native-runner/se-build/SDKStatCaches.noindex/iphonesimulator27.2-24B8118-cc78df9d8a9de6526dea716b1c70fd8e.sdkstatcache -output-file-map /tmp/sqld-ux-native-runner/se-build/Build/Intermediates.noindex/Capture.build/Debug-iphonesimulator/CaptureTests.build/Objects-normal/arm64/CaptureTests-OutputFileMap.json -save-temps -no-color-diagnostics -explicit-module-build -module-cache-path /tmp/sqld-ux-native-runner/se-build/Build/Intermediates.noindex/SwiftExplicitPrecompiledModules -clang-scanner-module-cache-path /tmp/sqld-ux-native-runner/se-build/ModuleCache.noindex -sdk-module-cache-path /tmp/sqld-ux-native-runner/se-build/SDKExplicitPrecompiledModules -emit-dependencies -emit-module -emit-module-path /tmp/sqld-ux-native-runner/se-build/Build/Intermediates.noindex/Capture.build/Debug-iphonesimulator/CaptureTests.build/Objects-normal/arm64/CaptureTests.swiftmodule -serialize-diagnostics -dependency-scan-serialize-diagnostics-path /tmp/sqld-ux-native-runner/se-build/Build/Intermediates.noindex/Capture.build/Debug-iphonesimulator/CaptureTests.build/Objects-normal/arm64/CaptureTests-dependency-scan.dia -validate-clang-modules-once -clang-build-session-file /tmp/sqld-ux-native-runner/se-build/ModuleCache.noindex/Session.modulevalidation -Xcc -fmodules-prune-interval\=86400 -Xcc -fmodules-prune-after\=345600 -emit-const-values -const-gather-protocols-list /tmp/sqld-ux-native-runner/se-build/Build/Intermediates.noindex/Capture.build/Debug-iphonesimulator/CaptureTests.build/Objects-normal/arm64/CaptureTests_const_extract_protocols.json -Xcc -iquote -Xcc /tmp/sqld-ux-native-runner/se-build/Build/Intermediates.noindex/Capture.build/Debug-iphonesimulator/CaptureTests.build/CaptureTests-generated-files.hmap -Xcc -I/tmp/sqld-ux-native-runner/se-build/Build/Intermediates.noindex/Capture.build/Debug-iphonesimulator/CaptureTests.build/CaptureTests-own-target-headers.hmap -Xcc -I/tmp/sqld-ux-native-runner/se-build/Build/Intermediates.noindex/Capture.build/Debug-iphonesimulator/CaptureTests.build/CaptureTests-all-target-headers.hmap -Xcc -iquote -Xcc /tmp/sqld-ux-native-runner/se-build/Build/Intermediates.noindex/Capture.build/Debug-iphonesimulator/CaptureTests.build/CaptureTests-project-headers.hmap -Xcc -I/tmp/sqld-ux-native-runner/se-build/Build/Products/Debug-iphonesimulator/include -Xcc -I/tmp/sqld-ux-native-runner/se-build/Build/Intermediates.noindex/Capture.build/Debug-iphonesimulator/CaptureTests.build/DerivedSources-normal/arm64 -Xcc -I/tmp/sqld-ux-native-runner/se-build/Build/Intermediates.noindex/Capture.build/Debug-iphonesimulator/CaptureTests.build/DerivedSources/arm64 -Xcc -I/tmp/sqld-ux-native-runner/se-build/Build/Intermediates.noindex/Capture.build/Debug-iphonesimulator/CaptureTests.build/DerivedSources -Xcc -DDEBUG\=1 -emit-objc-header -emit-objc-header-path /tmp/sqld-ux-native-runner/se-build/Build/Intermediates.noindex/Capture.build/Debug-iphonesimulator/CaptureTests.build/Objects-normal/arm64/CaptureTests-Swift.h -working-directory /tmp/sqld-ux-native-runner -experimental-emit-module-separately -disable-cmo
+
+SwiftDriverJobDiscovery normal arm64 Emitting module for CaptureTests (in target 'CaptureTests' from project 'Capture')
+
+SwiftDriver\ Compilation\ Requirements CaptureTests normal arm64 com.apple.xcode.tools.swift.compiler (in target 'CaptureTests' from project 'Capture')
+    cd /tmp/sqld-ux-native-runner
+    builtin-Swift-Compilation-Requirements -- /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/swiftc -module-name CaptureTests -Onone @/tmp/sqld-ux-native-runner/se-build/Build/Intermediates.noindex/Capture.build/Debug-iphonesimulator/CaptureTests.build/Objects-normal/arm64/CaptureTests.SwiftFileList -DDEBUG -module-alias Testing\=_Testing_Unavailable -plugin-path /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/host/plugins/testing -enable-bare-slash-regex -enable-experimental-feature DebugDescriptionMacro -sdk /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator27.2.sdk -target arm64-apple-ios16.4-simulator -g -module-cache-path /tmp/sqld-ux-native-runner/se-build/ModuleCache.noindex -Xfrontend -serialize-debugging-options -enable-testing -index-store-path /tmp/sqld-ux-native-runner/se-build/Index.noindex/DataStore -Xcc -D_LIBCPP_HARDENING_MODE\=_LIBCPP_HARDENING_MODE_DEBUG -swift-version 5 -I /tmp/sqld-ux-native-runner/se-build/Build/Products/Debug-iphonesimulator -Isystem /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/usr/lib -F /tmp/sqld-ux-native-runner/se-build/Build/Products/Debug-iphonesimulator -F /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/Library/Frameworks -F /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator27.2.sdk/Developer/Library/Frameworks -parse-as-library -c -j12 -enable-batch-mode -incremental -Xcc -ivfsstatcache -Xcc /tmp/sqld-ux-native-runner/se-build/SDKStatCaches.noindex/iphonesimulator27.2-24B8118-cc78df9d8a9de6526dea716b1c70fd8e.sdkstatcache -output-file-map /tmp/sqld-ux-native-runner/se-build/Build/Intermediates.noindex/Capture.build/Debug-iphonesimulator/CaptureTests.build/Objects-normal/arm64/CaptureTests-OutputFileMap.json -save-temps -no-color-diagnostics -explicit-module-build -module-cache-path /tmp/sqld-ux-native-runner/se-build/Build/Intermediates.noindex/SwiftExplicitPrecompiledModules -clang-scanner-module-cache-path /tmp/sqld-ux-native-runner/se-build/ModuleCache.noindex -sdk-module-cache-path /tmp/sqld-ux-native-runner/se-build/SDKExplicitPrecompiledModules -emit-dependencies -emit-module -emit-module-path /tmp/sqld-ux-native-runner/se-build/Build/Intermediates.noindex/Capture.build/Debug-iphonesimulator/CaptureTests.build/Objects-normal/arm64/CaptureTests.swiftmodule -serialize-diagnostics -dependency-scan-serialize-diagnostics-path /tmp/sqld-ux-native-runner/se-build/Build/Intermediates.noindex/Capture.build/Debug-iphonesimulator/CaptureTests.build/Objects-normal/arm64/CaptureTests-dependency-scan.dia -validate-clang-modules-once -clang-build-session-file /tmp/sqld-ux-native-runner/se-build/ModuleCache.noindex/Session.modulevalidation -Xcc -fmodules-prune-interval\=86400 -Xcc -fmodules-prune-after\=345600 -emit-const-values -const-gather-protocols-list /tmp/sqld-ux-native-runner/se-build/Build/Intermediates.noindex/Capture.build/Debug-iphonesimulator/CaptureTests.build/Objects-normal/arm64/CaptureTests_const_extract_protocols.json -Xcc -iquote -Xcc /tmp/sqld-ux-native-runner/se-build/Build/Intermediates.noindex/Capture.build/Debug-iphonesimulator/CaptureTests.build/CaptureTests-generated-files.hmap -Xcc -I/tmp/sqld-ux-native-runner/se-build/Build/Intermediates.noindex/Capture.build/Debug-iphonesimulator/CaptureTests.build/CaptureTests-own-target-headers.hmap -Xcc -I/tmp/sqld-ux-native-runner/se-build/Build/Intermediates.noindex/Capture.build/Debug-iphonesimulator/CaptureTests.build/CaptureTests-all-target-headers.hmap -Xcc -iquote -Xcc /tmp/sqld-ux-native-runner/se-build/Build/Intermediates.noindex/Capture.build/Debug-iphonesimulator/CaptureTests.build/CaptureTests-project-headers.hmap -Xcc -I/tmp/sqld-ux-native-runner/se-build/Build/Products/Debug-iphonesimulator/include -Xcc -I/tmp/sqld-ux-native-runner/se-build/Build/Intermediates.noindex/Capture.build/Debug-iphonesimulator/CaptureTests.build/DerivedSources-normal/arm64 -Xcc -I/tmp/sqld-ux-native-runner/se-build/Build/Intermediates.noindex/Capture.build/Debug-iphonesimulator/CaptureTests.build/DerivedSources/arm64 -Xcc -I/tmp/sqld-ux-native-runner/se-build/Build/Intermediates.noindex/Capture.build/Debug-iphonesimulator/CaptureTests.build/DerivedSources -Xcc -DDEBUG\=1 -emit-objc-header -emit-objc-header-path /tmp/sqld-ux-native-runner/se-build/Build/Intermediates.noindex/Capture.build/Debug-iphonesimulator/CaptureTests.build/Objects-normal/arm64/CaptureTests-Swift.h -working-directory /tmp/sqld-ux-native-runner -experimental-emit-module-separately -disable-cmo
+
+Copy /tmp/sqld-ux-native-runner/se-build/Build/Products/Debug-iphonesimulator/CaptureTests.swiftmodule/arm64-apple-ios-simulator.swiftmodule /tmp/sqld-ux-native-runner/se-build/Build/Intermediates.noindex/Capture.build/Debug-iphonesimulator/CaptureTests.build/Objects-normal/arm64/CaptureTests.swiftmodule (in target 'CaptureTests' from project 'Capture')
+    cd /tmp/sqld-ux-native-runner
+    builtin-copy -exclude .DS_Store -exclude CVS -exclude .svn -exclude .git -exclude .hg -resolve-src-symlinks -rename /tmp/sqld-ux-native-runner/se-build/Build/Intermediates.noindex/Capture.build/Debug-iphonesimulator/CaptureTests.build/Objects-normal/arm64/CaptureTests.swiftmodule /tmp/sqld-ux-native-runner/se-build/Build/Products/Debug-iphonesimulator/CaptureTests.swiftmodule/arm64-apple-ios-simulator.swiftmodule
+
+Copy /tmp/sqld-ux-native-runner/se-build/Build/Products/Debug-iphonesimulator/CaptureTests.swiftmodule/arm64-apple-ios-simulator.abi.json /tmp/sqld-ux-native-runner/se-build/Build/Intermediates.noindex/Capture.build/Debug-iphonesimulator/CaptureTests.build/Objects-normal/arm64/CaptureTests.abi.json (in target 'CaptureTests' from project 'Capture')
+    cd /tmp/sqld-ux-native-runner
+    builtin-copy -exclude .DS_Store -exclude CVS -exclude .svn -exclude .git -exclude .hg -resolve-src-symlinks -rename /tmp/sqld-ux-native-runner/se-build/Build/Intermediates.noindex/Capture.build/Debug-iphonesimulator/CaptureTests.build/Objects-normal/arm64/CaptureTests.abi.json /tmp/sqld-ux-native-runner/se-build/Build/Products/Debug-iphonesimulator/CaptureTests.swiftmodule/arm64-apple-ios-simulator.abi.json
+
+Copy /tmp/sqld-ux-native-runner/se-build/Build/Products/Debug-iphonesimulator/CaptureTests.swiftmodule/Project/arm64-apple-ios-simulator.swiftsourceinfo /tmp/sqld-ux-native-runner/se-build/Build/Intermediates.noindex/Capture.build/Debug-iphonesimulator/CaptureTests.build/Objects-normal/arm64/CaptureTests.swiftsourceinfo (in target 'CaptureTests' from project 'Capture')
+    cd /tmp/sqld-ux-native-runner
+    builtin-copy -exclude .DS_Store -exclude CVS -exclude .svn -exclude .git -exclude .hg -resolve-src-symlinks -rename /tmp/sqld-ux-native-runner/se-build/Build/Intermediates.noindex/Capture.build/Debug-iphonesimulator/CaptureTests.build/Objects-normal/arm64/CaptureTests.swiftsourceinfo /tmp/sqld-ux-native-runner/se-build/Build/Products/Debug-iphonesimulator/CaptureTests.swiftmodule/Project/arm64-apple-ios-simulator.swiftsourceinfo
+
+Ld /tmp/sqld-ux-native-runner/se-build/Build/Products/Debug-iphonesimulator/CaptureTests-Runner.app/PlugIns/CaptureTests.xctest/CaptureTests normal (in target 'CaptureTests' from project 'Capture')
+    cd /tmp/sqld-ux-native-runner
+    /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang -Xlinker -reproducible -target arm64-apple-ios16.4-simulator -bundle -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator27.2.sdk -O0 -Xlinker -no_warn_duplicate_libraries -L/tmp/sqld-ux-native-runner/se-build/Build/Intermediates.noindex/EagerLinkingTBDs/Debug-iphonesimulator -L/tmp/sqld-ux-native-runner/se-build/Build/Products/Debug-iphonesimulator -L/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/usr/lib -F/tmp/sqld-ux-native-runner/se-build/Build/Intermediates.noindex/EagerLinkingTBDs/Debug-iphonesimulator -F/tmp/sqld-ux-native-runner/se-build/Build/Products/Debug-iphonesimulator -iframework /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/Library/Frameworks -iframework /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator27.2.sdk/Developer/Library/Frameworks -filelist /tmp/sqld-ux-native-runner/se-build/Build/Intermediates.noindex/Capture.build/Debug-iphonesimulator/CaptureTests.build/Objects-normal/arm64/CaptureTests.LinkFileList -Xlinker -rpath -Xlinker /usr/lib/swift -Xlinker -rpath -Xlinker @loader_path/Frameworks -Xlinker -dead_strip -Xlinker -object_path_lto -Xlinker /tmp/sqld-ux-native-runner/se-build/Build/Intermediates.noindex/Capture.build/Debug-iphonesimulator/CaptureTests.build/Objects-normal/arm64/CaptureTests_lto.o -rdynamic -Xlinker -no_deduplicate -Xlinker -objc_abi_version -Xlinker 2 -Xlinker -dependency_info -Xlinker /tmp/sqld-ux-native-runner/se-build/Build/Intermediates.noindex/Capture.build/Debug-iphonesimulator/CaptureTests.build/Objects-normal/arm64/CaptureTests_dependency_info.dat -fobjc-link-runtime -L/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphonesimulator -L/usr/lib/swift -Xlinker -add_ast_path -Xlinker /tmp/sqld-ux-native-runner/se-build/Build/Intermediates.noindex/Capture.build/Debug-iphonesimulator/CaptureTests.build/Objects-normal/arm64/CaptureTests.swiftmodule -Xlinker -needed_framework -Xlinker XCTest -framework XCTest -Xlinker -needed-lXCTestSwiftSupport -lXCTestSwiftSupport -framework Foundation -o /tmp/sqld-ux-native-runner/se-build/Build/Products/Debug-iphonesimulator/CaptureTests-Runner.app/PlugIns/CaptureTests.xctest/CaptureTests
+/tmp/sqld-ux-native-runner/Capture.xcodeproj: CaptureTests: ld: warning: building for iOS-simulator-16.4, but linking with dylib '@rpath/XCTest.framework/XCTest' which was built for newer version 17.0
+/tmp/sqld-ux-native-runner/Capture.xcodeproj: CaptureTests: ld: warning: building for iOS-simulator-16.4, but linking with dylib '@rpath/libXCTestSwiftSupport.dylib' which was built for newer version 17.0
+/tmp/sqld-ux-native-runner/Capture.xcodeproj: CaptureTests: ld: warning: building for iOS-simulator-16.4, but linking with dylib '@rpath/XCUIAutomation.framework/XCUIAutomation' which was built for newer version 17.0
+
+ExtractAppIntentsMetadata (in target 'CaptureTests' from project 'Capture')
+    cd /tmp/sqld-ux-native-runner
+    /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/appintentsmetadataprocessor --toolchain-dir /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain --module-name CaptureTests --sdk-root /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator27.2.sdk --xcode-version 27B52 --platform-family iOS --deployment-target 16.4 --bundle-identifier com.kasa500000.sqldpass.capturetests --output /tmp/sqld-ux-native-runner/se-build/Build/Products/Debug-iphonesimulator/CaptureTests-Runner.app/PlugIns/CaptureTests.xctest --target-triple arm64-apple-ios16.4-simulator --binary-file /tmp/sqld-ux-native-runner/se-build/Build/Products/Debug-iphonesimulator/CaptureTests-Runner.app/PlugIns/CaptureTests.xctest/CaptureTests --dependency-file /tmp/sqld-ux-native-runner/se-build/Build/Intermediates.noindex/Capture.build/Debug-iphonesimulator/CaptureTests.build/Objects-normal/arm64/CaptureTests_dependency_info.dat --stringsdata-file /tmp/sqld-ux-native-runner/se-build/Build/Intermediates.noindex/Capture.build/Debug-iphonesimulator/CaptureTests.build/Objects-normal/arm64/ExtractedAppShortcutsMetadata.stringsdata --source-file-list /tmp/sqld-ux-native-runner/se-build/Build/Intermediates.noindex/Capture.build/Debug-iphonesimulator/CaptureTests.build/Objects-normal/arm64/CaptureTests.SwiftFileList --metadata-file-list /tmp/sqld-ux-native-runner/se-build/Build/Intermediates.noindex/Capture.build/Debug-iphonesimulator/CaptureTests.build/CaptureTests.DependencyMetadataFileList --static-metadata-file-list /tmp/sqld-ux-native-runner/se-build/Build/Intermediates.noindex/Capture.build/Debug-iphonesimulator/CaptureTests.build/CaptureTests.DependencyStaticMetadataFileList --swift-const-vals-list /tmp/sqld-ux-native-runner/se-build/Build/Intermediates.noindex/Capture.build/Debug-iphonesimulator/CaptureTests.build/Objects-normal/arm64/CaptureTests.SwiftConstValuesFileList --compile-time-extraction --deployment-aware-processing --no-app-shortcuts-localization
+2026-11-11 17:55:58.743 appintentsmetadataprocessor[51397:8457482] Starting App Intents metadata extraction
+2026-11-11 17:55:58.744 appintentsmetadataprocessor[51397:8457482] warning: Metadata extraction skipped, no AppIntents.framework dependency found
+
+ProcessInfoPlistFile /tmp/sqld-ux-native-runner/se-build/Build/Products/Debug-iphonesimulator/CaptureTests-Runner.app/PlugIns/CaptureTests.xctest/Info.plist /tmp/sqld-ux-native-runner/se-build/Build/Intermediates.noindex/Capture.build/Debug-iphonesimulator/CaptureTests.build/empty-CaptureTests.plist (in target 'CaptureTests' from project 'Capture')
+    cd /tmp/sqld-ux-native-runner
+    builtin-infoPlistUtility /tmp/sqld-ux-native-runner/se-build/Build/Intermediates.noindex/Capture.build/Debug-iphonesimulator/CaptureTests.build/empty-CaptureTests.plist -producttype com.apple.product-type.bundle.ui-testing -expandbuildsettings -format binary -platform iphonesimulator -additionalcontentfile /tmp/sqld-ux-native-runner/se-build/Build/Intermediates.noindex/Capture.build/Debug-iphonesimulator/CaptureTests.build/ProductTypeInfoPlistAdditions.plist -o /tmp/sqld-ux-native-runner/se-build/Build/Products/Debug-iphonesimulator/CaptureTests-Runner.app/PlugIns/CaptureTests.xctest/Info.plist
+
+CopySwiftLibs /tmp/sqld-ux-native-runner/se-build/Build/Products/Debug-iphonesimulator/CaptureTests-Runner.app/PlugIns/CaptureTests.xctest (in target 'CaptureTests' from project 'Capture')
+    cd /tmp/sqld-ux-native-runner
+    builtin-swiftStdLibTool --copy --verbose --scan-executable /tmp/sqld-ux-native-runner/se-build/Build/Products/Debug-iphonesimulator/CaptureTests-Runner.app/PlugIns/CaptureTests.xctest/CaptureTests --scan-folder /tmp/sqld-ux-native-runner/se-build/Build/Products/Debug-iphonesimulator/CaptureTests-Runner.app/PlugIns/CaptureTests.xctest/Frameworks --scan-folder /tmp/sqld-ux-native-runner/se-build/Build/Products/Debug-iphonesimulator/CaptureTests-Runner.app/PlugIns/CaptureTests.xctest/PlugIns --scan-folder /tmp/sqld-ux-native-runner/se-build/Build/Products/Debug-iphonesimulator/CaptureTests-Runner.app/PlugIns/CaptureTests.xctest/SystemExtensions --scan-folder /tmp/sqld-ux-native-runner/se-build/Build/Products/Debug-iphonesimulator/CaptureTests-Runner.app/PlugIns/CaptureTests.xctest/Extensions --scan-folder /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS26.0.sdk/System/Library/Frameworks/Foundation.framework --platform iphonesimulator --toolchain /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain --destination /tmp/sqld-ux-native-runner/se-build/Build/Products/Debug-iphonesimulator/CaptureTests-Runner.app/PlugIns/CaptureTests.xctest/Frameworks --strip-bitcode --scan-executable /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/usr/lib/libXCTestSwiftSupport.dylib --strip-bitcode-tool /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/bitcode_strip --emit-dependency-info /tmp/sqld-ux-native-runner/se-build/Build/Intermediates.noindex/Capture.build/Debug-iphonesimulator/CaptureTests.build/SwiftStdLibToolInputDependencies.dep --filter-for-swift-os
+Ignoring --strip-bitcode because --sign was not passed
+
+PruneExplicitPrecompiledModules /tmp/sqld-ux-native-runner/se-build/Build/Intermediates.noindex/ExplicitPrecompiledModules
+
+PruneExplicitPrecompiledModules /tmp/sqld-ux-native-runner/se-build/Build/Intermediates.noindex/SwiftExplicitPrecompiledModules
+
+PruneExplicitPrecompiledModules /tmp/sqld-ux-native-runner/se-build/SDKExplicitPrecompiledModules
+
+2026-11-11 17:55:59.509064+0900 CaptureTests-Runner[51399:8457671] [Default] Running tests...
+    t =      nans Interface orientation changed to Portrait
+Test Suite 'Selected tests' started at 2026-11-11 17:56:01.134.
+Test Suite 'CaptureTests.xctest' started at 2026-11-11 17:56:01.134.
+Test Suite 'CaptureTests' started at 2026-11-11 17:56:01.134.
+Test Case '-[CaptureTests.CaptureTests testLearningJourneys]' started.
+    t =     0.00s Start Test at 2026-11-11 17:56:01.136
+    t =     0.03s Set Up
+    t =     0.03s Open com.sqldpass.app.adsqa
+    t =     0.03s     Launch com.sqldpass.app.adsqa
+    t =     0.03s         Terminate com.sqldpass.app.adsqa:50288
+objc[51399]: Class UIAccessibilityLoaderWebShared is implemented in both /private/var/run/com.apple.security.cryptexd/mnt/com.apple.iPhoneOS.SimulatorRuntime-v24.2.8117.0.3a3aUO/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 27.2.simruntime/Contents/Resources/RuntimeRoot/System/Library/AccessibilityBundles/WebCore.axbundle/WebCore (0x101c44310) and /private/var/run/com.apple.security.cryptexd/mnt/com.apple.iPhoneOS.SimulatorRuntime-v24.2.8117.0.3a3aUO/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 27.2.simruntime/Contents/Resources/RuntimeRoot/System/Library/AccessibilityBundles/WebKit.axbundle/WebKit (0x101dc4398). This may cause spurious casting failures and mysterious crashes. One of the duplicates must be removed or renamed.
+    t =     1.12s         Setting up automation session
+    t =     2.37s         Wait for com.sqldpass.app.adsqa to idle
+    t =     3.48s Waiting 3.0s for "textbook-start" Any to exist
+    t =     4.55s     Checking `Expect predicate `existsNoRetry == 1` for object "textbook-start" Any`
+    t =     4.55s         Checking existence of `"textbook-start" Any`
+    t =     4.58s         Capturing element debug description
+    t =     5.53s     Checking `Expect predicate `existsNoRetry == 1` for object "textbook-start" Any`
+    t =     5.53s         Checking existence of `"textbook-start" Any`
+    t =     5.59s         Capturing element debug description
+    t =     6.49s     Checking `Expect predicate `existsNoRetry == 1` for object "textbook-start" Any`
+    t =     6.49s         Checking existence of `"textbook-start" Any`
+    t =     6.53s         Capturing element debug description
+    t =     6.53s     Checking existence of `"textbook-start" Any`
+    t =     6.56s Collecting debug information to assist test failure triage
+    t =     6.56s     Requesting snapshot of accessibility hierarchy for app with pid 51420
+    t =     6.58s Waiting 12.0s for "tab-today" Any to exist
+    t =     7.63s     Checking `Expect predicate `existsNoRetry == 1` for object "tab-today" Any`
+    t =     7.63s         Checking existence of `"tab-today" Any`
+    t =     7.64s Find the "tab-today" Any
+    t =     7.67s Find the "tab-today" Other
+    t =     7.68s Tap "tab-today" Other
+    t =     7.68s     Wait for com.sqldpass.app.adsqa to idle
+    t =     7.68s     Find the "tab-today" Other
+    t =     7.69s     Check for interrupting elements affecting "tab-today" Other
+    t =     7.70s     Synthesize event
+    t =     7.99s     Wait for com.sqldpass.app.adsqa to idle
+    t =     7.99s Waiting 12.0s for "설정" Any to exist
+    t =     9.06s     Checking `Expect predicate `existsNoRetry == 1` for object "설정" Any`
+    t =     9.06s         Checking existence of `"설정" Any`
+    t =     9.08s Find the "설정" Any
+    t =     9.10s Find the "설정" Button
+    t =     9.11s Tap "설정" Button
+    t =     9.11s     Wait for com.sqldpass.app.adsqa to idle
+    t =     9.11s     Find the "설정" Button
+    t =     9.12s     Check for interrupting elements affecting "설정" Button
+    t =     9.14s     Synthesize event
+    t =     9.43s     Wait for com.sqldpass.app.adsqa to idle
+    t =     9.43s Waiting 12.0s for "밝게" Any to exist
+    t =    10.47s     Checking `Expect predicate `existsNoRetry == 1` for object "밝게" Any`
+    t =    10.47s         Checking existence of `"밝게" Any`
+    t =    10.52s Find the "밝게" Any
+    t =    10.54s Find the "밝게" Button
+    t =    10.56s Tap "밝게" Button
+    t =    10.56s     Wait for com.sqldpass.app.adsqa to idle
+    t =    10.56s     Find the "밝게" Button
+    t =    10.58s     Check for interrupting elements affecting "밝게" Button
+    t =    10.59s     Synthesize event
+    t =    10.88s     Wait for com.sqldpass.app.adsqa to idle
+    t =    10.88s Waiting 12.0s for "100%" Any to exist
+    t =    11.94s     Checking `Expect predicate `existsNoRetry == 1` for object "100%" Any`
+    t =    11.94s         Checking existence of `"100%" Any`
+    t =    11.98s Find the "100%" Any
+    t =    12.01s Find the "100%" Button
+    t =    12.03s Find the Application 'com.sqldpass.app.adsqa'
+    t =    12.03s Get all elements bound by index for: Descendants matching type ScrollView
+    t =    12.04s Find the ScrollView (Element at index 0)
+    t =    12.05s Find the ScrollView at {{0.0, 84.0}, {375.0, 434.0}}
+    t =    12.06s Find the ScrollView at {{0.0, 84.0}, {375.0, 434.0}}
+    t =    12.07s Find the Application 'com.sqldpass.app.adsqa'
+    t =    12.07s Find the ScrollView at {{0.0, 84.0}, {375.0, 434.0}}
+    t =    12.09s Find the ScrollView at {{0.0, 84.0}, {375.0, 434.0}}
+    t =    12.10s Find the ScrollView at {{0.0, 84.0}, {375.0, 434.0}}
+    t =    12.10s Press ScrollView at {{0.0, 84.0}, {375.0, 434.0}}[0.03, 0.80] for 0.1 seconds, then drag to ScrollView at {{0.0, 84.0}, {375.0, 434.0}}[0.03, 0.20] with velocity of 500.00 pixels per second, and then hold for 0.0 seconds
+    t =    12.10s     Wait for com.sqldpass.app.adsqa to idle
+    t =    12.11s     Find the ScrollView at {{0.0, 84.0}, {375.0, 434.0}}
+    t =    12.11s     Check for interrupting elements affecting ScrollView
+    t =    12.12s     Synthesize event
+    t =    12.12s         Find the ScrollView at {{0.0, 84.0}, {375.0, 434.0}}
+    t =    12.13s         Find the ScrollView at {{0.0, 84.0}, {375.0, 434.0}}
+    t =    12.14s         Find the ScrollView at {{0.0, 84.0}, {375.0, 434.0}}
+    t =    12.15s         Find the ScrollView at {{0.0, 84.0}, {375.0, 434.0}}
+    t =    12.16s         Find the ScrollView at {{0.0, 84.0}, {375.0, 434.0}}
+    t =    12.98s     Wait for com.sqldpass.app.adsqa to idle
+    t =    12.99s Find the "100%" Button
+    t =    13.03s Find the "100%" Button
+    t =    13.06s Tap "100%" Button
+    t =    13.06s     Wait for com.sqldpass.app.adsqa to idle
+    t =    13.06s     Find the "100%" Button
+    t =    13.07s     Check for interrupting elements affecting "100%" Button
+    t =    13.09s     Synthesize event
+    t =    13.38s     Wait for com.sqldpass.app.adsqa to idle
+    t =    13.39s Waiting 12.0s for "save-textbook-settings" Any to exist
+    t =    14.44s     Checking `Expect predicate `existsNoRetry == 1` for object "save-textbook-settings" Any`
+    t =    14.44s         Checking existence of `"save-textbook-settings" Any`
+    t =    14.45s Find the "save-textbook-settings" Any
+    t =    14.46s Find the "save-textbook-settings" Button
+    t =    14.47s Tap "save-textbook-settings" Button
+    t =    14.47s     Wait for com.sqldpass.app.adsqa to idle
+    t =    14.47s     Find the "save-textbook-settings" Button
+    t =    14.48s     Check for interrupting elements affecting "save-textbook-settings" Button
+    t =    14.49s     Synthesize event
+    t =    14.78s     Wait for com.sqldpass.app.adsqa to idle
+    t =    14.78s Find the Application 'com.sqldpass.app.adsqa'
+    t =    14.83s Requesting snapshot of accessibility hierarchy for app with pid 51420
+    t =    14.89s Requesting snapshot of accessibility hierarchy for app with pid 51420
+UX-CAPTURE iphone-375/home
+    t =    14.90s Waiting 12.0s for "tab-learn" Any to exist
+    t =    15.95s     Checking `Expect predicate `existsNoRetry == 1` for object "tab-learn" Any`
+    t =    15.95s         Checking existence of `"tab-learn" Any`
+    t =    15.97s Find the "tab-learn" Any
+    t =    15.99s Find the "tab-learn" Other
+    t =    15.99s Tap "tab-learn" Other
+    t =    15.99s     Wait for com.sqldpass.app.adsqa to idle
+    t =    16.00s     Find the "tab-learn" Other
+    t =    16.00s     Check for interrupting elements affecting "tab-learn" Other
+    t =    16.02s     Synthesize event
+    t =    16.31s     Wait for com.sqldpass.app.adsqa to idle
+    t =    16.31s Find the Application 'com.sqldpass.app.adsqa'
+    t =    16.37s Requesting snapshot of accessibility hierarchy for app with pid 51420
+    t =    16.44s Requesting snapshot of accessibility hierarchy for app with pid 51420
+UX-CAPTURE iphone-375/textbook
+    t =    16.46s Waiting 12.0s for "chapter-1" Any to exist
+    t =    17.51s     Checking `Expect predicate `existsNoRetry == 1` for object "chapter-1" Any`
+    t =    17.51s         Checking existence of `"chapter-1" Any`
+    t =    17.55s Find the "chapter-1" Any
+    t =    17.57s Find the "chapter-1" Button
+    t =    17.59s Tap "chapter-1" Button
+    t =    17.59s     Wait for com.sqldpass.app.adsqa to idle
+    t =    17.59s     Find the "chapter-1" Button
+    t =    17.61s     Check for interrupting elements affecting "chapter-1" Button
+    t =    17.62s     Synthesize event
+    t =    17.92s     Wait for com.sqldpass.app.adsqa to idle
+    t =    17.92s Find the Application 'com.sqldpass.app.adsqa'
+    t =    17.98s Requesting snapshot of accessibility hierarchy for app with pid 51420
+    t =    18.05s Requesting snapshot of accessibility hierarchy for app with pid 51420
+UX-CAPTURE iphone-375/chapter
+    t =    18.06s Waiting 12.0s for "section-TB20261109:c1-s5" Any to exist
+    t =    19.11s     Checking `Expect predicate `existsNoRetry == 1` for object "section-TB20261109:c1-s5" Any`
+    t =    19.11s         Checking existence of `"section-TB20261109:c1-s5" Any`
+    t =    19.15s Find the "section-TB20261109:c1-s5" Any
+    t =    19.18s Find the "section-TB20261109:c1-s5" Button
+    t =    19.20s Find the Application 'com.sqldpass.app.adsqa'
+    t =    19.21s Get all elements bound by index for: Descendants matching type ScrollView
+    t =    19.22s Find the ScrollView (Element at index 0)
+    t =    19.23s Find the ScrollView at {{0.0, 84.0}, {375.0, 503.0}}
+    t =    19.23s Find the ScrollView at {{0.0, 84.0}, {375.0, 503.0}}
+    t =    19.24s Find the Application 'com.sqldpass.app.adsqa'
+    t =    19.25s Find the ScrollView at {{0.0, 84.0}, {375.0, 503.0}}
+    t =    19.26s Find the ScrollView at {{0.0, 84.0}, {375.0, 503.0}}
+    t =    19.27s Find the ScrollView at {{0.0, 84.0}, {375.0, 503.0}}
+    t =    19.28s Press ScrollView at {{0.0, 84.0}, {375.0, 503.0}}[0.03, 0.80] for 0.1 seconds, then drag to ScrollView at {{0.0, 84.0}, {375.0, 503.0}}[0.03, 0.20] with velocity of 500.00 pixels per second, and then hold for 0.0 seconds
+    t =    19.28s     Wait for com.sqldpass.app.adsqa to idle
+    t =    19.28s     Find the ScrollView at {{0.0, 84.0}, {375.0, 503.0}}
+    t =    19.29s     Check for interrupting elements affecting ScrollView
+    t =    19.30s     Synthesize event
+    t =    19.30s         Find the ScrollView at {{0.0, 84.0}, {375.0, 503.0}}
+    t =    19.31s         Find the ScrollView at {{0.0, 84.0}, {375.0, 503.0}}
+    t =    19.32s         Find the ScrollView at {{0.0, 84.0}, {375.0, 503.0}}
+    t =    19.33s         Find the ScrollView at {{0.0, 84.0}, {375.0, 503.0}}
+    t =    19.34s         Find the ScrollView at {{0.0, 84.0}, {375.0, 503.0}}
+    t =    20.25s     Wait for com.sqldpass.app.adsqa to idle
+    t =    20.25s Find the "section-TB20261109:c1-s5" Button
+    t =    20.29s Find the "section-TB20261109:c1-s5" Button
+    t =    20.32s Tap "section-TB20261109:c1-s5" Button
+    t =    20.32s     Wait for com.sqldpass.app.adsqa to idle
+    t =    20.32s     Find the "section-TB20261109:c1-s5" Button
+    t =    20.33s     Check for interrupting elements affecting "section-TB20261109:c1-s5" Button
+    t =    20.35s     Synthesize event
+    t =    20.63s     Wait for com.sqldpass.app.adsqa to idle
+    t =    20.64s Find the Application 'com.sqldpass.app.adsqa'
+    t =    20.70s Requesting snapshot of accessibility hierarchy for app with pid 51420
+    t =    20.79s Requesting snapshot of accessibility hierarchy for app with pid 51420
+UX-CAPTURE iphone-375/lesson-sql
+    t =    20.82s Waiting 12.0s for "SQL 자동 줄바꿈" Any to exist
+    t =    21.85s     Checking `Expect predicate `existsNoRetry == 1` for object "SQL 자동 줄바꿈" Any`
+    t =    21.85s         Checking existence of `"SQL 자동 줄바꿈" Any`
+    t =    21.91s Find the "SQL 자동 줄바꿈" Any
+    t =    21.93s Find the "SQL 자동 줄바꿈" Button
+    t =    21.96s Find the Application 'com.sqldpass.app.adsqa'
+    t =    21.97s Get all elements bound by index for: Descendants matching type ScrollView
+    t =    21.99s Find the ScrollView (Element at index 0)
+    t =    22.00s Find the ScrollView at {{0.0, 84.0}, {375.0, 434.0}}
+    t =    22.02s Find the ScrollView at {{0.0, 84.0}, {375.0, 434.0}}
+    t =    22.04s Find the Application 'com.sqldpass.app.adsqa'
+    t =    22.05s Find the ScrollView at {{0.0, 84.0}, {375.0, 434.0}}
+    t =    22.07s Find the ScrollView (Element at index 1)
+    t =    22.09s Find the ScrollView at {{16.0, -376.0}, {343.0, 165.0}}
+    t =    22.10s Find the ScrollView (Element at index 2)
+    t =    22.12s Find the ScrollView at {{16.0, 165.5}, {343.0, 124.0}}
+    t =    22.14s Find the ScrollView at {{16.0, 165.5}, {343.0, 124.0}}
+    t =    22.15s Find the Application 'com.sqldpass.app.adsqa'
+    t =    22.17s Find the ScrollView at {{16.0, 165.5}, {343.0, 124.0}}
+    t =    22.19s Find the ScrollView (Element at index 3)
+    t =    22.21s Find the ScrollView at {{16.0, -125.0}, {343.0, 106.0}}
+    t =    22.22s Find the ScrollView at {{0.0, 84.0}, {375.0, 434.0}}
+    t =    22.24s Find the ScrollView at {{16.0, 165.5}, {343.0, 124.0}}
+    t =    22.26s Find the ScrollView at {{0.0, 84.0}, {375.0, 434.0}}
+    t =    22.27s Find the ScrollView at {{0.0, 84.0}, {375.0, 434.0}}
+    t =    22.29s Press ScrollView at {{0.0, 84.0}, {375.0, 434.0}}[0.03, 0.20] for 0.1 seconds, then drag to ScrollView at {{0.0, 84.0}, {375.0, 434.0}}[0.03, 0.80] with velocity of 500.00 pixels per second, and then hold for 0.0 seconds
+    t =    22.29s     Wait for com.sqldpass.app.adsqa to idle
+    t =    22.29s     Find the ScrollView at {{0.0, 84.0}, {375.0, 434.0}}
+    t =    22.31s     Check for interrupting elements affecting ScrollView
+    t =    22.33s     Synthesize event
+    t =    22.33s         Find the ScrollView at {{0.0, 84.0}, {375.0, 434.0}}
+    t =    22.34s         Find the ScrollView at {{0.0, 84.0}, {375.0, 434.0}}
+    t =    22.36s         Find the ScrollView at {{0.0, 84.0}, {375.0, 434.0}}
+    t =    22.38s         Find the ScrollView at {{0.0, 84.0}, {375.0, 434.0}}
+    t =    22.40s         Find the ScrollView at {{0.0, 84.0}, {375.0, 434.0}}
+    t =    23.23s     Wait for com.sqldpass.app.adsqa to idle
+    t =    23.24s Find the "SQL 자동 줄바꿈" Button
+    t =    23.29s Find the "SQL 자동 줄바꿈" Button
+    t =    23.32s Tap "SQL 자동 줄바꿈" Button
+    t =    23.32s     Wait for com.sqldpass.app.adsqa to idle
+    t =    23.32s     Find the "SQL 자동 줄바꿈" Button
+    t =    23.34s     Check for interrupting elements affecting "SQL 자동 줄바꿈" Button
+    t =    23.36s     Synthesize event
+    t =    23.65s     Wait for com.sqldpass.app.adsqa to idle
+    t =    23.66s Swipe up Application 'com.sqldpass.app.adsqa'
+    t =    23.66s     Wait for com.sqldpass.app.adsqa to idle
+    t =    23.66s     Find the Application 'com.sqldpass.app.adsqa'
+    t =    23.70s     Check for interrupting elements affecting "SQLD Pass" Application
+    t =    23.72s     Synthesize event
+    t =    24.15s     Wait for com.sqldpass.app.adsqa to idle
+    t =    26.25s Find the Application 'com.sqldpass.app.adsqa'
+    t =    26.31s Requesting snapshot of accessibility hierarchy for app with pid 51420
+    t =    26.38s Requesting snapshot of accessibility hierarchy for app with pid 51420
+UX-CAPTURE iphone-375/lesson-lower
+    t =    26.40s Waiting 12.0s for "mark-section" Any to exist
+    t =    27.46s     Checking `Expect predicate `existsNoRetry == 1` for object "mark-section" Any`
+    t =    27.46s         Checking existence of `"mark-section" Any`
+    t =    27.49s Find the "mark-section" Any
+    t =    27.51s Find the "mark-section" Button
+    t =    27.52s Tap "mark-section" Button
+    t =    27.53s     Wait for com.sqldpass.app.adsqa to idle
+    t =    27.53s     Find the "mark-section" Button
+    t =    27.53s     Check for interrupting elements affecting "mark-section" Button
+    t =    27.56s     Synthesize event
+    t =    27.85s     Wait for com.sqldpass.app.adsqa to idle
+    t =    27.86s Waiting 12.0s for "tab-exams" Any to exist
+    t =    28.92s     Checking `Expect predicate `existsNoRetry == 1` for object "tab-exams" Any`
+    t =    28.92s         Checking existence of `"tab-exams" Any`
+    t =    28.95s Find the "tab-exams" Any
+    t =    28.96s Find the "tab-exams" Other
+    t =    28.97s Tap "tab-exams" Other
+    t =    28.97s     Wait for com.sqldpass.app.adsqa to idle
+    t =    28.97s     Find the "tab-exams" Other
+    t =    28.98s     Check for interrupting elements affecting "tab-exams" Other
+    t =    29.00s     Synthesize event
+    t =    29.30s     Wait for com.sqldpass.app.adsqa to idle
+    t =    29.30s Checking existence of `"resume-mock" Any`
+    t =    29.39s Find the Application 'com.sqldpass.app.adsqa'
+    t =    29.44s Requesting snapshot of accessibility hierarchy for app with pid 51420
+    t =    29.61s Requesting snapshot of accessibility hierarchy for app with pid 51420
+UX-CAPTURE iphone-375/mock-catalog
+    t =    29.65s Waiting 12.0s for "mock-SQLD-M01" Any to exist
+    t =    30.69s     Checking `Expect predicate `existsNoRetry == 1` for object "mock-SQLD-M01" Any`
+    t =    30.70s         Checking existence of `"mock-SQLD-M01" Any`
+    t =    30.75s Find the "mock-SQLD-M01" Any
+    t =    30.78s Find the "mock-SQLD-M01" Button
+    t =    30.81s Tap "mock-SQLD-M01" Button
+    t =    30.81s     Wait for com.sqldpass.app.adsqa to idle
+    t =    30.81s     Find the "mock-SQLD-M01" Button
+    t =    30.83s     Check for interrupting elements affecting "mock-SQLD-M01" Button
+    t =    30.86s     Synthesize event
+    t =    31.15s     Wait for com.sqldpass.app.adsqa to idle
+    t =    31.16s Find the Application 'com.sqldpass.app.adsqa'
+    t =    31.18s Requesting snapshot of accessibility hierarchy for app with pid 51420
+    t =    31.23s Requesting snapshot of accessibility hierarchy for app with pid 51420
+UX-CAPTURE iphone-375/mock-intro
+    t =    31.24s Waiting 12.0s for "start-mock-timed" Any to exist
+    t =    32.29s     Checking `Expect predicate `existsNoRetry == 1` for object "start-mock-timed" Any`
+    t =    32.30s         Checking existence of `"start-mock-timed" Any`
+    t =    32.32s Find the "start-mock-timed" Any
+    t =    32.34s Find the "start-mock-timed" Button
+    t =    32.36s Tap "start-mock-timed" Button
+    t =    32.36s     Wait for com.sqldpass.app.adsqa to idle
+    t =    32.36s     Find the "start-mock-timed" Button
+    t =    32.36s     Check for interrupting elements affecting "start-mock-timed" Button
+    t =    32.38s     Synthesize event
+    t =    32.67s     Wait for com.sqldpass.app.adsqa to idle
+    t =    32.67s Find the Application 'com.sqldpass.app.adsqa'
+    t =    32.73s Requesting snapshot of accessibility hierarchy for app with pid 51420
+    t =    32.78s Requesting snapshot of accessibility hierarchy for app with pid 51420
+UX-CAPTURE iphone-375/exam-question
+    t =    32.79s Waiting 12.0s for "mock-option-2" Any to exist
+    t =    33.84s     Checking `Expect predicate `existsNoRetry == 1` for object "mock-option-2" Any`
+    t =    33.85s         Checking existence of `"mock-option-2" Any`
+    t =    33.89s Find the "mock-option-2" Any
+    t =    33.91s Find the "mock-option-2" Other
+    t =    33.93s Tap "mock-option-2" Other
+    t =    33.93s     Wait for com.sqldpass.app.adsqa to idle
+    t =    33.94s     Find the "mock-option-2" Other
+    t =    33.95s     Check for interrupting elements affecting "mock-option-2" Other
+    t =    33.96s     Synthesize event
+    t =    34.25s     Wait for com.sqldpass.app.adsqa to idle
+    t =    34.25s Waiting 12.0s for "mock-next" Any to exist
+    t =    35.29s     Checking `Expect predicate `existsNoRetry == 1` for object "mock-next" Any`
+    t =    35.29s         Checking existence of `"mock-next" Any`
+    t =    35.32s Find the "mock-next" Any
+    t =    35.34s Find the "mock-next" Button
+    t =    35.36s Tap "mock-next" Button
+    t =    35.36s     Wait for com.sqldpass.app.adsqa to idle
+    t =    35.36s     Find the "mock-next" Button
+    t =    35.37s     Check for interrupting elements affecting "mock-next" Button
+    t =    35.38s     Synthesize event
+    t =    35.67s     Wait for com.sqldpass.app.adsqa to idle
+    t =    35.67s Waiting 12.0s for "mock-option-2" Any to exist
+    t =    36.71s     Checking `Expect predicate `existsNoRetry == 1` for object "mock-option-2" Any`
+    t =    36.71s         Checking existence of `"mock-option-2" Any`
+    t =    36.76s Find the "mock-option-2" Any
+    t =    36.78s Find the "mock-option-2" Other
+    t =    36.80s Find the Application 'com.sqldpass.app.adsqa'
+    t =    36.81s Get all elements bound by index for: Descendants matching type ScrollView
+    t =    36.81s Find the ScrollView (Element at index 0)
+    t =    36.82s Find the ScrollView at {{0.0, 156.0}, {375.0, 442.0}}
+    t =    36.83s Find the ScrollView at {{0.0, 156.0}, {375.0, 442.0}}
+    t =    36.84s Find the Application 'com.sqldpass.app.adsqa'
+    t =    36.84s Find the ScrollView at {{0.0, 156.0}, {375.0, 442.0}}
+    t =    36.85s Find the ScrollView at {{0.0, 156.0}, {375.0, 442.0}}
+    t =    36.86s Find the ScrollView at {{0.0, 156.0}, {375.0, 442.0}}
+    t =    36.87s Press ScrollView at {{0.0, 156.0}, {375.0, 442.0}}[0.03, 0.80] for 0.1 seconds, then drag to ScrollView at {{0.0, 156.0}, {375.0, 442.0}}[0.03, 0.20] with velocity of 500.00 pixels per second, and then hold for 0.0 seconds
+    t =    36.87s     Wait for com.sqldpass.app.adsqa to idle
+    t =    36.87s     Find the ScrollView at {{0.0, 156.0}, {375.0, 442.0}}
+    t =    36.88s     Check for interrupting elements affecting ScrollView
+    t =    36.88s     Synthesize event
+    t =    36.89s         Find the ScrollView at {{0.0, 156.0}, {375.0, 442.0}}
+    t =    36.89s         Find the ScrollView at {{0.0, 156.0}, {375.0, 442.0}}
+    t =    36.90s         Find the ScrollView at {{0.0, 156.0}, {375.0, 442.0}}
+    t =    37.02s         Find the ScrollView at {{0.0, 156.0}, {375.0, 442.0}}
+    t =    37.03s         Find the ScrollView at {{0.0, 156.0}, {375.0, 442.0}}
+    t =    37.85s     Wait for com.sqldpass.app.adsqa to idle
+    t =    38.53s Find the "mock-option-2" Other
+    t =    38.58s Find the "mock-option-2" Other
+    t =    38.60s Tap "mock-option-2" Other
+    t =    38.60s     Wait for com.sqldpass.app.adsqa to idle
+    t =    38.60s     Find the "mock-option-2" Other
+    t =    38.62s     Check for interrupting elements affecting "mock-option-2" Other
+    t =    38.63s     Synthesize event
+    t =    38.92s     Wait for com.sqldpass.app.adsqa to idle
+    t =    38.92s Waiting 12.0s for "flag-mock" Any to exist
+    t =    39.94s     Checking `Expect predicate `existsNoRetry == 1` for object "flag-mock" Any`
+    t =    39.95s         Checking existence of `"flag-mock" Any`
+    t =    39.99s Find the "flag-mock" Any
+    t =    40.02s Find the "flag-mock" Button
+    t =    40.04s Tap "flag-mock" Button
+    t =    40.04s     Wait for com.sqldpass.app.adsqa to idle
+    t =    40.04s     Find the "flag-mock" Button
+    t =    40.05s     Check for interrupting elements affecting "flag-mock" Button
+    t =    40.07s     Synthesize event
+    t =    40.35s     Wait for com.sqldpass.app.adsqa to idle
+    t =    40.36s Waiting 12.0s for "mock-sheet" Any to exist
+    t =    41.39s     Checking `Expect predicate `existsNoRetry == 1` for object "mock-sheet" Any`
+    t =    41.39s         Checking existence of `"mock-sheet" Any`
+    t =    41.40s Find the "mock-sheet" Any
+    t =    41.41s Find the "mock-sheet" Button
+    t =    41.42s Tap "mock-sheet" Button
+    t =    41.42s     Wait for com.sqldpass.app.adsqa to idle
+    t =    41.42s     Find the "mock-sheet" Button
+    t =    41.43s     Check for interrupting elements affecting "mock-sheet" Button
+    t =    41.44s     Synthesize event
+    t =    41.73s     Wait for com.sqldpass.app.adsqa to idle
+    t =    41.73s Waiting 12.0s for "sheet-filter-unanswered" Any to exist
+    t =    42.78s     Checking `Expect predicate `existsNoRetry == 1` for object "sheet-filter-unanswered" Any`
+    t =    42.78s         Checking existence of `"sheet-filter-unanswered" Any`
+    t =    42.83s Find the "sheet-filter-unanswered" Any
+    t =    42.85s Find the "sheet-filter-unanswered" Button
+    t =    42.87s Tap "sheet-filter-unanswered" Button
+    t =    42.87s     Wait for com.sqldpass.app.adsqa to idle
+    t =    42.87s     Find the "sheet-filter-unanswered" Button
+    t =    42.89s     Check for interrupting elements affecting "sheet-filter-unanswered" Button
+    t =    42.91s     Synthesize event
+    t =    43.20s     Wait for com.sqldpass.app.adsqa to idle
+    t =    43.20s Find the Application 'com.sqldpass.app.adsqa'
+    t =    43.25s Requesting snapshot of accessibility hierarchy for app with pid 51420
+    t =    43.33s Requesting snapshot of accessibility hierarchy for app with pid 51420
+UX-CAPTURE iphone-375/answer-sheet-unanswered
+    t =    43.35s Checking existence of `"mock-sheet-1" Any`
+    t =    43.38s Waiting 12.0s for "sheet-filter-all" Any to exist
+    t =    44.42s     Checking `Expect predicate `existsNoRetry == 1` for object "sheet-filter-all" Any`
+    t =    44.42s         Checking existence of `"sheet-filter-all" Any`
+    t =    44.46s Find the "sheet-filter-all" Any
+    t =    44.48s Find the "sheet-filter-all" Button
+    t =    44.50s Tap "sheet-filter-all" Button
+    t =    44.50s     Wait for com.sqldpass.app.adsqa to idle
+    t =    44.51s     Find the "sheet-filter-all" Button
+    t =    44.52s     Check for interrupting elements affecting "sheet-filter-all" Button
+    t =    44.54s     Synthesize event
+    t =    44.82s     Wait for com.sqldpass.app.adsqa to idle
+    t =    44.82s Waiting 12.0s for "mock-sheet-50" Any to exist
+    t =    45.86s     Checking `Expect predicate `existsNoRetry == 1` for object "mock-sheet-50" Any`
+    t =    45.86s         Checking existence of `"mock-sheet-50" Any`
+    t =    45.93s Find the "mock-sheet-50" Any
+    t =    45.96s Find the "mock-sheet-50" Button
+    t =    45.99s Find the Application 'com.sqldpass.app.adsqa'
+    t =    46.00s Get all elements bound by index for: Descendants matching type ScrollView
+    t =    46.01s Find the ScrollView (Element at index 0)
+    t =    46.02s Find the ScrollView at {{0.0, 156.0}, {375.0, 442.0}}
+    t =    46.04s Find the ScrollView at {{0.0, 156.0}, {375.0, 442.0}}
+    t =    46.05s Find the Application 'com.sqldpass.app.adsqa'
+    t =    46.06s Find the ScrollView at {{0.0, 156.0}, {375.0, 442.0}}
+    t =    46.07s Find the ScrollView at {{0.0, 156.0}, {375.0, 442.0}}
+    t =    46.09s Find the ScrollView at {{0.0, 156.0}, {375.0, 442.0}}
+    t =    46.10s Press ScrollView at {{0.0, 156.0}, {375.0, 442.0}}[0.03, 0.80] for 0.1 seconds, then drag to ScrollView at {{0.0, 156.0}, {375.0, 442.0}}[0.03, 0.20] with velocity of 500.00 pixels per second, and then hold for 0.0 seconds
+    t =    46.10s     Wait for com.sqldpass.app.adsqa to idle
+    t =    46.10s     Find the ScrollView at {{0.0, 156.0}, {375.0, 442.0}}
+    t =    46.11s     Check for interrupting elements affecting ScrollView
+    t =    46.12s     Synthesize event
+    t =    46.12s         Find the ScrollView at {{0.0, 156.0}, {375.0, 442.0}}
+    t =    46.13s         Find the ScrollView at {{0.0, 156.0}, {375.0, 442.0}}
+    t =    46.15s         Find the ScrollView at {{0.0, 156.0}, {375.0, 442.0}}
+    t =    46.16s         Find the ScrollView at {{0.0, 156.0}, {375.0, 442.0}}
+    t =    46.17s         Find the ScrollView at {{0.0, 156.0}, {375.0, 442.0}}
+    t =    47.00s     Wait for com.sqldpass.app.adsqa to idle
+    t =    47.85s Find the "mock-sheet-50" Button
+    t =    47.92s Find the "mock-sheet-50" Button
+    t =    47.95s Tap "mock-sheet-50" Button
+    t =    47.95s     Wait for com.sqldpass.app.adsqa to idle
+    t =    47.95s     Find the "mock-sheet-50" Button
+    t =    47.98s     Check for interrupting elements affecting "mock-sheet-50" Button
+    t =    47.99s     Synthesize event
+    t =    48.28s     Wait for com.sqldpass.app.adsqa to idle
+    t =    48.29s Find the Application 'com.sqldpass.app.adsqa'
+    t =    48.33s Requesting snapshot of accessibility hierarchy for app with pid 51420
+    t =    48.51s Requesting snapshot of accessibility hierarchy for app with pid 51420
+UX-CAPTURE iphone-375/exam-last
+    t =    48.55s Waiting 12.0s for "leave-exam" Any to exist
+    t =    49.59s     Checking `Expect predicate `existsNoRetry == 1` for object "leave-exam" Any`
+    t =    49.60s         Checking existence of `"leave-exam" Any`
+    t =    49.62s Find the "leave-exam" Any
+    t =    49.64s Find the "leave-exam" Button
+    t =    49.65s Tap "leave-exam" Button
+    t =    49.65s     Wait for com.sqldpass.app.adsqa to idle
+    t =    49.66s     Find the "leave-exam" Button
+    t =    49.66s     Check for interrupting elements affecting "leave-exam" Button
+    t =    49.69s     Synthesize event
+    t =    49.99s     Wait for com.sqldpass.app.adsqa to idle
+    t =    49.99s Find the Application 'com.sqldpass.app.adsqa'
+    t =    50.04s Requesting snapshot of accessibility hierarchy for app with pid 51420
+    t =    50.08s Requesting snapshot of accessibility hierarchy for app with pid 51420
+UX-CAPTURE iphone-375/paused
+    t =    50.09s Find the StaticText (First Match)
+    t =    50.10s Checking existence of `"mock-option-1" Any`
+    t =    50.11s Terminate com.sqldpass.app.adsqa:51420
+    t =    51.15s Open com.sqldpass.app.adsqa
+    t =    51.15s     Launch com.sqldpass.app.adsqa
+    t =    51.18s         Wait for accessibility to load
+    t =    51.19s         Setting up automation session
+    t =    52.46s         Wait for com.sqldpass.app.adsqa to idle
+    t =    53.53s Waiting 12.0s for "tab-today" Any to exist
+    t =    54.57s     Checking `Expect predicate `existsNoRetry == 1` for object "tab-today" Any`
+    t =    54.57s         Checking existence of `"tab-today" Any`
+    t =    54.60s Find the "tab-today" Any
+    t =    54.63s Find the "tab-today" Other
+    t =    54.65s Tap "tab-today" Other
+    t =    54.65s     Wait for com.sqldpass.app.adsqa to idle
+    t =    54.65s     Find the "tab-today" Other
+    t =    54.65s     Check for interrupting elements affecting "tab-today" Other
+    t =    54.67s     Synthesize event
+    t =    54.96s     Wait for com.sqldpass.app.adsqa to idle
+    t =    54.96s Find the Application 'com.sqldpass.app.adsqa'
+    t =    55.00s Requesting snapshot of accessibility hierarchy for app with pid 51771
+    t =    55.08s Requesting snapshot of accessibility hierarchy for app with pid 51771
+UX-CAPTURE iphone-375/paused-home
+    t =    55.09s Checking existence of `"small-ad-slot" Any`
+    t =    55.12s Waiting 12.0s for "resume-mock" Any to exist
+    t =    56.17s     Checking `Expect predicate `existsNoRetry == 1` for object "resume-mock" Any`
+    t =    56.17s         Checking existence of `"resume-mock" Any`
+    t =    56.21s Find the "resume-mock" Any
+    t =    56.24s Find the "resume-mock" Button
+    t =    56.25s Tap "resume-mock" Button
+    t =    56.26s     Wait for com.sqldpass.app.adsqa to idle
+    t =    56.26s     Find the "resume-mock" Button
+    t =    56.27s     Check for interrupting elements affecting "resume-mock" Button
+    t =    56.28s     Synthesize event
+    t =    56.57s     Wait for com.sqldpass.app.adsqa to idle
+    t =    56.58s Find the StaticText (First Match)
+    t =    56.60s Waiting 12.0s for "resume-paused-mock" Any to exist
+    t =    57.65s     Checking `Expect predicate `existsNoRetry == 1` for object "resume-paused-mock" Any`
+    t =    57.65s         Checking existence of `"resume-paused-mock" Any`
+    t =    57.67s Find the "resume-paused-mock" Any
+    t =    57.69s Find the "resume-paused-mock" Button
+    t =    57.70s Tap "resume-paused-mock" Button
+    t =    57.70s     Wait for com.sqldpass.app.adsqa to idle
+    t =    57.70s     Find the "resume-paused-mock" Button
+    t =    57.71s     Check for interrupting elements affecting "resume-paused-mock" Button
+    t =    57.73s     Synthesize event
+    t =    58.01s     Wait for com.sqldpass.app.adsqa to idle
+    t =    58.01s Pressing Home button
+    t =    58.48s Open com.sqldpass.app.adsqa
+    t =    58.48s     Activate com.sqldpass.app.adsqa
+    t =    58.99s         Wait for com.sqldpass.app.adsqa to idle
+    t =    59.03s Waiting 12.0s for "resume-paused-mock" Any to exist
+    t =    60.05s     Checking `Expect predicate `existsNoRetry == 1` for object "resume-paused-mock" Any`
+    t =    60.05s         Checking existence of `"resume-paused-mock" Any`
+    t =    60.08s Find the Application 'com.sqldpass.app.adsqa'
+    t =    60.12s Requesting snapshot of accessibility hierarchy for app with pid 51771
+    t =    60.17s Requesting snapshot of accessibility hierarchy for app with pid 51771
+UX-CAPTURE iphone-375/background-pause
+    t =    60.17s Waiting 12.0s for "pause-submit" Any to exist
+    t =    61.21s     Checking `Expect predicate `existsNoRetry == 1` for object "pause-submit" Any`
+    t =    61.22s         Checking existence of `"pause-submit" Any`
+    t =    61.24s Find the "pause-submit" Any
+    t =    61.26s Find the "pause-submit" Button
+    t =    61.27s Tap "pause-submit" Button
+    t =    61.27s     Wait for com.sqldpass.app.adsqa to idle
+    t =    61.27s     Find the "pause-submit" Button
+    t =    61.28s     Check for interrupting elements affecting "pause-submit" Button
+    t =    61.29s     Synthesize event
+    t =    61.58s     Wait for com.sqldpass.app.adsqa to idle
+    t =    61.58s Find the Application 'com.sqldpass.app.adsqa'
+    t =    61.63s Requesting snapshot of accessibility hierarchy for app with pid 51771
+    t =    61.69s Requesting snapshot of accessibility hierarchy for app with pid 51771
+UX-CAPTURE iphone-375/submit-confirm
+    t =    61.70s Waiting 12.0s for "취소" Any to exist
+    t =    62.73s     Checking `Expect predicate `existsNoRetry == 1` for object "취소" Any`
+    t =    62.73s         Checking existence of `"취소" Any`
+    t =    62.77s Find the "취소" Any
+    t =    62.79s Find the "취소" Button
+    t =    62.81s Tap "취소" Button
+    t =    62.81s     Wait for com.sqldpass.app.adsqa to idle
+    t =    62.81s     Find the "취소" Button
+    t =    62.82s     Check for interrupting elements affecting "취소" Button
+    t =    62.83s     Synthesize event
+    t =    63.22s     Wait for com.sqldpass.app.adsqa to idle
+    t =    63.23s Checking existence of `"resume-paused-mock" Any`
+    t =    63.24s Waiting 12.0s for "pause-submit" Any to exist
+    t =    64.29s     Checking `Expect predicate `existsNoRetry == 1` for object "pause-submit" Any`
+    t =    64.30s         Checking existence of `"pause-submit" Any`
+    t =    64.32s Find the "pause-submit" Any
+    t =    64.34s Find the "pause-submit" Button
+    t =    64.36s Tap "pause-submit" Button
+    t =    64.36s     Wait for com.sqldpass.app.adsqa to idle
+    t =    64.36s     Find the "pause-submit" Button
+    t =    64.36s     Check for interrupting elements affecting "pause-submit" Button
+    t =    64.38s     Synthesize event
+    t =    64.66s     Wait for com.sqldpass.app.adsqa to idle
+    t =    64.67s Waiting 12.0s for "제출하고 결과 보기" Any to exist
+    t =    65.71s     Checking `Expect predicate `existsNoRetry == 1` for object "제출하고 결과 보기" Any`
+    t =    65.71s         Checking existence of `"제출하고 결과 보기" Any`
+    t =    65.74s Find the "제출하고 결과 보기" Any
+    t =    65.77s Find the "제출하고 결과 보기" Button
+    t =    65.79s Tap "제출하고 결과 보기" Button
+    t =    65.79s     Wait for com.sqldpass.app.adsqa to idle
+    t =    65.79s     Find the "제출하고 결과 보기" Button
+    t =    65.80s     Check for interrupting elements affecting "제출하고 결과 보기" Button
+    t =    65.81s     Synthesize event
+    t =    66.10s     Wait for com.sqldpass.app.adsqa to idle
+    t =    66.10s Find the Application 'com.sqldpass.app.adsqa'
+    t =    66.16s Requesting snapshot of accessibility hierarchy for app with pid 51771
+    t =    66.22s Requesting snapshot of accessibility hierarchy for app with pid 51771
+UX-CAPTURE iphone-375/exam-result
+    t =    66.23s Checking existence of `StaticText (First Match)`
+    t =    66.23s Waiting 12.0s for "review-wrong" Any to exist
+    t =    67.29s     Checking `Expect predicate `existsNoRetry == 1` for object "review-wrong" Any`
+    t =    67.29s         Checking existence of `"review-wrong" Any`
+    t =    67.33s Find the "review-wrong" Any
+    t =    67.36s Find the "review-wrong" Button
+    t =    67.37s Tap "review-wrong" Button
+    t =    67.37s     Wait for com.sqldpass.app.adsqa to idle
+    t =    67.38s     Find the "review-wrong" Button
+    t =    67.39s     Check for interrupting elements affecting "review-wrong" Button
+    t =    67.40s     Synthesize event
+    t =    67.69s     Wait for com.sqldpass.app.adsqa to idle
+    t =    67.70s Find the Application 'com.sqldpass.app.adsqa'
+    t =    67.76s Requesting snapshot of accessibility hierarchy for app with pid 51771
+    t =    67.83s Requesting snapshot of accessibility hierarchy for app with pid 51771
+UX-CAPTURE iphone-375/review-wrong
+    t =    67.85s Waiting 12.0s for "mock-review-next" Any to exist
+    t =    68.88s     Checking `Expect predicate `existsNoRetry == 1` for object "mock-review-next" Any`
+    t =    68.88s         Checking existence of `"mock-review-next" Any`
+    t =    68.91s Find the "mock-review-next" Any
+    t =    68.92s Find the "mock-review-next" Button
+    t =    68.93s Tap "mock-review-next" Button
+    t =    68.93s     Wait for com.sqldpass.app.adsqa to idle
+    t =    68.93s     Find the "mock-review-next" Button
+    t =    68.94s     Check for interrupting elements affecting "mock-review-next" Button
+    t =    68.96s     Synthesize event
+    t =    69.25s     Wait for com.sqldpass.app.adsqa to idle
+    t =    69.25s Find the Application 'com.sqldpass.app.adsqa'
+    t =    69.31s Requesting snapshot of accessibility hierarchy for app with pid 51771
+    t =    69.38s Requesting snapshot of accessibility hierarchy for app with pid 51771
+UX-CAPTURE iphone-375/review-unanswered
+    t =    69.40s Waiting 12.0s for "mock-theory" Any to exist
+    t =    70.43s     Checking `Expect predicate `existsNoRetry == 1` for object "mock-theory" Any`
+    t =    70.43s         Checking existence of `"mock-theory" Any`
+    t =    70.48s Find the "mock-theory" Any
+    t =    70.51s Find the "mock-theory" Button
+    t =    70.54s Find the Application 'com.sqldpass.app.adsqa'
+    t =    70.54s Get all elements bound by index for: Descendants matching type ScrollView
+    t =    70.55s Find the ScrollView (Element at index 0)
+    t =    70.56s Find the ScrollView at {{0.0, 148.0}, {375.0, 370.0}}
+    t =    70.57s Find the ScrollView at {{0.0, 148.0}, {375.0, 370.0}}
+    t =    70.58s Find the Application 'com.sqldpass.app.adsqa'
+    t =    70.59s Find the ScrollView at {{0.0, 148.0}, {375.0, 370.0}}
+    t =    70.72s Find the ScrollView at {{0.0, 148.0}, {375.0, 370.0}}
+    t =    70.73s Find the ScrollView at {{0.0, 148.0}, {375.0, 370.0}}
+    t =    70.75s Press ScrollView at {{0.0, 148.0}, {375.0, 370.0}}[0.03, 0.80] for 0.1 seconds, then drag to ScrollView at {{0.0, 148.0}, {375.0, 370.0}}[0.03, 0.20] with velocity of 500.00 pixels per second, and then hold for 0.0 seconds
+    t =    70.75s     Wait for com.sqldpass.app.adsqa to idle
+    t =    70.75s     Find the ScrollView at {{0.0, 148.0}, {375.0, 370.0}}
+    t =    70.76s     Check for interrupting elements affecting ScrollView
+    t =    70.77s     Synthesize event
+    t =    70.77s         Find the ScrollView at {{0.0, 148.0}, {375.0, 370.0}}
+    t =    70.78s         Find the ScrollView at {{0.0, 148.0}, {375.0, 370.0}}
+    t =    70.79s         Find the ScrollView at {{0.0, 148.0}, {375.0, 370.0}}
+    t =    70.80s         Find the ScrollView at {{0.0, 148.0}, {375.0, 370.0}}
+    t =    70.81s         Find the ScrollView at {{0.0, 148.0}, {375.0, 370.0}}
+    t =    71.55s     Wait for com.sqldpass.app.adsqa to idle
+    t =    73.17s Find the "mock-theory" Button
+    t =    73.22s Find the "mock-theory" Button
+    t =    73.25s Find the Application 'com.sqldpass.app.adsqa'
+    t =    73.26s Get all elements bound by index for: Descendants matching type ScrollView
+    t =    73.26s Find the ScrollView (Element at index 0)
+    t =    73.27s Find the ScrollView at {{0.0, 148.0}, {375.0, 370.0}}
+    t =    73.29s Find the ScrollView at {{0.0, 148.0}, {375.0, 370.0}}
+    t =    73.29s Find the Application 'com.sqldpass.app.adsqa'
+    t =    73.30s Find the ScrollView at {{0.0, 148.0}, {375.0, 370.0}}
+    t =    73.32s Find the ScrollView at {{0.0, 148.0}, {375.0, 370.0}}
+    t =    73.33s Find the ScrollView at {{0.0, 148.0}, {375.0, 370.0}}
+    t =    73.34s Press ScrollView at {{0.0, 148.0}, {375.0, 370.0}}[0.03, 0.80] for 0.1 seconds, then drag to ScrollView at {{0.0, 148.0}, {375.0, 370.0}}[0.03, 0.20] with velocity of 500.00 pixels per second, and then hold for 0.0 seconds
+    t =    73.34s     Wait for com.sqldpass.app.adsqa to idle
+    t =    73.34s     Find the ScrollView at {{0.0, 148.0}, {375.0, 370.0}}
+    t =    73.35s     Check for interrupting elements affecting ScrollView
+    t =    73.36s     Synthesize event
+    t =    73.36s         Find the ScrollView at {{0.0, 148.0}, {375.0, 370.0}}
+    t =    73.37s         Find the ScrollView at {{0.0, 148.0}, {375.0, 370.0}}
+    t =    73.38s         Find the ScrollView at {{0.0, 148.0}, {375.0, 370.0}}
+    t =    73.39s         Find the ScrollView at {{0.0, 148.0}, {375.0, 370.0}}
+    t =    73.51s         Find the ScrollView at {{0.0, 148.0}, {375.0, 370.0}}
+    t =    74.26s     Wait for com.sqldpass.app.adsqa to idle
+    t =    75.85s Find the "mock-theory" Button
+    t =    75.90s Find the "mock-theory" Button
+    t =    75.93s Find the Application 'com.sqldpass.app.adsqa'
+    t =    75.94s Get all elements bound by index for: Descendants matching type ScrollView
+    t =    75.95s Find the ScrollView (Element at index 0)
+    t =    75.96s Find the ScrollView at {{0.0, 148.0}, {375.0, 370.0}}
+    t =    75.97s Find the ScrollView at {{0.0, 148.0}, {375.0, 370.0}}
+    t =    75.98s Find the Application 'com.sqldpass.app.adsqa'
+    t =    75.99s Find the ScrollView at {{0.0, 148.0}, {375.0, 370.0}}
+    t =    76.00s Find the ScrollView at {{0.0, 148.0}, {375.0, 370.0}}
+    t =    76.01s Find the ScrollView at {{0.0, 148.0}, {375.0, 370.0}}
+    t =    76.02s Press ScrollView at {{0.0, 148.0}, {375.0, 370.0}}[0.03, 0.80] for 0.1 seconds, then drag to ScrollView at {{0.0, 148.0}, {375.0, 370.0}}[0.03, 0.20] with velocity of 500.00 pixels per second, and then hold for 0.0 seconds
+    t =    76.02s     Wait for com.sqldpass.app.adsqa to idle
+    t =    76.02s     Find the ScrollView at {{0.0, 148.0}, {375.0, 370.0}}
+    t =    76.03s     Check for interrupting elements affecting ScrollView
+    t =    76.04s     Synthesize event
+    t =    76.05s         Find the ScrollView at {{0.0, 148.0}, {375.0, 370.0}}
+    t =    76.06s         Find the ScrollView at {{0.0, 148.0}, {375.0, 370.0}}
+    t =    76.07s         Find the ScrollView at {{0.0, 148.0}, {375.0, 370.0}}
+    t =    76.08s         Find the ScrollView at {{0.0, 148.0}, {375.0, 370.0}}
+    t =    76.09s         Find the ScrollView at {{0.0, 148.0}, {375.0, 370.0}}
+    t =    76.83s     Wait for com.sqldpass.app.adsqa to idle
+    t =    78.43s Find the "mock-theory" Button
+    t =    78.49s Find the "mock-theory" Button
+    t =    78.52s Find the Application 'com.sqldpass.app.adsqa'
+    t =    78.52s Get all elements bound by index for: Descendants matching type ScrollView
+    t =    78.53s Find the ScrollView (Element at index 0)
+    t =    78.54s Find the ScrollView at {{0.0, 148.0}, {375.0, 370.0}}
+    t =    78.55s Find the ScrollView at {{0.0, 148.0}, {375.0, 370.0}}
+    t =    78.56s Find the Application 'com.sqldpass.app.adsqa'
+    t =    78.57s Find the ScrollView at {{0.0, 148.0}, {375.0, 370.0}}
+    t =    78.59s Find the ScrollView at {{0.0, 148.0}, {375.0, 370.0}}
+    t =    78.60s Find the ScrollView at {{0.0, 148.0}, {375.0, 370.0}}
+    t =    78.61s Press ScrollView at {{0.0, 148.0}, {375.0, 370.0}}[0.03, 0.80] for 0.1 seconds, then drag to ScrollView at {{0.0, 148.0}, {375.0, 370.0}}[0.03, 0.20] with velocity of 500.00 pixels per second, and then hold for 0.0 seconds
+    t =    78.61s     Wait for com.sqldpass.app.adsqa to idle
+    t =    78.61s     Find the ScrollView at {{0.0, 148.0}, {375.0, 370.0}}
+    t =    78.62s     Check for interrupting elements affecting ScrollView
+    t =    78.63s     Synthesize event
+    t =    78.63s         Find the ScrollView at {{0.0, 148.0}, {375.0, 370.0}}
+    t =    78.64s         Find the ScrollView at {{0.0, 148.0}, {375.0, 370.0}}
+    t =    78.65s         Find the ScrollView at {{0.0, 148.0}, {375.0, 370.0}}
+    t =    78.66s         Find the ScrollView at {{0.0, 148.0}, {375.0, 370.0}}
+    t =    78.67s         Find the ScrollView at {{0.0, 148.0}, {375.0, 370.0}}
+    t =    79.42s     Wait for com.sqldpass.app.adsqa to idle
+    t =    81.02s Find the "mock-theory" Button
+    t =    81.07s Find the "mock-theory" Button
+    t =    81.10s Tap "mock-theory" Button
+    t =    81.10s     Wait for com.sqldpass.app.adsqa to idle
+    t =    81.10s     Find the "mock-theory" Button
+    t =    81.12s     Check for interrupting elements affecting "mock-theory" Button
+    t =    81.13s     Synthesize event
+    t =    81.42s     Wait for com.sqldpass.app.adsqa to idle
+    t =    81.43s Find the Application 'com.sqldpass.app.adsqa'
+    t =    81.48s Requesting snapshot of accessibility hierarchy for app with pid 51771
+    t =    81.64s Requesting snapshot of accessibility hierarchy for app with pid 51771
+UX-CAPTURE iphone-375/review-related-textbook
+    t =    81.67s Waiting 12.0s for "뒤로" Any to exist
+    t =    82.72s     Checking `Expect predicate `existsNoRetry == 1` for object "뒤로" Any`
+    t =    82.72s         Checking existence of `"뒤로" Any`
+    t =    82.74s Find the "뒤로" Any
+    t =    82.76s Find the "뒤로" Button
+    t =    82.78s Tap "뒤로" Button
+    t =    82.78s     Wait for com.sqldpass.app.adsqa to idle
+    t =    82.78s     Find the "뒤로" Button
+    t =    82.78s     Check for interrupting elements affecting "뒤로" Button
+    t =    82.81s     Synthesize event
+    t =    83.11s     Wait for com.sqldpass.app.adsqa to idle
+    t =    83.12s Checking existence of `"mock-review-next" Any`
+    t =    83.14s Waiting 12.0s for "review-picker" Any to exist
+    t =    84.18s     Checking `Expect predicate `existsNoRetry == 1` for object "review-picker" Any`
+    t =    84.18s         Checking existence of `"review-picker" Any`
+    t =    84.20s Find the "review-picker" Any
+    t =    84.22s Find the "review-picker" Button
+    t =    84.23s Tap "review-picker" Button
+    t =    84.23s     Wait for com.sqldpass.app.adsqa to idle
+    t =    84.23s     Find the "review-picker" Button
+    t =    84.24s     Check for interrupting elements affecting "review-picker" Button
+    t =    84.26s     Synthesize event
+    t =    84.55s     Wait for com.sqldpass.app.adsqa to idle
+    t =    84.56s Find the Application 'com.sqldpass.app.adsqa'
+    t =    84.62s Requesting snapshot of accessibility hierarchy for app with pid 51771
+    t =    84.73s Requesting snapshot of accessibility hierarchy for app with pid 51771
+UX-CAPTURE iphone-375/review-picker
+    t =    84.76s Waiting 12.0s for "review-jump-50" Any to exist
+    t =    85.78s     Checking `Expect predicate `existsNoRetry == 1` for object "review-jump-50" Any`
+    t =    85.78s         Checking existence of `"review-jump-50" Any`
+    t =    85.81s Find the "review-jump-50" Any
+    t =    85.85s Find the "review-jump-50" Button
+    t =    85.88s Find the Application 'com.sqldpass.app.adsqa'
+    t =    85.90s Get all elements bound by index for: Descendants matching type ScrollView
+    t =    85.91s Find the ScrollView (Element at index 0)
+    t =    85.93s Find the ScrollView at {{16.0, 40.0}, {343.0, 615.0}}
+    t =    85.95s Find the ScrollView at {{16.0, 40.0}, {343.0, 615.0}}
+    t =    85.96s Find the Application 'com.sqldpass.app.adsqa'
+    t =    85.98s Find the ScrollView at {{16.0, 40.0}, {343.0, 615.0}}
+    t =    86.00s Find the ScrollView (Element at index 1)
+    t =    86.02s Find the ScrollView at {{0.0, 148.0}, {375.0, 370.0}}
+    t =    86.03s Find the ScrollView at {{0.0, 148.0}, {375.0, 370.0}}
+    t =    86.05s Find the Application 'com.sqldpass.app.adsqa'
+    t =    86.07s Find the ScrollView at {{0.0, 148.0}, {375.0, 370.0}}
+    t =    86.09s Find the ScrollView at {{16.0, 40.0}, {343.0, 615.0}}
+    t =    86.11s Find the ScrollView at {{16.0, 40.0}, {343.0, 615.0}}
+    t =    86.12s Press ScrollView at {{16.0, 40.0}, {343.0, 615.0}}[0.03, 0.80] for 0.1 seconds, then drag to ScrollView at {{16.0, 40.0}, {343.0, 615.0}}[0.03, 0.20] with velocity of 500.00 pixels per second, and then hold for 0.0 seconds
+    t =    86.12s     Wait for com.sqldpass.app.adsqa to idle
+    t =    86.12s     Find the ScrollView at {{16.0, 40.0}, {343.0, 615.0}}
+    t =    86.14s     Check for interrupting elements affecting ScrollView
+    t =    86.16s     Synthesize event
+    t =    86.16s         Find the ScrollView at {{16.0, 40.0}, {343.0, 615.0}}
+    t =    86.18s         Find the ScrollView at {{16.0, 40.0}, {343.0, 615.0}}
+    t =    86.20s         Find the ScrollView at {{16.0, 40.0}, {343.0, 615.0}}
+    t =    86.21s         Find the ScrollView at {{16.0, 40.0}, {343.0, 615.0}}
+    t =    86.23s         Find the ScrollView at {{16.0, 40.0}, {343.0, 615.0}}
+    t =    87.28s     Wait for com.sqldpass.app.adsqa to idle
+    t =    87.29s Find the "review-jump-50" Button
+    t =    87.33s Find the "review-jump-50" Button
+    t =    87.37s Tap "review-jump-50" Button
+    t =    87.37s     Wait for com.sqldpass.app.adsqa to idle
+    t =    87.37s     Find the "review-jump-50" Button
+    t =    87.40s     Check for interrupting elements affecting "review-jump-50" Button
+    t =    87.42s     Synthesize event
+    t =    87.70s     Wait for com.sqldpass.app.adsqa to idle
+    t =    87.71s Find the Application 'com.sqldpass.app.adsqa'
+    t =    87.78s Requesting snapshot of accessibility hierarchy for app with pid 51771
+    t =    87.99s Requesting snapshot of accessibility hierarchy for app with pid 51771
+UX-CAPTURE iphone-375/review-last
+    t =    88.03s Waiting 12.0s for "save-mock-question" Any to exist
+    t =    89.07s     Checking `Expect predicate `existsNoRetry == 1` for object "save-mock-question" Any`
+    t =    89.07s         Checking existence of `"save-mock-question" Any`
+    t =    89.12s Find the "save-mock-question" Any
+    t =    89.14s Find the "save-mock-question" Button
+    t =    89.17s Find the Application 'com.sqldpass.app.adsqa'
+    t =    89.20s Get all elements bound by index for: Descendants matching type ScrollView
+    t =    89.22s Find the ScrollView (Element at index 0)
+    t =    89.25s Find the ScrollView at {{0.0, 148.0}, {375.0, 370.0}}
+    t =    89.28s Find the ScrollView at {{0.0, 148.0}, {375.0, 370.0}}
+    t =    89.30s Find the Application 'com.sqldpass.app.adsqa'
+    t =    89.33s Find the ScrollView at {{0.0, 148.0}, {375.0, 370.0}}
+    t =    89.36s Find the ScrollView (Element at index 1)
+    t =    89.39s Find the ScrollView at {{16.0, 535.5}, {343.0, 288.0}}
+    t =    89.52s Find the ScrollView at {{16.0, 535.5}, {343.0, 288.0}}
+    t =    89.55s Find the Application 'com.sqldpass.app.adsqa'
+    t =    89.57s Find the ScrollView (Element at index 2)
+    t =    89.60s Find the ScrollView at {{16.0, 1507.0}, {343.0, 83.0}}
+    t =    89.63s Find the ScrollView at {{16.0, 1507.0}, {343.0, 83.0}}
+    t =    89.65s Find the Application 'com.sqldpass.app.adsqa'
+    t =    89.68s Find the ScrollView (Element at index 3)
+    t =    89.70s Find the ScrollView at {{0.0, 148.0}, {375.0, 370.0}}
+    t =    89.73s Find the ScrollView at {{0.0, 148.0}, {375.0, 370.0}}
+    t =    89.76s Press ScrollView at {{0.0, 148.0}, {375.0, 370.0}}[0.03, 0.80] for 0.1 seconds, then drag to ScrollView at {{0.0, 148.0}, {375.0, 370.0}}[0.03, 0.20] with velocity of 500.00 pixels per second, and then hold for 0.0 seconds
+    t =    89.76s     Wait for com.sqldpass.app.adsqa to idle
+    t =    89.76s     Find the ScrollView at {{0.0, 148.0}, {375.0, 370.0}}
+    t =    89.79s     Check for interrupting elements affecting ScrollView
+    t =    89.81s     Synthesize event
+    t =    89.82s         Find the ScrollView at {{0.0, 148.0}, {375.0, 370.0}}
+    t =    89.84s         Find the ScrollView at {{0.0, 148.0}, {375.0, 370.0}}
+    t =    89.87s         Find the ScrollView at {{0.0, 148.0}, {375.0, 370.0}}
+    t =    89.90s         Find the ScrollView at {{0.0, 148.0}, {375.0, 370.0}}
+    t =    89.92s         Find the ScrollView at {{0.0, 148.0}, {375.0, 370.0}}
+    t =    90.69s     Wait for com.sqldpass.app.adsqa to idle
+    t =    92.28s Find the "save-mock-question" Button
+    t =    92.31s Find the "save-mock-question" Button
+    t =    92.33s Find the Application 'com.sqldpass.app.adsqa'
+    t =    92.35s Get all elements bound by index for: Descendants matching type ScrollView
+    t =    92.38s Find the ScrollView (Element at index 0)
+    t =    92.41s Find the ScrollView at {{0.0, 148.0}, {375.0, 370.0}}
+    t =    92.43s Find the ScrollView at {{0.0, 148.0}, {375.0, 370.0}}
+    t =    92.46s Find the Application 'com.sqldpass.app.adsqa'
+    t =    92.48s Find the ScrollView at {{0.0, 148.0}, {375.0, 370.0}}
+    t =    92.52s Find the ScrollView (Element at index 1)
+    t =    92.55s Find the ScrollView at {{16.0, 150.0}, {343.0, 288.0}}
+    t =    92.58s Find the ScrollView at {{16.0, 150.0}, {343.0, 288.0}}
+    t =    92.61s Find the Application 'com.sqldpass.app.adsqa'
+    t =    92.63s Find the ScrollView at {{16.0, 150.0}, {343.0, 288.0}}
+    t =    92.67s Find the ScrollView (Element at index 2)
+    t =    92.69s Find the ScrollView at {{16.0, 1121.5}, {343.0, 83.0}}
+    t =    92.72s Find the ScrollView at {{16.0, 1121.5}, {343.0, 83.0}}
+    t =    92.74s Find the Application 'com.sqldpass.app.adsqa'
+    t =    92.77s Find the ScrollView (Element at index 3)
+    t =    92.80s Find the ScrollView at {{0.0, 148.0}, {375.0, 370.0}}
+    t =    92.82s Find the ScrollView at {{16.0, 150.0}, {343.0, 288.0}}
+    t =    92.85s Find the ScrollView at {{0.0, 148.0}, {375.0, 370.0}}
+    t =    92.88s Find the ScrollView at {{0.0, 148.0}, {375.0, 370.0}}
+    t =    92.90s Press ScrollView at {{0.0, 148.0}, {375.0, 370.0}}[0.03, 0.80] for 0.1 seconds, then drag to ScrollView at {{0.0, 148.0}, {375.0, 370.0}}[0.03, 0.20] with velocity of 500.00 pixels per second, and then hold for 0.0 seconds
+    t =    92.90s     Wait for com.sqldpass.app.adsqa to idle
+    t =    92.90s     Find the ScrollView at {{0.0, 148.0}, {375.0, 370.0}}
+    t =    92.93s     Check for interrupting elements affecting ScrollView
+    t =    92.96s     Synthesize event
+    t =    92.96s         Find the ScrollView at {{0.0, 148.0}, {375.0, 370.0}}
+    t =    92.99s         Find the ScrollView at {{0.0, 148.0}, {375.0, 370.0}}
+    t =    93.02s         Find the ScrollView at {{0.0, 148.0}, {375.0, 370.0}}
+    t =    93.04s         Find the ScrollView at {{0.0, 148.0}, {375.0, 370.0}}
+    t =    93.07s         Find the ScrollView at {{0.0, 148.0}, {375.0, 370.0}}
+    t =    93.84s     Wait for com.sqldpass.app.adsqa to idle
+    t =    95.43s Find the "save-mock-question" Button
+    t =    95.47s Find the "save-mock-question" Button
+    t =    95.50s Find the Application 'com.sqldpass.app.adsqa'
+    t =    95.53s Get all elements bound by index for: Descendants matching type ScrollView
+    t =    95.55s Find the ScrollView (Element at index 0)
+    t =    95.58s Find the ScrollView at {{0.0, 148.0}, {375.0, 370.0}}
+    t =    95.61s Find the ScrollView at {{0.0, 148.0}, {375.0, 370.0}}
+    t =    95.64s Find the Application 'com.sqldpass.app.adsqa'
+    t =    95.67s Find the ScrollView at {{0.0, 148.0}, {375.0, 370.0}}
+    t =    95.70s Find the ScrollView (Element at index 1)
+    t =    95.73s Find the ScrollView at {{16.0, -235.5}, {343.0, 288.0}}
+    t =    95.76s Find the ScrollView (Element at index 2)
+    t =    95.79s Find the ScrollView at {{16.0, 736.0}, {343.0, 83.0}}
+    t =    95.82s Find the ScrollView at {{16.0, 736.0}, {343.0, 83.0}}
+    t =    95.84s Find the Application 'com.sqldpass.app.adsqa'
+    t =    95.87s Find the ScrollView (Element at index 3)
+    t =    95.90s Find the ScrollView at {{0.0, 148.0}, {375.0, 370.0}}
+    t =    95.93s Find the ScrollView at {{0.0, 148.0}, {375.0, 370.0}}
+    t =    95.96s Press ScrollView at {{0.0, 148.0}, {375.0, 370.0}}[0.03, 0.80] for 0.1 seconds, then drag to ScrollView at {{0.0, 148.0}, {375.0, 370.0}}[0.03, 0.20] with velocity of 500.00 pixels per second, and then hold for 0.0 seconds
+    t =    95.96s     Wait for com.sqldpass.app.adsqa to idle
+    t =    95.96s     Find the ScrollView at {{0.0, 148.0}, {375.0, 370.0}}
+    t =    95.99s     Check for interrupting elements affecting ScrollView
+    t =    96.01s     Synthesize event
+    t =    96.01s         Find the ScrollView at {{0.0, 148.0}, {375.0, 370.0}}
+    t =    96.04s         Find the ScrollView at {{0.0, 148.0}, {375.0, 370.0}}
+    t =    96.07s         Find the ScrollView at {{0.0, 148.0}, {375.0, 370.0}}
+    t =    96.09s         Find the ScrollView at {{0.0, 148.0}, {375.0, 370.0}}
+    t =    96.12s         Find the ScrollView at {{0.0, 148.0}, {375.0, 370.0}}
+    t =    96.88s     Wait for com.sqldpass.app.adsqa to idle
+    t =    98.47s Find the "save-mock-question" Button
+    t =    98.52s Find the "save-mock-question" Button
+    t =    98.55s Find the Application 'com.sqldpass.app.adsqa'
+    t =    98.57s Get all elements bound by index for: Descendants matching type ScrollView
+    t =    98.60s Find the ScrollView (Element at index 0)
+    t =    98.63s Find the ScrollView at {{0.0, 148.0}, {375.0, 370.0}}
+    t =    98.67s Find the ScrollView at {{0.0, 148.0}, {375.0, 370.0}}
+    t =    98.69s Find the Application 'com.sqldpass.app.adsqa'
+    t =    98.72s Find the ScrollView at {{0.0, 148.0}, {375.0, 370.0}}
+    t =    98.76s Find the ScrollView (Element at index 1)
+    t =    98.79s Find the ScrollView at {{16.0, -617.0}, {343.0, 288.0}}
+    t =    98.81s Find the ScrollView (Element at index 2)
+    t =    98.84s Find the ScrollView at {{16.0, 354.5}, {343.0, 83.0}}
+    t =    98.87s Find the ScrollView at {{16.0, 354.5}, {343.0, 83.0}}
+    t =    98.90s Find the Application 'com.sqldpass.app.adsqa'
+    t =    98.94s Find the ScrollView at {{16.0, 354.5}, {343.0, 83.0}}
+    t =    98.97s Find the ScrollView (Element at index 3)
+    t =    99.00s Find the ScrollView at {{0.0, 148.0}, {375.0, 370.0}}
+    t =    99.03s Find the ScrollView at {{16.0, 354.5}, {343.0, 83.0}}
+    t =    99.06s Find the ScrollView at {{0.0, 148.0}, {375.0, 370.0}}
+    t =    99.09s Find the ScrollView at {{0.0, 148.0}, {375.0, 370.0}}
+    t =    99.12s Press ScrollView at {{0.0, 148.0}, {375.0, 370.0}}[0.03, 0.80] for 0.1 seconds, then drag to ScrollView at {{0.0, 148.0}, {375.0, 370.0}}[0.03, 0.20] with velocity of 500.00 pixels per second, and then hold for 0.0 seconds
+    t =    99.12s     Wait for com.sqldpass.app.adsqa to idle
+    t =    99.12s     Find the ScrollView at {{0.0, 148.0}, {375.0, 370.0}}
+    t =    99.15s     Check for interrupting elements affecting ScrollView
+    t =    99.17s     Synthesize event
+    t =    99.17s         Find the ScrollView at {{0.0, 148.0}, {375.0, 370.0}}
+    t =    99.20s         Find the ScrollView at {{0.0, 148.0}, {375.0, 370.0}}
+    t =    99.24s         Find the ScrollView at {{0.0, 148.0}, {375.0, 370.0}}
+    t =    99.28s         Find the ScrollView at {{0.0, 148.0}, {375.0, 370.0}}
+    t =    99.41s         Find the ScrollView at {{0.0, 148.0}, {375.0, 370.0}}
+    t =   100.18s     Wait for com.sqldpass.app.adsqa to idle
+    t =   101.77s Find the "save-mock-question" Button
+    t =   101.81s Find the "save-mock-question" Button
+    t =   101.84s Find the Application 'com.sqldpass.app.adsqa'
+    t =   101.87s Get all elements bound by index for: Descendants matching type ScrollView
+    t =   101.90s Find the ScrollView (Element at index 0)
+    t =   101.93s Find the ScrollView at {{0.0, 148.0}, {375.0, 370.0}}
+    t =   101.96s Find the ScrollView at {{0.0, 148.0}, {375.0, 370.0}}
+    t =   101.99s Find the Application 'com.sqldpass.app.adsqa'
+    t =   102.02s Find the ScrollView at {{0.0, 148.0}, {375.0, 370.0}}
+    t =   102.05s Find the ScrollView (Element at index 1)
+    t =   102.08s Find the ScrollView at {{16.0, -999.5}, {343.0, 288.0}}
+    t =   102.11s Find the ScrollView (Element at index 2)
+    t =   102.14s Find the ScrollView at {{16.0, -28.0}, {343.0, 83.0}}
+    t =   102.17s Find the ScrollView (Element at index 3)
+    t =   102.20s Find the ScrollView at {{0.0, 148.0}, {375.0, 370.0}}
+    t =   102.23s Find the ScrollView at {{0.0, 148.0}, {375.0, 370.0}}
+    t =   102.26s Press ScrollView at {{0.0, 148.0}, {375.0, 370.0}}[0.03, 0.80] for 0.1 seconds, then drag to ScrollView at {{0.0, 148.0}, {375.0, 370.0}}[0.03, 0.20] with velocity of 500.00 pixels per second, and then hold for 0.0 seconds
+    t =   102.26s     Wait for com.sqldpass.app.adsqa to idle
+    t =   102.26s     Find the ScrollView at {{0.0, 148.0}, {375.0, 370.0}}
+    t =   102.29s     Check for interrupting elements affecting ScrollView
+    t =   102.32s     Synthesize event
+    t =   102.32s         Find the ScrollView at {{0.0, 148.0}, {375.0, 370.0}}
+    t =   102.36s         Find the ScrollView at {{0.0, 148.0}, {375.0, 370.0}}
+    t =   102.39s         Find the ScrollView at {{0.0, 148.0}, {375.0, 370.0}}
+    t =   102.42s         Find the ScrollView at {{0.0, 148.0}, {375.0, 370.0}}
+    t =   102.45s         Find the ScrollView at {{0.0, 148.0}, {375.0, 370.0}}
+    t =   103.21s     Wait for com.sqldpass.app.adsqa to idle
+    t =   104.83s Find the "save-mock-question" Button
+    t =   104.89s Find the "save-mock-question" Button
+    t =   104.92s Tap "save-mock-question" Button
+    t =   104.92s     Wait for com.sqldpass.app.adsqa to idle
+    t =   104.92s     Find the "save-mock-question" Button
+    t =   104.95s     Check for interrupting elements affecting "save-mock-question" Button
+    t =   104.98s     Synthesize event
+    t =   105.27s     Wait for com.sqldpass.app.adsqa to idle
+    t =   105.27s Waiting 12.0s for "toggle-mock-note" Any to exist
+    t =   106.29s     Checking `Expect predicate `existsNoRetry == 1` for object "toggle-mock-note" Any`
+    t =   106.29s         Checking existence of `"toggle-mock-note" Any`
+    t =   106.35s Find the "toggle-mock-note" Any
+    t =   106.38s Find the "toggle-mock-note" Button
+    t =   106.41s Tap "toggle-mock-note" Button
+    t =   106.41s     Wait for com.sqldpass.app.adsqa to idle
+    t =   106.41s     Find the "toggle-mock-note" Button
+    t =   106.43s     Check for interrupting elements affecting "toggle-mock-note" Button
+    t =   106.46s     Synthesize event
+    t =   106.75s     Wait for com.sqldpass.app.adsqa to idle
+    t =   106.76s Tap "mock-note" Any
+    t =   106.76s     Wait for com.sqldpass.app.adsqa to idle
+    t =   106.76s     Find the "mock-note" Any
+    t =   106.80s     Check for interrupting elements affecting "mock-note" TextView
+    t =   106.84s     Synthesize event
+    t =   106.85s         Scroll element to visible
+    t =   106.85s         Find the "mock-note" TextView
+    t =   106.88s         Computed hit point {22, 292} after scrolling to visible
+    t =   107.17s     Wait for com.sqldpass.app.adsqa to idle
+    t =   107.62s Type 'Check the conditio...' into "mock-note" TextView
+    t =   107.62s     Wait for com.sqldpass.app.adsqa to idle
+    t =   108.00s     Find the "mock-note" TextView
+    t =   108.05s     Check for interrupting elements affecting "mock-note" TextView
+    t =   108.10s     Synthesize event
+    t =   108.90s     Wait for com.sqldpass.app.adsqa to idle
+    t =   108.91s Find the Application 'com.sqldpass.app.adsqa'
+    t =   108.96s Requesting snapshot of accessibility hierarchy for app with pid 51771
+    t =   109.11s Requesting snapshot of accessibility hierarchy for app with pid 51771
+UX-CAPTURE iphone-375/review-note-keyboard
+    t =   109.17s Waiting 12.0s for "save-mock-note" Any to exist
+    t =   110.20s     Checking `Expect predicate `existsNoRetry == 1` for object "save-mock-note" Any`
+    t =   110.20s         Checking existence of `"save-mock-note" Any`
+    t =   110.24s Find the "save-mock-note" Any
+    t =   110.29s Find the "save-mock-note" Button
+    t =   110.34s Find the Application 'com.sqldpass.app.adsqa'
+    t =   110.36s Get all elements bound by index for: Descendants matching type ScrollView
+    t =   110.40s Find the ScrollView (Element at index 0)
+    t =   110.43s Find the ScrollView (Element at index 1)
+    t =   110.46s Find the ScrollView at {{0.0, 140.0}, {375.0, 142.0}}
+    t =   110.49s Find the ScrollView at {{0.0, 140.0}, {375.0, 142.0}}
+    t =   110.53s Find the Application 'com.sqldpass.app.adsqa'
+    t =   110.55s Find the ScrollView at {{0.0, 140.0}, {375.0, 142.0}}
+    t =   110.59s Find the ScrollView (Element at index 2)
+    t =   110.62s Find the ScrollView at {{16.0, -1699.5}, {343.0, 288.0}}
+    t =   110.65s Find the ScrollView (Element at index 3)
+    t =   110.69s Find the ScrollView at {{16.0, -728.0}, {343.0, 83.0}}
+    t =   110.72s Find the ScrollView (Element at index 4)
+    t =   110.76s Find the ScrollView at {{0.0, 140.0}, {375.0, 142.0}}
+    t =   110.80s Find the ScrollView at {{0.0, 140.0}, {375.0, 142.0}}
+    t =   110.84s Press ScrollView at {{0.0, 140.0}, {375.0, 142.0}}[0.03, 0.80] for 0.1 seconds, then drag to ScrollView at {{0.0, 140.0}, {375.0, 142.0}}[0.03, 0.20] with velocity of 500.00 pixels per second, and then hold for 0.0 seconds
+    t =   110.84s     Wait for com.sqldpass.app.adsqa to idle
+    t =   110.84s     Find the ScrollView at {{0.0, 140.0}, {375.0, 142.0}}
+    t =   110.87s     Check for interrupting elements affecting ScrollView
+    t =   110.91s     Synthesize event
+    t =   110.91s         Find the ScrollView at {{0.0, 140.0}, {375.0, 142.0}}
+    t =   110.94s         Find the ScrollView at {{0.0, 140.0}, {375.0, 142.0}}
+    t =   110.98s         Find the ScrollView at {{0.0, 140.0}, {375.0, 142.0}}
+    t =   111.01s         Find the ScrollView at {{0.0, 140.0}, {375.0, 142.0}}
+    t =   111.05s         Find the ScrollView at {{0.0, 140.0}, {375.0, 142.0}}
+    t =   111.55s     Wait for com.sqldpass.app.adsqa to idle
+    t =   112.65s Find the "save-mock-note" Button
+    t =   112.69s Find the "save-mock-note" Button
+    t =   112.73s Tap "save-mock-note" Button
+    t =   112.73s     Wait for com.sqldpass.app.adsqa to idle
+    t =   112.73s     Find the "save-mock-note" Button
+    t =   112.78s     Check for interrupting elements affecting "save-mock-note" Button
+    t =   112.82s     Synthesize event
+    t =   113.10s     Wait for com.sqldpass.app.adsqa to idle
+    t =   113.10s Waiting 12.0s for "tab-exams" Any to exist
+    t =   114.12s     Checking `Expect predicate `existsNoRetry == 1` for object "tab-exams" Any`
+    t =   114.12s         Checking existence of `"tab-exams" Any`
+    t =   114.18s Find the "tab-exams" Any
+    t =   114.22s Find the "tab-exams" Other
+    t =   114.25s Tap "tab-exams" Other
+    t =   114.25s     Wait for com.sqldpass.app.adsqa to idle
+    t =   114.25s     Find the "tab-exams" Other
+    t =   114.28s     Check for interrupting elements affecting "tab-exams" Other
+    t =   114.32s     Synthesize event
+    t =   114.61s     Wait for com.sqldpass.app.adsqa to idle
+    t =   114.85s Waiting 12.0s for "mock-saved" Any to exist
+    t =   115.88s     Checking `Expect predicate `existsNoRetry == 1` for object "mock-saved" Any`
+    t =   115.88s         Checking existence of `"mock-saved" Any`
+    t =   115.90s Find the "mock-saved" Any
+    t =   115.93s Find the "mock-saved" Button
+    t =   115.96s Tap "mock-saved" Button
+    t =   115.96s     Wait for com.sqldpass.app.adsqa to idle
+    t =   115.96s     Find the "mock-saved" Button
+    t =   115.98s     Check for interrupting elements affecting "mock-saved" Button
+    t =   116.02s     Synthesize event
+    t =   116.31s     Wait for com.sqldpass.app.adsqa to idle
+    t =   116.31s Find the Application 'com.sqldpass.app.adsqa'
+    t =   116.34s Requesting snapshot of accessibility hierarchy for app with pid 51771
+    t =   116.39s Requesting snapshot of accessibility hierarchy for app with pid 51771
+UX-CAPTURE iphone-375/saved-mock
+    t =   116.40s Waiting 12.0s for "tab-exams" Any to exist
+    t =   117.44s     Checking `Expect predicate `existsNoRetry == 1` for object "tab-exams" Any`
+    t =   117.44s         Checking existence of `"tab-exams" Any`
+    t =   117.44s Find the "tab-exams" Any
+    t =   117.46s Find the "tab-exams" Other
+    t =   117.47s Tap "tab-exams" Other
+    t =   117.47s     Wait for com.sqldpass.app.adsqa to idle
+    t =   117.47s     Find the "tab-exams" Other
+    t =   117.48s     Check for interrupting elements affecting "tab-exams" Other
+    t =   117.49s     Synthesize event
+    t =   117.78s     Wait for com.sqldpass.app.adsqa to idle
+    t =   117.78s Waiting 12.0s for "mock-history" Any to exist
+    t =   118.83s     Checking `Expect predicate `existsNoRetry == 1` for object "mock-history" Any`
+    t =   118.83s         Checking existence of `"mock-history" Any`
+    t =   118.89s Find the "mock-history" Any
+    t =   118.96s Find the "mock-history" Button
+    t =   119.00s Tap "mock-history" Button
+    t =   119.00s     Wait for com.sqldpass.app.adsqa to idle
+    t =   119.00s     Find the "mock-history" Button
+    t =   119.02s     Check for interrupting elements affecting "mock-history" Button
+    t =   119.06s     Synthesize event
+    t =   119.35s     Wait for com.sqldpass.app.adsqa to idle
+    t =   119.35s Find the Application 'com.sqldpass.app.adsqa'
+    t =   119.38s Requesting snapshot of accessibility hierarchy for app with pid 51771
+    t =   119.44s Requesting snapshot of accessibility hierarchy for app with pid 51771
+UX-CAPTURE iphone-375/exam-history
+    t =   119.45s Waiting 12.0s for "tab-review" Any to exist
+    t =   120.46s     Checking `Expect predicate `existsNoRetry == 1` for object "tab-review" Any`
+    t =   120.46s         Checking existence of `"tab-review" Any`
+    t =   120.47s Find the "tab-review" Any
+    t =   120.49s Find the "tab-review" Other
+    t =   120.50s Tap "tab-review" Other
+    t =   120.50s     Wait for com.sqldpass.app.adsqa to idle
+    t =   120.50s     Find the "tab-review" Other
+    t =   120.50s     Check for interrupting elements affecting "tab-review" Other
+    t =   120.52s     Synthesize event
+    t =   120.81s     Wait for com.sqldpass.app.adsqa to idle
+    t =   120.82s Waiting 12.0s for "batch-5" Any to exist
+    t =   121.86s     Checking `Expect predicate `existsNoRetry == 1` for object "batch-5" Any`
+    t =   121.86s         Checking existence of `"batch-5" Any`
+    t =   121.88s Find the "batch-5" Any
+    t =   121.89s Find the "batch-5" Button
+    t =   121.91s Tap "batch-5" Button
+    t =   121.91s     Wait for com.sqldpass.app.adsqa to idle
+    t =   121.91s     Find the "batch-5" Button
+    t =   121.92s     Check for interrupting elements affecting "batch-5" Button
+    t =   121.94s     Synthesize event
+    t =   122.23s     Wait for com.sqldpass.app.adsqa to idle
+    t =   122.23s Find the Application 'com.sqldpass.app.adsqa'
+    t =   122.26s Requesting snapshot of accessibility hierarchy for app with pid 51771
+    t =   122.38s Requesting snapshot of accessibility hierarchy for app with pid 51771
+UX-CAPTURE iphone-375/practice-list
+    t =   122.40s Waiting 12.0s for Button (First Match) to exist
+    t =   123.41s     Checking `Expect predicate `existsNoRetry == 1` for object Button (First Match)`
+    t =   123.41s         Checking existence of `Button (First Match)`
+    t =   123.42s Find the Button (First Match)
+    t =   123.44s Tap "종합 연습
+72문항 중 선택한 분량 풀기" Button
+    t =   123.44s     Wait for com.sqldpass.app.adsqa to idle
+    t =   123.44s     Find the "종합 연습
+72문항 중 선택한 분량 풀기" Button
+    t =   123.45s     Check for interrupting elements affecting "종합 연습
+72문항 중 선택한 분량 풀기" Button
+    t =   123.47s     Synthesize event
+    t =   123.76s     Wait for com.sqldpass.app.adsqa to idle
+    t =   123.76s Waiting 2.0s for "새 연습 시작" Any to exist
+    t =   124.79s     Checking `Expect predicate `existsNoRetry == 1` for object "새 연습 시작" Any`
+    t =   124.79s         Checking existence of `"새 연습 시작" Any`
+    t =   124.82s         Capturing element debug description
+    t =   125.77s     Checking `Expect predicate `existsNoRetry == 1` for object "새 연습 시작" Any`
+    t =   125.77s         Checking existence of `"새 연습 시작" Any`
+    t =   125.81s         Capturing element debug description
+    t =   125.81s     Checking existence of `"새 연습 시작" Any`
+    t =   125.83s Collecting debug information to assist test failure triage
+    t =   125.83s     Requesting snapshot of accessibility hierarchy for app with pid 51771
+    t =   125.85s Waiting 12.0s for "option-2" Any to exist
+    t =   126.87s     Checking `Expect predicate `existsNoRetry == 1` for object "option-2" Any`
+    t =   126.87s         Checking existence of `"option-2" Any`
+    t =   126.91s Find the "option-2" Any
+    t =   126.94s Find the "option-2" Other
+    t =   126.96s Tap "option-2" Other
+    t =   126.96s     Wait for com.sqldpass.app.adsqa to idle
+    t =   126.96s     Find the "option-2" Other
+    t =   126.97s     Check for interrupting elements affecting "option-2" Other
+    t =   126.99s     Synthesize event
+    t =   127.27s     Wait for com.sqldpass.app.adsqa to idle
+    t =   127.28s Find the Application 'com.sqldpass.app.adsqa'
+    t =   127.33s Requesting snapshot of accessibility hierarchy for app with pid 51771
+    t =   127.40s Requesting snapshot of accessibility hierarchy for app with pid 51771
+UX-CAPTURE iphone-375/practice-selected
+    t =   127.41s Waiting 12.0s for "submit-question" Any to exist
+    t =   128.45s     Checking `Expect predicate `existsNoRetry == 1` for object "submit-question" Any`
+    t =   128.45s         Checking existence of `"submit-question" Any`
+    t =   128.48s Find the "submit-question" Any
+    t =   128.50s Find the "submit-question" Button
+    t =   128.52s Tap "submit-question" Button
+    t =   128.52s     Wait for com.sqldpass.app.adsqa to idle
+    t =   128.52s     Find the "submit-question" Button
+    t =   128.53s     Check for interrupting elements affecting "submit-question" Button
+    t =   128.55s     Synthesize event
+    t =   128.84s     Wait for com.sqldpass.app.adsqa to idle
+    t =   128.84s Find the Application 'com.sqldpass.app.adsqa'
+    t =   128.91s Requesting snapshot of accessibility hierarchy for app with pid 51771
+    t =   128.99s Requesting snapshot of accessibility hierarchy for app with pid 51771
+UX-CAPTURE iphone-375/practice-feedback
+    t =   129.00s Waiting 12.0s for "next-question" Any to exist
+    t =   130.02s     Checking `Expect predicate `existsNoRetry == 1` for object "next-question" Any`
+    t =   130.02s         Checking existence of `"next-question" Any`
+    t =   130.05s Find the "next-question" Any
+    t =   130.06s Find the "next-question" Button
+    t =   130.07s Tap "next-question" Button
+    t =   130.07s     Wait for com.sqldpass.app.adsqa to idle
+    t =   130.08s     Find the "next-question" Button
+    t =   130.09s     Check for interrupting elements affecting "next-question" Button
+    t =   130.11s     Synthesize event
+    t =   130.40s     Wait for com.sqldpass.app.adsqa to idle
+    t =   130.40s Waiting 12.0s for "option-2" Any to exist
+    t =   131.45s     Checking `Expect predicate `existsNoRetry == 1` for object "option-2" Any`
+    t =   131.45s         Checking existence of `"option-2" Any`
+    t =   131.49s Find the "option-2" Any
+    t =   131.52s Find the "option-2" Other
+    t =   131.54s Tap "option-2" Other
+    t =   131.54s     Wait for com.sqldpass.app.adsqa to idle
+    t =   131.54s     Find the "option-2" Other
+    t =   131.56s     Check for interrupting elements affecting "option-2" Other
+    t =   131.57s     Synthesize event
+    t =   131.86s     Wait for com.sqldpass.app.adsqa to idle
+    t =   131.87s Waiting 12.0s for "submit-question" Any to exist
+    t =   132.88s     Checking `Expect predicate `existsNoRetry == 1` for object "submit-question" Any`
+    t =   132.88s         Checking existence of `"submit-question" Any`
+    t =   132.89s Find the "submit-question" Any
+    t =   132.90s Find the "submit-question" Button
+    t =   132.91s Tap "submit-question" Button
+    t =   132.91s     Wait for com.sqldpass.app.adsqa to idle
+    t =   132.92s     Find the "submit-question" Button
+    t =   132.92s     Check for interrupting elements affecting "submit-question" Button
+    t =   132.94s     Synthesize event
+    t =   133.22s     Wait for com.sqldpass.app.adsqa to idle
+    t =   133.23s Waiting 12.0s for "next-question" Any to exist
+    t =   134.27s     Checking `Expect predicate `existsNoRetry == 1` for object "next-question" Any`
+    t =   134.27s         Checking existence of `"next-question" Any`
+    t =   134.30s Find the "next-question" Any
+    t =   134.32s Find the "next-question" Button
+    t =   134.34s Tap "next-question" Button
+    t =   134.34s     Wait for com.sqldpass.app.adsqa to idle
+    t =   134.34s     Find the "next-question" Button
+    t =   134.35s     Check for interrupting elements affecting "next-question" Button
+    t =   134.37s     Synthesize event
+    t =   134.65s     Wait for com.sqldpass.app.adsqa to idle
+    t =   134.66s Waiting 12.0s for "option-2" Any to exist
+    t =   135.69s     Checking `Expect predicate `existsNoRetry == 1` for object "option-2" Any`
+    t =   135.69s         Checking existence of `"option-2" Any`
+    t =   135.74s Find the "option-2" Any
+    t =   135.77s Find the "option-2" Other
+    t =   135.79s Tap "option-2" Other
+    t =   135.79s     Wait for com.sqldpass.app.adsqa to idle
+    t =   135.79s     Find the "option-2" Other
+    t =   135.80s     Check for interrupting elements affecting "option-2" Other
+    t =   135.82s     Synthesize event
+    t =   136.11s     Wait for com.sqldpass.app.adsqa to idle
+    t =   136.11s Waiting 12.0s for "submit-question" Any to exist
+    t =   137.14s     Checking `Expect predicate `existsNoRetry == 1` for object "submit-question" Any`
+    t =   137.15s         Checking existence of `"submit-question" Any`
+    t =   137.18s Find the "submit-question" Any
+    t =   137.20s Find the "submit-question" Button
+    t =   137.21s Tap "submit-question" Button
+    t =   137.21s     Wait for com.sqldpass.app.adsqa to idle
+    t =   137.22s     Find the "submit-question" Button
+    t =   137.22s     Check for interrupting elements affecting "submit-question" Button
+    t =   137.24s     Synthesize event
+    t =   137.53s     Wait for com.sqldpass.app.adsqa to idle
+    t =   137.54s Waiting 12.0s for "next-question" Any to exist
+    t =   138.58s     Checking `Expect predicate `existsNoRetry == 1` for object "next-question" Any`
+    t =   138.58s         Checking existence of `"next-question" Any`
+    t =   138.61s Find the "next-question" Any
+    t =   138.63s Find the "next-question" Button
+    t =   138.65s Tap "next-question" Button
+    t =   138.65s     Wait for com.sqldpass.app.adsqa to idle
+    t =   138.65s     Find the "next-question" Button
+    t =   138.66s     Check for interrupting elements affecting "next-question" Button
+    t =   138.67s     Synthesize event
+    t =   138.96s     Wait for com.sqldpass.app.adsqa to idle
+    t =   138.97s Waiting 12.0s for "option-2" Any to exist
+    t =   140.00s     Checking `Expect predicate `existsNoRetry == 1` for object "option-2" Any`
+    t =   140.00s         Checking existence of `"option-2" Any`
+    t =   140.04s Find the "option-2" Any
+    t =   140.07s Find the "option-2" Other
+    t =   140.09s Tap "option-2" Other
+    t =   140.09s     Wait for com.sqldpass.app.adsqa to idle
+    t =   140.09s     Find the "option-2" Other
+    t =   140.10s     Check for interrupting elements affecting "option-2" Other
+    t =   140.12s     Synthesize event
+    t =   140.41s     Wait for com.sqldpass.app.adsqa to idle
+    t =   140.41s Waiting 12.0s for "submit-question" Any to exist
+    t =   141.43s     Checking `Expect predicate `existsNoRetry == 1` for object "submit-question" Any`
+    t =   141.43s         Checking existence of `"submit-question" Any`
+    t =   141.46s Find the "submit-question" Any
+    t =   141.47s Find the "submit-question" Button
+    t =   141.48s Tap "submit-question" Button
+    t =   141.48s     Wait for com.sqldpass.app.adsqa to idle
+    t =   141.48s     Find the "submit-question" Button
+    t =   141.49s     Check for interrupting elements affecting "submit-question" Button
+    t =   141.51s     Synthesize event
+    t =   141.80s     Wait for com.sqldpass.app.adsqa to idle
+    t =   141.80s Waiting 12.0s for "next-question" Any to exist
+    t =   142.86s     Checking `Expect predicate `existsNoRetry == 1` for object "next-question" Any`
+    t =   142.86s         Checking existence of `"next-question" Any`
+    t =   142.87s Find the "next-question" Any
+    t =   142.88s Find the "next-question" Button
+    t =   142.89s Tap "next-question" Button
+    t =   142.89s     Wait for com.sqldpass.app.adsqa to idle
+    t =   142.89s     Find the "next-question" Button
+    t =   142.90s     Check for interrupting elements affecting "next-question" Button
+    t =   142.92s     Synthesize event
+    t =   143.21s     Wait for com.sqldpass.app.adsqa to idle
+    t =   143.22s Waiting 12.0s for "option-2" Any to exist
+    t =   144.25s     Checking `Expect predicate `existsNoRetry == 1` for object "option-2" Any`
+    t =   144.25s         Checking existence of `"option-2" Any`
+    t =   144.29s Find the "option-2" Any
+    t =   144.32s Find the "option-2" Other
+    t =   144.34s Tap "option-2" Other
+    t =   144.35s     Wait for com.sqldpass.app.adsqa to idle
+    t =   144.35s     Find the "option-2" Other
+    t =   144.36s     Check for interrupting elements affecting "option-2" Other
+    t =   144.38s     Synthesize event
+    t =   144.67s     Wait for com.sqldpass.app.adsqa to idle
+    t =   144.67s Waiting 12.0s for "submit-question" Any to exist
+    t =   145.73s     Checking `Expect predicate `existsNoRetry == 1` for object "submit-question" Any`
+    t =   145.73s         Checking existence of `"submit-question" Any`
+    t =   145.76s Find the "submit-question" Any
+    t =   145.78s Find the "submit-question" Button
+    t =   145.79s Tap "submit-question" Button
+    t =   145.79s     Wait for com.sqldpass.app.adsqa to idle
+    t =   145.80s     Find the "submit-question" Button
+    t =   145.80s     Check for interrupting elements affecting "submit-question" Button
+    t =   145.82s     Synthesize event
+    t =   146.11s     Wait for com.sqldpass.app.adsqa to idle
+    t =   146.11s Waiting 12.0s for "next-question" Any to exist
+    t =   147.13s     Checking `Expect predicate `existsNoRetry == 1` for object "next-question" Any`
+    t =   147.13s         Checking existence of `"next-question" Any`
+    t =   147.15s Find the "next-question" Any
+    t =   147.18s Find the "next-question" Button
+    t =   147.19s Tap "next-question" Button
+    t =   147.19s     Wait for com.sqldpass.app.adsqa to idle
+    t =   147.20s     Find the "next-question" Button
+    t =   147.21s     Check for interrupting elements affecting "next-question" Button
+    t =   147.22s     Synthesize event
+    t =   147.51s     Wait for com.sqldpass.app.adsqa to idle
+    t =   147.52s Find the Application 'com.sqldpass.app.adsqa'
+    t =   147.58s Requesting snapshot of accessibility hierarchy for app with pid 51771
+    t =   147.64s Requesting snapshot of accessibility hierarchy for app with pid 51771
+UX-CAPTURE iphone-375/practice-result
+    t =   147.65s Waiting 12.0s for "tab-records" Any to exist
+    t =   148.68s     Checking `Expect predicate `existsNoRetry == 1` for object "tab-records" Any`
+    t =   148.68s         Checking existence of `"tab-records" Any`
+    t =   148.71s Find the "tab-records" Any
+    t =   148.72s Find the "tab-records" Other
+    t =   148.73s Tap "tab-records" Other
+    t =   148.73s     Wait for com.sqldpass.app.adsqa to idle
+    t =   148.73s     Find the "tab-records" Other
+    t =   148.74s     Check for interrupting elements affecting "tab-records" Other
+    t =   148.76s     Synthesize event
+    t =   149.05s     Wait for com.sqldpass.app.adsqa to idle
+    t =   149.05s Find the Application 'com.sqldpass.app.adsqa'
+    t =   149.11s Requesting snapshot of accessibility hierarchy for app with pid 51771
+    t =   149.18s Requesting snapshot of accessibility hierarchy for app with pid 51771
+UX-CAPTURE iphone-375/records
+    t =   149.20s Waiting 12.0s for "설정" Any to exist
+    t =   150.21s     Checking `Expect predicate `existsNoRetry == 1` for object "설정" Any`
+    t =   150.21s         Checking existence of `"설정" Any`
+    t =   150.23s Find the "설정" Any
+    t =   150.25s Find the "설정" Button
+    t =   150.27s Tap "설정" Button
+    t =   150.27s     Wait for com.sqldpass.app.adsqa to idle
+    t =   150.27s     Find the "설정" Button
+    t =   150.28s     Check for interrupting elements affecting "설정" Button
+    t =   150.30s     Synthesize event
+    t =   150.59s     Wait for com.sqldpass.app.adsqa to idle
+    t =   150.59s Waiting 12.0s for "130%" Any to exist
+    t =   151.61s     Checking `Expect predicate `existsNoRetry == 1` for object "130%" Any`
+    t =   151.61s         Checking existence of `"130%" Any`
+    t =   151.65s Find the "130%" Any
+    t =   151.68s Find the "130%" Button
+    t =   151.70s Find the Application 'com.sqldpass.app.adsqa'
+    t =   151.70s Get all elements bound by index for: Descendants matching type ScrollView
+    t =   151.71s Find the ScrollView (Element at index 0)
+    t =   151.72s Find the ScrollView at {{0.0, 84.0}, {375.0, 434.0}}
+    t =   151.73s Find the ScrollView at {{0.0, 84.0}, {375.0, 434.0}}
+    t =   151.74s Find the Application 'com.sqldpass.app.adsqa'
+    t =   151.75s Find the ScrollView at {{0.0, 84.0}, {375.0, 434.0}}
+    t =   151.76s Find the ScrollView at {{0.0, 84.0}, {375.0, 434.0}}
+    t =   151.77s Find the ScrollView at {{0.0, 84.0}, {375.0, 434.0}}
+    t =   151.78s Press ScrollView at {{0.0, 84.0}, {375.0, 434.0}}[0.03, 0.80] for 0.1 seconds, then drag to ScrollView at {{0.0, 84.0}, {375.0, 434.0}}[0.03, 0.20] with velocity of 500.00 pixels per second, and then hold for 0.0 seconds
+    t =   151.78s     Wait for com.sqldpass.app.adsqa to idle
+    t =   151.78s     Find the ScrollView at {{0.0, 84.0}, {375.0, 434.0}}
+    t =   151.79s     Check for interrupting elements affecting ScrollView
+    t =   151.80s     Synthesize event
+    t =   151.80s         Find the ScrollView at {{0.0, 84.0}, {375.0, 434.0}}
+    t =   151.82s         Find the ScrollView at {{0.0, 84.0}, {375.0, 434.0}}
+    t =   151.83s         Find the ScrollView at {{0.0, 84.0}, {375.0, 434.0}}
+    t =   151.84s         Find the ScrollView at {{0.0, 84.0}, {375.0, 434.0}}
+    t =   151.85s         Find the ScrollView at {{0.0, 84.0}, {375.0, 434.0}}
+    t =   152.67s     Wait for com.sqldpass.app.adsqa to idle
+    t =   152.68s Find the "130%" Button
+    t =   152.72s Find the "130%" Button
+    t =   152.75s Tap "130%" Button
+    t =   152.75s     Wait for com.sqldpass.app.adsqa to idle
+    t =   152.75s     Find the "130%" Button
+    t =   152.76s     Check for interrupting elements affecting "130%" Button
+    t =   152.78s     Synthesize event
+    t =   153.07s     Wait for com.sqldpass.app.adsqa to idle
+    t =   153.07s Waiting 12.0s for "tab-today" Any to exist
+    t =   154.10s     Checking `Expect predicate `existsNoRetry == 1` for object "tab-today" Any`
+    t =   154.10s         Checking existence of `"tab-today" Any`
+    t =   154.12s Find the "tab-today" Any
+    t =   154.14s Find the "tab-today" Other
+    t =   154.15s Tap "tab-today" Other
+    t =   154.15s     Wait for com.sqldpass.app.adsqa to idle
+    t =   154.15s     Find the "tab-today" Other
+    t =   154.16s     Check for interrupting elements affecting "tab-today" Other
+    t =   154.18s     Synthesize event
+    t =   154.46s     Wait for com.sqldpass.app.adsqa to idle
+    t =   154.47s Find the Application 'com.sqldpass.app.adsqa'
+    t =   154.53s Requesting snapshot of accessibility hierarchy for app with pid 51771
+    t =   154.64s Requesting snapshot of accessibility hierarchy for app with pid 51771
+UX-CAPTURE iphone-375/unsaved-settings
+    t =   154.66s Waiting 12.0s for "취소" Any to exist
+    t =   155.69s     Checking `Expect predicate `existsNoRetry == 1` for object "취소" Any`
+    t =   155.69s         Checking existence of `"취소" Any`
+    t =   155.74s Find the "취소" Any
+    t =   155.76s Find the "취소" Button
+    t =   155.78s Tap "취소" Button
+    t =   155.78s     Wait for com.sqldpass.app.adsqa to idle
+    t =   155.78s     Find the "취소" Button
+    t =   155.80s     Check for interrupting elements affecting "취소" Button
+    t =   155.81s     Synthesize event
+    t =   156.10s     Wait for com.sqldpass.app.adsqa to idle
+    t =   156.11s Waiting 12.0s for "어둡게" Any to exist
+    t =   157.14s     Checking `Expect predicate `existsNoRetry == 1` for object "어둡게" Any`
+    t =   157.14s         Checking existence of `"어둡게" Any`
+    t =   157.16s Find the "어둡게" Any
+    t =   157.18s Find the "어둡게" Button
+    t =   157.19s Tap "어둡게" Button
+    t =   157.19s     Wait for com.sqldpass.app.adsqa to idle
+    t =   157.19s     Find the "어둡게" Button
+    t =   157.21s     Check for interrupting elements affecting "어둡게" Button
+    t =   157.22s     Synthesize event
+    t =   157.50s     Wait for com.sqldpass.app.adsqa to idle
+    t =   157.51s Waiting 12.0s for "save-textbook-settings" Any to exist
+    t =   158.51s     Checking `Expect predicate `existsNoRetry == 1` for object "save-textbook-settings" Any`
+    t =   158.52s         Checking existence of `"save-textbook-settings" Any`
+    t =   158.54s Find the "save-textbook-settings" Any
+    t =   158.56s Find the "save-textbook-settings" Button
+    t =   158.58s Tap "save-textbook-settings" Button
+    t =   158.58s     Wait for com.sqldpass.app.adsqa to idle
+    t =   158.58s     Find the "save-textbook-settings" Button
+    t =   158.59s     Check for interrupting elements affecting "save-textbook-settings" Button
+    t =   158.60s     Synthesize event
+    t =   158.90s     Wait for com.sqldpass.app.adsqa to idle
+    t =   158.90s Waiting 12.0s for "tab-today" Any to exist
+    t =   159.93s     Checking `Expect predicate `existsNoRetry == 1` for object "tab-today" Any`
+    t =   159.93s         Checking existence of `"tab-today" Any`
+    t =   159.96s Find the "tab-today" Any
+    t =   159.98s Find the "tab-today" Other
+    t =   159.99s Tap "tab-today" Other
+    t =   159.99s     Wait for com.sqldpass.app.adsqa to idle
+    t =   160.00s     Find the "tab-today" Other
+    t =   160.00s     Check for interrupting elements affecting "tab-today" Other
+    t =   160.02s     Synthesize event
+    t =   160.31s     Wait for com.sqldpass.app.adsqa to idle
+    t =   160.31s Find the Application 'com.sqldpass.app.adsqa'
+    t =   160.38s Requesting snapshot of accessibility hierarchy for app with pid 51771
+    t =   160.45s Requesting snapshot of accessibility hierarchy for app with pid 51771
+UX-CAPTURE iphone-375/home-dark-large
+    t =   160.46s Find the "tab-records" Any
+    t =   160.47s Find the Application 'com.sqldpass.app.adsqa'
+    t =   160.48s Waiting 12.0s for "tab-exams" Any to exist
+    t =   161.49s     Checking `Expect predicate `existsNoRetry == 1` for object "tab-exams" Any`
+    t =   161.49s         Checking existence of `"tab-exams" Any`
+    t =   161.52s Find the "tab-exams" Any
+    t =   161.54s Find the "tab-exams" Other
+    t =   161.55s Tap "tab-exams" Other
+    t =   161.55s     Wait for com.sqldpass.app.adsqa to idle
+    t =   161.56s     Find the "tab-exams" Other
+    t =   161.56s     Check for interrupting elements affecting "tab-exams" Other
+    t =   161.58s     Synthesize event
+    t =   161.87s     Wait for com.sqldpass.app.adsqa to idle
+    t =   161.87s Waiting 12.0s for "mock-SQLD-M02" Any to exist
+    t =   162.91s     Checking `Expect predicate `existsNoRetry == 1` for object "mock-SQLD-M02" Any`
+    t =   162.91s         Checking existence of `"mock-SQLD-M02" Any`
+    t =   162.97s Find the "mock-SQLD-M02" Any
+    t =   163.01s Find the "mock-SQLD-M02" Button
+    t =   163.03s Tap "mock-SQLD-M02" Button
+    t =   163.03s     Wait for com.sqldpass.app.adsqa to idle
+    t =   163.03s     Find the "mock-SQLD-M02" Button
+    t =   163.05s     Check for interrupting elements affecting "mock-SQLD-M02" Button
+    t =   163.09s     Synthesize event
+    t =   163.37s     Wait for com.sqldpass.app.adsqa to idle
+    t =   163.37s Waiting 12.0s for "mode-study" Any to exist
+    t =   164.40s     Checking `Expect predicate `existsNoRetry == 1` for object "mode-study" Any`
+    t =   164.40s         Checking existence of `"mode-study" Any`
+    t =   164.43s Find the "mode-study" Any
+    t =   164.45s Find the "mode-study" Button
+    t =   164.47s Tap "mode-study" Button
+    t =   164.47s     Wait for com.sqldpass.app.adsqa to idle
+    t =   164.47s     Find the "mode-study" Button
+    t =   164.48s     Check for interrupting elements affecting "mode-study" Button
+    t =   164.50s     Synthesize event
+    t =   164.78s     Wait for com.sqldpass.app.adsqa to idle
+    t =   164.78s Waiting 12.0s for "start-mock-study" Any to exist
+    t =   165.82s     Checking `Expect predicate `existsNoRetry == 1` for object "start-mock-study" Any`
+    t =   165.82s         Checking existence of `"start-mock-study" Any`
+    t =   165.85s Find the "start-mock-study" Any
+    t =   165.87s Find the "start-mock-study" Button
+    t =   165.89s Tap "start-mock-study" Button
+    t =   165.89s     Wait for com.sqldpass.app.adsqa to idle
+    t =   165.89s     Find the "start-mock-study" Button
+    t =   165.90s     Check for interrupting elements affecting "start-mock-study" Button
+    t =   165.91s     Synthesize event
+    t =   166.20s     Wait for com.sqldpass.app.adsqa to idle
+    t =   166.20s Find the Application 'com.sqldpass.app.adsqa'
+    t =   166.27s Requesting snapshot of accessibility hierarchy for app with pid 51771
+    t =   166.32s Requesting snapshot of accessibility hierarchy for app with pid 51771
+UX-CAPTURE iphone-375/study-dark-large
+    t =   166.33s Waiting 12.0s for "leave-exam" Any to exist
+    t =   167.36s     Checking `Expect predicate `existsNoRetry == 1` for object "leave-exam" Any`
+    t =   167.36s         Checking existence of `"leave-exam" Any`
+    t =   167.37s Find the "leave-exam" Any
+    t =   167.38s Find the "leave-exam" Button
+    t =   167.39s Tap "leave-exam" Button
+    t =   167.39s     Wait for com.sqldpass.app.adsqa to idle
+    t =   167.39s     Find the "leave-exam" Button
+    t =   167.39s     Check for interrupting elements affecting "leave-exam" Button
+    t =   167.41s     Synthesize event
+    t =   167.70s     Wait for com.sqldpass.app.adsqa to idle
+    t =   167.70s Find the Application 'com.sqldpass.app.adsqa'
+    t =   167.76s Requesting snapshot of accessibility hierarchy for app with pid 51771
+    t =   167.80s Requesting snapshot of accessibility hierarchy for app with pid 51771
+UX-CAPTURE iphone-375/paused-dark-large
+    t =   167.81s Waiting 12.0s for "pause-submit" Any to exist
+    t =   168.86s     Checking `Expect predicate `existsNoRetry == 1` for object "pause-submit" Any`
+    t =   168.86s         Checking existence of `"pause-submit" Any`
+    t =   168.88s Find the "pause-submit" Any
+    t =   168.90s Find the "pause-submit" Button
+    t =   168.92s Tap "pause-submit" Button
+    t =   168.92s     Wait for com.sqldpass.app.adsqa to idle
+    t =   168.92s     Find the "pause-submit" Button
+    t =   168.92s     Check for interrupting elements affecting "pause-submit" Button
+    t =   168.94s     Synthesize event
+    t =   169.23s     Wait for com.sqldpass.app.adsqa to idle
+    t =   169.23s Waiting 12.0s for "제출하고 결과 보기" Any to exist
+    t =   170.26s     Checking `Expect predicate `existsNoRetry == 1` for object "제출하고 결과 보기" Any`
+    t =   170.26s         Checking existence of `"제출하고 결과 보기" Any`
+    t =   170.30s Find the "제출하고 결과 보기" Any
+    t =   170.32s Find the "제출하고 결과 보기" Button
+    t =   170.34s Tap "제출하고 결과 보기" Button
+    t =   170.34s     Wait for com.sqldpass.app.adsqa to idle
+    t =   170.34s     Find the "제출하고 결과 보기" Button
+    t =   170.35s     Check for interrupting elements affecting "제출하고 결과 보기" Button
+    t =   170.37s     Synthesize event
+    t =   170.65s     Wait for com.sqldpass.app.adsqa to idle
+    t =   170.65s Waiting 12.0s for "설정" Any to exist
+    t =   171.71s     Checking `Expect predicate `existsNoRetry == 1` for object "설정" Any`
+    t =   171.71s         Checking existence of `"설정" Any`
+    t =   171.74s Find the "설정" Any
+    t =   171.76s Find the "설정" Button
+    t =   171.77s Tap "설정" Button
+    t =   171.77s     Wait for com.sqldpass.app.adsqa to idle
+    t =   171.77s     Find the "설정" Button
+    t =   171.78s     Check for interrupting elements affecting "설정" Button
+    t =   171.79s     Synthesize event
+    t =   172.08s     Wait for com.sqldpass.app.adsqa to idle
+    t =   172.08s Waiting 12.0s for "밝게" Any to exist
+    t =   173.11s     Checking `Expect predicate `existsNoRetry == 1` for object "밝게" Any`
+    t =   173.11s         Checking existence of `"밝게" Any`
+    t =   173.16s Find the "밝게" Any
+    t =   173.19s Find the "밝게" Button
+    t =   173.20s Find the Application 'com.sqldpass.app.adsqa'
+    t =   173.21s Get all elements bound by index for: Descendants matching type ScrollView
+    t =   173.22s Find the ScrollView (Element at index 0)
+    t =   173.23s Find the ScrollView at {{0.0, 84.0}, {375.0, 429.5}}
+    t =   173.24s Find the ScrollView at {{0.0, 84.0}, {375.0, 429.5}}
+    t =   173.25s Find the Application 'com.sqldpass.app.adsqa'
+    t =   173.26s Find the ScrollView at {{0.0, 84.0}, {375.0, 429.5}}
+    t =   173.27s Find the ScrollView at {{0.0, 84.0}, {375.0, 429.5}}
+    t =   173.28s Find the ScrollView at {{0.0, 84.0}, {375.0, 429.5}}
+    t =   173.29s Press ScrollView at {{0.0, 84.0}, {375.0, 429.5}}[0.03, 0.80] for 0.1 seconds, then drag to ScrollView at {{0.0, 84.0}, {375.0, 429.5}}[0.03, 0.20] with velocity of 500.00 pixels per second, and then hold for 0.0 seconds
+    t =   173.29s     Wait for com.sqldpass.app.adsqa to idle
+    t =   173.29s     Find the ScrollView at {{0.0, 84.0}, {375.0, 429.5}}
+    t =   173.30s     Check for interrupting elements affecting ScrollView
+    t =   173.31s     Synthesize event
+    t =   173.31s         Find the ScrollView at {{0.0, 84.0}, {375.0, 429.5}}
+    t =   173.32s         Find the ScrollView at {{0.0, 84.0}, {375.0, 429.5}}
+    t =   173.33s         Find the ScrollView at {{0.0, 84.0}, {375.0, 429.5}}
+    t =   173.34s         Find the ScrollView at {{0.0, 84.0}, {375.0, 429.5}}
+    t =   173.35s         Find the ScrollView at {{0.0, 84.0}, {375.0, 429.5}}
+    t =   174.17s     Wait for com.sqldpass.app.adsqa to idle
+    t =   175.75s Find the "밝게" Button
+    t =   175.79s Find the "밝게" Button
+    t =   175.82s Tap "밝게" Button
+    t =   175.82s     Wait for com.sqldpass.app.adsqa to idle
+    t =   175.82s     Find the "밝게" Button
+    t =   175.84s     Check for interrupting elements affecting "밝게" Button
+    t =   175.85s     Synthesize event
+    t =   176.14s     Wait for com.sqldpass.app.adsqa to idle
+    t =   176.14s Waiting 12.0s for "100%" Any to exist
+    t =   177.18s     Checking `Expect predicate `existsNoRetry == 1` for object "100%" Any`
+    t =   177.18s         Checking existence of `"100%" Any`
+    t =   177.23s Find the "100%" Any
+    t =   177.26s Find the "100%" Button
+    t =   177.28s Tap "100%" Button
+    t =   177.28s     Wait for com.sqldpass.app.adsqa to idle
+    t =   177.28s     Find the "100%" Button
+    t =   177.29s     Check for interrupting elements affecting "100%" Button
+    t =   177.31s     Synthesize event
+    t =   177.60s     Wait for com.sqldpass.app.adsqa to idle
+    t =   177.60s Waiting 12.0s for "save-textbook-settings" Any to exist
+    t =   178.64s     Checking `Expect predicate `existsNoRetry == 1` for object "save-textbook-settings" Any`
+    t =   178.64s         Checking existence of `"save-textbook-settings" Any`
+    t =   178.67s Find the "save-textbook-settings" Any
+    t =   178.69s Find the "save-textbook-settings" Button
+    t =   178.71s Tap "save-textbook-settings" Button
+    t =   178.71s     Wait for com.sqldpass.app.adsqa to idle
+    t =   178.71s     Find the "save-textbook-settings" Button
+    t =   178.72s     Check for interrupting elements affecting "save-textbook-settings" Button
+    t =   178.73s     Synthesize event
+    t =   179.02s     Wait for com.sqldpass.app.adsqa to idle
+    t =   179.02s Waiting 12.0s for "설정" Any to exist
+    t =   180.05s     Checking `Expect predicate `existsNoRetry == 1` for object "설정" Any`
+    t =   180.05s         Checking existence of `"설정" Any`
+    t =   180.08s Find the "설정" Any
+    t =   180.10s Find the "설정" Button
+    t =   180.11s Tap "설정" Button
+    t =   180.11s     Wait for com.sqldpass.app.adsqa to idle
+    t =   180.11s     Find the "설정" Button
+    t =   180.12s     Check for interrupting elements affecting "설정" Button
+    t =   180.14s     Synthesize event
+    t =   180.42s     Wait for com.sqldpass.app.adsqa to idle
+    t =   180.42s Waiting 12.0s for "개인정보 안내" Any to exist
+    t =   181.44s     Checking `Expect predicate `existsNoRetry == 1` for object "개인정보 안내" Any`
+    t =   181.45s         Checking existence of `"개인정보 안내" Any`
+    t =   181.50s Find the "개인정보 안내" Any
+    t =   181.52s Find the "개인정보 안내" Button
+    t =   181.55s Tap "개인정보 안내" Button
+    t =   181.55s     Wait for com.sqldpass.app.adsqa to idle
+    t =   181.55s     Find the "개인정보 안내" Button
+    t =   181.56s     Check for interrupting elements affecting "개인정보 안내" Button
+    t =   181.58s     Synthesize event
+    t =   181.87s     Wait for com.sqldpass.app.adsqa to idle
+    t =   181.87s Find the Application 'com.sqldpass.app.adsqa'
+    t =   181.93s Requesting snapshot of accessibility hierarchy for app with pid 51771
+    t =   181.98s Requesting snapshot of accessibility hierarchy for app with pid 51771
+UX-CAPTURE iphone-375/privacy
+    t =   181.99s Waiting 12.0s for "뒤로" Any to exist
+    t =   183.02s     Checking `Expect predicate `existsNoRetry == 1` for object "뒤로" Any`
+    t =   183.02s         Checking existence of `"뒤로" Any`
+    t =   183.04s Find the "뒤로" Any
+    t =   183.06s Find the "뒤로" Button
+    t =   183.08s Tap "뒤로" Button
+    t =   183.08s     Wait for com.sqldpass.app.adsqa to idle
+    t =   183.08s     Find the "뒤로" Button
+    t =   183.09s     Check for interrupting elements affecting "뒤로" Button
+    t =   183.10s     Synthesize event
+    t =   183.39s     Wait for com.sqldpass.app.adsqa to idle
+    t =   183.39s Waiting 12.0s for "도움말과 출처" Any to exist
+    t =   184.41s     Checking `Expect predicate `existsNoRetry == 1` for object "도움말과 출처" Any`
+    t =   184.41s         Checking existence of `"도움말과 출처" Any`
+    t =   184.45s Find the "도움말과 출처" Any
+    t =   184.48s Find the "도움말과 출처" Button
+    t =   184.50s Tap "도움말과 출처" Button
+    t =   184.50s     Wait for com.sqldpass.app.adsqa to idle
+    t =   184.51s     Find the "도움말과 출처" Button
+    t =   184.52s     Check for interrupting elements affecting "도움말과 출처" Button
+    t =   184.54s     Synthesize event
+    t =   184.83s     Wait for com.sqldpass.app.adsqa to idle
+    t =   184.84s Waiting 12.0s for "faq-0" Any to exist
+    t =   185.88s     Checking `Expect predicate `existsNoRetry == 1` for object "faq-0" Any`
+    t =   185.88s         Checking existence of `"faq-0" Any`
+    t =   185.91s Find the "faq-0" Any
+    t =   185.93s Find the "faq-0" Button
+    t =   185.95s Tap "faq-0" Button
+    t =   185.95s     Wait for com.sqldpass.app.adsqa to idle
+    t =   185.95s     Find the "faq-0" Button
+    t =   185.96s     Check for interrupting elements affecting "faq-0" Button
+    t =   185.98s     Synthesize event
+    t =   186.27s     Wait for com.sqldpass.app.adsqa to idle
+    t =   186.27s Find the Application 'com.sqldpass.app.adsqa'
+    t =   186.33s Requesting snapshot of accessibility hierarchy for app with pid 51771
+    t =   186.39s Requesting snapshot of accessibility hierarchy for app with pid 51771
+UX-CAPTURE iphone-375/help
+    t =   186.42s Tear Down
+Test Case '-[CaptureTests.CaptureTests testLearningJourneys]' passed (186.670 seconds).
+Test Suite 'CaptureTests' passed at 2026-11-11 17:59:07.806.
+	 Executed 1 test, with 0 failures (0 unexpected) in 186.670 (186.672) seconds
+Test Suite 'CaptureTests.xctest' passed at 2026-11-11 17:59:07.807.
+	 Executed 1 test, with 0 failures (0 unexpected) in 186.670 (186.673) seconds
+Test Suite 'Selected tests' passed at 2026-11-11 17:59:07.807.
+	 Executed 1 test, with 0 failures (0 unexpected) in 186.670 (186.674) seconds
+2026-11-11 17:59:08.107 xcodebuild[51374:8457310] [MT] IDETestOperationsObserverDebug: 189.349 elapsed -- Testing started completed.
+2026-11-11 17:59:08.107 xcodebuild[51374:8457310] [MT] IDETestOperationsObserverDebug: 0.000 sec, +0.000 sec -- start
+2026-11-11 17:59:08.107 xcodebuild[51374:8457310] [MT] IDETestOperationsObserverDebug: 189.349 sec, +189.349 sec -- end
+
+Test session results, code coverage, and logs:
+	/tmp/sqld-ux-native-runner/se-result3.xcresult
+
+** TEST SUCCEEDED **
+
+Testing started

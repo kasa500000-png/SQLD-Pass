@@ -1,0 +1,69 @@
+Attributes: Application, 0x113989680, pid: 49073, label: 'SQLD Pass'
+Element subtree:
+ →Application, 0x113989680, pid: 49073, label: 'SQLD Pass'
+    Window (Main), 0x113989a40, {{0.0, 0.0}, {1032.0, 1376.0}}
+      Other, 0x11398a580, {{0.0, 0.0}, {1032.0, 1376.0}}
+        Other, 0x113989540, {{0.0, 0.0}, {1032.0, 1376.0}}
+          Other, 0x1139892c0, {{0.0, 0.0}, {1032.0, 1376.0}}
+            Other, 0x113989400, {{0.0, 0.0}, {1032.0, 1376.0}}
+              Other, 0x11398a440, {{0.0, 0.0}, {1032.0, 1376.0}}
+                Other, 0x113989e00, {{0.0, 0.0}, {1032.0, 1376.0}}
+                  Other, 0x11398a300, {{0.0, 0.0}, {1032.0, 1376.0}}
+                    Other, 0x113989cc0, {{0.0, 32.0}, {1032.0, 1324.0}}
+                      Other, 0x11398bac0, {{0.0, 32.0}, {1032.0, 64.0}}
+                      Other, 0x11398bc00, {{0.0, 32.0}, {1032.0, 64.0}}
+                      Other, 0x11398a1c0, {{0.0, 32.0}, {1032.0, 1324.0}}
+                      Button, 0x11398a080, {{28.0, 40.0}, {76.0, 48.0}}, identifier: 'leave-exam', label: '일시정지'
+                      StaticText, 0x113989f40, {{114.0, 49.5}, {890.0, 29.0}}, label: '제01회 실전 모의고사'
+                        StaticText, 0x113989b80, {{114.0, 49.5}, {890.0, 29.0}}, label: '제01회 실전 모의고사'
+                      Other, 0x113989900, {{0.0, 96.0}, {1032.0, 72.0}}
+                      Other, 0x10aac4640, {{156.0, 96.0}, {720.0, 72.0}}, identifier: 'screen-header'
+                      StaticText, 0x10aac5f40, {{184.0, 104.0}, {42.0, 28.0}}, label: '1 / 50'
+                        StaticText, 0x10aac4500, {{184.0, 104.0}, {42.0, 28.0}}, label: '1 / 50'
+                      StaticText, 0x10aac6e40, {{780.5, 104.0}, {67.5, 28.0}}, label: '01:30:00'
+                        StaticText, 0x10aac6300, {{780.5, 104.0}, {67.5, 28.0}}, label: '01:30:00'
+                      StaticText, 0x10aac6580, {{184.0, 140.0}, {664.0, 20.0}}, label: '1과목 · 응답 0 · 미응답 50 · 검토 0'
+                        StaticText, 0x10aac4dc0, {{184.0, 140.0}, {664.0, 20.0}}, label: '1과목 · 응답 0 · 미응답 50 · 검토 0'
+                      Other, 0x10aac4c80, {{0.0, 168.0}, {1032.0, 1119.0}}
+                        ScrollView, 0x10aac6a80, {{0.0, 168.0}, {1032.0, 1119.0}}
+                          Other, 0x10aac5b80, {{0.0, 168.0}, {876.0, 493.0}}
+                            Other, 0x10aac4f00, {{156.0, 168.0}, {720.0, 493.0}}
+                              Other, 0x10aac5900, {{184.0, 184.0}, {664.0, 89.0}}
+                              StaticText, 0x10aac7700, {{200.0, 200.0}, {632.0, 20.0}}, label: '문제'
+                                StaticText, 0x10aac5a40, {{200.0, 200.0}, {632.0, 20.0}}, label: '문제'
+                              StaticText, 0x10aac5180, {{200.0, 228.0}, {632.0, 29.0}}, label: '서로 다른 직원 두 명이 같은 이름을 가진다. 직원 인스턴스를 구별하기 위해 필요한 것은?'
+                                StaticText, 0x10aac4b40, {{200.0, 228.0}, {632.0, 29.0}}, label: '서로 다른 직원 두 명이 같은 이름을 가진다. 직원 인스턴스를 구별하기 위해 필요한 것은?'
+                              StaticText, 0x10aac57c0, {{184.0, 285.0}, {664.0, 20.0}}, label: '답을 하나 선택해 주세요.'
+                                StaticText, 0x1073ef980, {{184.0, 285.0}, {664.0, 20.0}}, label: '답을 하나 선택해 주세요.'
+                              Other, 0x1073ec640, {{184.0, 317.0}, {664.0, 58.0}}, identifier: 'mock-option-1', label: '1. 행을 물리적 저장 순서로만 구별하기', value: radio button, unch...
+                                Other, 0x1073ee300, {{197.0, 332.0}, {28.0, 28.0}}
+                              Other, 0x1073ef5c0, {{184.0, 387.0}, {664.0, 58.0}}, identifier: 'mock-option-2', label: '2. 각 직원을 유일하게 식별하는 식별자', value: radio button, unch...
+                                Other, 0x1073ee6c0, {{197.0, 402.0}, {28.0, 28.0}}
+                              Other, 0x1073ee800, {{184.0, 457.0}, {664.0, 58.0}}, identifier: 'mock-option-3', label: '3. 동명이인 중 한 명을 삭제하기', value: radio button, unch...
+                              Other, 0x1073efe80, {{184.0, 527.0}, {664.0, 58.0}}, identifier: 'mock-option-4', label: '4. 직원명을 임의로 바꾸기', value: radio button, unch...
+                                Other, 0x1073ef0c0, {{197.0, 542.0}, {28.0, 28.0}}
+                              Button, 0x1073efc00, {{184.0, 597.0}, {329.0, 48.0}}, identifier: 'flag-mock', label: '검토 표시'
+                              Button, 0x1073ee940, {{519.0, 597.0}, {329.0, 48.0}}, identifier: 'clear-mock-answer', label: '답안 지우기', Disabled
+                          Other, 0x1073ef840, {{999.0, 168.0}, {30.0, 1119.0}}, label: 'Vertical scroll bar, 1 page', value: 0%
+                            Other, 0x1073eed00, {{1026.0, 171.0}, {3.0, 754.0}}
+                          Other, 0x1073eebc0, {{0.0, 1254.0}, {1032.0, 30.0}}, label: 'Horizontal scroll bar, 1 page', value: 0%
+                            Other, 0x1073ed7c0, {{3.0, 1281.0}, {1026.0, 3.0}}
+                          Other, 0x1073efd40, {{999.0, 168.0}, {30.0, 1119.0}}, label: 'Vertical scroll bar, 1 page', value: 0%
+                            Other, 0x1073ed180, {{1026.0, 171.0}, {3.0, 754.0}}
+                          Other, 0x1073ef700, {{0.0, 1254.0}, {1032.0, 30.0}}, label: 'Horizontal scroll bar, 1 page', value: 0%
+                            Other, 0x1073ec500, {{3.0, 1281.0}, {1026.0, 3.0}}
+                      Other, 0x1073edf40, {{0.0, 1287.0}, {1032.0, 69.0}}
+                      Other, 0x1073edb80, {{156.0, 1288.0}, {720.0, 68.0}}, identifier: 'screen-footer'
+                      Button, 0x11398c000, {{184.0, 1298.0}, {50.0, 48.0}}, identifier: 'mock-previous', label: '이전', Disabled
+                      Button, 0x11398c140, {{484.5, 1298.0}, {63.0, 48.0}}, identifier: 'mock-sheet', label: '답안표'
+                      Button, 0x11398c280, {{798.0, 1298.0}, {50.0, 48.0}}, identifier: 'mock-next', label: '다음'
+    Window, 0x11398c3c0, {{0.0, 0.0}, {1032.0, 1376.0}}
+      Other, 0x11398c500, {{0.0, 0.0}, {1032.0, 1376.0}}
+        Other, 0x11398c640, {{0.0, 0.0}, {1032.0, 1376.0}}
+Path to element:
+ →Application, 0x113989680, pid: 49073, label: 'SQLD Pass'
+Query chain:
+ →Find: Application 'com.sqldpass.app.adsqa'
+  Output: {
+    Application, 0x11398c780, pid: 49073, label: 'SQLD Pass'
+  }
