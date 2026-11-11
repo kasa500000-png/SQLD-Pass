@@ -1,0 +1,11 @@
+{
+  "recordedAt": "2026-11-11T10:16:03.338600+00:00",
+  "projectId": "appgprj_6aae6a02162c81918889df5b4c23a6a6",
+  "version": 15,
+  "versionId": "appgprj_6aae6a02162c81918889df5b4c23a6a6~appgver_705fd537d05c8191b85da8f2e1b62346",
+  "commitSha": "6abc7899758fbb3b2b6b7d38aa2017c80cc50666",
+  "status": "succeeded",
+  "url": "https://sqld-pass-support.shk1122.chatgpt.site",
+  "audience": "public; unchanged",
+  "change": "iOS 0.3.3(13) TestFlight available and App Store waiting for review; public App Store version remains 0.2.0 at submission"
+}

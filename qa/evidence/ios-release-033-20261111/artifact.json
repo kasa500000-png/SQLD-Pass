@@ -1,0 +1,32 @@
+{
+  "artifact": "SQLDPass.ipa",
+  "sha256": "4876d29b2de991324b8e2ea5921007f7834618c402b78b45f481c4a209e02fab",
+  "version": "0.3.3",
+  "build": "13",
+  "bundleId": "com.kasa500000.sqldpass",
+  "adMobAppId": "ca-app-pub-9314207769680999~3391326882",
+  "trackingPermissionDescriptionPresent": false,
+  "nonExemptEncryption": false,
+  "runtime": {
+    "appEnvironment": "production",
+    "contentReleaseReady": true,
+    "productionContentApproval": {
+      "schemaVersion": 1,
+      "approved": true,
+      "contentSha256": "1f7a60245d9b75a19ad733dca7fc281539d73ebdc0fcfa25fd5a959ebd7d589d",
+      "contentVersion": "textbook.20261109.2"
+    },
+    "adsRuntimeEnabled": true,
+    "adsMode": "live",
+    "examAccessPolicy": "rewarded",
+    "remoteAnalyticsEnabled": false,
+    "eas": {
+      "projectId": "9c3d6489-bfb8-426a-9a6c-8673fa3c07f0"
+    }
+  },
+  "productionAdUnitsPresent": {
+    "ca-app-pub-9314207769680999/4355019185": true,
+    "ca-app-pub-9314207769680999/9507152408": true
+  },
+  "newPhysicalValidation": "waived by owner; not performed"
+}

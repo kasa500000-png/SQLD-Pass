@@ -1,0 +1,14 @@
+{
+  "recordedAt": "2026-11-11T10:14:10.394Z",
+  "appId": "6818046749",
+  "version": "0.3.3",
+  "build": "13",
+  "buildId": "6ad2dfae-481b-4001-af79-79bcb6159e1f",
+  "versionId": "5a921f1b-09d4-482b-a075-484def168e6e",
+  "reviewSubmissionId": "b4494fbd-9d0b-4197-97ff-8e4855f2d90b",
+  "submissionState": "WAITING_FOR_REVIEW",
+  "submittedDate": "2026-11-11T10:14:08.133Z",
+  "appStoreState": "WAITING_FOR_REVIEW",
+  "releaseType": "AFTER_APPROVAL",
+  "additionalPhysicalValidation": "owner-waived; not performed"
+}
