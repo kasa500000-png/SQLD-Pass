@@ -3,7 +3,7 @@ import type {AppState, Content} from '../core/types';
 export type AdMode = 'off' | 'test' | 'live';
 export type ExamAccessPolicy = 'launch-free' | 'rewarded';
 export const FREE_EXAM_IDS = ['SQLD-M01','SQLD-M02','SQLD-M03','SQLD-M04'] as const;
-export const POLICY_VERSION = '2026-09-30.1';
+export const POLICY_VERSION = '2026-11-12.1';
 // Shown beside every direct rewarded-ad button, before the user opts in.
 export const REWARD_ACTION = '광고 1회 보고 회차 열기';
 export const REWARD_DISCLOSURE = '광고 완료 후 이 회차의 두 모드·재응시·해설을 이 기기에서 계속 이용합니다.';
@@ -27,7 +27,9 @@ export interface RewardDriver {
 export const disabledAds:RewardDriver = {
   mode:'off', adultConfirmed:false, confirmAdult(){}, async showReward(){return 'unavailable';}, async privacyOptions(){}
 };
-export function validExamId(id:string):boolean {return /^SQLD-M(0[1-9]|1[0-9]|20)$/.test(id);}
+export function validExamId(id:string):boolean {return /^SQLD-M(0[1-9]|[1-5][0-9]|60)$/.test(id);}
+/** Historical free-launch rights never expand with the current catalog. */
+export function legacyLaunchExam(id:string):boolean {return /^SQLD-M(0[1-9]|1[0-9]|20)$/.test(id);}
 export function isFreeExam(id:string):boolean {return (FREE_EXAM_IDS as readonly string[]).includes(id);}
 export function walletOf(s:AppState):Wallet {
   const w=(s as MonetizedState).monetization;
@@ -51,7 +53,7 @@ export function migrateWallet(s:AppState):AppState {
   if(old!==undefined){if(!validateWallet(old))throw new Error('모의고사 이용 권한이 손상되었습니다. 기존 학습 기록은 삭제하지 않습니다.');return s;}
   // Existing attempts from the earlier all-free version retain their access.
   const grants:Record<string,Grant>={};
-  for(const e of s.exams){if(validExamId(e.examId)&&!isFreeExam(e.examId))grants[e.examId]={
+  for(const e of s.exams){if(legacyLaunchExam(e.examId)&&!isFreeExam(e.examId))grants[e.examId]={
     examId:e.examId,requestId:`legacy:${e.id}`,grantedAt:Math.max(0,e.startedAt),source:'legacy',mode:'live'
   };}
   return {...s,monetization:{version:1,grants,pending:null}} as MonetizedState;
@@ -68,7 +70,7 @@ export function grantLaunchFreeAccess(s:AppState,c:Content,now:number):AppState 
   const migrated=migrateWallet(s),w=walletOf(migrated),grants={...w.grants};
   let changed=false;
   for(const e of c.exams){
-    if(!validExamId(e.id))continue;
+    if(!legacyLaunchExam(e.id))continue;
     const existing=grants[e.id];
     if(existing&&(existing.source==='legacy'||existing.source==='launch-free'||existing.mode==='live'))continue;
     grants[e.id]={examId:e.id,requestId:`launch-free:${POLICY_VERSION}:${e.id}`,grantedAt:now,source:'launch-free',mode:'off'};

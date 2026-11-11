@@ -17,7 +17,11 @@ export function initialState(content:Content,time=Date.now()):AppState {
 }
 export function parseState(raw:unknown,content:Content):AppState {
   if(raw===null)return initialState(content);let s=raw as Partial<AppState>;
-  if(content.mockPack&&s?.contentVersion==='textbook.20261109.1'&&content.manifest.theoryVersion==='textbook.20261109.1')s={...s,contentVersion:content.manifest.version};
+  const compatible:Record<string,readonly string[]>={
+    'textbook.20261109.2':['textbook.20261109.1'],
+    'textbook.20261112.1':['textbook.20261109.1','textbook.20261109.2']
+  };
+  if(content.mockPack&&content.manifest.theoryVersion==='textbook.20261109.1'&&compatible[content.manifest.version]?.includes(s?.contentVersion??''))s={...s,contentVersion:content.manifest.version};
   if(!s||typeof s!=='object'||s.schema!==1||typeof s.revision!=='number'||!s.settings||!Array.isArray(s.exams)||!Array.isArray(s.responses)||!Array.isArray(s.readLessons)||!Array.isArray(s.bookmarks)||!Array.isArray(s.completedDays)||!Array.isArray(s.studyDays)||!s.reviews||typeof s.contentVersion!=='string'||typeof s.onboarded!=='boolean')throw new Error('학습 기록 형식이 올바르지 않습니다. 원본을 지우지 않고 복구를 중단했습니다.');
   if(![15,30,45,60,90].includes(s.settings.minutes)||![1,1.15,1.3].includes(s.settings.fontScale)||!['light','dark','system'].includes(s.settings.theme))throw new Error('설정 데이터가 손상되었습니다.');
   if(content.textbook&&s.contentVersion!==content.manifest.version){
