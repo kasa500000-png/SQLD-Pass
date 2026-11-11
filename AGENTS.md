@@ -6,6 +6,14 @@ QueryPass or SpicPass as an implicit target unless the owner explicitly requests
 
 ## Latest owner direction — 2026-11-11 interruption and UI refinement
 
+The owner approved implementation of the2026-11-12 volume expansion plan. Add volumes2–3
+as exams21–60, preserving the existing20 exams,216 sections and340 practice questions.
+Use volume tabs and one filter dialog; do not add next-exam recommendations. Preserve
+all textbook-era data, pause state and grants. Historical free access covers only1–20;
+new21–60 require earned rewarded events. Activate the60-exam pack only in the final
+integration PR. New content approval and current native/consent evidence are required;
+the0.3.3/0.3.4 exceptions do not carry forward to0.4.0.
+
 Timed mocks have 90 minutes of active solving time. Explicit pause, saved exit, and
 background/inactive interruptions freeze the remaining time; returning requires explicit
 resume. Paused attempts stay active for one-attempt, explanation and advertising gates.
@@ -15,7 +23,7 @@ Unpaused recovery conservatively accounts for unverifiable elapsed time before p
 Show pause usage on results; missing historic metadata is not evidence of no interruptions.
 Use the 2026-11-11 UI refinement document for current screen hierarchy and tokens.
 The owner authorized implementation, TestFlight update and both production submissions;
-this does not replace actual build/consent/device evidence. Additional mock volumes remain deferred.
+this does not replace actual build/consent/device evidence. The volume deferral is superseded by the2026-11-12 implementation direction above.
 
 ### Scoped owner exception — iOS 0.3.3(13), 2026-11-11
 
