@@ -13,3 +13,5 @@ export function mockWrongQuestions(s:AppState):Question[]{
 }
 export function mockStats(s:AppState,mode:ExamMode){const es=latestMocks(s,mode);return {completed:es.length,average:es.length?Math.round(es.reduce((n,e)=>n+(e.score?.points??0),0)/es.length):null,met:es.filter(e=>e.score?.practiceThresholdMet).length};}
 export const modeName=(mode?:ExamMode)=>mode==='study'?'학습 모드':'실전 모드';
+
+export const pauseUsage=(e:ExamAttempt)=>e.pauseCount===undefined?'이전 버전 응시 기록':e.pauseCount?`일시정지 사용 · ${e.pauseCount}회`:'일시정지 없이 제출';
