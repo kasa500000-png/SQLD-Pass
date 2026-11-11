@@ -1,7 +1,7 @@
 import type {WidgetSpec} from '../textbook/types';
 import type {ReadingOffset} from '../core/types';
 export type Style = Record<string,string|number|undefined>;
-export type LearningIconName = 'home'|'book'|'timer'|'chart'|'settings'|'bookmark'|'search'|'chevron-right'|'check'|'close'|'arrow-right'|'refresh'|'bell'|'list'|'chevron-left';
+export type LearningIconName = 'home'|'book'|'timer'|'chart'|'settings'|'bookmark'|'search'|'chevron-right'|'check'|'close'|'arrow-right'|'refresh'|'bell'|'list'|'chevron-left'|'chevron-up'|'chevron-down';
 export interface Node {
   widget?:WidgetSpec; highlight?:number[][];
   kind:'widget'|'box'|'text'|'button'|'input'|'date'|'progress'|'table'|'code'|'modal'|'icon'|'ring'; key?:string; children?:Node[];
