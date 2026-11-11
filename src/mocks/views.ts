@@ -36,8 +36,7 @@ export function renderMockScreen(c:MonetizedController,u:UI):{title:string;body:
  segments((['all','unattempted','completed'] as const).map((f,i)=>act(['전체','미응시','응시 완료'][i],()=>c.setExamProgressFilter(f),'exam-filter-'+f,c.examProgressFilter===f))),
  ...c.content.exams.filter(e=>c.examProgressFilter==='all'||(s.exams.some(a=>a.examId===e.id&&a.status==='submitted')===(c.examProgressFilter==='completed'))).map(e=>{
    const open=c.hasAccess(e.id),history=(['timed','study'] as const).map(mode=>{const a=latestMocks(s,mode).find(a=>a.examId===e.id);return a?` · ${modeName(mode)} ${a.score?.points??0}점`:'';}).join('');
-   if(open||c.ads.mode==='off')return link(`${e.title}\n${active?.examId===e.id?(isExamPaused(active)?'일시정지 · 이어하기':'진행 중'):open?(e.order<=4?'무료 · 이용 가능':'열림 · 재시청 없음'):'현재 잠김'}${history}`,intro(e.id),'mock-'+e.id);
-   return card([h(e.title),...rewardInfo(),primary(REWARD_ACTION,()=>c.watchAdToUnlock(e.id),'mock-'+e.id,!!active||c.rewardBusy),link('광고·저장 안내',intro(e.id),'reward-info-'+e.id)],'reward-'+e.id);
+   return link(`${e.title}\n${active?.examId===e.id?(isExamPaused(active)?'일시정지 · 이어하기':'진행 중'):open?(e.order<=4?'무료 · 이용 가능':'열림 · 재시청 없음'):c.ads.mode==='off'?'현재 잠김':'광고 1회로 회차 열기'}${history}`,intro(e.id),'mock-'+e.id);
  }),act('모의고사 출처와 기준',go('mockSources'))]};
  if(r.name==='examIntro'){
   const e=c.content.exams.find(e=>e.id===r.id);if(!e)return {title:'실전',body:[t('회차를 찾을 수 없습니다.')]};
