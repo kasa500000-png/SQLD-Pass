@@ -92,7 +92,7 @@ export function NativeView({node: n, scale, dark, path = '0',maxSystemFontMultip
       {n.text ? <Text maxFontSizeMultiplier={maxSystemFontMultiplier} style={[{color: ink, textAlign: 'center', fontSize: 15 * scale, fontWeight:'400', flexShrink: 1}, s.text,roleText]}><RichText value={option?.[2]??n.text} />{n.subtitle?<Text style={{fontSize:13*scale,lineHeight:21*scale,fontWeight:'400',color:palette.muted}}>{'\n'+n.subtitle}</Text>:null}</Text> : null}
       {n.icon&&n.iconPosition==='trailing'?<LearningIcon name={n.icon} size={n.iconSize??20} color={iconColor}/>:null}
     </View>:null}
-    {list?<View style={{position:'absolute',right:10}} pointerEvents="none"><LearningIcon name="chevron-right" size={18} color={palette.muted}/></View>:null}
+    {list?<View style={{position:'absolute',right:10}} pointerEvents="none"><LearningIcon name={n.expanded===undefined?'chevron-right':n.expanded?'chevron-up':'chevron-down'} size={18} color={palette.muted}/></View>:null}
     {children}
   </Pressable>;
   }
