@@ -5,6 +5,7 @@ import type {ContentBlock} from './types';
 import type {Route} from '../core/types';
 import {box,button,code,dark,light,learningType,progress,row,segments as segmentGroup,table,text,type Node} from '../ui/nodes';
 import {dailySections,searchSections,textbookMetrics} from './learning';
+import {questionPrompt,answerSummary} from '../ui/learning-content';
 
 export function renderTextbook(c:MonetizedController):Node{
  const p=c.isDark?dark:light,tb=c.content.textbook!,s=c.state,m=textbookMetrics(s,c.content);
@@ -92,8 +93,12 @@ export function renderTextbook(c:MonetizedController):Node{
   body=[h('확인 문제와 복습'),small('장별 확인 268문항 · 종합 연습 72문항'),small('한 번에 풀 문항 수'),segments([5,10,20,0].map(n=>act(n?`${n}문항`:'전체',()=>{c.practiceBatchSize=n;c.notify();},'batch-'+n,c.practiceBatchSize===n))),...(s.practice?[act('진행 중 문제풀이 이어하기',()=>c.resumePractice())]:[]),act(`오답·헷갈린 문제 ${wrong.length}문항`,()=>c.beginPractice(wrong.slice(0,c.practiceBatchSize||wrong.length),'review'),undefined,false,!wrong.length),link('종합 연습\n72문항 중 선택한 분량 풀기',()=>c.beginPractice(Object.values(c.content.questions).filter(q=>q.pool==='mixed').map(q=>q.id).slice(0,c.practiceBatchSize||undefined))),...tb.chapters.map(ch=>{const qs=Object.values(c.content.questions).filter(q=>q.chapterId===ch.id&&q.pool==='chapter');return {...link(`${ch.number}. ${ch.title}\n${qs.length}문항 · ${Math.min(c.practiceBatchSize||qs.length,qs.length)}문항 풀기`,()=>c.beginPractice(qs.map(q=>q.id).slice(0,c.practiceBatchSize||undefined))),disabled:!qs.length||c.busy};})];
  }
  else if(r==='practice'){
-  const ps=s.practice,q=ps&&c.content.questions[ps.questionIds[ps.index]];title='문제풀이';if(ps&&q&&canStudyQuestion(s,q))body=[small(`${ps.index+1} / ${ps.questionIds.length}`),t(q.stem),...blocks(q.blocks??[],q.id),...q.options.map(o=>choice(`${o.id}. ${o.text}${ps.submitted&&o.id===q.answer?' · 정답':''}${ps.submitted&&o.id===ps.selected?' · 내 답':''}`,()=>c.selectPractice(o.id),`option-${o.id}`,ps.selected===o.id,ps.submitted,ps.submitted?(o.id===q.answer?'correct':o.id===ps.selected?'incorrect':undefined):undefined)),{...act(ps.uncertain?'✓ 헷갈림 표시됨':'헷갈림 표시',()=>c.uncertain(),'uncertain',ps.uncertain,ps.submitted),style:{alignSelf:'flex-start',color:p.muted,fontSize:13}},
-   ...(ps.submitted?[card([{...h(ps.selected===q.answer?'정답입니다':'다시 확인해 보세요'),alert:true},...(q.pool==='mock'?mockExplanation(c,q,mockUi):[t(`정답 ${q.answer}번`),t(q.explanation),...q.options.map(o=>t(`${o.id}. ${q.optionExplanations[o.id]}`)),...q.lessonIds.map(id=>act('관련 개념 읽기',go('lesson',id)))])])]:[])];
+  const ps=s.practice,q=ps&&c.content.questions[ps.questionIds[ps.index]];title='문제풀이';
+  if(ps&&q&&canStudyQuestion(s,q)){
+   header=[row([small(`${ps.index+1} / ${ps.questionIds.length}문항`),box([],{flex:1}),small(ps.submitted?'답안 제출 완료':ps.selected?'답안 선택됨':'미응답')])];
+   body=[questionPrompt(q.stem,p),...(q.blocks?.length?[small('제시 자료'),...blocks(q.blocks,q.id)]:[]),small(ps.submitted?'제출한 답안은 변경할 수 없습니다.':'보기를 선택한 뒤 아래의 답안 확인을 눌러 주세요.'),...q.options.map(o=>choice(`${o.id}. ${o.text}${ps.submitted&&o.id===q.answer?' · 정답':''}${ps.submitted&&o.id===ps.selected?(o.id===q.answer?' · 내 답':' · 내 답 · 오답'):''}`,()=>c.selectPractice(o.id),`option-${o.id}`,ps.selected===o.id,ps.submitted,ps.submitted?(o.id===q.answer?'correct':o.id===ps.selected?'incorrect':undefined):undefined)),{...act(ps.uncertain?'✓ 헷갈림 표시됨':'헷갈림 표시',()=>c.uncertain(),'uncertain',ps.uncertain,ps.submitted),style:{alignSelf:'flex-start',color:p.muted,fontSize:13}},
+   ...(ps.submitted?[card([answerSummary(ps.selected??undefined,q.answer,p),h('해설'),...(q.pool==='mock'?mockExplanation(c,q,mockUi):[t(q.explanation),h('보기별 판단 근거'),...q.options.map(o=>box([small(`${o.id}번 보기`),t(q.optionExplanations[o.id])],{gap:6,paddingVertical:8})),...q.lessonIds.map(id=>link(`관련 개념 읽기\n${c.content.lessons.find(l=>l.id===id)?.title??''}`,go('lesson',id)))])])]:[])];
+  }else body=[h(ps?'진행 중인 회차의 해설은 아직 열 수 없습니다':'진행 중인 문제풀이가 없습니다'),t(ps?'모의고사를 최종 제출한 뒤 복습을 이어갈 수 있습니다.':'학습할 범위와 문항 수를 선택해 시작해 보세요.'),primary(ps?'모의고사로 이동':'문제 선택',go(ps?'exams':'review'))];
   if(ps&&q&&canStudyQuestion(s,q))footer=[ps.submitted?primary(ps.index+1===ps.questionIds.length?'결과 보기':'다음 문제',()=>c.nextPractice(),'next-question'):primary('답안 확인',()=>c.answerPractice(),'submit-question',!ps.selected)];
  }
  else if(r==='practiceResult'){
