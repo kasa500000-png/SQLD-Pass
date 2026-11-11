@@ -1,0 +1,17 @@
+{
+  "platform": "ios",
+  "policyVersion": "2026-11-12.1",
+  "codeSha256": "537367c8710b4b962418382afbb533f639bd813e3e04d75346b1521d46d54a6a",
+  "iosDeviceEvidence": "Current0.4.0(15) physical iPad unavailable; no current physical iOS flow passed. Owner instructed ios도 별도 검증 생략 후 진행 after the pending validation/submission status was reported. Additional iPad rerun waived for this candidate only. Current simulator and Android evidence are separately recorded in qa/MOCK_VOLUMES_20261112.md.",
+  "consentAndATTEvidence": "Additional0.4.0 iOS physical/regional consent reruns waived by owner, not performed. Runtime UMP canRequestAds, adult session choice and earned-reward gates unchanged; no ATT request introduced. Historical published iOS EEA results remain historical. Current Android EEA reject/accept/withdraw is Android-only evidence.",
+  "adPlacementEvidence": "Current0.4.0 iPhone/iPad simulator volume/filter/records/sources/dark130% journeys passed; iPhone simulator official test rewards M21/M41 unlocked. Android physical paused-attempt home suppression verified. Both AdMob banner refresh disabled and both apps Ready/serving enabled verified2026-11-12 in mock60 evidence. No current physical iOS ad impression asserted.",
+  "sdkCompatibilityEvidence": "Current0.4.0 simulator and signed internal iOS device build succeeded.458 automated tests, native types/content checks and Expo doctor21/21 passed before this submission-only change. Actual App Store archive/export/signature and Apple VALID ingestion are required separately.",
+  "appAdsTxtEvidence": "2026-11-12 public direct-seller app-ads.txt record verified; AdMob both SQLD Pass apps Ready/serving enabled. qa/evidence/mock60-20261112/admob-status.json and app-ads.txt. No own live impressions/clicks.",
+  "privacyDisclosureEvidence": "60-exam expansion adds no SDK collection, tracking or data sharing. Existing Apple ad privacy declarations and public privacy policy preserved; no learner answers, notes, progress or identities sent for advertising. Support site version16 describes60-exam scope and preserved local rights.",
+  "privacyUrl": "https://sqld-pass-support.shk1122.chatgpt.site/privacy.html",
+  "supportUrl": "https://sqld-pass-support.shk1122.chatgpt.site/support.html",
+  "approvedBy": "Owner authorized TestFlight and official production submission, confirmed exact new-content hash review, and explicitly instructed ios도 별도 검증 생략 후 진행 for current0.4.0 after the pending iPad/consent checks were reported.",
+  "approvedAt": "2026-11-11T23:39:59.384Z",
+  "additionalValidationWaived": true,
+  "waiverScope": "iOS0.4.0(15) additional physical iPad and consent reruns only. These checks remain unperformed. Actual build/export/upload, content, runtime consent and earned-reward gates remain required."
+}

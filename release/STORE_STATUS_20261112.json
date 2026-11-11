@@ -1,5 +1,5 @@
 {
-  "observedAt": "2026-11-11T23:20:52.450Z",
+  "observedAt": "2026-11-11T23:47:57.337Z",
   "contentVersion": "textbook.20261112.1",
   "contentSha256": "ef14277859237b0a08f5f8b0857e37ff26587cdc0aff6b5d21527787870a1db3",
   "android": {
@@ -7,32 +7,66 @@
     "versionCode": 21,
     "track": "production",
     "state": "changes_in_review",
-    "rollout": 1.0,
+    "rollout": 1,
     "managedPublishing": false,
     "adsMode": "live",
     "publicVersionAtSubmission": "0.3.4 (20)",
     "submittedAt": "2026-11-11T23:20:52.450Z",
-    "submittedChanges": ["production_release", "ko-KR_short_description", "ko-KR_full_description", "phone_screenshots"],
+    "submittedChanges": [
+      "production_release",
+      "ko-KR_short_description",
+      "ko-KR_full_description",
+      "phone_screenshots"
+    ],
     "evidence": "qa/evidence/mock60-20261112/play-submitted.txt",
     "artifactEvidence": "qa/evidence/mock60-20261112/android-production-artifact.json",
     "physicalQa": "SM-F721N Android 16; official test ads and EEA diagnostic test variant",
     "productionLiveImpressionsTested": false,
-    "released": false
+    "released": false,
+    "observedAt": "2026-11-11T23:20:52.450Z"
   },
   "ios": {
     "candidateVersion": "0.4.0",
     "candidateBuild": "15",
-    "candidateState": "pending_physical_validation_or_new_scoped_owner_exception",
-    "productionArchiveBuilt": false,
-    "buildUploaded": false,
-    "testFlightUpdated": false,
-    "appStoreSubmitted": false,
+    "candidateState": "WAITING_FOR_REVIEW",
+    "productionArchiveBuilt": true,
+    "buildUploaded": true,
+    "testFlightUpdated": true,
+    "appStoreSubmitted": true,
     "publicVersion": "0.3.4 (14)",
     "publicState": "READY_FOR_SALE",
     "latestUploadedBuildState": "VALID",
-    "completedScope": ["iPhone and iPad simulator volume journeys", "iPhone simulator official test reward unlock", "signed internal device build"],
-    "unperformedScope": ["physical iPad 0.4.0 journeys", "physical iOS consent rerun", "production archive/export/upload"],
-    "priorExceptionsReused": false
+    "completedScope": [
+      "iPhone and iPad simulator volume journeys",
+      "iPhone simulator official test reward unlock",
+      "signed internal device build",
+      "production archive/export and signature checks",
+      "Apple VALID ingestion",
+      "TestFlight internal group distribution",
+      "App Store official review submission"
+    ],
+    "unperformedScope": [
+      "physical iPad 0.4.0 journeys",
+      "physical iOS consent rerun"
+    ],
+    "priorExceptionsReused": false,
+    "versionId": "eeea18de-bf63-4825-b1c4-3cba9b7f6fe3",
+    "buildId": "5e6ace43-73a6-4606-b78c-6f2d6dd14dc0",
+    "reviewSubmissionId": "065d2c2d-038a-48ba-87ac-83caa92e9a8e",
+    "submittedAt": "2026-11-11T23:47:55.849Z",
+    "observedAt": "2026-11-11T23:47:57.337Z",
+    "releaseType": "AFTER_APPROVAL",
+    "testFlightInternalState": "IN_BETA_TESTING",
+    "adsMode": "live",
+    "released": false,
+    "evidence": "qa/evidence/ios-release-040-20261112/app-store-submission.json",
+    "artifactEvidence": "qa/evidence/ios-release-040-20261112/artifact.json",
+    "validationException": {
+      "version": "0.4.0",
+      "build": "15",
+      "ownerStatement": "ios도 별도 검증 생략 후 진행",
+      "scope": "Additional physical iPad and iOS consent reruns only; checks remain unperformed."
+    }
   },
   "supportSite": {
     "url": "https://sqld-pass-support.shk1122.chatgpt.site",
@@ -40,5 +74,11 @@
     "deploymentState": "SUCCEEDED",
     "evidence": "qa/evidence/mock60-20261112/support-site.json"
   },
-  "implementationPrs": [64, 65, 66, 67, 68]
+  "implementationPrs": [
+    64,
+    65,
+    66,
+    67,
+    68
+  ]
 }

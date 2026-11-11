@@ -1,0 +1,10 @@
+{
+  "recordedAt": "2026-11-11T23:44:36.806Z",
+  "version": "0.4.0",
+  "build": "15",
+  "deliveryUuid": "5e6ace43-73a6-4606-b78c-6f2d6dd14dc0",
+  "bytes": 19546937,
+  "status": "UPLOAD SUCCEEDED with no errors",
+  "processExitCode": 0,
+  "localResumeFileWarning": "Failed to create URL for CDUploaderStateInfoResumeFilePath; upload then returned success. Apple processing checked separately."
+}

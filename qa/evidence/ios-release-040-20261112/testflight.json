@@ -1,0 +1,15 @@
+{
+  "recordedAt": "2026-11-11T23:47:38.606Z",
+  "appId": "6818046749",
+  "version": "0.4.0",
+  "build": "15",
+  "buildId": "5e6ace43-73a6-4606-b78c-6f2d6dd14dc0",
+  "processingState": "VALID",
+  "buildAudienceType": "APP_STORE_ELIGIBLE",
+  "betaGroupId": "d3e4d5fe-4c01-4e93-bd67-f1eb85826e06",
+  "betaGroupName": "SQLD Pass 내부 검증",
+  "assignedToGroup": true,
+  "autoNotifyEnabled": true,
+  "internalBuildState": "IN_BETA_TESTING",
+  "externalBuildState": "READY_FOR_BETA_SUBMISSION"
+}
