@@ -84,3 +84,11 @@ roles. Choices are regular-weight with a separate number; primary actions use se
 Navigation rows use neutral surfaces and separators. Reading widths are bounded at 720
 layout units, including exam questions. Modal transitions have no animation and support
 accessibility escape. Do not reintroduce heavy option text through generic button styles.
+
+## 0.3.4 Android audit follow-up — 2026-11-11
+
+The owner authorized the task-separated implementation in
+[UI_FOCUS_034_20261111.md](UI_FOCUS_034_20261111.md), followed by both production releases.
+Prefer question, reading and explanation space over repeated controls and metadata.
+The 0.3.4 document refines hierarchy while preserving the current pause, content,
+record, consent and earned-reward contracts. The iOS 0.3.3 device waiver is not reused.

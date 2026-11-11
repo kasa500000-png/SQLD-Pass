@@ -5,11 +5,24 @@ import type {AppState, Repository, Services} from '../core/types';
 import support from '../../config/public-support.json';
 
 export class NativeRepository implements Repository {
-  private readonly db: Promise<SQLite.SQLiteDatabase>;
+  private db?: Promise<SQLite.SQLiteDatabase>;
   private readonly knownSnapshots = new Set<string>();
-  constructor(name = 'sqld_pass.sqlite') { this.db = this.open(name); }
+  constructor(private readonly name = 'sqld_pass.sqlite') {}
+  private connection(): Promise<SQLite.SQLiteDatabase> {
+    if (!this.db) {
+      const opening = this.open(this.name).catch(error => {
+        if (this.db === opening) this.db = undefined;
+        throw error;
+      });
+      this.db = opening;
+    }
+    return this.db;
+  }
   private async open(name: string): Promise<SQLite.SQLiteDatabase> {
-    const db = await SQLite.openDatabaseAsync(name);
+    // Own the connection so a failed initialization cannot reuse a stale native handle.
+    // The same database file, schema, previous slot and snapshots remain in place.
+    const db = await SQLite.openDatabaseAsync(name, {useNewConnection: true});
+    try {
     await db.execAsync('PRAGMA journal_mode = WAL; PRAGMA busy_timeout = 5000;');
     const row = await db.getFirstAsync<{user_version: number}>('PRAGMA user_version');
     const version = row?.user_version ?? 0;
@@ -28,10 +41,16 @@ export class NativeRepository implements Repository {
       attempt_id TEXT PRIMARY KEY NOT NULL,
       payload TEXT NOT NULL
     );`);
-    return db;
+      return db;
+    } catch (error) {
+      try { await db.closeAsync(); } catch { /* Preserve the original failure. */ }
+      throw error;
+    }
   }
   async load(): Promise<unknown | null> {
-    const db = await this.db;
+    const connection = this.connection();
+    const db = await connection;
+    try {
     const row = await db.getFirstAsync<{payload: string}>('SELECT payload FROM learner_state WHERE slot = ?', 'current');
     if (!row) return null;
     const decoded = JSON.parse(row.payload) as AppState;
@@ -45,10 +64,20 @@ export class NativeRepository implements Repository {
         }
       }
     }
-    return decoded;
+      return decoded;
+    } catch (error) {
+      // Loading happens before the controller accepts writes. A user retry gets a
+      // fresh handle; no automatic replay of writes or removal of learner records.
+      if (this.db === connection) {
+        try { await db.closeAsync(); } catch { /* Preserve the read failure. */ }
+        this.db = undefined;
+        this.knownSnapshots.clear();
+      }
+      throw error;
+    }
   }
   async save(state: AppState): Promise<void> {
-    const db = await this.db;
+    const db = await this.connection();
     const payload = JSON.stringify({...state, exams: state.exams.map(e => { const {snapshots: _snapshots, ...rest} = e; return rest; })});
     const pending = state.exams.filter(e => !this.knownSnapshots.has(e.id));
     await db.withExclusiveTransactionAsync(async tx => {
@@ -64,7 +93,7 @@ export class NativeRepository implements Repository {
     for (const exam of pending) this.knownSnapshots.add(exam.id);
   }
   async clear(): Promise<void> {
-    const db = await this.db;
+    const db = await this.connection();
     await db.withExclusiveTransactionAsync(async tx => {
       await tx.runAsync('DELETE FROM learner_state WHERE slot IN (?, ?)', 'current', 'previous');
       await tx.runAsync('DELETE FROM exam_snapshot');
