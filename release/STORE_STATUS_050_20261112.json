@@ -1,0 +1,41 @@
+{
+  "observedAt": "2026-11-12T14:51:21+09:00",
+  "version": "0.5.0",
+  "contentVersion": "textbook.20261112.2",
+  "contentSha256": "48e1214183bb4123a218a46bbce1362933778e34914cd79a7485d06d233be9b3",
+  "googlePlay": {
+    "versionCode": 22,
+    "track": "production",
+    "state": "IN_REVIEW",
+    "rolloutAfterApproval": 1.0,
+    "managedPublishing": false,
+    "liveAdsConfigured": true,
+    "releaseName": "0.5.0 (22) 40회 재편 · 권별 5회 무료",
+    "submittedChanges": 6,
+    "publicVersionObservedBeforeSubmission": "0.4.0(21)",
+    "publicReleaseConfirmed": false,
+    "evidence": "qa/evidence/mock40-20261112/store/google-play-submitted.txt"
+  },
+  "appStore": {
+    "candidateBuild": 16,
+    "candidateState": "NOT_SUBMITTED",
+    "testFlightUpdated": false,
+    "productionArtifactBuilt": false,
+    "physicalQA": "NOT_PERFORMED; iPad unavailable",
+    "currentException": null,
+    "simulatorQA": "UI, persistence upgrade, official test reward, visible EEA reject/accept/withdraw verified",
+    "priorVersionObserved": "0.4.0(15) WAITING_FOR_REVIEW;0.3.4 public;observed earlier at14:19 KST"
+  },
+  "supportSite": {
+    "url": "https://sqld-pass-support.shk1122.chatgpt.site",
+    "version": 17,
+    "state": "DEPLOYED"
+  },
+  "implementationPullRequests": [
+    70,
+    71,
+    72,
+    73,
+    74
+  ]
+}

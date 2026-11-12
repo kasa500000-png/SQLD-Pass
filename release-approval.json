@@ -6,12 +6,12 @@
   "contentVersion": "textbook.20261112.2",
   "humanContentReview": "Owner directly confirmed 해당 40회 구성의 콘텐츠 검수·출시 확인 완료 for this exact candidate/hash. Retained 216 sections,340 practice and2000 mock question objects match approved source; original volume1 retired.",
   "androidDeviceQA": "Current0.5.0(22) official-test APK updated over0.4.0 on SM-F721N Android16. Retained oldM40/new20 paused01:29:54,2answers/flag/position; direct review and official rewarded new6 grant persistence verified. New9 actual test-ad process interruption before reward remains locked. Current EEA reject/accept/withdraw, age cancel/adult and test banner verified. Active paused study suppresses home banner.471 tests and native/content checks passed. qa/MOCK40_20261112.md.",
-  "iosDeviceQA": "NOT COMPLETED for physical iPad0.5.0. Current iPhone/iPad simulator journeys, official test reward, UI large/dark and actual SQLite upgrade comparison passed. Physical iPad unavailable; previous0.4.0 waiver NOT reused. iOS production remains blocked pending current evidence or a new explicit owner exception.",
+  "iosDeviceQA": "NOT COMPLETED for physical iPad0.5.0. Current iPhone/iPad simulator journeys, official test reward, UI large/dark and actual SQLite upgrade comparison passed. Physical iPad unavailable; previous0.4.0 waiver NOT reused. iOS production remains blocked pending current evidence or a new explicit owner exception. Current EEA simulator visible-form reject/accept/withdraw passed; first form-not-ready retry and discarded hidden-element automation result documented.",
   "ownerApproval": "Owner authorized implementation, five PR groups, commits/merges and both production submissions; directly confirmed exact40-exam content review/release. Android-only execution uses current device/consent evidence. iOS validation and signing gates remain independent.",
   "privacyUrl": "https://sqld-pass-support.shk1122.chatgpt.site/privacy.html",
   "supportUrl": "https://sqld-pass-support.shk1122.chatgpt.site/support.html",
   "platformReleaseStatus": {
-    "android": "device/consent verified; actual signed artifact/upload pending",
+    "android": "0.5.0(22) signed live-ad AAB validated and submitted to Google Play production review on 2026-11-12 14:51 KST;100% automatic rollout after approval;not yet publicly released.",
     "ios": "blocked: physical validation pending; no0.5.0 waiver"
   }
 }
