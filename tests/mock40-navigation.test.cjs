@@ -11,7 +11,7 @@ test('two volume tabs show new numbers, correct free badges and unchanged stable
   a.equal(rows.length,20);a.equal(rows[0].text,`제${String(first).padStart(2,'0')}회 실전 모의고사`);a.equal(rows.filter(n=>n.subtitle.includes('무료')).length,5);a.equal(ns.find(n=>n.testId==='mock-volume-'+v).selected,true);
   await rows[0].action();a.ok(flat(renderTextbook(c)).some(n=>n.testId==='start-mock-timed'));a.ok(!flat(renderTextbook(c)).some(n=>n.testId==='unlock-mock'));
  }
- a.equal(shows,0);await c.beginExam('SQLD-M41','study');await c.finishExam('manual');const e=c.state.exams[0],before=structuredClone(e);
+ a.equal(shows,0);await c.beginExam('SQLD-M41','study');a.ok(flat(renderTextbook(c)).some(n=>n.text==='제21회 · 학습'));await c.finishExam('manual');const e=c.state.exams[0],before=structuredClone(e);
  a.equal(e.title,'41회 실전 모의고사');a.equal(mockExamTitle(content,e),'제21회 실전 모의고사');a.match(mockQuestionOrigin(content,e.snapshots[0]),/^2권 · 제21회/);
  a.ok(flat(renderTextbook(c)).some(n=>n.text==='제21회 실전 모의고사 · 학습 모드'));
  await flat(renderTextbook(c)).find(n=>n.testId==='result-exam-list').action();a.equal(c.mockVolumeId,'vol3');a.deepEqual(e,before);

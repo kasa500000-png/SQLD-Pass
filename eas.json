@@ -132,9 +132,9 @@
         "EXPO_PUBLIC_ADS_MODE": "live",
         "EXPO_PUBLIC_ADS_TARGET": "both",
         "EXPO_PUBLIC_EXAM_ACCESS_POLICY": "rewarded",
-        "APP_VERSION": "0.4.0",
-        "ANDROID_VERSION_CODE": "21",
-        "IOS_BUILD_NUMBER": "15",
+        "APP_VERSION": "0.5.0",
+        "ANDROID_VERSION_CODE": "22",
+        "IOS_BUILD_NUMBER": "16",
         "ANDROID_PACKAGE": "com.kasa500000.sqldpass",
         "IOS_BUNDLE_IDENTIFIER": "com.kasa500000.sqldpass"
       }
@@ -144,7 +144,7 @@
       "autoIncrement": false,
       "env": {
         "EXPO_PUBLIC_ADS_TARGET": "ios",
-        "IOS_BUILD_NUMBER": "15"
+        "IOS_BUILD_NUMBER": "16"
       }
     },
     "textbook-android-production": {
@@ -152,8 +152,8 @@
       "autoIncrement": false,
       "env": {
         "EXPO_PUBLIC_ADS_TARGET": "android",
-        "ANDROID_VERSION_CODE": "21",
-        "APP_VERSION": "0.4.0"
+        "ANDROID_VERSION_CODE": "22",
+        "APP_VERSION": "0.5.0"
       }
     }
   },

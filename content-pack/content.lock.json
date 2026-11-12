@@ -1,17 +1,16 @@
 {
   "schema": 1,
-  "contentVersion": "textbook.20261112.1",
-  "sha256": "ef14277859237b0a08f5f8b0857e37ff26587cdc0aff6b5d21527787870a1db3",
-  "bytes": 9413256,
+  "contentVersion": "textbook.20261112.2",
+  "sha256": "48e1214183bb4123a218a46bbce1362933778e34914cd79a7485d06d233be9b3",
+  "bytes": 6879936,
   "counts": {
     "lessons": 216,
     "practice": 340,
-    "exams": 60,
-    "examQuestions": 3000
+    "exams": 40,
+    "examQuestions": 2000
   },
   "sourceHashes": {
     "textbook-20261109.html": "cb789f945b31c6e5f53ab0cf5e55d1ba43d5824882e1da85cd835dc8ee7e9182",
-    "mock20-20261109.html": "6184a2dec1b82fbf850004ae309fe5c373dd5a8e42e099c0a5d4a608a03320b1",
     "mock-vol2-20261112.html": "e6fef8f1291a784af1fa21f0c2d65641afa96c454c9ea7bfa971402114e296fb",
     "mock-vol3-20261112.html": "9a1c36c857d03e75398f467e9eef95af8568eb9811a3042db4a71461ed1f6979"
   },

@@ -1,20 +1,17 @@
 {
   "schemaVersion": 1,
   "approvedBy": "repository owner (current conversation)",
-  "approvedAt": "2026-11-11T22:45:35Z",
-  "contentSha256": "ef14277859237b0a08f5f8b0857e37ff26587cdc0aff6b5d21527787870a1db3",
-  "contentVersion": "textbook.20261112.1",
-  "humanContentReview": "Owner directly confirmed 새 2·3권 내용 검수 완료 for this exact version/hash. Original textbook, practice and volume1 preserved byte-for-byte. No unprovided expert review inferred.",
-  "androidDeviceQA": "Current0.4.0(21) official-test APK installed over0.3.4(20) on SM-F721N Android16. Earned M21/40/41/60, interrupted M60 remained locked, pause/restart retained01:28:59 and two answers/flag/position, correct1/wrong1/unanswered48 score2, result returns volume2. 458tests and native/content checks passed. Current regional consent results and release artifact checks are separately recorded in qa/MOCK_VOLUMES_20261112.md.",
-  "iosDeviceQA": "Current0.4.0 iPhone/iPad simulator volume/filter/records/sources/dark130% journeys and iPhone official test reward unlock verified; signed internal device build succeeded. Physical iPad0.4.0 and regional iOS consent reruns NOT performed. Owner explicitly instructed ios도 별도 검증 생략 후 진행 for this candidate. Actual production build/signing/upload results are recorded separately in qa/IOS_RELEASE_040_20261112.md.",
-  "ownerApproval": "Owner authorized implementing the revised60-exam plan, five PR groups, TestFlight and both official production submissions. Owner separately confirmed new content review and directed physical QA on the connected Android. Content approval does not override platform advertising/device/signing gates.",
+  "approvedAt": "2026-11-12T05:37:40.375+00:00",
+  "contentSha256": "48e1214183bb4123a218a46bbce1362933778e34914cd79a7485d06d233be9b3",
+  "contentVersion": "textbook.20261112.2",
+  "humanContentReview": "Owner directly confirmed 해당 40회 구성의 콘텐츠 검수·출시 확인 완료 for this exact candidate/hash. Retained 216 sections,340 practice and2000 mock question objects match approved source; original volume1 retired.",
+  "androidDeviceQA": "Current0.5.0(22) official-test APK updated over0.4.0 on SM-F721N Android16. Retained oldM40/new20 paused01:29:54,2answers/flag/position; direct review and official rewarded new6 grant persistence verified. New9 actual test-ad process interruption before reward remains locked. Current EEA reject/accept/withdraw, age cancel/adult and test banner verified. Active paused study suppresses home banner.471 tests and native/content checks passed. qa/MOCK40_20261112.md.",
+  "iosDeviceQA": "NOT COMPLETED for physical iPad0.5.0. Current iPhone/iPad simulator journeys, official test reward, UI large/dark and actual SQLite upgrade comparison passed. Physical iPad unavailable; previous0.4.0 waiver NOT reused. iOS production remains blocked pending current evidence or a new explicit owner exception.",
+  "ownerApproval": "Owner authorized implementation, five PR groups, commits/merges and both production submissions; directly confirmed exact40-exam content review/release. Android-only execution uses current device/consent evidence. iOS validation and signing gates remain independent.",
   "privacyUrl": "https://sqld-pass-support.shk1122.chatgpt.site/privacy.html",
   "supportUrl": "https://sqld-pass-support.shk1122.chatgpt.site/support.html",
-  "iosValidationException": {
-    "version": "0.4.0",
-    "build": "15",
-    "ownerStatement": "ios도 별도 검증 생략 후 진행",
-    "recordedAt": "2026-11-11T23:39:59.384Z",
-    "scope": "iOS0.4.0(15) additional physical iPad and consent reruns only. These checks remain unperformed. Actual build/export/upload, content, runtime consent and earned-reward gates remain required."
+  "platformReleaseStatus": {
+    "android": "device/consent verified; actual signed artifact/upload pending",
+    "ios": "blocked: physical validation pending; no0.5.0 waiver"
   }
 }

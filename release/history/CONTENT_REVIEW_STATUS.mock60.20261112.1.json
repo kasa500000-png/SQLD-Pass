@@ -1,0 +1,22 @@
+{
+  "schemaVersion": 1,
+  "status": "owner-reviewed-complete",
+  "contentVersion": "textbook.20261112.1",
+  "contentSha256": "ef14277859237b0a08f5f8b0857e37ff26587cdc0aff6b5d21527787870a1db3",
+  "scope": {
+    "lessons": 216,
+    "questions": 3340,
+    "practiceQuestions": 340,
+    "mockExams": 60,
+    "mockQuestions": 3000
+  },
+  "productionReleaseApproved": true,
+  "note": "Owner directly confirmed completion for added volumes 2 and 3 in the current conversation, explicitly bound to this full-pack hash. Original textbook and volume 1 are byte-preserved from the previously confirmed pack. Release execution remains authorized; device/consent, advertising, signing and upload gates remain independent. No unprovided editorial review date or expert verification is inferred.",
+  "recordedAt": "2026-11-11T22:45:35Z",
+  "declaredBy": "repository owner (current conversation)",
+  "ownerStatement": "새 2·3권 내용 검수 완료",
+  "reviewer": null,
+  "reviewedAt": null,
+  "targetDbmsReview": null,
+  "officialSyllabusReview": null
+}

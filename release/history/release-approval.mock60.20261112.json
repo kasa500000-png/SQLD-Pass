@@ -1,0 +1,20 @@
+{
+  "schemaVersion": 1,
+  "approvedBy": "repository owner (current conversation)",
+  "approvedAt": "2026-11-11T22:45:35Z",
+  "contentSha256": "ef14277859237b0a08f5f8b0857e37ff26587cdc0aff6b5d21527787870a1db3",
+  "contentVersion": "textbook.20261112.1",
+  "humanContentReview": "Owner directly confirmed 새 2·3권 내용 검수 완료 for this exact version/hash. Original textbook, practice and volume1 preserved byte-for-byte. No unprovided expert review inferred.",
+  "androidDeviceQA": "Current0.4.0(21) official-test APK installed over0.3.4(20) on SM-F721N Android16. Earned M21/40/41/60, interrupted M60 remained locked, pause/restart retained01:28:59 and two answers/flag/position, correct1/wrong1/unanswered48 score2, result returns volume2. 458tests and native/content checks passed. Current regional consent results and release artifact checks are separately recorded in qa/MOCK_VOLUMES_20261112.md.",
+  "iosDeviceQA": "Current0.4.0 iPhone/iPad simulator volume/filter/records/sources/dark130% journeys and iPhone official test reward unlock verified; signed internal device build succeeded. Physical iPad0.4.0 and regional iOS consent reruns NOT performed. Owner explicitly instructed ios도 별도 검증 생략 후 진행 for this candidate. Actual production build/signing/upload results are recorded separately in qa/IOS_RELEASE_040_20261112.md.",
+  "ownerApproval": "Owner authorized implementing the revised60-exam plan, five PR groups, TestFlight and both official production submissions. Owner separately confirmed new content review and directed physical QA on the connected Android. Content approval does not override platform advertising/device/signing gates.",
+  "privacyUrl": "https://sqld-pass-support.shk1122.chatgpt.site/privacy.html",
+  "supportUrl": "https://sqld-pass-support.shk1122.chatgpt.site/support.html",
+  "iosValidationException": {
+    "version": "0.4.0",
+    "build": "15",
+    "ownerStatement": "ios도 별도 검증 생략 후 진행",
+    "recordedAt": "2026-11-11T23:39:59.384Z",
+    "scope": "iOS0.4.0(15) additional physical iPad and consent reruns only. These checks remain unperformed. Actual build/export/upload, content, runtime consent and earned-reward gates remain required."
+  }
+}

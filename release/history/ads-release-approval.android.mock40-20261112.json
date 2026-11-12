@@ -1,0 +1,15 @@
+{
+  "platform": "android",
+  "policyVersion": "2026-11-12.2",
+  "codeSha256": "532992120c602655d5b440cee590c49896836db97144f47cd5f638a218b5301a",
+  "androidDeviceEvidence": "Current0.5.0(22) official-test APK updated over0.4.0 on SM-F721N Android16. Retained oldM40/new20 paused01:29:54,2answers/flag/position; direct review and official rewarded new6 grant persistence verified. New9 actual test-ad process interruption before reward remains locked. Current EEA reject/accept/withdraw, age cancel/adult and test banner verified. Active paused study suppresses home banner.471 tests and native/content checks passed. qa/MOCK40_20261112.md.",
+  "androidConsentEvidence": "Current0.5.0 published UMP EEA message on SM-F721N Android16: Do not consent, Consent, then Do not consent via privacy options completed. Existing grant6/free access retained after withdrawal/restart. Normal official-test APK restored. Adult choice cancellation shows no banner; adult choice allows test banner. No ATT or Android AD_ID permission introduced.",
+  "adPlacementEvidence": "Current physical home small test banner separated from navigation. Active paused study suppresses it. Direct submitted review contains no banner. New6 earned reward persists; new9 interrupted actual test ad remains locked. Both AdMob banner automatic refresh disabled verified2026-11-12.",
+  "sdkCompatibilityEvidence": "Current native Android Release official-test builds succeeded;471 unit tests/core/native/content checks passed. Production signing/AAB and16KB artifact checks are required separately before upload.",
+  "appAdsTxtEvidence": "Public app-ads.txt direct seller pub-9314207769680999 verified2026-11-12. Both AdMob apps Ready/serving enabled. No own live impressions/clicks.",
+  "privacyDisclosureEvidence": "No SDK, permissions or collection changes;40-exam/selective migration modifies local learning only. Current Android published EEA form verified. Support site version17 discloses0.5.0 first5free per volume and selective retirement, privacy processing unchanged. Existing Play declarations remain applicable; no learner answers/progress/notes sent to ads.",
+  "privacyUrl": "https://sqld-pass-support.shk1122.chatgpt.site/privacy.html",
+  "supportUrl": "https://sqld-pass-support.shk1122.chatgpt.site/support.html",
+  "approvedBy": "Owner authorized live ads and official store submissions and directly confirmed exact40-exam candidate release. This record is Android-only and does not reuse an iOS waiver.",
+  "approvedAt": "2026-11-12T05:37:40.375+00:00"
+}

@@ -1,0 +1,27 @@
+{
+  "oldVersion": "textbook.20261112.1",
+  "newVersion": "textbook.20261112.2",
+  "attemptsBefore": 7,
+  "attemptsAfter": 1,
+  "retainedExam": "SQLD-M21",
+  "retainedFields": {
+    "id": true,
+    "examId": true,
+    "title": true,
+    "answers": true,
+    "index": true,
+    "flagged": true
+  },
+  "readingUnchanged": true,
+  "snapshotUnchanged": true,
+  "remainingSnapshotCount": 1,
+  "previousVersion": "textbook.20261112.2",
+  "previousAttemptCount": 1,
+  "grantsUnchanged": true,
+  "preservedGrantIds": [
+    "SQLD-M21",
+    "SQLD-M41"
+  ],
+  "readingPositionUnchanged": true,
+  "practiceResponsesUnchanged": true
+}
