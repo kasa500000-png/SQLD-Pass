@@ -21,15 +21,16 @@ module.exports=function validateTextbook(c){
  check(['releaseReady','humanReviewed','officialSyllabusVerified','adsEnabled','analyticsEnabled'].every(k=>typeof m[k]==='boolean'),'authored evidence flags');
  const seen=new Set();
  if(c.mockPack){
-  const expanded=!!c.mockPack.volumes,total=expanded?60:20;
+  const expanded=!!c.mockPack.volumes,curated=c.mockPack.version==='mock40.20261112.1',total=curated?40:expanded?60:20,offset=curated?20:0;
   check(c.exams.length===total&&counts.examQuestions===total*50,'mock totals');
   const owners=new Map();
   if(expanded){
-   check(m.version==='textbook.20261112.1'&&m.theoryVersion==='textbook.20261109.1'&&m.examVersion==='mock60.20261112.1','volume versions');
-   check(c.mockPack.volumes.length===3,'volume count');
+   check(m.version===(curated?'textbook.20261112.2':'textbook.20261112.1')&&m.theoryVersion==='textbook.20261109.1'&&m.examVersion===c.mockPack.version,'volume versions');
+   check(c.mockPack.volumes.length===(curated?2:3),'volume count');
+   if(curated)check(JSON.stringify(c.mockPack.freeExamIds)===JSON.stringify([21,22,23,24,25,41,42,43,44,45].map(n=>'SQLD-M'+n)),'free exam scope');
    for(const [i,v] of c.mockPack.volumes.entries()){
-    check(v.id===`vol${i+1}`&&v.number===i+1&&v.title&&v.version,'volume identity');
-    const expected=Array.from({length:20},(_,n)=>`SQLD-M${String(i*20+n+1).padStart(2,'0')}`);
+    check(v.id===`vol${i+1+(curated?1:0)}`&&v.number===i+1+(curated?1:0)&&(!curated||v.displayNumber===i+1)&&v.title&&v.version,'volume identity');
+    const expected=Array.from({length:20},(_,n)=>`SQLD-M${String(i*20+n+1+offset).padStart(2,'0')}`);
     check(JSON.stringify(v.examIds)===JSON.stringify(expected),'volume exam order');
     check(unique(v.topicIds)&&v.topicIds.length===50&&v.topicIds.every(id=>c.mockPack.topics.some(t=>t.id===id)),'volume topics');source(v.sourceIds);
     check(typeof v.editorialNote==='string'&&Array.isArray(v.assumptions)&&v.quality&&typeof v.integrationNote==='string','volume provenance');
@@ -38,9 +39,9 @@ module.exports=function validateTextbook(c){
    check(unique(c.mockPack.volumes.flatMap(v=>v.topicIds)),'cross-volume topics');
   }
   check(unique(c.exams.map(e=>e.id)),'duplicate exams');
-  check(unique(c.mockPack.topics.map(t=>t.id))&&c.mockPack.topics.length===(expanded?150:50),'mock topics');
+  check(unique(c.mockPack.topics.map(t=>t.id))&&c.mockPack.topics.length===(curated?100:expanded?150:50),'mock topics');
   for(const t of c.mockPack.topics){check(ls.has(t.sectionId),'topic section');source(t.sourceIds);}
-  for(const [i,e] of c.exams.entries()){check(e.id===`SQLD-M${String(e.order).padStart(2,'0')}`&&e.order===i+1&&e.order<=total&&e.durationSeconds===5400,'exam identity');check(e.questionIds.length===50&&unique(e.questionIds),'exam size');const owner=owners.get(e.id),prefix=owner&&owner.number>1?`MEV${owner.number}:`:'ME20261109:';let s1=0;for(const id of e.questionIds){const q=qs[id];check(q&&q.examId===e.id&&!seen.has(id)&&id.startsWith(prefix),'exam assignment');seen.add(id);check(['S1','S2'].includes(q.subject)&&q.number===e.questionIds.indexOf(id)+1,'exam subject/order');check(c.mockPack.topics.some(t=>t.id===q.conceptId),'question concept');if(owner)check(owner.topicIds.includes(q.conceptId)&&q.sourceIds.every(id=>owner.sourceIds.includes(id)),'volume question references');if(q.subject==='S1')s1++;}check(s1===10,'exam subject ratio');}
+  for(const [i,e] of c.exams.entries()){check(e.id===`SQLD-M${String(e.order).padStart(2,'0')}`&&e.order===i+1+offset&&e.order<=total+offset&&(!curated||e.displayNumber===i+1)&&e.durationSeconds===5400,'exam identity');check(e.questionIds.length===50&&unique(e.questionIds),'exam size');const owner=owners.get(e.id),prefix=owner&&owner.number>1?`MEV${owner.number}:`:'ME20261109:';let s1=0;for(const id of e.questionIds){const q=qs[id];check(q&&q.examId===e.id&&!seen.has(id)&&id.startsWith(prefix),'exam assignment');seen.add(id);check(['S1','S2'].includes(q.subject)&&q.number===e.questionIds.indexOf(id)+1,'exam subject/order');check(c.mockPack.topics.some(t=>t.id===q.conceptId),'question concept');if(owner)check(owner.topicIds.includes(q.conceptId)&&q.sourceIds.every(id=>owner.sourceIds.includes(id)),'volume question references');if(q.subject==='S1')s1++;}check(s1===10,'exam subject ratio');}
   check(seen.size===counts.examQuestions,'unassigned exam question');
  }else check(c.exams.length===0&&counts.examQuestions===0,'unlabelled mock pack');
  return {...counts,questions:counts.practice+counts.examQuestions,days:0};
