@@ -3,12 +3,12 @@ import type {AppState, Content} from '../core/types';
 export type AdMode = 'off' | 'test' | 'live';
 export type ExamAccessPolicy = 'launch-free' | 'rewarded';
 export const FREE_EXAM_IDS = ['SQLD-M01','SQLD-M02','SQLD-M03','SQLD-M04'] as const;
-export const POLICY_VERSION = '2026-11-12.1';
+export const POLICY_VERSION = '2026-11-12.2';
 // Shown beside every direct rewarded-ad button, before the user opts in.
 export const REWARD_ACTION = '광고 1회 보고 회차 열기';
 export const REWARD_DISCLOSURE = '광고 완료 후 이 회차의 두 모드·재응시·해설을 이 기기에서 계속 이용합니다.';
 export const REWARD_AGE_DISCLOSURE = '만 18세 이상이며 광고 시청을 원하면 아래 버튼을 눌러 주세요.';
-export const REWARD_STORAGE_DISCLOSURE = '중간에 닫으면 잠금은 유지됩니다. 무료 1~4회와 열린 회차는 그대로 이용할 수 있습니다. 앱 삭제·전체 데이터 삭제·기기 변경 시 해제 기록은 복원되지 않습니다.';
+export const REWARD_STORAGE_DISCLOSURE = '중간에 닫으면 잠금은 유지됩니다. 무료 회차와 열린 회차는 그대로 이용할 수 있습니다. 앱 삭제·전체 데이터 삭제·기기 변경 시 해제 기록은 복원되지 않습니다.';
 export interface Grant {
   examId:string; requestId:string; grantedAt:number; source:'reward'|'legacy'|'launch-free'; mode:AdMode;
 }
@@ -30,7 +30,7 @@ export const disabledAds:RewardDriver = {
 export function validExamId(id:string):boolean {return /^SQLD-M(0[1-9]|[1-5][0-9]|60)$/.test(id);}
 /** Historical free-launch rights never expand with the current catalog. */
 export function legacyLaunchExam(id:string):boolean {return /^SQLD-M(0[1-9]|1[0-9]|20)$/.test(id);}
-export function isFreeExam(id:string):boolean {return (FREE_EXAM_IDS as readonly string[]).includes(id);}
+export function isFreeExam(id:string,c?:Content):boolean {return (c?.mockPack?.freeExamIds??FREE_EXAM_IDS as readonly string[]).includes(id);}
 export function walletOf(s:AppState):Wallet {
   const w=(s as MonetizedState).monetization;
   return w ?? {version:1,grants:{},pending:null};
@@ -58,9 +58,9 @@ export function migrateWallet(s:AppState):AppState {
   };}
   return {...s,monetization:{version:1,grants,pending:null}} as MonetizedState;
 }
-export function canAccessExam(s:AppState,id:string,mode:AdMode):boolean {
-  if(!validExamId(id))return false;
-  if(isFreeExam(id))return true;
+export function canAccessExam(s:AppState,id:string,mode:AdMode,c?:Content):boolean {
+  if(!validExamId(id)||(c&&!c.exams.some(e=>e.id===id)))return false;
+  if(isFreeExam(id,c))return true;
   const g=walletOf(s).grants[id];
   return !!g && (g.source==='legacy'||g.source==='launch-free'||g.mode==='live'||mode==='test');
 }
@@ -79,14 +79,15 @@ export function grantLaunchFreeAccess(s:AppState,c:Content,now:number):AppState 
   return changed?{...migrated,monetization:{...w,grants,pending:null}} as MonetizedState:clearPending(migrated);
 }
 export function prepareReward(s:AppState,p:PendingReward,c:Content):AppState {
-  if(!validExamId(p.examId) || isFreeExam(p.examId) || !c.exams.some(e=>e.id===p.examId))throw new Error('광고 해제 대상 회차가 아닙니다.');
+  if(!validExamId(p.examId) || isFreeExam(p.examId,c) || !c.exams.some(e=>e.id===p.examId))throw new Error('광고 해제 대상 회차가 아닙니다.');
   if(s.exams.some(e=>e.status==='active'))throw new Error('진행 중 시험을 먼저 마쳐 주세요.');
-  if(canAccessExam(s,p.examId,p.mode))return s;
+  if(canAccessExam(s,p.examId,p.mode,c))return s;
   return {...s,monetization:{...walletOf(s),pending:p}} as MonetizedState;
 }
-export function earnReward(s:AppState,p:PendingReward,now:number):AppState {
+export function earnReward(s:AppState,p:PendingReward,now:number,c?:Content):AppState {
+  if(c&&!c.exams.some(e=>e.id===p.examId))throw Error('현재 제공하지 않는 회차입니다.');
   const w=walletOf(s);
-  if(canAccessExam(s,p.examId,p.mode))return s;
+  if(canAccessExam(s,p.examId,p.mode,c))return s;
   if(!w.pending || w.pending.requestId!==p.requestId || w.pending.examId!==p.examId || w.pending.mode!==p.mode)
     throw new Error('광고 요청과 보상 이벤트가 일치하지 않습니다.');
   return {...s,monetization:{version:1,pending:null,grants:{...w.grants,[p.examId]:{

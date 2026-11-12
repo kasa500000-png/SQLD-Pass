@@ -127,6 +127,7 @@ export function renderTextbook(c:MonetizedController):Node{
  else body=[h('새 교재 학습'),t('교재와 실전 탭에서 학습을 이어가세요.'),act('교재 목차',go('catalog'))];
  if(c.needsRewardSave)body.unshift(act('시청 완료 보상 저장 재시도',()=>c.retryRewardSave()));
  if(c.notice)body.unshift({...t(c.notice),alert:true});
+ if(s.mockCatalogMigration?.noticePending&&c.ready)body.unshift(card([h('모의고사를 새롭게 구성했습니다'),t('기존 1권 1~20회와 해당 응시·저장·메모·해제 기록을 삭제했습니다. 기존 2·3권은 새 1·2권 1~40회로 표시하며 기록과 해제 내역은 유지됩니다. 각 권의 첫 5회는 무료입니다.'),act('확인',()=>c.dismissMockCatalogMigration(),'dismiss-mock-migration')]));
  if(s.textbookMigration?.noticePending&&c.ready)body.unshift(card([h('새 교재로 전환했습니다'),t('이전 교재의 진도·저장 목록·풀이·모의고사 기록을 정리했습니다. 학습 설정·알림 설정과 기존 이용 권한은 유지됩니다.'),act('확인',()=>c.dismissTextbookMigration(),'dismiss-migration')]));
  const reading=r==='lesson'?c.content.lessons.find(l=>l.id===c.route.id):undefined;
  const scroll:Node={...box(body,{gap:12,paddingVertical:16},`${r}:${c.route.id??''}:${r==='practice'?s.practice?.index??0:['exam','result','examReview'].includes(r)?(r==='exam'?c.activeExam()?.index:c.route.index)??0:''}`),scroll:true,contentWidth:reading||['setup','settings','appearance','examIntro','exam','sheet','examPause','result','examReview','practice','mockQuestion','privacy','help'].includes(r)?'reading':undefined,...(reading?{reading:{position:c.readingPosition(reading.id),onSave:pos=>c.rememberReading(reading.id,pos)}}:{})};

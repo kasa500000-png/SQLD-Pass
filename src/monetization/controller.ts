@@ -19,7 +19,7 @@ export class MonetizedController extends Controller {
     if(!ok)throw new Error('이용 권한을 저장하지 못했습니다. 저장 상태를 확인 후 다시 시도해 주세요.');
     if(pending&&!this.isLaunchFree)this.notice='이전 광고의 완료 보상을 확인하지 못했습니다. 무료 회차와 이미 열린 회차는 그대로 이용할 수 있습니다.';
   }
-  hasAccess(id:string){return validExamId(id)&&this.content.exams.some(e=>e.id===id)&&((this.isLaunchFree&&legacyLaunchExam(id))||canAccessExam(this.state,id,this.ads.mode));}
+  hasAccess(id:string){return validExamId(id)&&this.content.exams.some(e=>e.id===id)&&((this.isLaunchFree&&legacyLaunchExam(id))||canAccessExam(this.state,id,this.ads.mode,this.content));}
   override examCatalogContext(){return JSON.stringify([super.examCatalogContext(),this.accessPolicy,this.ads.mode,this.content.exams.filter(e=>this.hasAccess(e.id)).map(e=>e.id)]);}
   get needsRewardSave(){return this.unsavedReward!==null;}
   get showBanner(){return !this.isLaunchFree&&this.ads.mode!=='off'&&this.ready&&this.state.onboarded&&bannerAllowed(this.route.name,!!this.activeExam(),!!this.dialog,this.rewardBusy);}
@@ -42,7 +42,7 @@ export class MonetizedController extends Controller {
     // reward and eligibility beside a dedicated watch button.
     if(this.content.mockPack){this.navigate({name:'examIntro',id});return;}
     this.confirm(`${e.title} 열기`,
-      '광고 기능은 만 18세 이상만 이용할 수 있습니다. 생년월일은 수집하지 않으며, 연령 확인은 앱을 종료하면 초기화됩니다. 보상형 광고 1회를 끝까지 시청하면 이 회차와 제출 후 해설을 이 기기에 계속 열어 둡니다. 클릭·설치·추적 허용은 필요하지 않습니다. 앱 삭제·데이터 삭제·기기 변경 시 복원되지 않습니다. 취소해도 무료 1~4회와 열린 회차는 유지됩니다.'+(this.ads.mode==='test'?'\n테스트 광고로 열린 회차는 운영 광고 버전으로 이전되지 않습니다.':''),
+      '광고 기능은 만 18세 이상만 이용할 수 있습니다. 생년월일은 수집하지 않으며, 연령 확인은 앱을 종료하면 초기화됩니다. 보상형 광고 1회를 끝까지 시청하면 이 회차와 제출 후 해설을 이 기기에 계속 열어 둡니다. 클릭·설치·추적 허용은 필요하지 않습니다. 앱 삭제·데이터 삭제·기기 변경 시 복원되지 않습니다. 취소해도 무료 회차와 열린 회차는 유지됩니다.'+(this.ads.mode==='test'?'\n테스트 광고로 열린 회차는 운영 광고 버전으로 이전되지 않습니다.':''),
       '만 18세 이상 · 광고 시청',()=>{this.ads.confirmAdult();return this.unlockAfterOptIn(id);});
   }
   async watchAdToUnlock(id:string){
@@ -57,7 +57,7 @@ export class MonetizedController extends Controller {
     if(this.hasAccess(id)&&!this.needsRewardSave)this.navigate({name:'examIntro',id});
   }
   private async saveEarned(p:PendingReward):Promise<void>{
-    const ok=await this.commit(s=>earnReward(s,p,this.services.clock().wall));
+    const ok=await this.commit(s=>earnReward(s,p,this.services.clock().wall,this.content));
     if(!ok){this.unsavedReward=p;return;}
     this.unsavedReward=null;this.notice='회차를 열었습니다. 이후 응시·제출 후 해설은 추가 광고 없이 이용할 수 있습니다.';this.notify();
   }
@@ -67,8 +67,8 @@ export class MonetizedController extends Controller {
     try{await this.saveEarned(this.unsavedReward);}finally{this.rewardBusy=false;this.notify();}
   }
   private async unlockAfterOptIn(id:string){
-    if(this.rewardBusy||this.hasAccess(id)||isFreeExam(id))return;
-    if(this.ads.mode==='off'){this.notice='광고 기능이 아직 활성화되지 않았습니다. 무료 1~4회를 이용해 주세요.';this.notify();return;}
+    if(this.rewardBusy||this.hasAccess(id)||isFreeExam(id,this.content))return;
+    if(this.ads.mode==='off'){this.notice='광고 기능이 아직 활성화되지 않았습니다. 무료 회차를 이용해 주세요.';this.notify();return;}
     if(this.activeExam())return;
     this.rewardBusy=true;this.notice='광고를 준비하고 있습니다. 완료 전에는 회차가 열리지 않습니다.';this.notify();
     const p:PendingReward={examId:id,requestId:this.services.uuid(),createdAt:this.services.clock().wall,mode:this.ads.mode};
@@ -79,7 +79,7 @@ export class MonetizedController extends Controller {
         if(earned)return;earned=true;
         await this.saveEarned(p); // Save on EARNED_REWARD, not on CLOSED or an ad click.
       });
-      if(!earned)this.notice=outcome==='unavailable'?'표시할 광고가 없거나 연결/동의 상태를 확인하지 못했습니다. 잠시 후 다시 시도하거나 무료 1~4회를 이용해 주세요.':'시청 완료 보상이 확인되지 않아 회차를 열지 않았습니다. 무료 학습은 계속 이용할 수 있습니다.';
+      if(!earned)this.notice=outcome==='unavailable'?'표시할 광고가 없거나 연결/동의 상태를 확인하지 못했습니다. 잠시 후 다시 시도하거나 무료 회차를 이용해 주세요.':'시청 완료 보상이 확인되지 않아 회차를 열지 않았습니다. 무료 학습은 계속 이용할 수 있습니다.';
       else if(this.unsavedReward)this.notice='시청은 완료됐지만 저장하지 못했습니다. 광고를 다시 보지 말고 보상 저장 재시도를 눌러 주세요.';
     }catch{
       if(!earned)this.notice='광고를 표시하지 못했습니다. 회차는 잠금 상태이며 무료 학습은 계속 가능합니다.';

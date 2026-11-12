@@ -63,6 +63,7 @@ export interface ReadingOffset { offset:number; contentHeight:number; }
 export interface ReadingPosition extends ReadingOffset { lessonVersion:string; }
 export interface ReadingState { lastLessonId:string|null; positions:Record<string,ReadingPosition>; }
 export interface AppState {
+  mockCatalogMigration?:{version:1;fromVersion:string;noticePending:boolean};
   textbookMigration?:{version:1;fromVersion:string;noticePending:boolean};
   knownCards?:string[];
   mockStudy?:{bookmarks:string[];notes:Record<string,string>;mastered:Record<string,boolean>};
