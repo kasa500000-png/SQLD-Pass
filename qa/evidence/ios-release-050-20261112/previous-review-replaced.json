@@ -1,0 +1,12 @@
+{
+  "recordedAt": "2026-11-12T09:03:58.493Z",
+  "versionId": "eeea18de-bf63-4825-b1c4-3cba9b7f6fe3",
+  "version": "0.4.0",
+  "state": "WAITING_FOR_REVIEW",
+  "replacedReviewSubmissionId": "065d2c2d-038a-48ba-87ac-83caa92e9a8e",
+  "canceledSubmissionState": "CANCELING",
+  "finalPriorSubmissionState": "COMPLETE",
+  "intermediateVersionState": "DEVELOPER_REJECTED",
+  "reason": "Owner-authorized replacement of waiting0.4.0 with curated40 version0.5.0; developer cancellation, not an Apple review rejection.",
+  "versionRecordReused": true
+}

@@ -1,0 +1,10 @@
+{
+  "recordedAt": "2026-11-12T17:58:59+09:00",
+  "version": "0.5.0",
+  "build": "16",
+  "deliveryUuid": "48c4c0ff-45d7-42b4-ad21-f9deea5d6264",
+  "exitCode": 0,
+  "status": "UPLOAD SUCCEEDED with no errors",
+  "bytes": 19331568,
+  "localWarning": "Uploader could not create local resume-state file; upload completed. Server processing is checked separately."
+}

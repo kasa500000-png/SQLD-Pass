@@ -1,0 +1,40 @@
+{
+  "artifact": "/tmp/sqld-production-0.5.0/ios-export16/SQLDPass.ipa",
+  "bytes": 19331568,
+  "sha256": "532f34417060912de46f546708f154f67c18acd1c4f62a50e68566adf6f92108",
+  "mainJsBundleSha256": "651a6f5710834c086cc5f579f7f0bb578539150700e5154c04ed461084eb01e3",
+  "version": "0.5.0",
+  "build": "16",
+  "bundleId": "com.kasa500000.sqldpass",
+  "adMobAppId": "ca-app-pub-9314207769680999~3391326882",
+  "trackingPermissionDescriptionPresent": false,
+  "nonExemptEncryption": false,
+  "runtime": {
+    "appEnvironment": "production",
+    "contentReleaseReady": true,
+    "productionContentApproval": {
+      "schemaVersion": 1,
+      "approved": true,
+      "contentSha256": "48e1214183bb4123a218a46bbce1362933778e34914cd79a7485d06d233be9b3",
+      "contentVersion": "textbook.20261112.2"
+    },
+    "adsRuntimeEnabled": true,
+    "adsMode": "live",
+    "examAccessPolicy": "rewarded",
+    "remoteAnalyticsEnabled": false,
+    "eas": {
+      "projectId": "9c3d6489-bfb8-426a-9a6c-8673fa3c07f0"
+    }
+  },
+  "productionAdUnitsPresent": [
+    "ca-app-pub-9314207769680999/4355019185",
+    "ca-app-pub-9314207769680999/9507152408"
+  ],
+  "archiveSignatureVerified": true,
+  "exportedSignatureVerified": true,
+  "applicationIdentifier": "F4HJ438953.com.kasa500000.sqldpass",
+  "getTaskAllow": false,
+  "privacyManifestIncluded": true,
+  "diagnosticDeviceHashAbsent": true,
+  "physicalValidation": "Current 0.5.0 physical iPad validation was not performed. The owner explicitly waived additional physical iPad and regional iOS consent reruns for 0.5.0(16). Existing current simulator consent and Android physical results remain separately scoped."
+}

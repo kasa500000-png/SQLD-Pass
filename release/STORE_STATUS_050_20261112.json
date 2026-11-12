@@ -1,5 +1,5 @@
 {
-  "observedAt": "2026-11-12T14:51:21+09:00",
+  "observedAt": "2026-11-12T09:06:30.422Z",
   "version": "0.5.0",
   "contentVersion": "textbook.20261112.2",
   "contentSha256": "48e1214183bb4123a218a46bbce1362933778e34914cd79a7485d06d233be9b3",
@@ -14,17 +14,30 @@
     "submittedChanges": 6,
     "publicVersionObservedBeforeSubmission": "0.4.0(21)",
     "publicReleaseConfirmed": false,
-    "evidence": "qa/evidence/mock40-20261112/store/google-play-submitted.txt"
+    "evidence": "qa/evidence/mock40-20261112/store/google-play-submitted.txt",
+    "observedAt": "2026-11-12T14:51:21+09:00"
   },
   "appStore": {
     "candidateBuild": 16,
-    "candidateState": "NOT_SUBMITTED",
-    "testFlightUpdated": false,
-    "productionArtifactBuilt": false,
+    "candidateState": "WAITING_FOR_REVIEW",
+    "versionId": "eeea18de-bf63-4825-b1c4-3cba9b7f6fe3",
+    "buildId": "48c4c0ff-45d7-42b4-ad21-f9deea5d6264",
+    "reviewSubmissionId": "32415fb0-7020-4b8c-b2e9-a0831cf3454c",
+    "submittedAt": "2026-11-12T09:06:00.796Z",
+    "observedAt": "2026-11-12T09:06:30.422Z",
+    "releaseType": "AFTER_APPROVAL",
+    "liveAdsConfigured": true,
+    "testFlightUpdated": true,
+    "testFlightState": "IN_BETA_TESTING",
+    "testFlightGroup": "SQLD Pass 내부 검증",
+    "productionArtifactBuilt": true,
     "physicalQA": "NOT_PERFORMED; iPad unavailable",
-    "currentException": null,
-    "simulatorQA": "UI, persistence upgrade, official test reward, visible EEA reject/accept/withdraw verified",
-    "priorVersionObserved": "0.4.0(15) WAITING_FOR_REVIEW;0.3.4 public;observed earlier at14:19 KST"
+    "currentException": "Owner explicitly instructed 검증 생략 예외로 ios도 정식 심사 및 testflight 업데이트 반영 for0.5.0(16); additional physical/consent reruns waived, not passed.",
+    "simulatorQA": "Current UI, SQLite upgrade comparison, official test reward and visible EEA reject/accept/withdraw evidence preserved separately; no new physical claim.",
+    "previousWaitingSubmissionReplaced": "0.4.0(15) canceled by developer to submit0.5.0; not an Apple rejection.",
+    "latestPublicVersionObserved": "0.3.4",
+    "publicReleaseConfirmed": false,
+    "evidence": "qa/IOS_RELEASE_050_20261112.md"
   },
   "supportSite": {
     "url": "https://sqld-pass-support.shk1122.chatgpt.site",
