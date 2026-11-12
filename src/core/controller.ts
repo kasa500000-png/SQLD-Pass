@@ -66,6 +66,7 @@ export class Controller {
       finally{this.busy=false;this.notify();}
     });this.serial=task.catch(()=>{});await task;return ok;
   }
+  async dismissMockCatalogMigration(){await this.commit(s=>s.mockCatalogMigration?{...s,mockCatalogMigration:{...s.mockCatalogMigration,noticePending:false}}:s);}
   async dismissTextbookMigration(){await this.commit(s=>s.textbookMigration?{...s,textbookMigration:{...s.textbookMigration,noticePending:false}}:s);}
   async toggleKnownCard(id:string){if(!this.content.textbook?.flashcards.some(f=>f.id===id))return;await this.commit(s=>({...s,knownCards:(s.knownCards??[]).includes(id)?s.knownCards!.filter(x=>x!==id):[...(s.knownCards??[]),id]}));}
   get settingsChanged(){return JSON.stringify(this.draftSettings)!==JSON.stringify(this.state.settings);}

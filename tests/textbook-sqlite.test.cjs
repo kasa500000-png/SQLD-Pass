@@ -6,9 +6,9 @@ const {initialState,parseState}=require('../.build/core/domain');
 const oldContent=require('./fixtures/legacy-content.cjs'),content=require('../generated/content.json');
 function setup(t){
  const db=new DatabaseSync(':memory:');t.after(()=>db.close());let fail=false,failOpen=false,failRead=false,opens=0,closes=0;
- const bridge={execAsync:async s=>{if(failOpen){failOpen=false;throw Error('native initialization failed');}return db.exec(s);},closeAsync:async()=>{closes++;},getFirstAsync:async(s,...p)=>{if(failRead&&s.includes('SELECT payload FROM learner_state')){failRead=false;throw Error('native read failed');}return db.prepare(s).get(...p);},runAsync:async(s,...p)=>{if(fail&&s.includes('INSERT OR REPLACE INTO learner_state')&&p[0]==='current')throw Error('interrupted write');return db.prepare(s).run(...p);},withExclusiveTransactionAsync:async fn=>{db.exec('BEGIN EXCLUSIVE');try{await fn(bridge);db.exec('COMMIT');}catch(e){db.exec('ROLLBACK');throw e;}}};
+ const bridge={execAsync:async s=>{if(failOpen){failOpen=false;throw Error('native initialization failed');}return db.exec(s);},closeAsync:async()=>{closes++;},getAllAsync:async(s,...p)=>db.prepare(s).all(...p),getFirstAsync:async(s,...p)=>{if(failRead&&s.includes('SELECT payload FROM learner_state')){failRead=false;throw Error('native read failed');}return db.prepare(s).get(...p);},runAsync:async(s,...p)=>{if(fail&&s.includes('INSERT OR REPLACE INTO learner_state')&&p[0]==='current')throw Error('interrupted write');return db.prepare(s).run(...p);},withExclusiveTransactionAsync:async fn=>{db.exec('BEGIN EXCLUSIVE');try{await fn(bridge);db.exec('COMMIT');}catch(e){db.exec('ROLLBACK');throw e;}}};
  const code=ts.transpileModule(fs.readFileSync('src/platform/native.ts','utf8'),{compilerOptions:{module:ts.ModuleKind.CommonJS,target:ts.ScriptTarget.ES2022}}).outputText;
- const module={exports:{}};vm.runInNewContext(code,{exports:module.exports,module,require:id=>id==='expo-sqlite'?{openDatabaseAsync:async(_name,options)=>{a.equal(options.useNewConnection,true);opens++;return bridge;}}:id==='expo-crypto'?{randomUUID:()=> 'test'}:id==='react-native'?{}:{},Date,JSON,Set});
+ const module={exports:{}};vm.runInNewContext(code,{exports:module.exports,module,require:id=>id==='../core/domain/mock-retirement'?require('../.build/core/domain/mock-retirement'):id==='expo-sqlite'?{openDatabaseAsync:async(_name,options)=>{a.equal(options.useNewConnection,true);opens++;return bridge;}}:id==='expo-crypto'?{randomUUID:()=> 'test'}:id==='react-native'?{}:{},Date,JSON,Set});
  return {db,repo:new module.exports.NativeRepository('isolated-test.sqlite'),fail:v=>{fail=v;},failOpen:()=>{failOpen=true;},failRead:()=>{failRead=true;},counts:()=>({opens,closes}),newRepo:()=>new module.exports.NativeRepository('isolated-test.sqlite')};
 }
 async function seed(t){const x=setup(t);await x.repo.load();const raw={...initialState(oldContent),revision:8,onboarded:true,readLessons:['SQLD-L001'],practice:{id:'old-session'},exams:[{id:'old-exam',examId:'SQLD-M05',startedAt:10,snapshots:[{stem:'retired question'}]}]};await x.repo.save({...raw,revision:1});await x.repo.save({...raw,revision:2});return x;}
@@ -56,5 +56,26 @@ test('60-exam compatible upgrade rolls back without deleting previous slots or r
   await x.repo.save(s);await x.repo.save({...s,revision:2});const before=x.db.prepare('SELECT * FROM learner_state ORDER BY slot').all(),snapshots=x.db.prepare('SELECT * FROM exam_snapshot ORDER BY attempt_id').all();const next={...parseState(await x.repo.load(),nextContent),revision:3};
   x.fail(true);await a.rejects(x.repo.save(next));a.deepEqual(x.db.prepare('SELECT * FROM learner_state ORDER BY slot').all(),before);a.deepEqual(x.db.prepare('SELECT * FROM exam_snapshot ORDER BY attempt_id').all(),snapshots);
   x.fail(false);await x.repo.save(next);const loaded=await x.newRepo().load();a.equal(loaded.contentVersion,nextContent.manifest.version);a.deepEqual(loaded.exams,s.exams);a.deepEqual(x.db.prepare('SELECT * FROM exam_snapshot ORDER BY attempt_id').all(),snapshots);a.equal(JSON.parse(x.db.prepare("SELECT payload FROM learner_state WHERE slot='previous'").get().payload).contentVersion,old.manifest.version);
+ }
+});
+
+test('curated40 removes only retired data in both slots and detached snapshots, with atomic retry',async t=>{
+ const old=require('./fixtures/mock60.cjs')(),nextContent=require('./fixtures/mock40.cjs')(),{startExam,pauseExam,submitExam}=require('../.build/core/domain');
+ for(const mode of ['timed','study']){
+  const x=setup(t),clock={wall:10000,mono:10000,runtimeId:'curated40'};await x.repo.load();
+  const s={...initialState(old),revision:1,onboarded:true};
+  const retired=submitExam(startExam(s,old.exams[0],old,clock,'retired-'+mode),clock,'manual');
+  const retained=pauseExam(startExam(s,old.exams[30],old,clock,'keep-'+mode,mode),{...clock,wall:12000,mono:12000});retained.index=9;retained.answers[retained.snapshots[9].id]='2';
+  s.exams=[retired,retained];s.mockStudy={bookmarks:[retired.snapshots[0].id,retained.snapshots[0].id],notes:{[retired.snapshots[0].id]:'retired-note',[retained.snapshots[0].id]:'kept-note'},mastered:{}};
+  await x.repo.save(s);await x.repo.save({...s,revision:2});
+  x.db.prepare('INSERT INTO exam_snapshot VALUES (?,?)').run('orphan-old',JSON.stringify(retired.snapshots));
+  x.db.prepare('INSERT INTO exam_snapshot VALUES (?,?)').run('orphan-retained',JSON.stringify(retained.snapshots));
+  const before=x.db.prepare('SELECT * FROM learner_state ORDER BY slot').all(),snapshots=x.db.prepare('SELECT * FROM exam_snapshot ORDER BY attempt_id').all();
+  const next={...parseState(await x.repo.load(),nextContent),revision:3};x.fail(true);await a.rejects(x.repo.save(next));
+  a.deepEqual(x.db.prepare('SELECT * FROM learner_state ORDER BY slot').all(),before);a.deepEqual(x.db.prepare('SELECT * FROM exam_snapshot ORDER BY attempt_id').all(),snapshots);
+  x.fail(false);await x.repo.save(next);const loaded=await x.newRepo().load();a.deepEqual(loaded.exams,[retained]);a.equal(loaded.mockStudy.notes[retained.snapshots[0].id],'kept-note');
+  a.deepEqual(x.db.prepare('SELECT * FROM exam_snapshot ORDER BY attempt_id').all(),snapshots.filter(x=>x.attempt_id===retained.id||x.attempt_id==='orphan-retained'));
+  for(const row of x.db.prepare('SELECT payload FROM learner_state').all()){const v=JSON.parse(row.payload);a.deepEqual(v.exams.map(e=>e.id),[retained.id]);a.equal(v.contentVersion,nextContent.manifest.version);a.ok(!row.payload.includes('ME20261109:'));a.ok(!row.payload.includes('retired-note'));}
+  await x.repo.save({...loaded,revision:4});a.equal(x.db.prepare('SELECT count(*) AS n FROM exam_snapshot').get().n,2);
  }
 });
