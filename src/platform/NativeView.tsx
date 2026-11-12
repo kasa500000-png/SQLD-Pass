@@ -5,7 +5,7 @@ import {
   Platform, Pressable, ScrollView, View,
   type TextStyle, type ViewStyle
 } from 'react-native';
-import {dark as darkPalette, light as lightPalette, learningType, type Node, type Style} from '../ui/nodes';
+import {dark as darkPalette, light as lightPalette, learningType, selectionStyle, type Node, type Style} from '../ui/nodes';
 import Svg,{Circle} from 'react-native-svg';
 import {StudyCode,StudyTable} from './StudyReadables';
 import {AppText as Text, AppTextInput as TextInput} from './Typography';
@@ -50,12 +50,12 @@ function LessonSections({node,scale,dark,path,maxSystemFontMultiplier}:NativeVie
 }
 function ResponsiveSegments({node,scale,dark,path,maxSystemFontMultiplier}:NativeViewProps){
   const layout=useResponsiveLayout(),[measured,setMeasured]=useState(0);
-  const width=Math.min(measured||layout.usableWidth,layout.usableWidth),items=node.children??[],minCell=76*layout.effectiveFontScale;
+  const width=Math.min(measured||layout.usableWidth,layout.usableWidth),items=node.children??[],minCell=(node.selectionStyle?80:76)*layout.effectiveFontScale;
   const count=width/items.length>=minCell?items.length:width/2>=minCell?2:1;
   // Fractional dp can round each child up on Android and wrap the last tab.
   const cellWidth=Math.floor((width-(count-1)*6)/count);
-  return <View onLayout={event=>setMeasured(event.nativeEvent.layout.width)} style={{width:'100%',flexDirection:'row',flexWrap:'wrap',gap:6}}>{items.map((child,index)=><View key={child.key??index} style={{width:cellWidth}}>
-    <NativeView node={{...child,style:{...child.style,flex:undefined,width:'100%',paddingHorizontal:6,fontSize:13,borderRadius:10}}} scale={scale} dark={dark} path={`${path}.${index}`} maxSystemFontMultiplier={maxSystemFontMultiplier}/>
+  return <View testID={node.testId} onLayout={event=>setMeasured(event.nativeEvent.layout.width)} style={{width:'100%',flexDirection:'row',flexWrap:'wrap',gap:6}}>{items.map((child,index)=><View key={child.key??index} style={{width:cellWidth}}>
+    <NativeView node={{...child,selectionStyle:node.selectionStyle,style:{...child.style,flex:undefined,width:'100%',paddingHorizontal:6,fontSize:child.style?.fontSize??13,borderRadius:10,...(node.selectionStyle?selectionStyle(child,dark?darkPalette:lightPalette,node.selectionStyle):{})}}} scale={scale} dark={dark} path={`${path}.${index}`} maxSystemFontMultiplier={maxSystemFontMultiplier}/>
   </View>)}</View>;
 }
 function ResponsiveTiles({node,scale,dark,path,maxSystemFontMultiplier}:NativeViewProps){
@@ -88,7 +88,7 @@ export function NativeView({node: n, scale, dark, path = '0',maxSystemFontMultip
     accessibilityLabel={n.label ?? n.text} accessibilityState={{disabled: !!n.disabled, selected: !!n.selected, checked: n.checked, expanded:n.expanded}}
     disabled={n.disabled} onPress={() => {void n.action?.();}}
     style={({pressed}) => [{minHeight: 48,minWidth:0,maxWidth:'100%', justifyContent: 'center', paddingHorizontal: 12, paddingVertical: 10}, s.view, roleStyle, {opacity: n.disabled ? (n.role==='radio'?1:0.45) : pressed ? 0.78 : 1}]}>
-    {(n.text||n.icon)?<View style={{flexDirection:n.iconPosition==='above'?'column':'row',alignItems:'center',justifyContent:list||choice?'flex-start':'center',gap:n.iconPosition==='above'?4:8}}>
+    {(n.text||n.icon)?<View style={{flexDirection:n.iconPosition==='above'?'column':'row',alignItems:'center',justifyContent:list||choice?'flex-start':'center',gap:n.iconPosition==='above'||n.selectionStyle?4:8}}>
       {n.icon&&n.iconPosition!=='trailing'?<LearningIcon name={n.icon} size={n.iconSize??(n.role==='tab'?23:20)} color={iconColor}/>:null}
       {option?<View accessible={false} style={{minWidth:28,minHeight:28,borderRadius:14,alignSelf:'flex-start',alignItems:'center',justifyContent:'center',backgroundColor:n.feedback?tone:n.selected?palette.blue:palette.code}}><Text style={{fontSize:14*scale,fontWeight:'600',color:n.feedback||n.selected?(dark?palette.bg:'#FFFFFF'):palette.ink}}>{option[1]}</Text></View>:null}
       {n.text ? <Text maxFontSizeMultiplier={maxSystemFontMultiplier} style={[{color: ink, textAlign: 'center', fontSize: 15 * scale, fontWeight:'400', flexShrink: 1}, s.text,roleText]}><RichText value={option?.[2]??n.text} />{n.subtitle?<Text style={{fontSize:13*scale,lineHeight:21*scale,fontWeight:'400',color:palette.muted}}>{'\n'+n.subtitle}</Text>:null}</Text> : null}
