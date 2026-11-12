@@ -15,7 +15,9 @@ five exams are free (internal21..25 and41..45); remaining30 use earned rewards. 
 transfer retired grants. Keep216 sections/340 practice questions unchanged. Show one
 question with its full prompt/options before its explanation, no extra reveal button.
 Distinguish selection groups from navigation. Activate the curated pack only in the
-integration PR. New exact-hash content approval and native/consent evidence are required;
+integration PR. The owner confirmed “해당 40회 구성의 콘텐츠 검수·출시 확인 완료” for textbook.20261112.2,
+SHA-25648e1214183bb4123a218a46bbce1362933778e34914cd79a7485d06d233be9b3.
+Current native/consent evidence is still required;
 the0.4.0 iOS waiver does not carry forward. Prior release execution authorization persists.
 
 ## Historical direction — 2026-11-12 mock volumes 2 and 3
