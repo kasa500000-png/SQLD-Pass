@@ -10,7 +10,7 @@ test('activated runtime exactly matches reviewed candidate and renders all3000 q
   const e=startExam(c.state,exam,content,clock,'render-'+exam.id,'study');c.state.exams=[e];c.route={name:'exam',id:e.id};
   for(let i=0;i<50;i++){e.index=i;const q=e.snapshots[i],nodes=flat(renderTextbook(c)),pub=publicQuestion(q);a.ok(nodes.some(n=>n.text===q.stem),q.id);a.ok(!nodes.some(n=>n.text===q.explanation),q.id);a.equal(pub.answer,undefined);a.equal(nodes.filter(n=>n.kind==='table').length,q.blocks.filter(b=>b.type==='table').length);seen++;}
   const result=submitExam(e,clock,'manual');c.state.exams=[result];
-  for(let i=0;i<50;i++){const q=result.snapshots[i];c.route={name:'examReview',id:e.id,index:i};const nodes=flat(renderTextbook(c));a.ok(nodes.some(n=>n.text===q.explanation),q.id);a.equal(nodes.filter(n=>n.kind==='table').length,(q.result?1:0)+(q.explanationBlocks??[]).filter(b=>b.type==='table').length);}
+  for(let i=0;i<50;i++){const q=result.snapshots[i];c.route={name:'examReview',id:e.id,index:i};const nodes=flat(renderTextbook(c));a.ok(nodes.some(n=>n.text===q.explanation),q.id);a.equal(nodes.filter(n=>n.kind==='table').length,q.blocks.filter(b=>b.type==='table').length+(q.result?1:0)+(q.explanationBlocks??[]).filter(b=>b.type==='table').length);}
   a.equal(result.score.unanswered,50);a.equal(result.score.points,0);
  }a.equal(seen,3000);
 });
