@@ -1,0 +1,88 @@
+{
+  "recordedAt": "2026-11-12T09:05:41.540Z",
+  "versionId": "eeea18de-bf63-4825-b1c4-3cba9b7f6fe3",
+  "sets": [
+    {
+      "setId": "b0f91576-37a8-4ecb-9c32-6593dc2f1988",
+      "type": "APP_IPHONE_65",
+      "files": [
+        {
+          "id": "df000019-6632-831d-8034-ec287bdd0867",
+          "name": "050-iphone-50-store-home.png",
+          "state": "COMPLETE",
+          "width": 1284,
+          "height": 2778
+        },
+        {
+          "id": "3ac00019-6632-831d-8033-ad5b0f2f2177",
+          "name": "050-iphone-51-store-textbook.png",
+          "state": "COMPLETE",
+          "width": 1284,
+          "height": 2778
+        },
+        {
+          "id": "94400019-6632-831d-8035-1a7b60a53a36",
+          "name": "050-iphone-52-store-practice.png",
+          "state": "COMPLETE",
+          "width": 1284,
+          "height": 2778
+        },
+        {
+          "id": "f7000019-6632-831d-8003-00b468c1afde",
+          "name": "050-iphone-53-store-mocks1.png",
+          "state": "COMPLETE",
+          "width": 1284,
+          "height": 2778
+        },
+        {
+          "id": "69000019-6632-831d-8007-06c3fa49a64d",
+          "name": "050-iphone-54-store-mocks2.png",
+          "state": "COMPLETE",
+          "width": 1284,
+          "height": 2778
+        }
+      ]
+    },
+    {
+      "setId": "3372334c-7b25-4d3e-bfc1-cbe5a34b04e0",
+      "type": "APP_IPAD_PRO_3GEN_129",
+      "files": [
+        {
+          "id": "22000019-6632-831d-8026-8d7d20419346",
+          "name": "050-ipad-50-store-home.png",
+          "state": "COMPLETE",
+          "width": 2064,
+          "height": 2752
+        },
+        {
+          "id": "b5c00019-6632-831d-8007-8d0d4836267f",
+          "name": "050-ipad-51-store-textbook.png",
+          "state": "COMPLETE",
+          "width": 2064,
+          "height": 2752
+        },
+        {
+          "id": "b0000019-6632-831d-8006-2fe564f61049",
+          "name": "050-ipad-52-store-practice.png",
+          "state": "COMPLETE",
+          "width": 2064,
+          "height": 2752
+        },
+        {
+          "id": "d7400019-6632-831d-8012-6c5ba4b9cccc",
+          "name": "050-ipad-53-store-mocks1.png",
+          "state": "COMPLETE",
+          "width": 2064,
+          "height": 2752
+        },
+        {
+          "id": "0e000019-6632-831d-8032-7f99e3d3ad71",
+          "name": "050-ipad-54-store-mocks2.png",
+          "state": "COMPLETE",
+          "width": 2064,
+          "height": 2752
+        }
+      ]
+    }
+  ]
+}

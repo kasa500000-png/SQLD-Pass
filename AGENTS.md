@@ -20,6 +20,17 @@ SHA-25648e1214183bb4123a218a46bbce1362933778e34914cd79a7485d06d233be9b3.
 Current native/consent evidence is still required;
 the0.4.0 iOS waiver does not carry forward. Prior release execution authorization persists.
 
+### Scoped owner exception — iOS 0.5.0(16), 2026-11-12
+
+After the current iPad blocker and Android production submission were reported,
+the owner instructed “검증 생략 예외로 ios도 정식 심사 및 testflight 업데이트 반영”.
+For this 40-exam candidate only, proceed with TestFlight and App Store submission
+without additional physical iPad or consent reruns. Record them as unperformed;
+keep current iOS simulator EEA/UI/reward and Android physical evidence separate.
+This is a new explicit exception, not reuse of prior waivers. Preserve actual
+archive/export/upload validation, approved content hash, runtime consent,
+earned-reward and signing gates. Future candidates require their own evidence.
+
 ## Historical direction — 2026-11-12 mock volumes 2 and 3
 
 The owner reactivated the deferred additional-volume plan and requested implementation.

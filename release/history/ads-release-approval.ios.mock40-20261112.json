@@ -1,0 +1,17 @@
+{
+  "platform": "ios",
+  "policyVersion": "2026-11-12.2",
+  "codeSha256": "532992120c602655d5b440cee590c49896836db97144f47cd5f638a218b5301a",
+  "iosDeviceEvidence": "Current0.5.0 physical iPad validation was not performed because the device is unavailable. Owner explicitly instructed 검증 생략 예외로 ios도 정식 심사 및 testflight 업데이트 반영 for this candidate. Current iPhone/iPad simulator UI, immutable SQLite update comparison, official test reward and visible EEA reject/accept/withdraw passed; qa/MOCK40_20261112.md. Additional physical/consent reruns waived, not reported as passed.",
+  "consentAndATTEvidence": "Current0.5.0 iOS simulator published EEA visible form reject/accept/withdraw and free access after withdrawal verified. First form-not-ready error resolved by retry; hidden-element false-positive run excluded. Physical iPad consent reruns unperformed and newly waived by owner. Runtime UMP canRequestAds/adult choice and no-ATT behavior preserved.",
+  "adPlacementEvidence": "Current0.5.0 iPhone/iPad simulator UI/large-font/dark journeys and official iPhone test reward passed. Android physical actual test banner and active paused-attempt global suppression passed separately. AdMob both apps Ready/serving and automatic banner refresh disabled verified earlier today. No physical iOS ad impression claimed.",
+  "sdkCompatibilityEvidence": "Current 0.5.0 Release archive and App Store export succeeded. Archive and IPA signatures, production/live/rewarded settings, exact approved content hash and iOS ad units verified; qa/evidence/ios-release-050-20261112/artifact.json. Apple upload succeeded; server ingestion recorded separately. Prior471 automated checks and current native/content checks remain separately scoped.",
+  "appAdsTxtEvidence": "Public direct seller record and AdMob readiness confirmed2026-11-12 in current40-exam QA. No self-generated live impressions or clicks.",
+  "privacyDisclosureEvidence": "40-exam curation adds no new SDK, tracking, data collection or sharing. Existing Apple ad disclosures remain applicable. No learner answers/progress/notes are sent for ads. Public support version17 explains40-exam/free10/retirement/local rights.",
+  "privacyUrl": "https://sqld-pass-support.shk1122.chatgpt.site/privacy.html",
+  "supportUrl": "https://sqld-pass-support.shk1122.chatgpt.site/support.html",
+  "approvedBy": "Owner approved exact40-exam content hash and production/TestFlight execution; newly instructed 검증 생략 예외로 ios도 정식 심사 및 testflight 업데이트 반영 for iOS0.5.0(16).",
+  "approvedAt": "2026-11-12T08:53:45.313+00:00",
+  "additionalValidationWaived": true,
+  "waiverScope": "iOS0.5.0(16) additional physical iPad and consent reruns only; unperformed. Actual archive/export/upload, exact content approval, runtime consent, earned-reward and signing gates remain required."
+}

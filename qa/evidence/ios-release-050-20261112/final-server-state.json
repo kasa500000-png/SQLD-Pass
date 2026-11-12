@@ -1,0 +1,20 @@
+{
+  "observedAt": "2026-11-12T09:06:30.422Z",
+  "version": "0.5.0",
+  "build": "16",
+  "versionId": "eeea18de-bf63-4825-b1c4-3cba9b7f6fe3",
+  "buildId": "48c4c0ff-45d7-42b4-ad21-f9deea5d6264",
+  "buildProcessingState": "VALID",
+  "appStoreState": "WAITING_FOR_REVIEW",
+  "releaseType": "AFTER_APPROVAL",
+  "reviewSubmissionId": "32415fb0-7020-4b8c-b2e9-a0831cf3454c",
+  "reviewState": "WAITING_FOR_REVIEW",
+  "internalTestFlightState": "IN_BETA_TESTING",
+  "versionsWithReadyForSaleState": [
+    "0.3.4",
+    "0.3.3",
+    "0.2.0",
+    "0.1.0"
+  ],
+  "latestPublicVersionObserved": "0.3.4"
+}
