@@ -1,5 +1,20 @@
 # SQLD Pass UI reference
 
+## Current 0.5.0 refinement — 2026-11-12
+
+The owner-approved [40-exam plan](MOCK40_20261112.md) supersedes prior catalog counts
+and explanation-first disclosures. Display original volumes2/3 as1/2, exams1–40,
+with five free exams per volume. Preserve authored identities and retained snapshots.
+Read each submitted question in prompt → material → options → own/correct answer →
+explanation order without an original-question reveal button. Keep one-question navigation.
+
+Use explicit `selectionGroup` for selectors, not action groups. Volume tabs have an
+underlined selected state; quantity/mode/filter selections use a border and check mark.
+Use15/22 text,48-unit targets, ink for unselected text, and blue/600 for selected text.
+`controlBorder` is #7C889C light / #73839B dark, meeting3:1 against their surfaces.
+Do not add filled-blue backgrounds to whole tab groups. Retain muted metadata, neutral
+navigation rows, large text wrapping, and existing question/body typography.
+
 The owner-provided [SQLD_Pass_UI_Reference.html](design/SQLD_Pass_UI_Reference.html) (2026-11-02, 54 interactive screen states) is the visual source of truth for SQLD Pass. The HTML is a prototype: its sample lessons, dates, progress, scores and ad interactions are illustrative and must never replace actual app data or release policies.
 
 The [screen mapping](design/REFERENCE_SCREEN_MAPPING.md) records how all prototype states correspond to real native screens and where SDK-owned or unavailable prototype behavior differs.

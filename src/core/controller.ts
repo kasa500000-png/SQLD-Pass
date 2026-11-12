@@ -39,7 +39,7 @@ export class Controller {
   setSystemAppearance(value:'light'|'dark'){if(this.systemAppearance!==value){this.systemAppearance=value;this.notify();}}
   readonly getSnapshot=()=>this.version;
   readonly subscribe=(fn:()=>void)=>{this.listeners.add(fn);return ()=>{this.listeners.delete(fn);};};
-  constructor(readonly content:Content,readonly services:Services){this.state=initialState(content,services.clock().wall);this.draftSettings={...this.state.settings};}
+  constructor(readonly content:Content,readonly services:Services){this.mockVolumeId=mockVolumes(content)[0]?.id??'vol1';this.state=initialState(content,services.clock().wall);this.draftSettings={...this.state.settings};}
   notify(){this.version++;for(const fn of this.listeners)fn();}
   protected async prepareStartup():Promise<void>{}
   async initialize(){

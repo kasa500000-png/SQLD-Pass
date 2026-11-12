@@ -1,11 +1,11 @@
 import type {MonetizedController} from '../monetization/controller';
 import type {Question,Route} from '../core/types';
 import type {ContentBlock} from '../textbook/types';
-import {box,row,adaptiveRow,segments,table,dark,light,type Node} from '../ui/nodes';
+import {box,row,adaptiveRow,segments,selectionGroup,table,dark,light,type Node} from '../ui/nodes';
 import {canStudyQuestion,formatTime,isExamPaused,publicQuestion} from '../core/domain/exam';
 import {questionPrompt,answerSummary} from '../ui/learning-content';
-import {latestMocks,mockStats,mockWrongQuestions,modeName,pauseUsage,mockVolumes,mockVolumeForExam,mockVolumeRange,mockScopeExamIds,mockQuestionOrigin} from './domain';
-import {REWARD_ACTION,REWARD_DISCLOSURE,REWARD_AGE_DISCLOSURE,REWARD_STORAGE_DISCLOSURE} from '../monetization/policy';
+import {latestMocks,mockStats,mockWrongQuestions,modeName,pauseUsage,mockVolumes,mockVolumeForExam,mockVolumeRange,mockScopeExamIds,mockQuestionOrigin,mockExamTitle} from './domain';
+import {isFreeExam,REWARD_ACTION,REWARD_DISCLOSURE,REWARD_AGE_DISCLOSURE,REWARD_STORAGE_DISCLOSURE} from '../monetization/policy';
 interface UI{
  t:(s:string)=>Node;small:(s:string)=>Node;h:(s:string)=>Node;card:(ns:Node[],key?:string)=>Node;
  act:(s:string,fn:()=>void|Promise<void>,id?:string,selected?:boolean,disabled?:boolean)=>Node;
@@ -16,7 +16,7 @@ interface UI{
 }
 export function mockVolumePicker(c:MonetizedController,u:Pick<UI,'act'>,screen:keyof typeof c.mockRecordVolumes):Node[]{
  const vs=mockVolumes(c.content);if(vs.length<2)return [];
- return [segments([{id:'all',title:'전체'},...vs].map(v=>({...u.act(v.title,()=>c.selectMockRecordVolume(screen,v.id),screen+'-volume-'+v.id,c.mockRecordVolumes[screen]===v.id),role:'tab' as const,label:`${v.title} 모의고사 기록`})) )];
+ return [selectionGroup([{id:'all',title:'전체'},...vs].map(v=>({...u.act(v.title,()=>c.selectMockRecordVolume(screen,v.id),screen+'-volume-'+v.id,c.mockRecordVolumes[screen]===v.id),role:'tab' as const,label:`${v.title} 모의고사 기록`})), 'tabs')];
 }
 export function mockStatsSummary(c:MonetizedController,u:Pick<UI,'act'|'t'|'small'>,screen:'stats'|'examHistory'):Node[]{
  const ids=mockScopeExamIds(c.content,c.mockRecordVolumes[screen]);
@@ -52,27 +52,27 @@ export function renderMockScreen(c:MonetizedController,u:UI):{title:string;body:
   const visible=exams.filter(e=>(c.examProgressFilter==='all'||completed.has(e.id)===(c.examProgressFilter==='completed'))&&(!c.mockAvailableOnly||c.hasAccess(e.id)));
   const progressLabel={all:'전체',unattempted:'미응시',completed:'응시 완료'}[c.examProgressFilter];
   return {title:'실전',body:[h(`모의고사 ${c.content.exams.length}회`),small('회차당 50문항 · 실전 90분 / 학습 시간 제한 없음'),
-   ...(active?[card([h(isExamPaused(active)?'일시정지한 모의고사':'진행 중인 모의고사'),t(`${mockVolumeForExam(c.content,active.examId)?.title??''} · ${active.title} · ${modeName(active.mode)}`),primary('모의고사 이어하기',go('exam',active.id),'resume-mock')])]:[]),
-   ...(volumes.length>1?[segments(volumes.map(v=>({...act(`${v.title}\n${mockVolumeRange(c.content,v)}`,()=>c.selectMockVolume(v.id),'mock-volume-'+v.id,v.id===volume?.id),role:'tab' as const,label:`${v.title}, ${mockVolumeRange(c.content,v)}`,style:{...act('',()=>{}).style,color:v.id===volume?.id?p.blue:p.muted,backgroundColor:v.id===volume?.id?p.blueSoft:'transparent'}})))]:[]),
-   small(c.isLaunchFree?(c.content.exams.length>20?'기존 무료 출시 권한은 1~20회에 적용됩니다. 추가 회차 광고 해제는 현재 제공하지 않습니다.':'이 버전에서는 모든 회차를 무료로 이용할 수 있습니다.'):c.ads.mode==='off'?'1~4회와 이미 열린 회차를 이용할 수 있습니다. 추가 회차 광고 해제는 현재 제공하지 않습니다.':`1~4회는 무료입니다. 5~${c.content.exams.length}회는 회차별 선택 광고 1회 완료 후 두 모드를 계속 이용합니다.`),
-   segments([act('오답 복습',go('mockReview'),'mock-wrong'),act('저장 문항',go('mockSaved'),'mock-saved'),act('응시 기록',go('examHistory'),'mock-history')]),
+   ...(active?[card([h(isExamPaused(active)?'일시정지한 모의고사':'진행 중인 모의고사'),t(`${mockVolumeForExam(c.content,active.examId)?.title??''} · ${mockExamTitle(c.content,active)} · ${modeName(active.mode)}`),primary('모의고사 이어하기',go('exam',active.id),'resume-mock')])]:[]),
+   ...(volumes.length>1?[selectionGroup(volumes.map(v=>({...act(`${v.title} · ${mockVolumeRange(c.content,v)}`,()=>c.selectMockVolume(v.id),'mock-volume-'+v.id,v.id===volume?.id),label:`${v.title}, ${mockVolumeRange(c.content,v)}`})), 'tabs')]:[]),
+   small(c.content.mockPack?.freeExamIds?`각 권의 첫 5회는 무료입니다. 나머지 회차는 ${c.ads.mode==='off'?'이미 열린 회차만 이용할 수 있습니다.':'광고 1회 완료 후 계속 이용합니다.'}`:c.isLaunchFree?(c.content.exams.length>20?'기존 무료 출시 권한은 1~20회에 적용됩니다. 추가 회차 광고 해제는 현재 제공하지 않습니다.':'이 버전에서는 모든 회차를 무료로 이용할 수 있습니다.'):c.ads.mode==='off'?'1~4회와 이미 열린 회차를 이용할 수 있습니다. 추가 회차 광고 해제는 현재 제공하지 않습니다.':`1~4회는 무료입니다. 5~${c.content.exams.length}회는 회차별 선택 광고 1회 완료 후 두 모드를 계속 이용합니다.`),
+   segments([act('오답 복습',go('mockReview'),'mock-wrong'),act('저장 문항',go('mockSaved'),'mock-saved'),act('응시 기록',go('examHistory'),'mock-history')].map(n=>({...n,style:{...n.style,fontSize:15,color:p.ink,backgroundColor:p.surface,borderWidth:1,borderColor:p.controlBorder}}))),
    row([small(`${visible.length} / ${exams.length}회차`),box([],{flex:1}),act(`${progressLabel}${c.mockAvailableOnly?' · 이용 가능만':''} · 필터`,()=>c.openMockFilters(),'mock-filters')],{flexWrap:'wrap'}),
    ...visible.map(e=>{
     const open=c.hasAccess(e.id),history=(['timed','study'] as const).map(mode=>{const a=latestMocks(s,mode).find(a=>a.examId===e.id);return a?` · ${modeName(mode)} ${a.score?.points??0}점`:'';}).join('');
-    return link(`${e.title}\n${active?.examId===e.id?(isExamPaused(active)?'일시정지 · 이어하기':'진행 중'):open?(e.order<=4?'무료 · 이용 가능':'열림 · 재시청 없음'):c.ads.mode==='off'?'현재 잠김':'광고 1회로 회차 열기'}${history}`,intro(e.id),'mock-'+e.id);
+    return link(`${mockExamTitle(c.content,e)}\n${active?.examId===e.id?(isExamPaused(active)?'일시정지 · 이어하기':'진행 중'):open?(isFreeExam(e.id,c.content)?'무료 · 이용 가능':'열림 · 재시청 없음'):c.ads.mode==='off'?'현재 잠김':'광고 1회로 회차 열기'}${history}`,intro(e.id),'mock-'+e.id);
    }),...(!visible.length?[h('조건에 맞는 회차가 없습니다'),small(`${volume?.title??''}에서 필터 조건을 바꿔보세요.`),link('필터 초기화',()=>c.clearMockFilters(),'mock-clear-filters')]:[]),
    act('모의고사 출처와 기준',go('mockSources',volume?.id)),
    ...(c.mockFiltersOpen?[{kind:'modal' as const,testId:'mock-filter-modal',close:()=>c.closeMockFilters(),children:[card([
     row([h('회차 필터'),box([],{flex:1}),act('닫기',()=>c.closeMockFilters(),'mock-filter-close')]),small('응시 상태'),
-    segments((['all','unattempted','completed'] as const).map((f,i)=>({...act(['전체','미응시','응시 완료'][i],()=>{c.mockFilterDraft={...c.mockFilterDraft,progress:f};c.notify();},'exam-filter-'+f,c.mockFilterDraft.progress===f),role:'radio' as const,checked:c.mockFilterDraft.progress===f}))),
+    selectionGroup((['all','unattempted','completed'] as const).map((f,i)=>({...act(['전체','미응시','응시 완료'][i],()=>{c.mockFilterDraft={...c.mockFilterDraft,progress:f};c.notify();},'exam-filter-'+f,c.mockFilterDraft.progress===f),role:'radio' as const,checked:c.mockFilterDraft.progress===f}))),
     {...act(c.mockFilterDraft.available?'✓ 이용 가능한 회차만':'이용 가능한 회차만',()=>{c.mockFilterDraft={...c.mockFilterDraft,available:!c.mockFilterDraft.available};c.notify();},'mock-filter-available',c.mockFilterDraft.available),label:`이용 가능한 회차만, ${c.mockFilterDraft.available?'켜짐':'꺼짐'}`},
     segments([act('초기화',()=>{c.mockFilterDraft={progress:'all',available:false};c.notify();},'mock-filter-reset'),primary('필터 적용',()=>c.applyMockFilters(),'mock-filter-apply')])])]}]:[])]};
  }
  if(r.name==='examIntro'){
   const e=c.content.exams.find(e=>e.id===r.id);if(!e)return {title:'실전',body:[t('회차를 찾을 수 없습니다.')]};
   const mode=c.expanded.has('intro:study')?'study':'timed',volume=mockVolumeForExam(c.content,e.id);
-  return {title:'응시 안내',body:[small(volume?.title??'모의고사'),h(e.title),small('50문항 · 1과목 10문항 / 2과목 40문항'),
-   segments([act('실전 · 90분',()=>{c.expanded.delete('intro:study');c.notify();},'mode-timed',mode==='timed'),act('학습 · 무제한',()=>{c.expanded.add('intro:study');c.notify();},'mode-study',mode==='study')]),
+  return {title:'응시 안내',body:[small(volume?.title??'모의고사'),h(mockExamTitle(c.content,e)),small('50문항 · 1과목 10문항 / 2과목 40문항'),
+   selectionGroup([act('실전 · 90분',()=>{c.expanded.delete('intro:study');c.notify();},'mode-timed',mode==='timed'),act('학습 · 무제한',()=>{c.expanded.add('intro:study');c.notify();},'mode-study',mode==='study')]),
    card([t(mode==='timed'?'풀이 시간은 총 90분입니다. 일시정지하거나 앱을 벗어나면 남은 시간을 저장합니다.':'시간 제한 없이 풀어보세요. 중단한 문항과 답안을 저장합니다.'),small('돌아오면 이어서 풀기를 눌러 재개합니다. 일시정지 이력은 결과에 표시됩니다.'),small('두 모드 모두 최종 제출 후 정답과 해설을 확인합니다.'),small('미응답은 0점입니다. 제출한 답안은 변경할 수 없습니다.')]),
    act('응시 기준 자세히',()=>c.toggleExpanded('intro:rules'),'exam-rules',c.expanded.has('intro:rules')),
    ...(c.expanded.has('intro:rules')?[t('문항당 2점. 총점 60점 이상, 1과목 4문항·2과목 16문항 이상 정답을 연습 기준으로 사용합니다. 실제 시험의 합격을 보장하지 않습니다.'),...(volume?.assumptions??pack.assumptions).map(small)]:[])],
@@ -81,7 +81,7 @@ export function renderMockScreen(c:MonetizedController,u:UI):{title:string;body:
  if(r.name==='examPause'||(['exam','sheet'].includes(r.name)&&active&&isExamPaused(active))){
   const e=c.examAttempt(r.id);if(!e||e.status!=='active')return {title:'일시정지',body:[t('진행 중인 모의고사가 없습니다.'),link('회차 목록',go('exams'))]};
   const pending=c.isExamPausePending;
-  return {title:'일시정지',focus:true,body:[small(e.title),h(pending?'일시정지 저장 확인이 필요합니다':'잠시 쉬어도 괜찮아요'),t(pending?'앱을 닫기 전에 저장을 다시 시도해 주세요.':e.mode==='study'?'문항 위치와 답안을 저장했습니다.':'답안과 남은 시간을 저장했습니다. 쉬는 동안 시간은 줄어들지 않습니다.'),card([small(e.mode==='study'?'학습 모드 · 시간 제한 없음':'남은 풀이 시간'),h(e.mode==='study'?`${e.index+1}번부터 이어서`:formatTime(c.remaining())),t(`응답 ${Object.keys(e.answers).length} · 미응답 ${50-Object.keys(e.answers).length}`)]),small('진행 중인 회차를 제출하면 다른 모의고사를 시작할 수 있습니다.')],footer:pending?[primary('일시정지 저장 다시 시도',async()=>{await c.pauseExam();},'retry-pause')]:[primary('이어서 풀기',async()=>{await c.resumeExam();},'resume-paused-mock'),segments([act('홈으로',()=>c.tab('today'),'pause-home'),act('여기까지 제출',()=>c.requestSubmit(),'pause-submit')])]};
+  return {title:'일시정지',focus:true,body:[small(mockExamTitle(c.content,e)),h(pending?'일시정지 저장 확인이 필요합니다':'잠시 쉬어도 괜찮아요'),t(pending?'앱을 닫기 전에 저장을 다시 시도해 주세요.':e.mode==='study'?'문항 위치와 답안을 저장했습니다.':'답안과 남은 시간을 저장했습니다. 쉬는 동안 시간은 줄어들지 않습니다.'),card([small(e.mode==='study'?'학습 모드 · 시간 제한 없음':'남은 풀이 시간'),h(e.mode==='study'?`${e.index+1}번부터 이어서`:formatTime(c.remaining())),t(`응답 ${Object.keys(e.answers).length} · 미응답 ${50-Object.keys(e.answers).length}`)]),small('진행 중인 회차를 제출하면 다른 모의고사를 시작할 수 있습니다.')],footer:pending?[primary('일시정지 저장 다시 시도',async()=>{await c.pauseExam();},'retry-pause')]:[primary('이어서 풀기',async()=>{await c.resumeExam();},'resume-paused-mock'),segments([act('홈으로',()=>c.tab('today'),'pause-home'),act('여기까지 제출',()=>c.requestSubmit(),'pause-submit')])]};
  }
  if(r.name==='exam'||r.name==='sheet'){
   const e=c.examAttempt(r.id);if(!e||e.status!=='active')return {title:'실전',body:[t('진행 중인 응시를 찾을 수 없습니다.'),link('회차 목록',go('exams'))]};
@@ -99,12 +99,12 @@ export function renderMockScreen(c:MonetizedController,u:UI):{title:string;body:
   const ids=e.snapshots.map((q,i)=>({q,i})).filter(({q})=>c.mockResultFilter==='wrong'?e.answers[q.id]!==q.answer:c.mockResultFilter==='flagged'?e.flagged.includes(q.id):true);
   const current=ids.find(x=>x.i===r.index)??ids[0];const pos=current?ids.indexOf(current):-1;
   const move=(i:number)=>{if(!ids[i])return;c.route={name:'examReview',id:e.id,index:ids[i].i};c.reviewPickerOpen=false;c.notify();};
-  if(r.name==='result')return {title:'응시 결과',body:[small(`${e.title} · ${modeName(e.mode)}`),card([h(`${g.points} / 100점`),t(g.practiceThresholdMet?'연습 기준 충족':'연습 기준 미충족'),small(`${new Date(e.submittedAt!).toLocaleDateString('ko-KR')} · ${pauseUsage(e)}`)]),
+  if(r.name==='result')return {title:'응시 결과',body:[small(`${mockExamTitle(c.content,e)} · ${modeName(e.mode)}`),card([h(`${g.points} / 100점`),t(g.practiceThresholdMet?'연습 기준 충족':'연습 기준 미충족'),small(`${new Date(e.submittedAt!).toLocaleDateString('ko-KR')} · ${pauseUsage(e)}`)]),
     card([t(`1과목 ${g.bySubject.S1.correct}/10 · 2과목 ${g.bySubject.S2.correct}/40`),t(`정답 ${g.correct} · 오답 ${g.total-g.correct-g.unanswered} · 미응답 ${g.unanswered}`),small('50문항 · 문항당 2점 · 미응답 0점')]),
     ...(!e.timeTrusted&&e.mode!=='study'?[small('응시 중 시계 연속성을 확인하지 못한 구간이 있습니다.')]:[]),
     ...(locked?[t('같은 회차를 응시 중이므로 해설은 제출 후 다시 볼 수 있습니다.'),primary('진행 중 모의고사',go('exam',active!.id))]:[primary('오답·미응답 복습',()=>{c.mockResultFilter='wrong';c.navigate({name:'examReview',id:e.id});},'review-wrong',g.points===100),link('전체 해설 보기',()=>{c.mockResultFilter='all';c.navigate({name:'examReview',id:e.id});},'review-all')]),link('회차 목록',()=>c.openMockCatalog(e.examId),'result-exam-list')]};
   if(locked)return {title:'문항 해설',body:[t('같은 회차를 제출한 뒤 해설을 볼 수 있습니다.'),primary('진행 중 모의고사',go('exam',active!.id))]};
-  return {title:'문항 해설',header:[segments((['all','wrong','flagged'] as const).map((f,i)=>act(['전체','오답·미응답','검토'][i],()=>{c.mockResultFilter=f;c.route={...r,index:undefined};c.notify();},'mock-result-'+f,c.mockResultFilter===f)))],body:[row([small(current?`문항 ${current.i+1} · ${pos+1}/${ids.length}`:'해설'),box([],{flex:1}),act('결과 요약',()=>c.returnToExamResult(),'result-summary')]),
+  return {title:'문항 해설',header:[selectionGroup((['all','wrong','flagged'] as const).map((f,i)=>act(['전체','오답·미응답','검토'][i],()=>{c.mockResultFilter=f;c.route={...r,index:undefined};c.notify();},'mock-result-'+f,c.mockResultFilter===f)))],body:[row([small(current?`문항 ${current.i+1} · ${pos+1}/${ids.length}`:'해설'),box([],{flex:1}),act('결과 요약',()=>c.returnToExamResult(),'result-summary')]),
    ...(current?mockStudyContent(c,current.q,e.answers[current.q.id],u):[t('이 조건에 해당하는 문항이 없습니다.'),link('전체 해설 보기',()=>{c.mockResultFilter='all';c.notify();})]),
    ...(c.reviewPickerOpen?[{kind:'modal' as const,close:()=>{c.reviewPickerOpen=false;c.notify();},children:[card([row([h('문항 선택'),box([],{flex:1}),act('닫기',()=>{c.reviewPickerOpen=false;c.notify();})]),{...box(ids.map(({q,i},j)=>({...act(String(i+1),()=>move(j),'review-jump-'+(i+1),i===current?.i),subtitle:e.answers[q.id]===q.answer?'✓':'○',style:{...act('',()=>{},undefined,i===current?.i).style,paddingHorizontal:2,paddingVertical:6,minHeight:56,fontSize:14},label:`${i+1}번, ${e.answers[q.id]===q.answer?'정답':e.answers[q.id]?'오답':'미응답'}`}))),layout:'question-grid' as const},act('닫기',()=>{c.reviewPickerOpen=false;c.notify();})])]}]:[])],
    footer:[row([act('이전',()=>move(pos-1),'mock-review-previous',false,pos<=0),act('문항 선택',()=>{c.reviewPickerOpen=!c.reviewPickerOpen;c.notify();},'review-picker'),primary('다음',()=>move(pos+1),'mock-review-next',pos<0||pos>=ids.length-1)],{justifyContent:'space-between',flexWrap:'wrap'})]};
@@ -113,7 +113,7 @@ export function renderMockScreen(c:MonetizedController,u:UI):{title:string;body:
   const ids=mockScopeExamIds(c.content,c.mockRecordVolumes.examHistory),history=[...s.exams].reverse().filter(e=>e.status==='submitted'&&ids.includes(e.examId));
   return {title:'모의고사 기록',body:[h('모드별 기록'),...mockStatsSummary(c,u,'examHistory'),{...act('집계 기준',()=>c.toggleExpanded('history:help')),expanded:c.expanded.has('history:help')},...(c.expanded.has('history:help')?[small('각 회차의 모드별 가장 최근 제출 결과를 집계합니다. 일시정지 사용 결과도 포함합니다. 아래 기록에는 모든 응시 결과가 남습니다.')]:[]),
   ...(!history.length?[t('선택한 범위에 제출한 모의고사가 없습니다.'),link('모의고사 보기',go('exams'),'history-start')]:[h('최근 응시')]),
-  ...history.slice(0,c.mockHistoryLimit).map(e=>link(`${mockVolumeForExam(c.content,e.examId)?.title??''} · ${e.title} · ${e.score?.points??0}점\n${modeName(e.mode)} · ${new Date(e.submittedAt!).toLocaleString('ko-KR')} · ${pauseUsage(e)}`,()=>{c.mockResultFilter='all';c.navigate({name:'result',id:e.id});},'history-'+e.id)),...(history.length>c.mockHistoryLimit?[act('기록 더 보기',()=>{c.mockHistoryLimit+=20;c.notify();})]:[])]};
+  ...history.slice(0,c.mockHistoryLimit).map(e=>link(`${mockVolumeForExam(c.content,e.examId)?.title??''} · ${mockExamTitle(c.content,e)} · ${e.score?.points??0}점\n${modeName(e.mode)} · ${new Date(e.submittedAt!).toLocaleString('ko-KR')} · ${pauseUsage(e)}`,()=>{c.mockResultFilter='all';c.navigate({name:'result',id:e.id});},'history-'+e.id)),...(history.length>c.mockHistoryLimit?[act('기록 더 보기',()=>{c.mockHistoryLimit+=20;c.notify();})]:[])]};
  }
  if(r.name==='mockReview'||r.name==='mockSaved'){
   const ids=mockScopeExamIds(c.content,c.mockRecordVolumes[r.name]);
@@ -131,7 +131,7 @@ export function renderMockScreen(c:MonetizedController,u:UI):{title:string;body:
 
  if(r.name==='mockSources'){
   const volumes=mockVolumes(c.content),volume=volumes.find(v=>v.id===r.id)??volumes[0];
-  return {title:'모의고사 출처',body:[h('출처와 검산 안내'),...(volumes.length>1?[segments(volumes.map(v=>act(v.title,()=>{c.route={name:'mockSources',id:v.id};c.notify();},'sources-volume-'+v.id,v.id===volume.id)))]:[]),small(`${volume.title} · ${mockVolumeRange(c.content,volume)}`),t(volume.editorialNote),...volume.assumptions.map(t),small('원문 작성자의 검산 기록을 보존했습니다. 실제 시험과의 통계적 동등성이나 외부 전문가 검수를 의미하지 않습니다.'),...volume.sourceIds.map(id=>{const v=c.content.sources[id];return act(v.title,()=>c.external(v.url),id);}),{...act('원본 HTML 편집 주석',()=>c.toggleExpanded('source-editorial:'+volume.id),'source-editorial'),expanded:c.expanded.has('source-editorial:'+volume.id)},...(c.expanded.has('source-editorial:'+volume.id)?[small('다음은 원본 문서에 적힌 안내이며, 앱의 백업·파일 제공 기능을 뜻하지 않습니다.'),t(volume.integrationNote)]:[])]};
+  return {title:'모의고사 출처',body:[h('출처와 검산 안내'),...(volumes.length>1?[selectionGroup(volumes.map(v=>act(v.title,()=>{c.route={name:'mockSources',id:v.id};c.notify();},'sources-volume-'+v.id,v.id===volume.id)))]:[]),small(`${volume.title} · ${mockVolumeRange(c.content,volume)}`),t(volume.editorialNote),...volume.assumptions.map(t),small('원문 작성자의 검산 기록을 보존했습니다. 실제 시험과의 통계적 동등성이나 외부 전문가 검수를 의미하지 않습니다.'),...volume.sourceIds.map(id=>{const v=c.content.sources[id];return act(v.title,()=>c.external(v.url),id);}),{...act('원본 HTML 편집 주석',()=>c.toggleExpanded('source-editorial:'+volume.id),'source-editorial'),expanded:c.expanded.has('source-editorial:'+volume.id)},...(c.expanded.has('source-editorial:'+volume.id)?[small('다음은 원본 문서에 적힌 안내이며, 앱의 백업·파일 제공 기능을 뜻하지 않습니다.'),t(volume.integrationNote)]:[])]};
  }
  return;
 }

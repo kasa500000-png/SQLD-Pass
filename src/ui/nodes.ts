@@ -6,6 +6,7 @@ export interface Node {
   widget?:WidgetSpec; highlight?:number[][];
   kind:'widget'|'box'|'text'|'button'|'input'|'date'|'progress'|'table'|'code'|'modal'|'icon'|'ring'; key?:string; children?:Node[];
   layout?:'lesson-sections'|'adaptive-row'|'dashboard'|'question-grid'|'segments';
+  selectionStyle?:'tabs'|'segments';
   buttonKind?:'primary'|'secondary'|'row'|'choice'|'danger';
   feedback?:'correct'|'incorrect';
   contentWidth?:'reading';
@@ -18,8 +19,8 @@ export interface Node {
   catalog?:{context:string;position?:ReadingOffset;preserveContentOffset?:boolean;onRemember:(position:ReadingOffset)=>void};
 }
 // SQLD Pass reference design tokens. Keep light/dark semantic roles aligned.
-export const light={bg:'#F6F8FC',surface:'#FFFFFF',ink:'#172033',muted:'#64718A',line:'#E6EAF1',blue:'#2457D6',blueSoft:'#EDF3FF',navy:'#18243B',green:'#16836B',greenText:'#126B58',greenSoft:'#EAF7F1',orange:'#A96512',orangeText:'#8A530E',orangeSoft:'#FFF5E6',red:'#C34750',redText:'#A53640',redSoft:'#FFF0F1',code:'#EEF1F6',codeInk:'#24334B'};
-export const dark={bg:'#101A2B',surface:'#182337',ink:'#E8EDF7',muted:'#9BAAC1',line:'#29374C',blue:'#89AAFF',blueSoft:'#253859',navy:'#253859',green:'#6FD1AF',greenText:'#6FD1AF',greenSoft:'#1D3935',orange:'#EDBC77',orangeText:'#EDBC77',orangeSoft:'#3A3025',red:'#F19A9E',redText:'#F19A9E',redSoft:'#3E2933',code:'#0C1421',codeInk:'#EBF2FF'};
+export const light={bg:'#F6F8FC',surface:'#FFFFFF',ink:'#172033',muted:'#64718A',line:'#E6EAF1',controlBorder:'#7C889C',blue:'#2457D6',blueSoft:'#EDF3FF',navy:'#18243B',green:'#16836B',greenText:'#126B58',greenSoft:'#EAF7F1',orange:'#A96512',orangeText:'#8A530E',orangeSoft:'#FFF5E6',red:'#C34750',redText:'#A53640',redSoft:'#FFF0F1',code:'#EEF1F6',codeInk:'#24334B'};
+export const dark={bg:'#101A2B',surface:'#182337',ink:'#E8EDF7',muted:'#9BAAC1',line:'#29374C',controlBorder:'#73839B',blue:'#89AAFF',blueSoft:'#253859',navy:'#253859',green:'#6FD1AF',greenText:'#6FD1AF',greenSoft:'#1D3935',orange:'#EDBC77',orangeText:'#EDBC77',orangeSoft:'#3A3025',red:'#F19A9E',redText:'#F19A9E',redSoft:'#3E2933',code:'#0C1421',codeInk:'#EBF2FF'};
 export const learningType={
   title:{fontSize:20,lineHeight:29,fontWeight:'600'},
   heading:{fontSize:19,lineHeight:28,fontWeight:'600'},
@@ -43,3 +44,13 @@ export function code(sql:string):Node{return {kind:'code',text:sql,label:'SQL ì½
 
 /** Compact selection groups wrap only when their labels need the space. */
 export function segments(children:Node[]):Node{return {...row(children),layout:'segments'};}
+/** Selection semantics are explicit; navigation/action groups keep their own appearance. */
+export function selectionGroup(children:Node[],variant:'tabs'|'segments'='segments'):Node{
+ return {...segments(children),selectionStyle:variant,children:children.map(n=>({...n,role:variant==='tabs'?'tab':'radio',checked:variant==='segments'?!!n.selected:undefined,...(variant==='segments'&&n.selected?{icon:'check' as const,iconSize:14}:{})}))};
+}
+export function selectionStyle(n:Node,p:Palette,variant:'tabs'|'segments'):Style{
+ return {minHeight:48,fontSize:15,lineHeight:22,fontWeight:n.selected?'600':'400',color:n.selected?p.blue:p.ink,
+  backgroundColor:variant==='tabs'?p.surface:n.selected?p.blueSoft:p.surface,
+  borderRadius:variant==='tabs'?0:10,borderWidth:variant==='tabs'?0:n.selected?2:1,
+  borderBottomWidth:variant==='tabs'?(n.selected?3:1):n.selected?2:1,borderColor:n.selected?p.blue:p.controlBorder};
+}
