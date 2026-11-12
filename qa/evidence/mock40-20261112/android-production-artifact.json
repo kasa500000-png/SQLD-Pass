@@ -1,0 +1,37 @@
+{
+  "version": "0.5.0",
+  "versionCode": 22,
+  "package": "com.kasa500000.sqldpass",
+  "runtime": {
+    "appEnvironment": "production",
+    "contentReleaseReady": true,
+    "productionContentApproval": {
+      "schemaVersion": 1,
+      "approved": true,
+      "contentSha256": "48e1214183bb4123a218a46bbce1362933778e34914cd79a7485d06d233be9b3",
+      "contentVersion": "textbook.20261112.2"
+    },
+    "adsRuntimeEnabled": true,
+    "adsMode": "live",
+    "examAccessPolicy": "rewarded",
+    "remoteAnalyticsEnabled": false,
+    "eas": {
+      "projectId": "9c3d6489-bfb8-426a-9a6c-8673fa3c07f0"
+    }
+  },
+  "sha256": {
+    "SQLDPass22.aab": "7e2366ad22a66227dabdd4a65298b72c7297bee20258f2e33a7207a48142a042",
+    "SQLDPass22.apk": "b1d4b4361ea11d3214125128b0b3b5279a15a652629ecee1b023ee62c2554b03"
+  },
+  "uploadCertificateSha256": "ea1e8482b51d7a905271eecdabf840e244adcfaaed7da559329cb929e7171942",
+  "apkSignatureVerified": true,
+  "aabJarSignatureVerified": true,
+  "aabBundletoolValidated": true,
+  "aabAndApkJsBundleIdentical": true,
+  "native64BitLibraries16KB": 36,
+  "alignmentFailures": [],
+  "targetSdk": 36,
+  "adMobAppId": "ca-app-pub-9314207769680999~2504786470",
+  "testDeviceHashAbsent": true,
+  "physicalEvidence": "Current separate official-test APK on SM-F721N Android16. Production live ads never exercised."
+}
