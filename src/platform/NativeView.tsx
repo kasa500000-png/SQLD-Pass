@@ -132,6 +132,12 @@ export function NativeView({node: n, scale, dark, path = '0',maxSystemFontMultip
       </ScrollView>
     </SafeAreaView>
   </LearningModal>;
+  if(n.layout==='screen-title'){
+    const stacked=layout.effectiveFontScale>1.4||layout.usableWidth<340;
+    return <View testID={n.testId} style={[s.view,{flexDirection:stacked?'column':'row',alignItems:'stretch',minWidth:0}]}>
+      {(n.children??[]).map((child,index)=><NativeView key={index} node={{...child,style:{...child.style,...(stacked?{flex:undefined,width:'100%'}:{})}}} scale={scale} dark={dark} path={`${path}.${index}`} maxSystemFontMultiplier={maxSystemFontMultiplier}/>)}
+    </View>;
+  }
   if(n.layout==='segments')return <ResponsiveSegments node={n} scale={scale} dark={dark} path={path} maxSystemFontMultiplier={maxSystemFontMultiplier}/>;
   if(n.layout==='dashboard'||n.layout==='question-grid')return <ResponsiveTiles node={n} scale={scale} dark={dark} path={path} maxSystemFontMultiplier={maxSystemFontMultiplier}/>;
   if(n.layout==='lesson-sections')return <LessonSections node={n} scale={scale} dark={dark} path={path} maxSystemFontMultiplier={maxSystemFontMultiplier}/>;
