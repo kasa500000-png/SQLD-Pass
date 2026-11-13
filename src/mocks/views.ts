@@ -4,7 +4,7 @@ import type {ContentBlock} from '../textbook/types';
 import {box,row,adaptiveRow,segments,selectionGroup,table,dark,light,type Node} from '../ui/nodes';
 import {canStudyQuestion,formatTime,isExamPaused,publicQuestion} from '../core/domain/exam';
 import {questionPrompt,answerSummary} from '../ui/learning-content';
-import {latestMocks,mockStats,mockWrongQuestions,modeName,pauseUsage,mockVolumes,mockVolumeForExam,mockVolumeRange,mockScopeExamIds,mockQuestionOrigin,mockExamTitle} from './domain';
+import {latestMocks,mockStats,mockWrongQuestions,modeName,pauseUsage,mockVolumes,mockVolumeForExam,mockVolumeRange,mockScopeExamIds,mockQuestionOrigin,mockExamTitle,mockOriginalVolumeLabel} from './domain';
 import {isFreeExam,REWARD_ACTION,REWARD_DISCLOSURE,REWARD_AGE_DISCLOSURE,REWARD_STORAGE_DISCLOSURE} from '../monetization/policy';
 interface UI{
  t:(s:string)=>Node;small:(s:string)=>Node;h:(s:string)=>Node;card:(ns:Node[],key?:string)=>Node;
@@ -131,7 +131,7 @@ export function renderMockScreen(c:MonetizedController,u:UI):{title:string;body:
 
  if(r.name==='mockSources'){
   const volumes=mockVolumes(c.content),volume=volumes.find(v=>v.id===r.id)??volumes[0];
-  return {title:'모의고사 출처',body:[h('출처와 검산 안내'),...(volumes.length>1?[selectionGroup(volumes.map(v=>act(v.title,()=>{c.route={name:'mockSources',id:v.id};c.notify();},'sources-volume-'+v.id,v.id===volume.id)))]:[]),small(`${volume.title} · ${mockVolumeRange(c.content,volume)}`),t(volume.editorialNote),...volume.assumptions.map(t),small('원문 작성자의 검산 기록을 보존했습니다. 실제 시험과의 통계적 동등성이나 외부 전문가 검수를 의미하지 않습니다.'),...volume.sourceIds.map(id=>{const v=c.content.sources[id];return act(v.title,()=>c.external(v.url),id);}),{...act('원본 HTML 편집 주석',()=>c.toggleExpanded('source-editorial:'+volume.id),'source-editorial'),expanded:c.expanded.has('source-editorial:'+volume.id)},...(c.expanded.has('source-editorial:'+volume.id)?[small('다음은 원본 문서에 적힌 안내이며, 앱의 백업·파일 제공 기능을 뜻하지 않습니다.'),t(volume.integrationNote)]:[])]};
+  return {title:'모의고사 출처',body:[h('출처와 검산 안내'),...(volumes.length>1?[selectionGroup(volumes.map(v=>act(v.title,()=>{c.route={name:'mockSources',id:v.id};c.notify();},'sources-volume-'+v.id,v.id===volume.id)))]:[]),small(`${volume.title} · ${mockVolumeRange(c.content,volume)}`),...(volume.displayNumber&&volume.displayNumber!==volume.number?[small(mockOriginalVolumeLabel(c.content,volume))]:[]),t(volume.editorialNote),...volume.assumptions.map(t),small('원문 작성자의 검산 기록을 보존했습니다. 실제 시험과의 통계적 동등성이나 외부 전문가 검수를 의미하지 않습니다.'),...volume.sourceIds.map(id=>{const v=c.content.sources[id];return act(v.title,()=>c.external(v.url),id);}),{...act('원본 HTML 편집 주석',()=>c.toggleExpanded('source-editorial:'+volume.id),'source-editorial'),expanded:c.expanded.has('source-editorial:'+volume.id)},...(c.expanded.has('source-editorial:'+volume.id)?[small('다음은 원본 문서에 적힌 안내이며, 앱의 백업·파일 제공 기능을 뜻하지 않습니다.'),t(volume.integrationNote)]:[])]};
  }
  return;
 }

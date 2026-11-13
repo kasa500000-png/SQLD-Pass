@@ -30,3 +30,9 @@ export function mockExamTitle(c:Content,e:Exam|ExamAttempt):string {
  return catalog?.displayNumber?`제${String(catalog.displayNumber).padStart(2,'0')}회 실전 모의고사`:e.title;
 }
 export function mockQuestionOrigin(c:Content,q:Question){const e=c.exams.find(e=>e.id===q.examId);return `${mockVolumeForExam(c,q.examId??'')?.title??'모의고사'} · 제${String(e?.displayNumber??e?.order??q.examId?.replace('SQLD-M','')).padStart(2,'0')}회 · ${q.number}번`;}
+
+/** Preserve original provenance separately from the app's curated display numbering. */
+export function mockOriginalVolumeLabel(c:Content,v:MockVolume):string {
+ const orders=c.exams.filter(e=>v.examIds.includes(e.id)).map(e=>e.order);
+ return `원본 Vol.${v.number}${orders.length?` · ${Math.min(...orders)}~${Math.max(...orders)}회`:""}`;
+}
