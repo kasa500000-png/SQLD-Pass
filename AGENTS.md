@@ -4,6 +4,22 @@ This repository is the canonical standalone source for the SQLD Pass Android/iOS
 It is a separate product and codebase from QueryPass. Do not read, edit, merge into, or reuse
 QueryPass or SpicPass as an implicit target unless the owner explicitly requests cross-project work.
 
+## Latest owner direction — 2026-11-13 curated60 extension
+
+The owner confirmed all 20 exams/1,000 questions in supplied Vol.4 and approved
+implementation of the new third-volume plan. Append internal SQLD-M61..80 / MEV4
+as display volume3 / exams41..60 to the current curated40 pack. Preserve all retained
+content, learning records, snapshots, pauses and grants. Never restore retired vol1.
+Each volume's first5 exams remain free, including new display41..45; other45 exams
+use earned rewards. Keep216 sections/340 practice unchanged. Use textbook.20261113.1
+and mock-curated60.20261113.1; activate curated60 only in the integration PR.
+Support direct older-textbook upgrades with the same transactional original-vol1
+retirement; preserve both SQLite slots and immutable retained snapshots. Split content,
+state/rights, catalog, records/review and integration/release into5 PRs. Implementation,
+TestFlight and both production submissions remain authorized, but new exact-hash content
+review confirmation and current native/consent evidence are required. The0.5.0 iOS
+exception does not carry forward. See docs/MOCK_CURATED60_20261113.md.
+
 ## Latest owner direction — 2026-11-12 curated40 and study review
 
 The owner approved docs/MOCK40_20261112.md and requested implementation. Remove original

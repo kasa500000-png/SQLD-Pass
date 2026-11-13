@@ -42,8 +42,8 @@ function build(root,{includeMocks=true,mockVolumes,mockCatalog,outputRoot=root,w
  const targetFile=path.join(root,'content-pack/build-target.json');
  const target=fs.existsSync(targetFile)?JSON.parse(fs.readFileSync(targetFile)):{mockVolumes:1};
  mockCatalog??=mockVolumes===undefined?target.mockCatalog:undefined;
- if(mockCatalog!==undefined&&mockCatalog!=='curated40')throw Error('Unsupported mock catalog');
- mockVolumes??=mockCatalog==='curated40'?3:target.mockVolumes;
+ if(mockCatalog!==undefined&&!['curated40','curated60'].includes(mockCatalog))throw Error('Unsupported mock catalog');
+ mockVolumes??=mockCatalog?.startsWith('curated')?3:target.mockVolumes;
  if(![1,3].includes(mockVolumes))throw Error('Unsupported mock volume build target');
  const source=zlib.gunzipSync(fs.readFileSync(path.join(root,'content-source/textbook-20261109.html.gz')));if(hash(source)!==SOURCE_SHA)throw Error('Authored HTML hash changed; review importer and pin explicitly.');
  const html=source.toString('utf8'),D=JSON.parse(html.match(/<script type="application\/json" id="study-content">([\s\S]*?)<\/script>/)[1]);
@@ -56,7 +56,8 @@ function build(root,{includeMocks=true,mockVolumes,mockCatalog,outputRoot=root,w
  const c={manifest:{schema:2,version,theoryVersion:version,examVersion:'deferred',releaseReady:false,humanReviewed:false,officialSyllabusVerified:false,adsEnabled:false,analyticsEnabled:false,counts:{lessons:lessons.length,practice:qs.length,exams:0,examQuestions:0},sourceHashes:{'textbook-20261109.html':SOURCE_SHA},note:'새 교재 이관. 검수 및 공개 배포 승인과 별개. 모의고사 보류.'},lessons,questions,exams:[],days:[],sources:Object.fromEntries(D.sources.map(s=>[s.id,{...s,provider:s.publisher}])),textbook:{id:D.id,parts:ranges.map(([lo,hi,title],i)=>({id:'part'+(i+1),title,chapterIds:D.chapters.filter(c=>c.number>=lo&&c.number<=hi).map(c=>id(c.id))})),chapters:D.chapters.map(c=>({id:id(c.id),number:c.number,title:c.title,subtitle:c.subtitle,goals:c.goals,recap:c.recap,sectionIds:c.sections.map(s=>id(s.id))})),glossary:D.glossary.map(g=>({...g,id:id(g.id),sectionId:id(g.sectionId)})),flashcards:D.flashcards.map(f=>({...f,id:id(f.id),sectionId:id(f.sectionId)})),coverage:D.coverage.map(x=>({...x,sections:x.sections.map(id)})),datasets:D.datasets,widgets:widgetsFor(html,D),editorialNote:D.editorialNote,labNote:D.labNote}};
  if(includeMocks)require('./add-mock-exams.cjs').addMockExams(c,root);
  if(includeMocks&&mockVolumes===3)require('./add-mock-volumes.cjs').addMockVolumes(c,root);
- if(includeMocks&&mockCatalog==='curated40')require('./curate-mock40.cjs').curateMock40(c);
+ if(includeMocks&&mockCatalog?.startsWith('curated'))require('./curate-mock40.cjs').curateMock40(c);
+ if(includeMocks&&mockCatalog==='curated60')require('./add-curated-volume.cjs').addCuratedVolume(c,root);
  validateContent(c);const raw=Buffer.from(JSON.stringify(c));const lock={schema:1,contentVersion:c.manifest.version,sha256:hash(raw),bytes:raw.length,counts:c.manifest.counts,sourceHashes:c.manifest.sourceHashes,status:'editorial_draft',note:'Identity only. New content requires its own review and release approval.'};
  if(!write)return c;
  atomicWrite(path.join(outputRoot,'content-pack/content.json.gz'),zlib.gzipSync(raw,{level:9,mtime:0}));atomicWrite(path.join(outputRoot,'content-pack/content.lock.json'),JSON.stringify(lock,null,2)+'\n');atomicWrite(path.join(outputRoot,'generated/content.json'),raw);
