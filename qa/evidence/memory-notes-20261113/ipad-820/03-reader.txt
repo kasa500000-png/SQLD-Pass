@@ -1,0 +1,657 @@
+Attributes: Application, 0x104e7b980, pid: 37112, label: 'SQLD Pass'
+Element subtree:
+ →Application, 0x104e7b980, pid: 37112, label: 'SQLD Pass'
+    Window (Main), 0x104e79040, {{0.0, 0.0}, {820.0, 1180.0}}
+      Other, 0x104e788c0, {{0.0, 0.0}, {820.0, 1180.0}}
+        Other, 0x104e7bac0, {{0.0, 0.0}, {820.0, 1180.0}}
+          Other, 0x104e7b700, {{0.0, 0.0}, {820.0, 1180.0}}
+            Other, 0x104e7b840, {{0.0, 0.0}, {820.0, 1180.0}}
+              Other, 0x104e7b5c0, {{0.0, 0.0}, {820.0, 1180.0}}
+                Other, 0x104e7b200, {{0.0, 0.0}, {820.0, 1180.0}}
+                  Other, 0x108549f40, {{0.0, 0.0}, {820.0, 1180.0}}
+                    Other, 0x10854a580, {{0.0, 32.0}, {820.0, 1128.0}}
+                      Other, 0x1085497c0, {{0.0, 32.0}, {820.0, 64.0}}
+                      Other, 0x108549900, {{0.0, 32.0}, {820.0, 64.0}}, identifier: 'screen-titlebar'
+                      Other, 0x108549b80, {{0.0, 32.0}, {820.0, 1128.0}}
+                      Button, 0x108549a40, {{24.0, 40.0}, {48.0, 48.0}}, identifier: 'screen-back', label: '뒤로'
+                      StaticText, 0x108549e00, {{82.0, 49.5}, {656.0, 29.0}}, label: '함수·NULL'
+                        StaticText, 0x108549cc0, {{82.0, 49.5}, {656.0, 29.0}}, label: '함수·NULL'
+                      Button, 0x108549180, {{748.0, 40.0}, {48.0, 48.0}}, label: '설정'
+                      Other, 0x108549540, {{0.0, 96.0}, {820.0, 984.0}}
+                        ScrollView, 0x10854a6c0, {{0.0, 96.0}, {820.0, 984.0}}
+                          Other, 0x1085492c0, {{0.0, 96.0}, {770.0, 7624.0}}
+                            Other, 0x108549400, {{50.0, 96.0}, {720.0, 7624.0}}
+                              StaticText, 0x108548b40, {{74.0, 112.0}, {672.0, 20.0}}, label: '핵심 노트 · 17개 항목'
+                                StaticText, 0x10854a940, {{74.0, 112.0}, {672.0, 20.0}}, label: '핵심 노트 · 17개 항목'
+                              Other, 0x108548dc0, {{74.0, 144.0}, {672.0, 361.0}}, identifier: 'memory-note-functions-01'
+                              Button, 0x10854b340, {{668.0, 164.0}, {78.0, 48.0}}, identifier: 'memory-save-functions-01', label: 'NVL(expr1, expr2) 저장'
+                              StaticText, 0x10854abc0, {{74.0, 178.0}, {109.5, 20.0}}, label: '1 / 17 · 필수 · Oracle'
+                                StaticText, 0x10854ad00, {{74.0, 178.0}, {109.5, 20.0}}, label: '1 / 17 · 필수 · Oracle'
+                              StaticText, 0x10854aa80, {{74.0, 224.0}, {672.0, 28.0}}, label: 'NVL(expr1, expr2)'
+                                StaticText, 0x10854a800, {{74.0, 224.0}, {672.0, 28.0}}, label: 'NVL(expr1, expr2)'
+                              StaticText, 0x10854b480, {{74.0, 264.0}, {672.0, 28.0}}, label: '첫 번째 값이 NULL이면 두 번째 반환'
+                                StaticText, 0x10854ae40, {{74.0, 264.0}, {672.0, 28.0}}, label: '첫 번째 값이 NULL이면 두 번째 반환'
+                              StaticText, 0x10854af80, {{74.0, 304.0}, {672.0, 28.0}}, label: 'NVL(A,B)는 A가 NULL이 아니면 A, NULL이면 B를 반환한다. 숫자 0은 NULL이 아니다.'
+                                StaticText, 0x10854b0c0, {{74.0, 304.0}, {672.0, 28.0}}, label: 'NVL(A,B)는 A가 NULL이 아니면 A, NULL이면 B를 반환한다. 숫자 0은 NULL이 아니다.'
+                              StaticText, 0x10854b200, {{74.0, 344.0}, {672.0, 20.0}}, label: 'SQL·값 예시'
+                                StaticText, 0x10854b980, {{74.0, 344.0}, {672.0, 20.0}}, label: 'SQL·값 예시'
+                              Other, 0x108548a00, {{74.0, 376.0}, {672.0, 108.0}}
+                                Button, 0x108548f00, {{682.0, 376.0}, {64.0, 48.0}}, label: 'SQL 자동 줄바꿈'
+                                StaticText, 0x10854b700, {{88.0, 392.5}, {86.5, 14.5}}, label: 'SQL · 좌우 스크롤'
+                                  StaticText, 0x10854b5c0, {{88.0, 392.5}, {86.5, 14.5}}, label: 'SQL · 좌우 스크롤'
+                                Other, 0x10854bd40, {{74.0, 424.0}, {672.0, 60.0}}, label: 'SQL 코드'
+                                  ScrollView, 0x10854be80, {{74.0, 424.0}, {672.0, 60.0}}
+                                    Other, 0x10854bac0, {{74.0, 424.0}, {180.0, 60.0}}
+                                      Other, 0x10854bc00, {{74.0, 424.0}, {180.0, 60.0}}
+                                        StaticText, 0x10854b840, {{88.0, 424.0}, {152.0, 46.0}}, label: 'NVL(NULL, 10) → 10
+NVL(0, 10)    → 0'
+                                          StaticText, 0x10854a080, {{88.0, 424.0}, {152.0, 46.0}}, label: 'NVL(NULL, 10) → 10
+NVL(0, 10)    → 0'
+                                    Other, 0x10854a1c0, {{713.0, 424.0}, {30.0, 60.0}}, label: 'Vertical scroll bar, 1 page', value: 0%
+                                      Other, 0x10854a440, {{740.0, 427.0}, {3.0, 54.0}}
+                                    Other, 0x108549040, {{74.0, 451.0}, {672.0, 30.0}}, label: 'Horizontal scroll bar, 1 page', value: 0%
+                                      Other, 0x108548c80, {{569.0, 478.0}, {174.0, 3.0}}
+                                    Other, 0x108548780, {{713.0, 424.0}, {30.0, 60.0}}, label: 'Vertical scroll bar, 1 page', value: 0%
+                                      Other, 0x1085483c0, {{740.0, 427.0}, {3.0, 54.0}}
+                                    Other, 0x108548280, {{74.0, 451.0}, {672.0, 30.0}}, label: 'Horizontal scroll bar, 1 page', value: 0%
+                                      Other, 0x108548140, {{569.0, 478.0}, {174.0, 3.0}}
+                              Other, 0x108548000, {{74.0, 517.0}, {672.0, 476.0}}, identifier: 'memory-note-functions-02'
+                              Button, 0x108548500, {{668.0, 537.0}, {78.0, 48.0}}, identifier: 'memory-save-functions-02', label: 'NVL2(expr1, expr2, expr3) 저장'
+                              StaticText, 0x108548640, {{74.0, 551.0}, {111.5, 20.0}}, label: '2 / 17 · 필수 · Oracle'
+                                StaticText, 0x104fbb980, {{74.0, 551.0}, {111.5, 20.0}}, label: '2 / 17 · 필수 · Oracle'
+                              StaticText, 0x104fbbc00, {{74.0, 597.0}, {672.0, 28.0}}, label: 'NVL2(expr1, expr2, expr3)'
+                                StaticText, 0x104fbb840, {{74.0, 597.0}, {672.0, 28.0}}, label: 'NVL2(expr1, expr2, expr3)'
+                              StaticText, 0x104fbbac0, {{74.0, 637.0}, {672.0, 28.0}}, label: '첫 번째가 NULL 아니면 두 번째, NULL이면 세 번째'
+                                StaticText, 0x104fbbd40, {{74.0, 637.0}, {672.0, 28.0}}, label: '첫 번째가 NULL 아니면 두 번째, NULL이면 세 번째'
+                              Other, 0x104fb9a40, {{74.0, 677.0}, {672.0, 52.0}}
+                              StaticText, 0x104fb9900, {{88.0, 677.0}, {658.0, 20.0}}, label: '주의할 점'
+                                StaticText, 0x104fbbe80, {{88.0, 677.0}, {658.0, 20.0}}, label: '주의할 점'
+                              StaticText, 0x104fb8640, {{88.0, 701.0}, {658.0, 28.0}}, label: '0은 NULL이 아니므로 NVL2(0,10,20) 정답은 10.'
+                                StaticText, 0x104fb8500, {{88.0, 701.0}, {658.0, 28.0}}, label: '0은 NULL이 아니므로 NVL2(0,10,20) 정답은 10.'
+                              StaticText, 0x104fb9400, {{74.0, 741.0}, {672.0, 56.0}}, label: '세 인수 중 첫 번째는 값 유무를 검사하는 조건부 역할이다. 반환되는 값은 첫 번째 값 자체가 아니라 두 번째 또는 세 번째다.'
+                                StaticText, 0x104fb92c0, {{74.0, 741.0}, {672.0, 56.0}}, label: '세 인수 중 첫 번째는 값 유무를 검사하는 조건부 역할이다. 반환되는 값은 첫 번째 값 자체가 아니라 두 번째 또는 세 번째다.'
+                              StaticText, 0x104fb9040, {{74.0, 809.0}, {672.0, 20.0}}, label: 'SQL·값 예시'
+                                StaticText, 0x104fb97c0, {{74.0, 809.0}, {672.0, 20.0}}, label: 'SQL·값 예시'
+                              Other, 0x104fba6c0, {{74.0, 841.0}, {672.0, 131.0}}
+                                Button, 0x104fbad00, {{682.0, 841.0}, {64.0, 48.0}}, label: 'SQL 자동 줄바꿈'
+                                StaticText, 0x104fbabc0, {{88.0, 857.5}, {86.5, 14.5}}, label: 'SQL · 좌우 스크롤'
+                                  StaticText, 0x104fbb0c0, {{88.0, 857.5}, {86.5, 14.5}}, label: 'SQL · 좌우 스크롤'
+                                Other, 0x104fba580, {{74.0, 889.0}, {672.0, 83.0}}, label: 'SQL 코드'
+                                  ScrollView, 0x104fba940, {{74.0, 889.0}, {672.0, 83.0}}
+                                    Other, 0x104fbaa80, {{74.0, 889.0}, {222.0, 83.0}}
+                                      Other, 0x104fba800, {{74.0, 889.0}, {222.0, 83.0}}
+                                        StaticText, 0x104fb9b80, {{88.0, 889.0}, {194.0, 69.0}}, label: 'NVL2(0, 10, 20)    → 10
+NVL2(NULL, 10, 20) → 20
+NVL2(0, 0, 0)      → 0'
+                                          StaticText, 0x104fb9e00, {{88.0, 889.0}, {194.0, 69.0}}, label: 'NVL2(0, 10, 20)    → 10
+NVL2(NULL, 10, 20) → 20
+NVL2(0, 0, 0)      → 0'
+                                    Other, 0x104fbb700, {{713.0, 889.0}, {30.0, 83.0}}, label: 'Vertical scroll bar, 1 page', value: 0%
+                                      Other, 0x104fbaf80, {{740.0, 892.0}, {3.0, 77.0}}
+                                    Other, 0x104fbae40, {{74.0, 939.0}, {672.0, 30.0}}, label: 'Horizontal scroll bar, 1 page', value: 0%
+                                      Other, 0x104fbb200, {{527.0, 966.0}, {216.0, 3.0}}
+                                    Other, 0x104fbb480, {{713.0, 889.0}, {30.0, 83.0}}, label: 'Vertical scroll bar, 1 page', value: 0%
+                                      Other, 0x104fbb340, {{740.0, 892.0}, {3.0, 77.0}}
+                                    Other, 0x104fb9540, {{74.0, 939.0}, {672.0, 30.0}}, label: 'Horizontal scroll bar, 1 page', value: 0%
+                                      Other, 0x104fba440, {{527.0, 966.0}, {216.0, 3.0}}
+                              Other, 0x104fb8dc0, {{74.0, 1005.0}, {672.0, 389.0}}, identifier: 'memory-note-functions-03'
+                              Button, 0x104fba300, {{668.0, 1025.0}, {78.0, 48.0}}, identifier: 'memory-save-functions-03', label: 'NULLIF(expr1, expr2) 저장'
+                              StaticText, 0x104fb9180, {{74.0, 1039.0}, {64.5, 20.0}}, label: '3 / 17 · 필수'
+                                StaticText, 0x104fb9f40, {{74.0, 1039.0}, {64.5, 20.0}}, label: '3 / 17 · 필수'
+                              StaticText, 0x104fbb5c0, {{74.0, 1085.0}, {672.0, 28.0}}, label: 'NULLIF(expr1, expr2)'
+                                StaticText, 0x104fba1c0, {{74.0, 1085.0}, {672.0, 28.0}}, label: 'NULLIF(expr1, expr2)'
+                              StaticText, 0x104fb8b40, {{74.0, 1125.0}, {672.0, 28.0}}, label: '두 값이 같으면 NULL, 다르면 첫 번째 값'
+                                StaticText, 0x104fba080, {{74.0, 1125.0}, {672.0, 28.0}}, label: '두 값이 같으면 NULL, 다르면 첫 번째 값'
+                              StaticText, 0x110f84000, {{74.0, 1165.0}, {672.0, 56.0}}, label: 'NULLIF(A,B)는 두 표현식이 동일한 경우 NULL을 반환하고, 다르면 A를 반환한다. 조건 분기로 볼 수 있다.'
+                                StaticText, 0x110f84140, {{74.0, 1165.0}, {672.0, 56.0}}, label: 'NULLIF(A,B)는 두 표현식이 동일한 경우 NULL을 반환하고, 다르면 A를 반환한다. 조건 분기로 볼 수 있다.'
+                              StaticText, 0x110f84280, {{74.0, 1233.0}, {672.0, 20.0}}, label: 'SQL·값 예시'
+                                StaticText, 0x110f843c0, {{74.0, 1233.0}, {672.0, 20.0}}, label: 'SQL·값 예시'
+                              Other, 0x110f84500, {{74.0, 1265.0}, {672.0, 108.0}}
+                                Button, 0x110f84640, {{682.0, 1265.0}, {64.0, 48.0}}, label: 'SQL 자동 줄바꿈'
+                                StaticText, 0x110f84780, {{88.0, 1281.5}, {86.5, 14.5}}, label: 'SQL · 좌우 스크롤'
+                                  StaticText, 0x110f848c0, {{88.0, 1281.5}, {86.5, 14.5}}, label: 'SQL · 좌우 스크롤'
+                                Other, 0x110f84a00, {{74.0, 1313.0}, {672.0, 60.0}}, label: 'SQL 코드'
+                                  ScrollView, 0x110f84b40, {{74.0, 1313.0}, {672.0, 60.0}}
+                                    Other, 0x110f84c80, {{74.0, 1313.0}, {197.0, 60.0}}
+                                      Other, 0x110f84dc0, {{74.0, 1313.0}, {197.0, 60.0}}
+                                        StaticText, 0x110f84f00, {{88.0, 1313.0}, {169.0, 46.0}}, label: 'NULLIF(10,10) → NULL
+NULLIF(10,20) → 10'
+                                          StaticText, 0x110f85040, {{88.0, 1313.0}, {169.0, 46.0}}, label: 'NULLIF(10,10) → NULL
+NULLIF(10,20) → 10'
+                                    Other, 0x110f85180, {{713.0, 1313.0}, {30.0, 60.0}}, label: 'Vertical scroll bar, 1 page', value: 0%
+                                      Other, 0x110f852c0, {{740.0, 1316.0}, {3.0, 54.0}}
+                                    Other, 0x110f85400, {{74.0, 1340.0}, {672.0, 30.0}}, label: 'Horizontal scroll bar, 1 page', value: 0%
+                                      Other, 0x110f85540, {{552.0, 1367.0}, {191.0, 3.0}}
+                                    Other, 0x110f85680, {{713.0, 1313.0}, {30.0, 60.0}}, label: 'Vertical scroll bar, 1 page', value: 0%
+                                      Other, 0x110f857c0, {{740.0, 1316.0}, {3.0, 54.0}}
+                                    Other, 0x110f85900, {{74.0, 1340.0}, {672.0, 30.0}}, label: 'Horizontal scroll bar, 1 page', value: 0%
+                                      Other, 0x110f85a40, {{552.0, 1367.0}, {191.0, 3.0}}
+                              Other, 0x110f85b80, {{74.0, 1406.0}, {672.0, 425.0}}, identifier: 'memory-note-functions-04'
+                              Button, 0x110f85cc0, {{668.0, 1426.0}, {78.0, 48.0}}, identifier: 'memory-save-functions-04', label: 'COALESCE(a,b,c,...) 저장'
+                              StaticText, 0x110f85e00, {{74.0, 1440.0}, {64.5, 20.0}}, label: '4 / 17 · 필수'
+                                StaticText, 0x110f85f40, {{74.0, 1440.0}, {64.5, 20.0}}, label: '4 / 17 · 필수'
+                              StaticText, 0x110f86080, {{74.0, 1486.0}, {672.0, 28.0}}, label: 'COALESCE(a,b,c,...)'
+                                StaticText, 0x110f861c0, {{74.0, 1486.0}, {672.0, 28.0}}, label: 'COALESCE(a,b,c,...)'
+                              StaticText, 0x110f86300, {{74.0, 1526.0}, {672.0, 28.0}}, label: '왼쪽부터 첫 번째 NULL 아닌 값'
+                                StaticText, 0x110f86440, {{74.0, 1526.0}, {672.0, 28.0}}, label: '왼쪽부터 첫 번째 NULL 아닌 값'
+                              Other, 0x110f86580, {{74.0, 1566.0}, {672.0, 52.0}}
+                              StaticText, 0x110f866c0, {{88.0, 1566.0}, {658.0, 20.0}}, label: '주의할 점'
+                                StaticText, 0x110f86800, {{88.0, 1566.0}, {658.0, 20.0}}, label: '주의할 점'
+                              StaticText, 0x110f86940, {{88.0, 1590.0}, {658.0, 28.0}}, label: '0이 나오면 다음 값 10으로 넘어가지 않는다.'
+                                StaticText, 0x110f86a80, {{88.0, 1590.0}, {658.0, 28.0}}, label: '0이 나오면 다음 값 10으로 넘어가지 않는다.'
+                              StaticText, 0x110f86bc0, {{74.0, 1630.0}, {672.0, 28.0}}, label: '여러 표현식 중 NULL이 아닌 첫 번째 값을 반환한다. 모든 인수가 NULL이면 NULL이다.'
+                                StaticText, 0x110f86d00, {{74.0, 1630.0}, {672.0, 28.0}}, label: '여러 표현식 중 NULL이 아닌 첫 번째 값을 반환한다. 모든 인수가 NULL이면 NULL이다.'
+                              StaticText, 0x110f86e40, {{74.0, 1670.0}, {672.0, 20.0}}, label: 'SQL·값 예시'
+                                StaticText, 0x110f86f80, {{74.0, 1670.0}, {672.0, 20.0}}, label: 'SQL·값 예시'
+                              Other, 0x110f870c0, {{74.0, 1702.0}, {672.0, 108.0}}
+                                Button, 0x110f87200, {{682.0, 1702.0}, {64.0, 48.0}}, label: 'SQL 자동 줄바꿈'
+                                StaticText, 0x110f87340, {{88.0, 1718.5}, {86.5, 14.5}}, label: 'SQL · 좌우 스크롤'
+                                  StaticText, 0x110f87480, {{88.0, 1718.5}, {86.5, 14.5}}, label: 'SQL · 좌우 스크롤'
+                                Other, 0x110f875c0, {{74.0, 1750.0}, {672.0, 60.0}}, label: 'SQL 코드'
+                                  ScrollView, 0x110f87700, {{74.0, 1750.0}, {672.0, 60.0}}
+                                    Other, 0x110f87840, {{74.0, 1750.0}, {256.0, 60.0}}
+                                      Other, 0x110f87980, {{74.0, 1750.0}, {256.0, 60.0}}
+                                        StaticText, 0x110f87ac0, {{88.0, 1750.0}, {228.0, 46.0}}, label: 'COALESCE(NULL, 0, 10) → 0
+COALESCE(NULL, NULL, 5) → 5'
+                                          StaticText, 0x110f87c00, {{88.0, 1750.0}, {228.0, 46.0}}, label: 'COALESCE(NULL, 0, 10) → 0
+COALESCE(NULL, NULL, 5) → 5'
+                                    Other, 0x110f87d40, {{713.0, 1750.0}, {30.0, 60.0}}, label: 'Vertical scroll bar, 1 page', value: 0%
+                                      Other, 0x110f87e80, {{740.0, 1753.0}, {3.0, 54.0}}
+                                    Other, 0x1111b8000, {{74.0, 1777.0}, {672.0, 30.0}}, label: 'Horizontal scroll bar, 1 page', value: 0%
+                                      Other, 0x1111b8140, {{493.0, 1804.0}, {250.0, 3.0}}
+                                    Other, 0x1111b8280, {{713.0, 1750.0}, {30.0, 60.0}}, label: 'Vertical scroll bar, 1 page', value: 0%
+                                      Other, 0x1111b83c0, {{740.0, 1753.0}, {3.0, 54.0}}
+                                    Other, 0x1111b8500, {{74.0, 1777.0}, {672.0, 30.0}}, label: 'Horizontal scroll bar, 1 page', value: 0%
+                                      Other, 0x1111b8640, {{493.0, 1804.0}, {250.0, 3.0}}
+                              Other, 0x1111b8780, {{74.0, 1843.0}, {672.0, 453.0}}, identifier: 'memory-note-functions-05'
+                              Button, 0x1111b88c0, {{668.0, 1863.0}, {78.0, 48.0}}, identifier: 'memory-save-functions-05', label: 'DECODE(Oracle) 저장'
+                              StaticText, 0x1111b8a00, {{74.0, 1877.0}, {111.5, 20.0}}, label: '5 / 17 · 필수 · Oracle'
+                                StaticText, 0x1111b8b40, {{74.0, 1877.0}, {111.5, 20.0}}, label: '5 / 17 · 필수 · Oracle'
+                              StaticText, 0x1111b8c80, {{74.0, 1923.0}, {672.0, 28.0}}, label: 'DECODE(Oracle)'
+                                StaticText, 0x1111b8dc0, {{74.0, 1923.0}, {672.0, 28.0}}, label: 'DECODE(Oracle)'
+                              StaticText, 0x1111b8f00, {{74.0, 1963.0}, {672.0, 28.0}}, label: 'DECODE(값, 비교1, 결과1, ..., 기본값)'
+                                StaticText, 0x1111b9040, {{74.0, 1963.0}, {672.0, 28.0}}, label: 'DECODE(값, 비교1, 결과1, ..., 기본값)'
+                              Other, 0x1111b9180, {{74.0, 2003.0}, {672.0, 52.0}}
+                              StaticText, 0x1111b92c0, {{88.0, 2003.0}, {658.0, 20.0}}, label: '주의할 점'
+                                StaticText, 0x1111b9400, {{88.0, 2003.0}, {658.0, 20.0}}, label: '주의할 점'
+                              StaticText, 0x1111b9540, {{88.0, 2027.0}, {658.0, 28.0}}, label: 'DECODE의 NULL 비교는 일반적인 SQL = NULL 비교와 다르다.'
+                                StaticText, 0x1111b9680, {{88.0, 2027.0}, {658.0, 28.0}}, label: 'DECODE의 NULL 비교는 일반적인 SQL = NULL 비교와 다르다.'
+                              StaticText, 0x1111b97c0, {{74.0, 2067.0}, {672.0, 56.0}}, label: 'Oracle의 단순 동등 비교 분기 함수로 CASE와 유사하다. 마지막 기본값을 생략하고 매칭이 없으면 NULL이다. Oracle DECODE는 NULL과 NULL을 일치한다고 취급하는 특징이 있다.'
+                                StaticText, 0x1111b9900, {{74.0, 2067.0}, {672.0, 56.0}}, label: 'Oracle의 단순 동등 비교 분기 함수로 CASE와 유사하다. 마지막 기본값을 생략하고 매칭이 없으면 NULL이다. Oracle DECODE는 NULL과 NULL을 일치한다고 취급하는 특징이 있다.'
+                              StaticText, 0x1111b9a40, {{74.0, 2135.0}, {672.0, 20.0}}, label: 'SQL·값 예시'
+                                StaticText, 0x1111b9b80, {{74.0, 2135.0}, {672.0, 20.0}}, label: 'SQL·값 예시'
+                              Other, 0x1111b9cc0, {{74.0, 2167.0}, {672.0, 108.0}}
+                                Button, 0x1111b9e00, {{682.0, 2167.0}, {64.0, 48.0}}, label: 'SQL 자동 줄바꿈'
+                                StaticText, 0x1111b9f40, {{88.0, 2183.5}, {86.5, 14.5}}, label: 'SQL · 좌우 스크롤'
+                                  StaticText, 0x1111ba080, {{88.0, 2183.5}, {86.5, 14.5}}, label: 'SQL · 좌우 스크롤'
+                                Other, 0x1111ba1c0, {{74.0, 2215.0}, {672.0, 60.0}}, label: 'SQL 코드'
+                                  ScrollView, 0x1111ba300, {{74.0, 2215.0}, {672.0, 60.0}}
+                                    Other, 0x1111ba440, {{74.0, 2215.0}, {374.5, 60.0}}
+                                      Other, 0x1111ba580, {{74.0, 2215.0}, {374.5, 60.0}}
+                                        StaticText, 0x1111ba6c0, {{88.0, 2215.0}, {346.5, 46.0}}, label: 'DECODE(10, 10, 'A', 20, 'B', '기타') → 'A'
+DECODE(NULL, NULL, '일치', '불일치') → '일치''
+                                          StaticText, 0x1111ba800, {{88.0, 2215.0}, {346.5, 46.0}}, label: 'DECODE(10, 10, 'A', 20, 'B', '기타') → 'A'
+DECODE(NULL, NULL, '일치', '불일치') → '일치''
+                                    Other, 0x1111ba940, {{713.0, 2215.0}, {30.0, 60.0}}, label: 'Vertical scroll bar, 1 page', value: 0%
+                                      Other, 0x1111baa80, {{740.0, 2218.0}, {3.0, 54.0}}
+                                    Other, 0x1111babc0, {{74.0, 2242.0}, {672.0, 30.0}}, label: 'Horizontal scroll bar, 1 page', value: 0%
+                                      Other, 0x1111bad00, {{374.5, 2269.0}, {368.5, 3.0}}
+                                    Other, 0x1111bae40, {{713.0, 2215.0}, {30.0, 60.0}}, label: 'Vertical scroll bar, 1 page', value: 0%
+                                      Other, 0x1111baf80, {{740.0, 2218.0}, {3.0, 54.0}}
+                                    Other, 0x1111bb0c0, {{74.0, 2242.0}, {672.0, 30.0}}, label: 'Horizontal scroll bar, 1 page', value: 0%
+                                      Other, 0x1111bb200, {{374.5, 2269.0}, {368.5, 3.0}}
+                              Other, 0x1111bb340, {{74.0, 2308.0}, {672.0, 499.0}}, identifier: 'memory-note-functions-07'
+                              Button, 0x1111bb480, {{668.0, 2328.0}, {78.0, 48.0}}, identifier: 'memory-save-functions-07', label: 'COUNT(*) vs COUNT(열) 저장'
+                              StaticText, 0x1111bb5c0, {{74.0, 2342.0}, {64.5, 20.0}}, label: '6 / 17 · 필수'
+                                StaticText, 0x1111bb700, {{74.0, 2342.0}, {64.5, 20.0}}, label: '6 / 17 · 필수'
+                              StaticText, 0x1111bb840, {{74.0, 2388.0}, {672.0, 28.0}}, label: 'COUNT(*) vs COUNT(열)'
+                                StaticText, 0x1111bb980, {{74.0, 2388.0}, {672.0, 28.0}}, label: 'COUNT(*) vs COUNT(열)'
+                              StaticText, 0x1111bbac0, {{74.0, 2428.0}, {672.0, 28.0}}, label: 'COUNT(*)는 행 수 / COUNT(열)은 NULL 제외'
+                                StaticText, 0x1111bbc00, {{74.0, 2428.0}, {672.0, 28.0}}, label: 'COUNT(*)는 행 수 / COUNT(열)은 NULL 제외'
+                              Other, 0x1111bbd40, {{74.0, 2468.0}, {672.0, 52.0}}
+                              StaticText, 0x1111bbe80, {{88.0, 2468.0}, {658.0, 20.0}}, label: '주의할 점'
+                                StaticText, 0x1111e4000, {{88.0, 2468.0}, {658.0, 20.0}}, label: '주의할 점'
+                              StaticText, 0x1111e4140, {{88.0, 2492.0}, {658.0, 28.0}}, label: 'COUNT(*)는 해당 행의 모든 컬럼이 NULL이더라도 행이 존재하면 센다.'
+                                StaticText, 0x1111e4280, {{88.0, 2492.0}, {658.0, 28.0}}, label: 'COUNT(*)는 해당 행의 모든 컬럼이 NULL이더라도 행이 존재하면 센다.'
+                              StaticText, 0x1111e43c0, {{74.0, 2532.0}, {672.0, 56.0}}, label: 'COUNT(*)는 조건을 통과한 모든 행을 세며 COUNT(col)은 해당 열의 NULL을 뺀 개수를 센다. COUNT(DISTINCT col)은 NULL을 제외한 서로 다른 값의 개수다.'
+                                StaticText, 0x1111e4500, {{74.0, 2532.0}, {672.0, 56.0}}, label: 'COUNT(*)는 조건을 통과한 모든 행을 세며 COUNT(col)은 해당 열의 NULL을 뺀 개수를 센다. COUNT(DISTINCT col)은 NULL을 제외한 서로 다른 값의 개수다.'
+                              StaticText, 0x1111e4640, {{74.0, 2600.0}, {672.0, 20.0}}, label: 'SQL·값 예시'
+                                StaticText, 0x1111e4780, {{74.0, 2600.0}, {672.0, 20.0}}, label: 'SQL·값 예시'
+                              Other, 0x1111e48c0, {{74.0, 2632.0}, {672.0, 154.0}}
+                                Button, 0x1111e4a00, {{682.0, 2632.0}, {64.0, 48.0}}, label: 'SQL 자동 줄바꿈'
+                                StaticText, 0x1111e4b40, {{88.0, 2648.5}, {86.5, 14.5}}, label: 'SQL · 좌우 스크롤'
+                                  StaticText, 0x1111e4c80, {{88.0, 2648.5}, {86.5, 14.5}}, label: 'SQL · 좌우 스크롤'
+                                Other, 0x1111e4dc0, {{74.0, 2680.0}, {672.0, 106.0}}, label: 'SQL 코드'
+                                  ScrollView, 0x1111e4f00, {{74.0, 2680.0}, {672.0, 106.0}}
+                                    Other, 0x1111e5040, {{74.0, 2680.0}, {281.0, 106.0}}
+                                      Other, 0x1111e5180, {{74.0, 2680.0}, {281.0, 106.0}}
+                                        StaticText, 0x1111e52c0, {{88.0, 2680.0}, {253.0, 92.0}}, label: 'salary = [100, NULL, 100, 200]
+COUNT(*)=4
+COUNT(salary)=3
+COUNT(DISTINCT salary)=2'
+                                          StaticText, 0x1111e5400, {{88.0, 2680.0}, {253.0, 92.0}}, label: 'salary = [100, NULL, 100, 200]
+COUNT(*)=4
+COUNT(salary)=3
+COUNT(DISTINCT salary)=2'
+                                    Other, 0x1111e5540, {{713.0, 2680.0}, {30.0, 106.0}}, label: 'Vertical scroll bar, 1 page', value: 0%
+                                      Other, 0x1111e5680, {{740.0, 2683.0}, {3.0, 100.0}}
+                                    Other, 0x1111e57c0, {{74.0, 2753.0}, {672.0, 30.0}}, label: 'Horizontal scroll bar, 1 page', value: 0%
+                                      Other, 0x1111e5900, {{468.0, 2780.0}, {275.0, 3.0}}
+                                    Other, 0x1111e5a40, {{713.0, 2680.0}, {30.0, 106.0}}, label: 'Vertical scroll bar, 1 page', value: 0%
+                                      Other, 0x1111e5b80, {{740.0, 2683.0}, {3.0, 100.0}}
+                                    Other, 0x1111e5cc0, {{74.0, 2753.0}, {672.0, 30.0}}, label: 'Horizontal scroll bar, 1 page', value: 0%
+                                      Other, 0x1111e5e00, {{468.0, 2780.0}, {275.0, 3.0}}
+                              Other, 0x1111e5f40, {{74.0, 2819.0}, {672.0, 476.0}}, identifier: 'memory-note-functions-08'
+                              Button, 0x1111e6080, {{668.0, 2839.0}, {78.0, 48.0}}, identifier: 'memory-save-functions-08', label: '집계 함수와 NULL 저장'
+                              StaticText, 0x1111e61c0, {{74.0, 2853.0}, {63.5, 20.0}}, label: '7 / 17 · 필수'
+                                StaticText, 0x1111e6300, {{74.0, 2853.0}, {63.5, 20.0}}, label: '7 / 17 · 필수'
+                              StaticText, 0x1111e6440, {{74.0, 2899.0}, {672.0, 28.0}}, label: '집계 함수와 NULL'
+                                StaticText, 0x1111e6580, {{74.0, 2899.0}, {672.0, 28.0}}, label: '집계 함수와 NULL'
+                              StaticText, 0x1111e66c0, {{74.0, 2939.0}, {672.0, 28.0}}, label: 'SUM/AVG/MIN/MAX는 NULL 무시'
+                                StaticText, 0x1111e6800, {{74.0, 2939.0}, {672.0, 28.0}}, label: 'SUM/AVG/MIN/MAX는 NULL 무시'
+                              Other, 0x1111e6940, {{74.0, 2979.0}, {672.0, 52.0}}
+                              StaticText, 0x1111e6a80, {{88.0, 2979.0}, {658.0, 20.0}}, label: '주의할 점'
+                                StaticText, 0x1111e6bc0, {{88.0, 2979.0}, {658.0, 20.0}}, label: '주의할 점'
+                              StaticText, 0x1111e6d00, {{88.0, 3003.0}, {658.0, 28.0}}, label: 'AVG(x)는 NULL을 0으로 치환해 나누지 않는다.'
+                                StaticText, 0x1111e6e40, {{88.0, 3003.0}, {658.0, 28.0}}, label: 'AVG(x)는 NULL을 0으로 치환해 나누지 않는다.'
+                              StaticText, 0x1111e6f80, {{74.0, 3043.0}, {672.0, 56.0}}, label: 'NULL인 개별 입력은 대개 집계에서 제외된다. SUM/AVG/MIN/MAX는 유효 값이 하나도 없으면 NULL이다. COUNT는 이 경우 0을 반환한다.'
+                                StaticText, 0x1111e70c0, {{74.0, 3043.0}, {672.0, 56.0}}, label: 'NULL인 개별 입력은 대개 집계에서 제외된다. SUM/AVG/MIN/MAX는 유효 값이 하나도 없으면 NULL이다. COUNT는 이 경우 0을 반환한다.'
+                              StaticText, 0x1111e7200, {{74.0, 3111.0}, {672.0, 20.0}}, label: 'SQL·값 예시'
+                                StaticText, 0x1111e7340, {{74.0, 3111.0}, {672.0, 20.0}}, label: 'SQL·값 예시'
+                              Other, 0x1111e7480, {{74.0, 3143.0}, {672.0, 131.0}}
+                                Button, 0x1111e75c0, {{682.0, 3143.0}, {64.0, 48.0}}, label: 'SQL 자동 줄바꿈'
+                                StaticText, 0x1111e7700, {{88.0, 3159.5}, {86.5, 14.5}}, label: 'SQL · 좌우 스크롤'
+                                  StaticText, 0x1111e7840, {{88.0, 3159.5}, {86.5, 14.5}}, label: 'SQL · 좌우 스크롤'
+                                Other, 0x1111e7980, {{74.0, 3191.0}, {672.0, 83.0}}, label: 'SQL 코드'
+                                  ScrollView, 0x1111e7ac0, {{74.0, 3191.0}, {672.0, 83.0}}
+                                    Other, 0x1111e7c00, {{74.0, 3191.0}, {213.5, 83.0}}
+                                      Other, 0x1111e7d40, {{74.0, 3191.0}, {213.5, 83.0}}
+                                        StaticText, 0x1111e7e80, {{88.0, 3191.0}, {185.5, 69.0}}, label: 'x=[10, NULL, 20]
+SUM(x)=30, AVG(x)=15
+COUNT(x)=2, COUNT(*)=3'
+                                          StaticText, 0x1111e8000, {{88.0, 3191.0}, {185.5, 69.0}}, label: 'x=[10, NULL, 20]
+SUM(x)=30, AVG(x)=15
+COUNT(x)=2, COUNT(*)=3'
+                                    Other, 0x1111e8140, {{713.0, 3191.0}, {30.0, 83.0}}, label: 'Vertical scroll bar, 1 page', value: 0%
+                                      Other, 0x1111e8280, {{740.0, 3194.0}, {3.0, 77.0}}
+                                    Other, 0x1111e83c0, {{74.0, 3241.0}, {672.0, 30.0}}, label: 'Horizontal scroll bar, 1 page', value: 0%
+                                      Other, 0x1111e8500, {{535.5, 3268.0}, {207.5, 3.0}}
+                                    Other, 0x1111e8640, {{713.0, 3191.0}, {30.0, 83.0}}, label: 'Vertical scroll bar, 1 page', value: 0%
+                                      Other, 0x1111e8780, {{740.0, 3194.0}, {3.0, 77.0}}
+                                    Other, 0x1111e88c0, {{74.0, 3241.0}, {672.0, 30.0}}, label: 'Horizontal scroll bar, 1 page', value: 0%
+                                      Other, 0x1111e8a00, {{535.5, 3268.0}, {207.5, 3.0}}
+                              Other, 0x1111e8b40, {{74.0, 3307.0}, {672.0, 435.0}}, identifier: 'memory-note-functions-09'
+                              Button, 0x1111e8c80, {{668.0, 3327.0}, {78.0, 48.0}}, identifier: 'memory-save-functions-09', label: 'ROUND·TRUNC 저장'
+                              StaticText, 0x1111e8dc0, {{74.0, 3341.0}, {112.0, 20.0}}, label: '8 / 17 · 필수 · Oracle'
+                                StaticText, 0x1111e8f00, {{74.0, 3341.0}, {112.0, 20.0}}, label: '8 / 17 · 필수 · Oracle'
+                              StaticText, 0x1111e9040, {{74.0, 3387.0}, {672.0, 28.0}}, label: 'ROUND·TRUNC'
+                                StaticText, 0x1111e9180, {{74.0, 3387.0}, {672.0, 28.0}}, label: 'ROUND·TRUNC'
+                              StaticText, 0x1111e92c0, {{74.0, 3427.0}, {672.0, 28.0}}, label: 'ROUND 반올림 / TRUNC 버림(0방향 절삭)'
+                                StaticText, 0x1111e9400, {{74.0, 3427.0}, {672.0, 28.0}}, label: 'ROUND 반올림 / TRUNC 버림(0방향 절삭)'
+                              StaticText, 0x1111e9540, {{74.0, 3467.0}, {672.0, 56.0}}, label: '두 번째 인수는 소수점 자릿수다. 음수를 넣으면 정수부의 자리에서 반올림·절삭한다. 숫자 TRUNC는 절댓값이 아니라 0 방향으로 절삭한다.'
+                                StaticText, 0x1111e9680, {{74.0, 3467.0}, {672.0, 56.0}}, label: '두 번째 인수는 소수점 자릿수다. 음수를 넣으면 정수부의 자리에서 반올림·절삭한다. 숫자 TRUNC는 절댓값이 아니라 0 방향으로 절삭한다.'
+                              StaticText, 0x1111e97c0, {{74.0, 3535.0}, {672.0, 20.0}}, label: 'SQL·값 예시'
+                                StaticText, 0x1111e9900, {{74.0, 3535.0}, {672.0, 20.0}}, label: 'SQL·값 예시'
+                              Other, 0x1111e9a40, {{74.0, 3567.0}, {672.0, 154.0}}
+                                Button, 0x1111e9b80, {{682.0, 3567.0}, {64.0, 48.0}}, label: 'SQL 자동 줄바꿈'
+                                StaticText, 0x1111e9cc0, {{88.0, 3583.5}, {86.5, 14.5}}, label: 'SQL · 좌우 스크롤'
+                                  StaticText, 0x1111e9e00, {{88.0, 3583.5}, {86.5, 14.5}}, label: 'SQL · 좌우 스크롤'
+                                Other, 0x1111e9f40, {{74.0, 3615.0}, {672.0, 106.0}}, label: 'SQL 코드'
+                                  ScrollView, 0x1111ea080, {{74.0, 3615.0}, {672.0, 106.0}}
+                                    Other, 0x1111ea1c0, {{74.0, 3615.0}, {247.5, 106.0}}
+                                      Other, 0x1111ea300, {{74.0, 3615.0}, {247.5, 106.0}}
+                                        StaticText, 0x1111ea440, {{88.0, 3615.0}, {219.5, 92.0}}, label: 'ROUND(123.456, 2) → 123.46
+TRUNC(123.456, 2) → 123.45
+ROUND(1234, -2)   → 1200
+TRUNC(-12.9)      → -12'
+                                          StaticText, 0x1111ea580, {{88.0, 3615.0}, {219.5, 92.0}}, label: 'ROUND(123.456, 2) → 123.46
+TRUNC(123.456, 2) → 123.45
+ROUND(1234, -2)   → 1200
+TRUNC(-12.9)      → -12'
+                                    Other, 0x1111ea6c0, {{713.0, 3615.0}, {30.0, 106.0}}, label: 'Vertical scroll bar, 1 page', value: 0%
+                                      Other, 0x1111ea800, {{740.0, 3618.0}, {3.0, 100.0}}
+                                    Other, 0x1111ea940, {{74.0, 3688.0}, {672.0, 30.0}}, label: 'Horizontal scroll bar, 1 page', value: 0%
+                                      Other, 0x1111eaa80, {{501.5, 3715.0}, {241.5, 3.0}}
+                                    Other, 0x1111eabc0, {{713.0, 3615.0}, {30.0, 106.0}}, label: 'Vertical scroll bar, 1 page', value: 0%
+                                      Other, 0x1111ead00, {{740.0, 3618.0}, {3.0, 100.0}}
+                                    Other, 0x1111eae40, {{74.0, 3688.0}, {672.0, 30.0}}, label: 'Horizontal scroll bar, 1 page', value: 0%
+                                      Other, 0x1111eaf80, {{501.5, 3715.0}, {241.5, 3.0}}
+                              Other, 0x1111eb0c0, {{74.0, 3754.0}, {672.0, 412.0}}, identifier: 'memory-note-functions-10'
+                              Button, 0x1111eb200, {{668.0, 3774.0}, {78.0, 48.0}}, identifier: 'memory-save-functions-10', label: 'CEIL·FLOOR·MOD·ABS 저장'
+                              StaticText, 0x1111eb340, {{74.0, 3788.0}, {32.0, 20.0}}, label: '9 / 17'
+                                StaticText, 0x1111eb480, {{74.0, 3788.0}, {32.0, 20.0}}, label: '9 / 17'
+                              StaticText, 0x1111eb5c0, {{74.0, 3834.0}, {672.0, 28.0}}, label: 'CEIL·FLOOR·MOD·ABS'
+                                StaticText, 0x1111eb700, {{74.0, 3834.0}, {672.0, 28.0}}, label: 'CEIL·FLOOR·MOD·ABS'
+                              StaticText, 0x1111eb840, {{74.0, 3874.0}, {672.0, 28.0}}, label: '올림·내림·나머지·절댓값'
+                                StaticText, 0x1111eb980, {{74.0, 3874.0}, {672.0, 28.0}}, label: '올림·내림·나머지·절댓값'
+                              StaticText, 0x1111ebac0, {{74.0, 3914.0}, {672.0, 56.0}}, label: 'CEIL은 입력보다 크거나 같은 최소 정수, FLOOR는 작거나 같은 최대 정수다. 음수에서 결과를 주의한다.'
+                                StaticText, 0x1111ebc00, {{74.0, 3914.0}, {672.0, 56.0}}, label: 'CEIL은 입력보다 크거나 같은 최소 정수, FLOOR는 작거나 같은 최대 정수다. 음수에서 결과를 주의한다.'
+                              StaticText, 0x1111ebd40, {{74.0, 3982.0}, {672.0, 20.0}}, label: 'SQL·값 예시'
+                                StaticText, 0x1111ebe80, {{74.0, 3982.0}, {672.0, 20.0}}, label: 'SQL·값 예시'
+                              Other, 0x1111ec000, {{74.0, 4014.0}, {672.0, 131.0}}
+                                Button, 0x1111ec140, {{682.0, 4014.0}, {64.0, 48.0}}, label: 'SQL 자동 줄바꿈'
+                                StaticText, 0x1111ec280, {{88.0, 4030.5}, {86.5, 14.5}}, label: 'SQL · 좌우 스크롤'
+                                  StaticText, 0x1111ec3c0, {{88.0, 4030.5}, {86.5, 14.5}}, label: 'SQL · 좌우 스크롤'
+                                Other, 0x1111ec500, {{74.0, 4062.0}, {672.0, 83.0}}, label: 'SQL 코드'
+                                  ScrollView, 0x1111ec640, {{74.0, 4062.0}, {672.0, 83.0}}
+                                    Other, 0x1111ec780, {{74.0, 4062.0}, {272.5, 83.0}}
+                                      Other, 0x1111ec8c0, {{74.0, 4062.0}, {272.5, 83.0}}
+                                        StaticText, 0x1111eca00, {{88.0, 4062.0}, {244.5, 69.0}}, label: 'CEIL(1.2)=2, FLOOR(1.9)=1
+CEIL(-1.2)=-1, FLOOR(-1.2)=-2
+MOD(10,3)=1, ABS(-5)=5'
+                                          StaticText, 0x1111ecb40, {{88.0, 4062.0}, {244.5, 69.0}}, label: 'CEIL(1.2)=2, FLOOR(1.9)=1
+CEIL(-1.2)=-1, FLOOR(-1.2)=-2
+MOD(10,3)=1, ABS(-5)=5'
+                                    Other, 0x1111ecc80, {{713.0, 4062.0}, {30.0, 83.0}}, label: 'Vertical scroll bar, 1 page', value: 0%
+                                      Other, 0x1111ecdc0, {{740.0, 4065.0}, {3.0, 77.0}}
+                                    Other, 0x1111ecf00, {{74.0, 4112.0}, {672.0, 30.0}}, label: 'Horizontal scroll bar, 1 page', value: 0%
+                                      Other, 0x1111ed040, {{476.5, 4139.0}, {266.5, 3.0}}
+                                    Other, 0x1111ed180, {{713.0, 4062.0}, {30.0, 83.0}}, label: 'Vertical scroll bar, 1 page', value: 0%
+                                      Other, 0x1111ed2c0, {{740.0, 4065.0}, {3.0, 77.0}}
+                                    Other, 0x1111ed400, {{74.0, 4112.0}, {672.0, 30.0}}, label: 'Horizontal scroll bar, 1 page', value: 0%
+                                      Other, 0x1111ed540, {{476.5, 4139.0}, {266.5, 3.0}}
+                              Other, 0x1111ed680, {{74.0, 4178.0}, {672.0, 412.0}}, identifier: 'memory-note-functions-11'
+                              Button, 0x1111ed7c0, {{668.0, 4198.0}, {78.0, 48.0}}, identifier: 'memory-save-functions-11', label: 'SUBSTR·LENGTH·INSTR 저장'
+                              StaticText, 0x1111ed900, {{74.0, 4212.0}, {117.5, 20.0}}, label: '10 / 17 · 필수 · Oracle'
+                                StaticText, 0x1111eda40, {{74.0, 4212.0}, {117.5, 20.0}}, label: '10 / 17 · 필수 · Oracle'
+                              StaticText, 0x1111edb80, {{74.0, 4258.0}, {672.0, 28.0}}, label: 'SUBSTR·LENGTH·INSTR'
+                                StaticText, 0x1111edcc0, {{74.0, 4258.0}, {672.0, 28.0}}, label: 'SUBSTR·LENGTH·INSTR'
+                              StaticText, 0x1111ede00, {{74.0, 4298.0}, {672.0, 28.0}}, label: '부분 문자열 / 글자 수 / 부분 문자열 위치'
+                                StaticText, 0x1111edf40, {{74.0, 4298.0}, {672.0, 28.0}}, label: '부분 문자열 / 글자 수 / 부분 문자열 위치'
+                              StaticText, 0x1111ee080, {{74.0, 4338.0}, {672.0, 56.0}}, label: 'Oracle SUBSTR의 시작 위치는 1부터, INSTR의 검색 위치도 1부터 센다. LENGTH는 글자 수(멀티바이트 문자의 바이트 수와 다를 수 있음).'
+                                StaticText, 0x1111ee1c0, {{74.0, 4338.0}, {672.0, 56.0}}, label: 'Oracle SUBSTR의 시작 위치는 1부터, INSTR의 검색 위치도 1부터 센다. LENGTH는 글자 수(멀티바이트 문자의 바이트 수와 다를 수 있음).'
+                              StaticText, 0x1111ee300, {{74.0, 4406.0}, {672.0, 20.0}}, label: 'SQL·값 예시'
+                                StaticText, 0x1111ee440, {{74.0, 4406.0}, {672.0, 20.0}}, label: 'SQL·값 예시'
+                              Other, 0x1111ee580, {{74.0, 4438.0}, {672.0, 131.0}}
+                                Button, 0x1111ee6c0, {{682.0, 4438.0}, {64.0, 48.0}}, label: 'SQL 자동 줄바꿈'
+                                StaticText, 0x1111ee800, {{88.0, 4454.5}, {86.5, 14.5}}, label: 'SQL · 좌우 스크롤'
+                                  StaticText, 0x1111ee940, {{88.0, 4454.5}, {86.5, 14.5}}, label: 'SQL · 좌우 스크롤'
+                                Other, 0x1111eea80, {{74.0, 4486.0}, {672.0, 83.0}}, label: 'SQL 코드'
+                                  ScrollView, 0x1111eebc0, {{74.0, 4486.0}, {672.0, 83.0}}
+                                    Other, 0x1111eed00, {{74.0, 4486.0}, {272.5, 83.0}}
+                                      Other, 0x1111eee40, {{74.0, 4486.0}, {272.5, 83.0}}
+                                        StaticText, 0x1111eef80, {{88.0, 4486.0}, {244.5, 69.0}}, label: 'SUBSTR('ABCDE', 2, 3) → 'BCD'
+LENGTH('ABCDE') → 5
+INSTR('ABABA','BA') → 2'
+                                          StaticText, 0x1111ef0c0, {{88.0, 4486.0}, {244.5, 69.0}}, label: 'SUBSTR('ABCDE', 2, 3) → 'BCD'
+LENGTH('ABCDE') → 5
+INSTR('ABABA','BA') → 2'
+                                    Other, 0x1111ef200, {{713.0, 4486.0}, {30.0, 83.0}}, label: 'Vertical scroll bar, 1 page', value: 0%
+                                      Other, 0x1111ef340, {{740.0, 4489.0}, {3.0, 77.0}}
+                                    Other, 0x1111ef480, {{74.0, 4536.0}, {672.0, 30.0}}, label: 'Horizontal scroll bar, 1 page', value: 0%
+                                      Other, 0x1111ef5c0, {{476.5, 4563.0}, {266.5, 3.0}}
+                                    Other, 0x1111ef700, {{713.0, 4486.0}, {30.0, 83.0}}, label: 'Vertical scroll bar, 1 page', value: 0%
+                                      Other, 0x1111ef840, {{740.0, 4489.0}, {3.0, 77.0}}
+                                    Other, 0x1111ef980, {{74.0, 4536.0}, {672.0, 30.0}}, label: 'Horizontal scroll bar, 1 page', value: 0%
+                                      Other, 0x1111efac0, {{476.5, 4563.0}, {266.5, 3.0}}
+                              Other, 0x1111efc00, {{74.0, 4602.0}, {672.0, 412.0}}, identifier: 'memory-note-functions-12'
+                              Button, 0x1111efd40, {{668.0, 4622.0}, {78.0, 48.0}}, identifier: 'memory-save-functions-12', label: 'TRIM·LTRIM·RTRIM 저장'
+                              StaticText, 0x1111efe80, {{74.0, 4636.0}, {83.0, 20.0}}, label: '11 / 17 · Oracle'
+                                StaticText, 0x1111f8000, {{74.0, 4636.0}, {83.0, 20.0}}, label: '11 / 17 · Oracle'
+                              StaticText, 0x1111f8140, {{74.0, 4682.0}, {672.0, 28.0}}, label: 'TRIM·LTRIM·RTRIM'
+                                StaticText, 0x1111f8280, {{74.0, 4682.0}, {672.0, 28.0}}, label: 'TRIM·LTRIM·RTRIM'
+                              StaticText, 0x1111f83c0, {{74.0, 4722.0}, {672.0, 28.0}}, label: '양쪽·왼쪽·오른쪽 불필요 문자 제거'
+                                StaticText, 0x1111f8500, {{74.0, 4722.0}, {672.0, 28.0}}, label: '양쪽·왼쪽·오른쪽 불필요 문자 제거'
+                              StaticText, 0x1111f8640, {{74.0, 4762.0}, {672.0, 56.0}}, label: 'TRIM은 기본적으로 양끝 공백 제거. LTRIM/RTRIM은 지정된 문자 집합을 가장자리에서 반복 제거한다. REPLACE는 문자열 내부의 지정 부분을 치환한다.'
+                                StaticText, 0x1111f8780, {{74.0, 4762.0}, {672.0, 56.0}}, label: 'TRIM은 기본적으로 양끝 공백 제거. LTRIM/RTRIM은 지정된 문자 집합을 가장자리에서 반복 제거한다. REPLACE는 문자열 내부의 지정 부분을 치환한다.'
+                              StaticText, 0x1111f88c0, {{74.0, 4830.0}, {672.0, 20.0}}, label: 'SQL·값 예시'
+                                StaticText, 0x1111f8a00, {{74.0, 4830.0}, {672.0, 20.0}}, label: 'SQL·값 예시'
+                              Other, 0x1111f8b40, {{74.0, 4862.0}, {672.0, 131.0}}
+                                Button, 0x1111f8c80, {{682.0, 4862.0}, {64.0, 48.0}}, label: 'SQL 자동 줄바꿈'
+                                StaticText, 0x1111f8dc0, {{88.0, 4878.5}, {86.5, 14.5}}, label: 'SQL · 좌우 스크롤'
+                                  StaticText, 0x1111f8f00, {{88.0, 4878.5}, {86.5, 14.5}}, label: 'SQL · 좌우 스크롤'
+                                Other, 0x1111f9040, {{74.0, 4910.0}, {672.0, 83.0}}, label: 'SQL 코드'
+                                  ScrollView, 0x1111f9180, {{74.0, 4910.0}, {672.0, 83.0}}
+                                    Other, 0x1111f92c0, {{74.0, 4910.0}, {289.5, 83.0}}
+                                      Other, 0x1111f9400, {{74.0, 4910.0}, {289.5, 83.0}}
+                                        StaticText, 0x1111f9540, {{88.0, 4910.0}, {261.5, 69.0}}, label: 'TRIM('  SQL  ') → 'SQL'
+LTRIM('xxSQLx','x') → 'SQLx'
+REPLACE('ABAB','AB','C') → 'CC''
+                                          StaticText, 0x1111f9680, {{88.0, 4910.0}, {261.5, 69.0}}, label: 'TRIM('  SQL  ') → 'SQL'
+LTRIM('xxSQLx','x') → 'SQLx'
+REPLACE('ABAB','AB','C') → 'CC''
+                                    Other, 0x1111f97c0, {{713.0, 4910.0}, {30.0, 83.0}}, label: 'Vertical scroll bar, 1 page', value: 0%
+                                      Other, 0x1111f9900, {{740.0, 4913.0}, {3.0, 77.0}}
+                                    Other, 0x1111f9a40, {{74.0, 4960.0}, {672.0, 30.0}}, label: 'Horizontal scroll bar, 1 page', value: 0%
+                                      Other, 0x1111f9b80, {{459.5, 4987.0}, {283.5, 3.0}}
+                                    Other, 0x1111f9cc0, {{713.0, 4910.0}, {30.0, 83.0}}, label: 'Vertical scroll bar, 1 page', value: 0%
+                                      Other, 0x1111f9e00, {{740.0, 4913.0}, {3.0, 77.0}}
+                                    Other, 0x1111f9f40, {{74.0, 4960.0}, {672.0, 30.0}}, label: 'Horizontal scroll bar, 1 page', value: 0%
+                                      Other, 0x1111fa080, {{459.5, 4987.0}, {283.5, 3.0}}
+                              Other, 0x1111fa1c0, {{74.0, 5026.0}, {672.0, 389.0}}, identifier: 'memory-note-functions-15'
+                              Button, 0x1111fa300, {{668.0, 5046.0}, {78.0, 48.0}}, identifier: 'memory-save-functions-15', label: '날짜 함수 SYSDATE·ADD_MONTHS 저장'
+                              StaticText, 0x1111fa440, {{74.0, 5060.0}, {85.0, 20.0}}, label: '12 / 17 · Oracle'
+                                StaticText, 0x1111fa580, {{74.0, 5060.0}, {85.0, 20.0}}, label: '12 / 17 · Oracle'
+                              StaticText, 0x1111fa6c0, {{74.0, 5106.0}, {672.0, 28.0}}, label: '날짜 함수 SYSDATE·ADD_MONTHS'
+                                StaticText, 0x1111fa800, {{74.0, 5106.0}, {672.0, 28.0}}, label: '날짜 함수 SYSDATE·ADD_MONTHS'
+                              StaticText, 0x1111fa940, {{74.0, 5146.0}, {672.0, 28.0}}, label: '현재 날짜/시각 · 월 더하기'
+                                StaticText, 0x1111faa80, {{74.0, 5146.0}, {672.0, 28.0}}, label: '현재 날짜/시각 · 월 더하기'
+                              StaticText, 0x1111fabc0, {{74.0, 5186.0}, {672.0, 56.0}}, label: 'Oracle DATE에는 날짜뿐 아니라 시각도 포함된다. ADD_MONTHS는 월 단위 이동, LAST_DAY는 그 달의 마지막 날짜를 구한다. 정확한 반환 일자는 시작일·말일 규칙에 좌우된다.'
+                                StaticText, 0x1111fad00, {{74.0, 5186.0}, {672.0, 56.0}}, label: 'Oracle DATE에는 날짜뿐 아니라 시각도 포함된다. ADD_MONTHS는 월 단위 이동, LAST_DAY는 그 달의 마지막 날짜를 구한다. 정확한 반환 일자는 시작일·말일 규칙에 좌우된다.'
+                              StaticText, 0x1111fae40, {{74.0, 5254.0}, {672.0, 20.0}}, label: 'SQL·값 예시'
+                                StaticText, 0x1111faf80, {{74.0, 5254.0}, {672.0, 20.0}}, label: 'SQL·값 예시'
+                              Other, 0x1111fb0c0, {{74.0, 5286.0}, {672.0, 108.0}}
+                                Button, 0x1111fb200, {{682.0, 5286.0}, {64.0, 48.0}}, label: 'SQL 자동 줄바꿈'
+                                StaticText, 0x1111fb340, {{88.0, 5302.5}, {86.5, 14.5}}, label: 'SQL · 좌우 스크롤'
+                                  StaticText, 0x1111fb480, {{88.0, 5302.5}, {86.5, 14.5}}, label: 'SQL · 좌우 스크롤'
+                                Other, 0x1111fb5c0, {{74.0, 5334.0}, {672.0, 60.0}}, label: 'SQL 코드'
+                                  ScrollView, 0x1111fb700, {{74.0, 5334.0}, {672.0, 60.0}}
+                                    Other, 0x1111fb840, {{74.0, 5334.0}, {407.5, 60.0}}
+                                      Other, 0x1111fb980, {{74.0, 5334.0}, {407.5, 60.0}}
+                                        StaticText, 0x1111fbac0, {{88.0, 5334.0}, {379.5, 46.0}}, label: 'ADD_MONTHS(DATE '2026-01-15', 1) → 2026-02-15
+LAST_DAY(DATE '2026-02-10') → 2026-02-28'
+                                          StaticText, 0x1111fbc00, {{88.0, 5334.0}, {379.5, 46.0}}, label: 'ADD_MONTHS(DATE '2026-01-15', 1) → 2026-02-15
+LAST_DAY(DATE '2026-02-10') → 2026-02-28'
+                                    Other, 0x1111fbd40, {{713.0, 5334.0}, {30.0, 60.0}}, label: 'Vertical scroll bar, 1 page', value: 0%
+                                      Other, 0x1111fbe80, {{740.0, 5337.0}, {3.0, 54.0}}
+                                    Other, 0x111200000, {{74.0, 5361.0}, {672.0, 30.0}}, label: 'Horizontal scroll bar, 1 page', value: 0%
+                                      Other, 0x111200140, {{341.5, 5388.0}, {401.5, 3.0}}
+                                    Other, 0x111200280, {{713.0, 5334.0}, {30.0, 60.0}}, label: 'Vertical scroll bar, 1 page', value: 0%
+                                      Other, 0x1112003c0, {{740.0, 5337.0}, {3.0, 54.0}}
+                                    Other, 0x111200500, {{74.0, 5361.0}, {672.0, 30.0}}, label: 'Horizontal scroll bar, 1 page', value: 0%
+                                      Other, 0x111200640, {{341.5, 5388.0}, {401.5, 3.0}}
+                              Other, 0x111200780, {{74.0, 5427.0}, {672.0, 453.0}}, identifier: 'memory-note-functions-16'
+                              Button, 0x1112008c0, {{668.0, 5447.0}, {78.0, 48.0}}, identifier: 'memory-save-functions-16', label: '날짜 산술·MONTHS_BETWEEN 저장'
+                              StaticText, 0x111200a00, {{74.0, 5461.0}, {85.5, 20.0}}, label: '13 / 17 · Oracle'
+                                StaticText, 0x111200b40, {{74.0, 5461.0}, {85.5, 20.0}}, label: '13 / 17 · Oracle'
+                              StaticText, 0x111200c80, {{74.0, 5507.0}, {672.0, 28.0}}, label: '날짜 산술·MONTHS_BETWEEN'
+                                StaticText, 0x111200dc0, {{74.0, 5507.0}, {672.0, 28.0}}, label: '날짜 산술·MONTHS_BETWEEN'
+                              StaticText, 0x111200f00, {{74.0, 5547.0}, {672.0, 28.0}}, label: 'Oracle 날짜 - 날짜 = 일수 / 날짜 + 1 = 하루 뒤'
+                                StaticText, 0x111201040, {{74.0, 5547.0}, {672.0, 28.0}}, label: 'Oracle 날짜 - 날짜 = 일수 / 날짜 + 1 = 하루 뒤'
+                              Other, 0x111201180, {{74.0, 5587.0}, {672.0, 52.0}}
+                              StaticText, 0x1112012c0, {{88.0, 5587.0}, {658.0, 20.0}}, label: '주의할 점'
+                                StaticText, 0x111201400, {{88.0, 5587.0}, {658.0, 20.0}}, label: '주의할 점'
+                              StaticText, 0x111201540, {{88.0, 5611.0}, {658.0, 28.0}}, label: 'DATE에 시각이 들어 있으면 차이가 소수 일수로 나타날 수 있다.'
+                                StaticText, 0x111201680, {{88.0, 5611.0}, {658.0, 28.0}}, label: 'DATE에 시각이 들어 있으면 차이가 소수 일수로 나타날 수 있다.'
+                              StaticText, 0x1112017c0, {{74.0, 5651.0}, {672.0, 56.0}}, label: 'Oracle DATE끼리 빼면 일 단위 숫자가 나온다. MONTHS_BETWEEN(a,b)는 개월 차이. EXTRACT(YEAR FROM ...)로 연도 등을 꺼낼 수 있다.'
+                                StaticText, 0x111201900, {{74.0, 5651.0}, {672.0, 56.0}}, label: 'Oracle DATE끼리 빼면 일 단위 숫자가 나온다. MONTHS_BETWEEN(a,b)는 개월 차이. EXTRACT(YEAR FROM ...)로 연도 등을 꺼낼 수 있다.'
+                              StaticText, 0x111201a40, {{74.0, 5719.0}, {672.0, 20.0}}, label: 'SQL·값 예시'
+                                StaticText, 0x111201b80, {{74.0, 5719.0}, {672.0, 20.0}}, label: 'SQL·값 예시'
+                              Other, 0x111201cc0, {{74.0, 5751.0}, {672.0, 108.0}}
+                                Button, 0x111201e00, {{682.0, 5751.0}, {64.0, 48.0}}, label: 'SQL 자동 줄바꿈'
+                                StaticText, 0x111201f40, {{88.0, 5767.5}, {86.5, 14.5}}, label: 'SQL · 좌우 스크롤'
+                                  StaticText, 0x111202080, {{88.0, 5767.5}, {86.5, 14.5}}, label: 'SQL · 좌우 스크롤'
+                                Other, 0x1112021c0, {{74.0, 5799.0}, {672.0, 60.0}}, label: 'SQL 코드'
+                                  ScrollView, 0x111202300, {{74.0, 5799.0}, {672.0, 60.0}}
+                                    Other, 0x111202440, {{74.0, 5799.0}, {374.0, 60.0}}
+                                      Other, 0x111202580, {{74.0, 5799.0}, {374.0, 60.0}}
+                                        StaticText, 0x1112026c0, {{88.0, 5799.0}, {346.0, 46.0}}, label: 'DATE '2026-01-03' - DATE '2026-01-01' → 2
+DATE '2026-01-01' + 1 → 다음 날'
+                                          StaticText, 0x111202800, {{88.0, 5799.0}, {346.0, 46.0}}, label: 'DATE '2026-01-03' - DATE '2026-01-01' → 2
+DATE '2026-01-01' + 1 → 다음 날'
+                                    Other, 0x111202940, {{713.0, 5799.0}, {30.0, 60.0}}, label: 'Vertical scroll bar, 1 page', value: 0%
+                                      Other, 0x111202a80, {{740.0, 5802.0}, {3.0, 54.0}}
+                                    Other, 0x111202bc0, {{74.0, 5826.0}, {672.0, 30.0}}, label: 'Horizontal scroll bar, 1 page', value: 0%
+                                      Other, 0x111202d00, {{375.0, 5853.0}, {368.0, 3.0}}
+                                    Other, 0x111202e40, {{713.0, 5799.0}, {30.0, 60.0}}, label: 'Vertical scroll bar, 1 page', value: 0%
+                                      Other, 0x111202f80, {{740.0, 5802.0}, {3.0, 54.0}}
+                                    Other, 0x1112030c0, {{74.0, 5826.0}, {672.0, 30.0}}, label: 'Horizontal scroll bar, 1 page', value: 0%
+                                      Other, 0x111203200, {{375.0, 5853.0}, {368.0, 3.0}}
+                              Other, 0x111203340, {{74.0, 5892.0}, {672.0, 453.0}}, identifier: 'memory-note-functions-17'
+                              Button, 0x111203480, {{668.0, 5912.0}, {78.0, 48.0}}, identifier: 'memory-save-functions-17', label: 'TO_CHAR·TO_DATE·TO_NUMBER 저장'
+                              StaticText, 0x1112035c0, {{74.0, 5926.0}, {118.0, 20.0}}, label: '14 / 17 · 필수 · Oracle'
+                                StaticText, 0x111203700, {{74.0, 5926.0}, {118.0, 20.0}}, label: '14 / 17 · 필수 · Oracle'
+                              StaticText, 0x111203840, {{74.0, 5972.0}, {672.0, 28.0}}, label: 'TO_CHAR·TO_DATE·TO_NUMBER'
+                                StaticText, 0x111203980, {{74.0, 5972.0}, {672.0, 28.0}}, label: 'TO_CHAR·TO_DATE·TO_NUMBER'
+                              StaticText, 0x111203ac0, {{74.0, 6012.0}, {672.0, 28.0}}, label: '형식 문자열로 명시적 변환'
+                                StaticText, 0x111203c00, {{74.0, 6012.0}, {672.0, 28.0}}, label: '형식 문자열로 명시적 변환'
+                              Other, 0x111203d40, {{74.0, 6052.0}, {672.0, 52.0}}
+                              StaticText, 0x111203e80, {{88.0, 6052.0}, {658.0, 20.0}}, label: '주의할 점'
+                                StaticText, 0x111208000, {{88.0, 6052.0}, {658.0, 20.0}}, label: '주의할 점'
+                              StaticText, 0x111208140, {{88.0, 6076.0}, {658.0, 28.0}}, label: '형식 없이 암묵적 날짜 변환하면 세션 NLS 설정에 의존해 오류나 오해가 생긴다.'
+                                StaticText, 0x111208280, {{88.0, 6076.0}, {658.0, 28.0}}, label: '형식 없이 암묵적 날짜 변환하면 세션 NLS 설정에 의존해 오류나 오해가 생긴다.'
+                              StaticText, 0x1112083c0, {{74.0, 6116.0}, {672.0, 56.0}}, label: '날짜를 문자로 출력할 때 TO_CHAR(date, format), 문자를 날짜로 바꿀 때 TO_DATE(text, format), 문자를 숫자로 바꿀 때 TO_NUMBER를 사용한다.'
+                                StaticText, 0x111208500, {{74.0, 6116.0}, {672.0, 56.0}}, label: '날짜를 문자로 출력할 때 TO_CHAR(date, format), 문자를 날짜로 바꿀 때 TO_DATE(text, format), 문자를 숫자로 바꿀 때 TO_NUMBER를 사용한다.'
+                              StaticText, 0x111208640, {{74.0, 6184.0}, {672.0, 20.0}}, label: 'SQL·값 예시'
+                                StaticText, 0x111208780, {{74.0, 6184.0}, {672.0, 20.0}}, label: 'SQL·값 예시'
+                              Other, 0x1112088c0, {{74.0, 6216.0}, {672.0, 108.0}}
+                                Button, 0x111208a00, {{682.0, 6216.0}, {64.0, 48.0}}, label: 'SQL 자동 줄바꿈'
+                                StaticText, 0x111208b40, {{88.0, 6232.5}, {86.5, 14.5}}, label: 'SQL · 좌우 스크롤'
+                                  StaticText, 0x111208c80, {{88.0, 6232.5}, {86.5, 14.5}}, label: 'SQL · 좌우 스크롤'
+                                Other, 0x111208dc0, {{74.0, 6264.0}, {672.0, 60.0}}, label: 'SQL 코드'
+                                  ScrollView, 0x111208f00, {{74.0, 6264.0}, {672.0, 60.0}}
+                                    Other, 0x111209040, {{74.0, 6264.0}, {483.5, 60.0}}
+                                      Other, 0x111209180, {{74.0, 6264.0}, {483.5, 60.0}}
+                                        StaticText, 0x1112092c0, {{88.0, 6264.0}, {455.5, 46.0}}, label: 'TO_CHAR(DATE '2026-11-14','YYYY-MM-DD') → '2026-11-14'
+TO_DATE('2026-11-14','YYYY-MM-DD')'
+                                          StaticText, 0x111209400, {{88.0, 6264.0}, {455.5, 46.0}}, label: 'TO_CHAR(DATE '2026-11-14','YYYY-MM-DD') → '2026-11-14'
+TO_DATE('2026-11-14','YYYY-MM-DD')'
+                                    Other, 0x111209540, {{713.0, 6264.0}, {30.0, 60.0}}, label: 'Vertical scroll bar, 1 page', value: 0%
+                                      Other, 0x111209680, {{740.0, 6267.0}, {3.0, 54.0}}
+                                    Other, 0x1112097c0, {{74.0, 6291.0}, {672.0, 30.0}}, label: 'Horizontal scroll bar, 1 page', value: 0%
+                                      Other, 0x111209900, {{265.5, 6318.0}, {477.5, 3.0}}
+                                    Other, 0x111209a40, {{713.0, 6264.0}, {30.0, 60.0}}, label: 'Vertical scroll bar, 1 page', value: 0%
+                                      Other, 0x111209b80, {{740.0, 6267.0}, {3.0, 54.0}}
+                                    Other, 0x111209cc0, {{74.0, 6291.0}, {672.0, 30.0}}, label: 'Horizontal scroll bar, 1 page', value: 0%
+                                      Other, 0x111209e00, {{265.5, 6318.0}, {477.5, 3.0}}
+                              Other, 0x111209f40, {{74.0, 6357.0}, {672.0, 366.0}}, identifier: 'memory-note-functions-18'
+                              Button, 0x11120a080, {{668.0, 6377.0}, {78.0, 48.0}}, identifier: 'memory-save-functions-18', label: '날짜·문자 포맷 구분 저장'
+                              StaticText, 0x11120a1c0, {{74.0, 6391.0}, {117.5, 20.0}}, label: '15 / 17 · 필수 · Oracle'
+                                StaticText, 0x11120a300, {{74.0, 6391.0}, {117.5, 20.0}}, label: '15 / 17 · 필수 · Oracle'
+                              StaticText, 0x11120a440, {{74.0, 6437.0}, {672.0, 28.0}}, label: '날짜·문자 포맷 구분'
+                                StaticText, 0x11120a580, {{74.0, 6437.0}, {672.0, 28.0}}, label: '날짜·문자 포맷 구분'
+                              StaticText, 0x11120a6c0, {{74.0, 6477.0}, {672.0, 28.0}}, label: 'YYYY 연도 / MM 월 / DD 일 / HH24 시 / MI 분 / SS 초'
+                                StaticText, 0x11120a800, {{74.0, 6477.0}, {672.0, 28.0}}, label: 'YYYY 연도 / MM 월 / DD 일 / HH24 시 / MI 분 / SS 초'
+                              StaticText, 0x11120a940, {{74.0, 6517.0}, {672.0, 56.0}}, label: '월은 MM, 분은 MI라는 차이를 특히 기억한다. 날짜 출력 TO_CHAR와 문자열을 날짜로 해석하는 TO_DATE의 인수 역할도 구분한다.'
+                                StaticText, 0x11120aa80, {{74.0, 6517.0}, {672.0, 56.0}}, label: '월은 MM, 분은 MI라는 차이를 특히 기억한다. 날짜 출력 TO_CHAR와 문자열을 날짜로 해석하는 TO_DATE의 인수 역할도 구분한다.'
+                              StaticText, 0x11120abc0, {{74.0, 6585.0}, {672.0, 20.0}}, label: 'SQL·값 예시'
+                                StaticText, 0x11120ad00, {{74.0, 6585.0}, {672.0, 20.0}}, label: 'SQL·값 예시'
+                              Other, 0x11120ae40, {{74.0, 6617.0}, {672.0, 85.0}}
+                                Button, 0x11120af80, {{682.0, 6617.0}, {64.0, 48.0}}, label: 'SQL 자동 줄바꿈'
+                                StaticText, 0x11120b0c0, {{88.0, 6633.5}, {86.5, 14.5}}, label: 'SQL · 좌우 스크롤'
+                                  StaticText, 0x11120b200, {{88.0, 6633.5}, {86.5, 14.5}}, label: 'SQL · 좌우 스크롤'
+                                Other, 0x11120b340, {{74.0, 6665.0}, {672.0, 37.0}}, label: 'SQL 코드'
+                                  ScrollView, 0x11120b480, {{74.0, 6665.0}, {672.0, 37.0}}
+                                    Other, 0x11120b5c0, {{74.0, 6665.0}, {365.5, 37.0}}
+                                      Other, 0x11120b700, {{74.0, 6665.0}, {365.5, 37.0}}
+                                        StaticText, 0x11120b840, {{88.0, 6665.0}, {337.5, 23.0}}, label: 'TO_CHAR(SYSDATE,'YYYY-MM-DD HH24:MI:SS')'
+                                          StaticText, 0x11120b980, {{88.0, 6665.0}, {337.5, 23.0}}, label: 'TO_CHAR(SYSDATE,'YYYY-MM-DD HH24:MI:SS')'
+                                    Other, 0x11120bac0, {{713.0, 6665.0}, {30.0, 37.0}}, label: 'Vertical scroll bar, 1 page', value: 0%
+                                      Other, 0x11120bc00, {{740.0, 6663.0}, {3.0, 36.0}}
+                                    Other, 0x11120bd40, {{74.0, 6680.5}, {672.0, 18.5}}, label: 'Horizontal scroll bar, 1 page', value: 0%
+                                      Other, 0x11120be80, {{383.5, 6696.0}, {359.5, 3.0}}
+                                    Other, 0x111218000, {{713.0, 6665.0}, {30.0, 37.0}}, label: 'Vertical scroll bar, 1 page', value: 0%
+                                      Other, 0x111218140, {{740.0, 6663.0}, {3.0, 36.0}}
+                                    Other, 0x111218280, {{74.0, 6680.5}, {672.0, 18.5}}, label: 'Horizontal scroll bar, 1 page', value: 0%
+                                      Other, 0x1112183c0, {{383.5, 6696.0}, {359.5, 3.0}}
+                              Other, 0x111218500, {{74.0, 6735.0}, {672.0, 453.0}}, identifier: 'memory-note-functions-19'
+                              Button, 0x111218640, {{668.0, 6755.0}, {78.0, 48.0}}, identifier: 'memory-save-functions-19', label: '문자와 숫자의 NULL 구분 저장'
+                              StaticText, 0x111218780, {{74.0, 6769.0}, {85.5, 20.0}}, label: '16 / 17 · Oracle'
+                                StaticText, 0x1112188c0, {{74.0, 6769.0}, {85.5, 20.0}}, label: '16 / 17 · Oracle'
+                              StaticText, 0x111218a00, {{74.0, 6815.0}, {672.0, 28.0}}, label: '문자와 숫자의 NULL 구분'
+                                StaticText, 0x111218b40, {{74.0, 6815.0}, {672.0, 28.0}}, label: '문자와 숫자의 NULL 구분'
+                              StaticText, 0x111218c80, {{74.0, 6855.0}, {672.0, 28.0}}, label: '0 ≠ NULL / Oracle의 빈 문자열은 NULL 취급'
+                                StaticText, 0x111218dc0, {{74.0, 6855.0}, {672.0, 28.0}}, label: '0 ≠ NULL / Oracle의 빈 문자열은 NULL 취급'
+                              Other, 0x111218f00, {{74.0, 6895.0}, {672.0, 52.0}}
+                              StaticText, 0x111219040, {{88.0, 6895.0}, {658.0, 20.0}}, label: '주의할 점'
+                                StaticText, 0x111219180, {{88.0, 6895.0}, {658.0, 20.0}}, label: '주의할 점'
+                              StaticText, 0x1112192c0, {{88.0, 6919.0}, {658.0, 28.0}}, label: 'Oracle의 현재 동작: ''는 NULL 취급, ' '(공백 한 칸)은 NULL이 아니다.'
+                                StaticText, 0x111219400, {{88.0, 6919.0}, {658.0, 28.0}}, label: 'Oracle의 현재 동작: ''는 NULL 취급, ' '(공백 한 칸)은 NULL이 아니다.'
+                              StaticText, 0x111219540, {{74.0, 6959.0}, {672.0, 56.0}}, label: 'Oracle은 길이가 0인 문자값 ''를 현재 NULL로 취급한다(향후 변경 가능성 공식 고지). 다른 DBMS는 다를 수 있다. 공백 한 칸 ' '은 빈 문자열과 다르다.'
+                                StaticText, 0x111219680, {{74.0, 6959.0}, {672.0, 56.0}}, label: 'Oracle은 길이가 0인 문자값 ''를 현재 NULL로 취급한다(향후 변경 가능성 공식 고지). 다른 DBMS는 다를 수 있다. 공백 한 칸 ' '은 빈 문자열과 다르다.'
+                              StaticText, 0x1112197c0, {{74.0, 7027.0}, {672.0, 20.0}}, label: 'SQL·값 예시'
+                                StaticText, 0x111219900, {{74.0, 7027.0}, {672.0, 20.0}}, label: 'SQL·값 예시'
+                              Other, 0x111219a40, {{74.0, 7059.0}, {672.0, 108.0}}
+                                Button, 0x111219b80, {{682.0, 7059.0}, {64.0, 48.0}}, label: 'SQL 자동 줄바꿈'
+                                StaticText, 0x111219cc0, {{88.0, 7075.5}, {86.5, 14.5}}, label: 'SQL · 좌우 스크롤'
+                                  StaticText, 0x111219e00, {{88.0, 7075.5}, {86.5, 14.5}}, label: 'SQL · 좌우 스크롤'
+                                Other, 0x111219f40, {{74.0, 7107.0}, {672.0, 60.0}}, label: 'SQL 코드'
+                                  ScrollView, 0x11121a080, {{74.0, 7107.0}, {672.0, 60.0}}
+                                    Other, 0x11121a1c0, {{74.0, 7107.0}, {330.5, 60.0}}
+                                      Other, 0x11121a300, {{74.0, 7107.0}, {330.5, 60.0}}
+                                        StaticText, 0x11121a440, {{88.0, 7107.0}, {302.5, 46.0}}, label: 'NVL('', '대체') → '대체'   -- Oracle
+NVL(' ', '대체') → ' '      -- Oracle'
+                                          StaticText, 0x11121a580, {{88.0, 7107.0}, {302.5, 46.0}}, label: 'NVL('', '대체') → '대체'   -- Oracle
+NVL(' ', '대체') → ' '      -- Oracle'
+                                    Other, 0x11121a6c0, {{713.0, 7107.0}, {30.0, 60.0}}, label: 'Vertical scroll bar, 1 page', value: 0%
+                                      Other, 0x11121a800, {{740.0, 7110.0}, {3.0, 54.0}}
+                                    Other, 0x11121a940, {{74.0, 7134.0}, {672.0, 30.0}}, label: 'Horizontal scroll bar, 1 page', value: 0%
+                                      Other, 0x11121aa80, {{418.5, 7161.0}, {324.5, 3.0}}
+                                    Other, 0x11121abc0, {{713.0, 7107.0}, {30.0, 60.0}}, label: 'Vertical scroll bar, 1 page', value: 0%
+                                      Other, 0x11121ad00, {{740.0, 7110.0}, {3.0, 54.0}}
+                                    Other, 0x11121ae40, {{74.0, 7134.0}, {672.0, 30.0}}, label: 'Horizontal scroll bar, 1 page', value: 0%
+                                      Other, 0x11121af80, {{418.5, 7161.0}, {324.5, 3.0}}
+                              Other, 0x11121b0c0, {{74.0, 7200.0}, {672.0, 504.0}}, identifier: 'memory-note-functions-20'
+                              Button, 0x11121b200, {{668.0, 7220.0}, {78.0, 48.0}}, identifier: 'memory-save-functions-20', label: '집계+NVL 결과 차이 저장'
+                              StaticText, 0x11121b340, {{74.0, 7234.0}, {117.0, 20.0}}, label: '17 / 17 · 필수 · Oracle'
+                                StaticText, 0x11121b480, {{74.0, 7234.0}, {117.0, 20.0}}, label: '17 / 17 · 필수 · Oracle'
+                              StaticText, 0x11121b5c0, {{74.0, 7280.0}, {672.0, 28.0}}, label: '집계+NVL 결과 차이'
+                                StaticText, 0x11121b700, {{74.0, 7280.0}, {672.0, 28.0}}, label: '집계+NVL 결과 차이'
+                              StaticText, 0x11121b840, {{74.0, 7320.0}, {672.0, 28.0}}, label: 'SUM(NVL(x,0))와 NVL(SUM(x),0) 차이'
+                                StaticText, 0x11121b980, {{74.0, 7320.0}, {672.0, 28.0}}, label: 'SUM(NVL(x,0))와 NVL(SUM(x),0) 차이'
+                              Other, 0x11121bac0, {{74.0, 7360.0}, {672.0, 52.0}}
+                              StaticText, 0x11121bc00, {{88.0, 7360.0}, {658.0, 20.0}}, label: '주의할 점'
+                                StaticText, 0x11121bd40, {{88.0, 7360.0}, {658.0, 20.0}}, label: '주의할 점'
+                              StaticText, 0x11121be80, {{88.0, 7384.0}, {658.0, 28.0}}, label: 'NULL값만 있는 행과 아예 행이 없는 집합은 다르다.'
+                                StaticText, 0x111220000, {{88.0, 7384.0}, {658.0, 28.0}}, label: 'NULL값만 있는 행과 아예 행이 없는 집합은 다르다.'
+                              StaticText, 0x111220140, {{74.0, 7424.0}, {672.0, 84.0}}, label: '행이 있고 모든 x가 NULL인 그룹이라면 SUM(NVL(x,0))=0이고 NVL(SUM(x),0)=0이다. GROUP BY 없이 전체를 집계할 때 입력 행이 0개이면 SUM(NVL(x,0))은 NULL, NVL(SUM(x),0)은 0이다. GROUP BY로 묶을 행 자체가 없으면 결과 그룹도 없다.'
+                                StaticText, 0x111220280, {{74.0, 7424.0}, {672.0, 84.0}}, label: '행이 있고 모든 x가 NULL인 그룹이라면 SUM(NVL(x,0))=0이고 NVL(SUM(x),0)=0이다. GROUP BY 없이 전체를 집계할 때 입력 행이 0개이면 SUM(NVL(x,0))은 NULL, NVL(SUM(x),0)은 0이다. GROUP BY로 묶을 행 자체가 없으면 결과 그룹도 없다.'
+                              StaticText, 0x1112203c0, {{74.0, 7520.0}, {672.0, 20.0}}, label: 'SQL·값 예시'
+                                StaticText, 0x111220500, {{74.0, 7520.0}, {672.0, 20.0}}, label: 'SQL·값 예시'
+                              Other, 0x111220640, {{74.0, 7552.0}, {672.0, 131.0}}
+                                Button, 0x111220780, {{682.0, 7552.0}, {64.0, 48.0}}, label: 'SQL 자동 줄바꿈'
+                                StaticText, 0x1112208c0, {{88.0, 7568.5}, {86.5, 14.5}}, label: 'SQL · 좌우 스크롤'
+                                  StaticText, 0x111220a00, {{88.0, 7568.5}, {86.5, 14.5}}, label: 'SQL · 좌우 스크롤'
+                                Other, 0x111220b40, {{74.0, 7600.0}, {672.0, 83.0}}, label: 'SQL 코드'
+                                  ScrollView, 0x111220c80, {{74.0, 7600.0}, {672.0, 83.0}}
+                                    Other, 0x111220dc0, {{74.0, 7600.0}, {354.5, 83.0}}
+                                      Other, 0x111220f00, {{74.0, 7600.0}, {354.5, 83.0}}
+                                        StaticText, 0x111221040, {{88.0, 7600.0}, {326.5, 69.0}}, label: '-- GROUP BY 없이 전체 집계, 필터 결과 행이 0개
+SUM(NVL(x, 0)) → NULL
+NVL(SUM(x), 0) → 0'
+                                          StaticText, 0x111221180, {{88.0, 7600.0}, {326.5, 69.0}}, label: '-- GROUP BY 없이 전체 집계, 필터 결과 행이 0개
+SUM(NVL(x, 0)) → NULL
+NVL(SUM(x), 0) → 0'
+                                    Other, 0x1112212c0, {{713.0, 7600.0}, {30.0, 83.0}}, label: 'Vertical scroll bar, 1 page', value: 0%
+                                      Other, 0x111221400, {{740.0, 7603.0}, {3.0, 77.0}}
+                                    Other, 0x111221540, {{74.0, 7650.0}, {672.0, 30.0}}, label: 'Horizontal scroll bar, 1 page', value: 0%
+                                      Other, 0x111221680, {{394.5, 7677.0}, {348.5, 3.0}}
+                                    Other, 0x1112217c0, {{713.0, 7600.0}, {30.0, 83.0}}, label: 'Vertical scroll bar, 1 page', value: 0%
+                                      Other, 0x111221900, {{740.0, 7603.0}, {3.0, 77.0}}
+                                    Other, 0x111221a40, {{74.0, 7650.0}, {672.0, 30.0}}, label: 'Horizontal scroll bar, 1 page', value: 0%
+                                      Other, 0x111221b80, {{394.5, 7677.0}, {348.5, 3.0}}
+                          Other, 0x111221cc0, {{787.0, 96.0}, {30.0, 984.0}}, label: 'Vertical scroll bar, 8 pages', value: 0%
+                            Other, 0x111221e00, {{814.0, 179.0}, {3.0, 898.0}}
+                          Other, 0x111221f40, {{0.0, 1047.0}, {820.0, 30.0}}, label: 'Horizontal scroll bar, 1 page', value: 0%
+                            Other, 0x111222080, {{28.0, 1074.0}, {764.0, 3.0}}
+                          Other, 0x1112221c0, {{787.0, 96.0}, {30.0, 984.0}}, label: 'Vertical scroll bar, 8 pages', value: 0%
+                            Other, 0x111222300, {{814.0, 179.0}, {3.0, 898.0}}
+                          Other, 0x111222440, {{0.0, 1047.0}, {820.0, 30.0}}, label: 'Horizontal scroll bar, 1 page', value: 0%
+                            Other, 0x111222580, {{28.0, 1074.0}, {764.0, 3.0}}
+                      Other, 0x1112226c0, {{0.0, 1080.0}, {820.0, 80.0}}
+                      Other, 0x111222800, {{0.0, 1081.0}, {820.0, 79.0}}
+                      Other, 0x111222940, {{24.0, 1089.0}, {154.5, 63.0}}, identifier: 'tab-today', label: '홈', Selected
+                      Other, 0x111222a80, {{178.5, 1089.0}, {154.5, 63.0}}, identifier: 'tab-learn', label: '교재'
+                      Other, 0x111222bc0, {{333.0, 1089.0}, {154.0, 63.0}}, identifier: 'tab-review', label: '문제'
+                      Other, 0x111222d00, {{487.0, 1089.0}, {154.5, 63.0}}, identifier: 'tab-exams', label: '실전'
+                      Other, 0x111222e40, {{641.5, 1089.0}, {154.5, 63.0}}, identifier: 'tab-records', label: '기록'
+    Window, 0x111222f80, {{0.0, 0.0}, {820.0, 1180.0}}
+      Other, 0x1112230c0, {{0.0, 0.0}, {820.0, 1180.0}}
+        Other, 0x111223200, {{0.0, 0.0}, {820.0, 1180.0}}
+Path to element:
+ →Application, 0x104e7b980, pid: 37112, label: 'SQLD Pass'
+Query chain:
+ →Find: Application 'com.sqldpass.app.adsqa'
+  Output: {
+    Application, 0x111223340, pid: 37112, label: 'SQLD Pass'
+  }

@@ -1,20 +1,22 @@
 {
   "schemaVersion": 1,
   "status": "owner-reviewed-complete",
-  "contentVersion": "textbook.20261113.1",
-  "contentSha256": "61316063d2112c7b5cd25773a662a61b9037925e375073131c094d2522ca9fd5",
+  "contentVersion": "textbook.20261113.2",
+  "contentSha256": "5473eb0f7f166e8caf7b4eb7dc168e6e42592449a1bf7064fccebb9f38adc64f",
   "scope": {
     "lessons": 216,
     "questions": 3340,
     "practiceQuestions": 340,
     "mockExams": 60,
-    "mockQuestions": 3000
+    "mockQuestions": 3000,
+    "memoryNotes": 83,
+    "memoryCategories": 7
   },
   "productionReleaseApproved": true,
-  "note": "Owner directly confirmed the new app volume3 (originalVol4) exact candidate in this conversation. Original-source field comparison and retained data checks passed. No unprovided expert/DBMS/syllabus review is inferred. Native, consent and signing evidence remain independent.",
-  "recordedAt": "2026-11-13T03:53:50+00:00",
+  "note": "Owner directly confirmed the exact83-note memory guide candidate, including documented corrections. Existing216 sections/340 practice questions/curated60 retained unchanged. This does not claim unprovided full DBMS or latest-syllabus verification; native/consent/signing gates remain independent.",
+  "recordedAt": "2026-11-13T10:58:02.602Z",
   "declaredBy": "repository owner (current conversation)",
-  "ownerStatement": "새 3권 내용 검수 완료",
+  "ownerStatement": "새 핵심 노트의 내용 검수 완료",
   "reviewer": null,
   "reviewedAt": null,
   "targetDbmsReview": null,

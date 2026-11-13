@@ -1,0 +1,31 @@
+{
+  "appVersion": "0.7.0",
+  "observedAt": "2026-11-13T11:05:20+00:00",
+  "android": {
+    "package": "com.kasa500000.sqldpass",
+    "versionCode": 24,
+    "track": "production",
+    "status": "IN_REVIEW",
+    "rolloutPercent": 100,
+    "managedPublishing": false,
+    "submissionItems": [
+      "production release",
+      "Korean short description",
+      "Korean full description"
+    ],
+    "preReviewChecks": "running",
+    "adsMode": "live",
+    "examAccessPolicy": "rewarded",
+    "priorPublicVersion": "0.6.0(23)",
+    "evidence": "qa/evidence/memory-notes-20261113/store/android-submission.txt"
+  },
+  "ios": {
+    "buildNumber": "18 (planned)",
+    "status": "NOT_SUBMITTED",
+    "testFlightUploaded": false,
+    "physicalQA": "unavailable",
+    "consentRerun": "not performed",
+    "scopedWaiver": false
+  },
+  "contentSha256": "5473eb0f7f166e8caf7b4eb7dc168e6e42592449a1bf7064fccebb9f38adc64f"
+}

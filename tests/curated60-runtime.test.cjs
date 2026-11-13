@@ -1,9 +1,9 @@
 const test=require('node:test'),a=require('node:assert/strict');
-const content=require('../generated/content.json'),candidate=require('./fixtures/curated60.cjs');
+const content=require('../generated/content.json'),candidate=require('./fixtures/memory-notes.cjs');
 const {MonetizedController}=require('../.build/monetization/controller'),{renderTextbook}=require('../.build/textbook/views');
 const {startExam,submitExam,publicQuestion}=require('../.build/core/domain');
 const flat=n=>[n,...(n.children??[]).flatMap(flat)];
-test('activated curated60 runtime exactly matches candidate and renders all3000 questions without early answers',()=>{
+test('activated notes runtime preserves curated60 candidate and renders all3000 questions without early answers',()=>{
  a.deepEqual(content,candidate());
  const clock={wall:1e6,mono:1e6,runtimeId:'runtime-60'},c=new MonetizedController(content,{repository:{load:async()=>null,save:async()=>{},clear:async()=>{}},clock:()=>clock,uuid:()=>'',platform:'native'});c.ready=true;c.state.onboarded=true;
  let seen=0;for(const exam of content.exams){

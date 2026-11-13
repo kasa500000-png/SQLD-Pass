@@ -1,0 +1,66 @@
+Attributes: Application, 0x107d44140, pid: 36688, label: 'SQLD Pass'
+Element subtree:
+ →Application, 0x107d44140, pid: 36688, label: 'SQLD Pass'
+    Window (Main), 0x107d44000, {{0.0, 0.0}, {375.0, 667.0}}
+      Other, 0x107d45a40, {{0.0, 0.0}, {375.0, 667.0}}
+        Other, 0x107d45b80, {{0.0, 0.0}, {375.0, 667.0}}
+          Other, 0x107d45e00, {{0.0, 0.0}, {375.0, 667.0}}
+            Other, 0x107d45f40, {{0.0, 0.0}, {375.0, 667.0}}
+              Other, 0x107d45180, {{0.0, 0.0}, {375.0, 667.0}}
+                Other, 0x107d452c0, {{0.0, 0.0}, {375.0, 667.0}}
+                  Other, 0x107d45400, {{0.0, 0.0}, {375.0, 667.0}}
+                    Other, 0x107d45540, {{0.0, 20.0}, {375.0, 647.0}}
+                      Other, 0x107d45680, {{0.0, 20.0}, {375.0, 64.0}}
+                      Other, 0x107d457c0, {{0.0, 20.0}, {375.0, 64.0}}, identifier: 'screen-titlebar'
+                      Other, 0x107d448c0, {{0.0, 20.0}, {375.0, 647.0}}
+                      Button, 0x107d44a00, {{221.0, 28.0}, {80.0, 48.0}}, identifier: 'open-memory-notes', label: '핵심 노트'
+                      Button, 0x107d44b40, {{311.0, 28.0}, {48.0, 48.0}}, label: '설정'
+                      StaticText, 0x107d44c80, {{16.0, 37.5}, {195.0, 29.0}}, label: '홈'
+                        StaticText, 0x107d44dc0, {{16.0, 37.5}, {195.0, 29.0}}, label: '홈'
+                      Other, 0x107d44f00, {{0.0, 84.0}, {375.0, 503.0}}
+                        ScrollView, 0x107d44280, {{0.0, 84.0}, {375.0, 503.0}}
+                          Other, 0x107d443c0, {{0.0, 84.0}, {375.0, 486.0}}
+                            Other, 0x107d44500, {{0.0, 84.0}, {375.0, 486.0}}
+                              StaticText, 0x107d44640, {{16.0, 100.0}, {343.0, 28.0}}, label: '오늘의 학습'
+                                StaticText, 0x107d44780, {{16.0, 100.0}, {343.0, 28.0}}, label: '오늘의 학습'
+                              Other, 0x107d46080, {{16.0, 140.0}, {343.0, 214.0}}
+                              StaticText, 0x107d461c0, {{31.0, 155.0}, {313.0, 20.0}}, label: '교재 순서대로 학습'
+                                StaticText, 0x107d46300, {{31.0, 155.0}, {313.0, 20.0}}, label: '교재 순서대로 학습'
+                              StaticText, 0x107d46440, {{31.0, 185.0}, {313.0, 28.0}}, label: '오늘 분량 0 / 1절 완료'
+                                StaticText, 0x107d46580, {{31.0, 185.0}, {313.0, 28.0}}, label: '오늘 분량 0 / 1절 완료'
+                              StaticText, 0x107d466c0, {{31.0, 223.0}, {313.0, 28.0}}, label: '데이터베이스와 DBMS는 다르다'
+                                StaticText, 0x107d46800, {{31.0, 223.0}, {313.0, 28.0}}, label: '데이터베이스와 DBMS는 다르다'
+                              Button, 0x107d46940, {{31.0, 261.0}, {313.0, 48.0}}, identifier: 'section-TB20261109:c1-s1', label: '교재 공부 시작'
+                              StaticText, 0x107d46a80, {{31.0, 319.0}, {313.0, 20.0}}, label: '읽은 뒤 직접 읽음 완료를 표시해 주세요.'
+                                StaticText, 0x107d46bc0, {{31.0, 319.0}, {313.0, 20.0}}, label: '읽은 뒤 직접 읽음 완료를 표시해 주세요.'
+                              Button, 0x107d46d00, {{16.0, 366.0}, {343.0, 68.0}}, identifier: 'home-records', label: '학습 기록
+읽음 0/216절 · 풀이 0/340문항 · 모의고사 2/60회'
+                                Other, 0x107d46e40, {{331.0, 390.5}, {18.0, 18.0}}
+                                  Other, 0x107d46f80, {{331.0, 390.5}, {18.0, 18.0}}
+                                    Other, 0x107d470c0, {{337.0, 394.2}, {6.0, 10.5}}
+                                      Other, 0x107d47200, {{337.0, 394.2}, {6.0, 10.5}}
+                              Button, 0x107d47340, {{16.0, 446.0}, {168.0, 48.0}}, label: '핵심 카드'
+                              Button, 0x107d47480, {{190.0, 446.0}, {168.0, 48.0}}, label: '용어 사전'
+                              Button, 0x107d475c0, {{16.0, 506.0}, {343.0, 48.0}}, identifier: 'home-ad-settings', label: '광고 표시 설정'
+                          Other, 0x107d47700, {{342.0, 84.0}, {30.0, 503.0}}, label: 'Vertical scroll bar, 1 page', value: 0%
+                            Other, 0x107d47840, {{369.0, 609.0}, {3.0, 94.0}}
+                          Other, 0x107d47980, {{0.0, 554.0}, {375.0, 30.0}}, label: 'Horizontal scroll bar, 1 page', value: 0%
+                            Other, 0x107d47ac0, {{3.0, 581.0}, {369.0, 3.0}}
+                          Other, 0x107d47c00, {{342.0, 84.0}, {30.0, 503.0}}, label: 'Vertical scroll bar, 1 page', value: 0%
+                            Other, 0x107d47d40, {{369.0, 609.0}, {3.0, 94.0}}
+                          Other, 0x107d47e80, {{0.0, 554.0}, {375.0, 30.0}}, label: 'Horizontal scroll bar, 1 page', value: 0%
+                            Other, 0x104bcca00, {{3.0, 581.0}, {369.0, 3.0}}
+                      Other, 0x104bcc3c0, {{0.0, 587.0}, {375.0, 80.0}}
+                      Other, 0x104bcc780, {{0.0, 588.0}, {375.0, 79.0}}
+                      Other, 0x104bcfe80, {{16.0, 596.0}, {68.5, 63.0}}, identifier: 'tab-today', label: '홈', Selected
+                      Other, 0x104bcfd40, {{84.5, 596.0}, {68.5, 63.0}}, identifier: 'tab-learn', label: '교재'
+                      Other, 0x104bcf980, {{153.0, 596.0}, {69.0, 63.0}}, identifier: 'tab-review', label: '문제'
+                      Other, 0x104bcd7c0, {{222.0, 596.0}, {68.5, 63.0}}, identifier: 'tab-exams', label: '실전'
+                      Other, 0x104bcd900, {{290.5, 596.0}, {68.5, 63.0}}, identifier: 'tab-records', label: '기록'
+Path to element:
+ →Application, 0x107d44140, pid: 36688, label: 'SQLD Pass'
+Query chain:
+ →Find: Application 'com.sqldpass.app.adsqa'
+  Output: {
+    Application, 0x104bcfac0, pid: 36688, label: 'SQLD Pass'
+  }

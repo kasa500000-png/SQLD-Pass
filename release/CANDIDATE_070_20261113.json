@@ -1,0 +1,35 @@
+{
+  "appVersion": "0.7.0",
+  "androidVersionCode": 24,
+  "iosBuildNumber": "18",
+  "contentVersion": "textbook.20261113.2",
+  "contentSha256": "5473eb0f7f166e8caf7b4eb7dc168e6e42592449a1bf7064fccebb9f38adc64f",
+  "implementationStatus": "implemented; Android physical and iOS simulator validated",
+  "contentReview": "owner-reviewed-complete",
+  "androidBuild": "production/live/rewarded signed AAB24; signature, bundletool, embedded config/content and35 ELF alignment checks passed",
+  "androidTestApkSha256": "5316f7455d5b022d1dd8d8d337da7597405acfa92cd36b5be5463cbb416b4cd3",
+  "iosBuild": "Release iphonesimulator only; no0.7 store archive/upload",
+  "iosPhysical": "unavailable; not performed; no waiver for 0.7.0",
+  "productionSubmitted": true,
+  "testFlightUploaded": false,
+  "notes": "Android0.6.0(23) 100% public rollout observed before0.7 submission. iOS0.6.0 exception is not reused. Owner Android-only response does not waive0.7 iOS physical/consent gates.",
+  "adCodeSha256": "5e48dfdebdbd872dd6fe6f042ceae80f6c84063c30821ca6076bd6629d12157f",
+  "androidConsent": "EEA diagnostic: initial privacy error, retry displayed actual UMP; consent, reopen and decline; retained notes and earned access",
+  "automatedChecks": {
+    "unitAndContent": 496,
+    "failed": 0,
+    "nativeTypecheck": "pass",
+    "contentIntegrity": "pass"
+  },
+  "ownerConfirmationRecordedAt": "2026-11-13T10:58:02.603Z",
+  "androidSubmission": {
+    "track": "production",
+    "versionCode": 24,
+    "status": "IN_REVIEW",
+    "observedAt": "2026-11-13T11:05:20+00:00",
+    "automaticPublish": true,
+    "rolloutPercent": 100,
+    "preReviewChecks": "running",
+    "approvedOrPublished": false
+  }
+}

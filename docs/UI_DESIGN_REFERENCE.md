@@ -117,3 +117,14 @@ The owner authorized the task-separated implementation in
 Prefer question, reading and explanation space over repeated controls and metadata.
 The 0.3.4 document refines hierarchy while preserving the current pause, content,
 record, consent and earned-reward contracts. The iOS 0.3.3 device waiver is not reused.
+
+## Memory notes and fixed return — 2026-11-13
+
+Follow [MEMORY_NOTES_20261113.md](MEMORY_NOTES_20261113.md). Put a quiet 핵심 노트 action
+in the fixed titlebar of the five root tabs. Keep the title and settings accessible at
+large font scales with two rows. No entry in focused solving; no banner in any notes route.
+Read each category continuously: title, core, caution, explanation and example. Use native
+SQL horizontal scrolling and existing semantic typography. Saved/read positions are local
+and distinct from curriculum completion. Existing flashcards and glossary remain.
+Result review has a fixed 결과 return; remove its duplicated scrolling-body action.
+Keep other entry origins and the fixed question pager.

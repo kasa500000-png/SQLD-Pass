@@ -1,0 +1,15 @@
+{
+  "platform": "android",
+  "policyVersion": "2026-11-13.1",
+  "codeSha256": "5e48dfdebdbd872dd6fe6f042ceae80f6c84063c30821ca6076bd6629d12157f",
+  "androidDeviceEvidence": "Current0.7.0(24) official-test APK on SM-F721N Android16. Actual0.6→0.7 update preserved paused study/answers/prior records. Notes search/anchor/bookmarks/read-position/restart/dark130% and fixed result return passed. Actual official test reward47 earned and retained after restart. qa/MEMORY_NOTES_20261113.md and android-physical00..22.",
+  "androidConsentEvidence": "Current0.7.0 EEA diagnostic using published UMP and official test ads: initial request error, retry displayed real form, consent/reopen/decline completed. Notes and earned47 remained usable after withdrawal. Normal official-test APK restored. This is Android evidence only.",
+  "adPlacementEvidence": "Current physical note screens04..11/20/22 have no banner; focused solving and result-review unchanged restricted slots. Official reward47 visible14 and earned-only unlock15/16. Active-attempt global ad gate and no-reward/duplicate-save behavior covered by496 tests. Prior same-day0.6 physical home banner/active paused suppression and console refresh evidence remain historical, not claimed repeated on0.7. No live impressions or clicks used for QA.",
+  "sdkCompatibilityEvidence": "496/496 tests, native TypeScript and content integrity passed. Android Release official-test and iPhone/iPad Release simulator builds passed. No dependency or ad SDK upgrade in0.7. Production signing/artifact checks performed separately before upload.",
+  "appAdsTxtEvidence": "2026-11-13 public app-ads.txt HTTP200 with exact direct seller pub-9314207769680999. Previous same-day AdMob Ready/serving and refresh-disabled observation belongs to0.6 release evidence; no fresh console assertion in0.7.",
+  "privacyDisclosureEvidence": "No new SDK, permissions, remote collection or processing purpose. Notes bookmarks and reading position stay in existing local SQLite. Existing Google Play disclosures retained. Public privacy/support HTTP200 checked2026-11-13. Public support site content/version copy still historical; do not claim notes documentation published there.",
+  "privacyUrl": "https://sqld-pass-support.shk1122.chatgpt.site/privacy.html",
+  "supportUrl": "https://sqld-pass-support.shk1122.chatgpt.site/support.html",
+  "approvedBy": "Repository owner authorized operational ads/production submissions and directly confirmed 새 핵심 노트의 내용 검수 완료 for exact0.7 content hash. Android-only current evidence; iOS not approved by this record.",
+  "approvedAt": "2026-11-13T10:57:41.840Z"
+}

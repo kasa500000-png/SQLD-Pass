@@ -1,0 +1,97 @@
+Attributes: Application, 0x104bcd900, pid: 36688, label: 'SQLD Pass'
+Element subtree:
+ →Application, 0x104bcd900, pid: 36688, label: 'SQLD Pass'
+    Window (Main), 0x104bcd7c0, {{0.0, 0.0}, {375.0, 667.0}}
+      Other, 0x104bcf980, {{0.0, 0.0}, {375.0, 667.0}}
+        Other, 0x104bcfd40, {{0.0, 0.0}, {375.0, 667.0}}
+          Other, 0x104bcfe80, {{0.0, 0.0}, {375.0, 667.0}}
+            Other, 0x104bcc780, {{0.0, 0.0}, {375.0, 667.0}}
+              Other, 0x104bcc3c0, {{0.0, 0.0}, {375.0, 667.0}}
+                Other, 0x104bcca00, {{0.0, 0.0}, {375.0, 667.0}}
+                  Other, 0x104bce6c0, {{0.0, 0.0}, {375.0, 667.0}}
+                    Other, 0x104bce440, {{0.0, 20.0}, {375.0, 647.0}}
+                      Other, 0x104bce580, {{0.0, 20.0}, {375.0, 64.0}}
+                      Other, 0x104bccb40, {{0.0, 20.0}, {375.0, 64.0}}, identifier: 'screen-titlebar'
+                      Other, 0x104bcda40, {{0.0, 20.0}, {375.0, 647.0}}
+                      Button, 0x104bccf00, {{16.0, 28.0}, {48.0, 48.0}}, identifier: 'screen-back', label: '뒤로'
+                      Button, 0x104bcd040, {{311.0, 28.0}, {48.0, 48.0}}, label: '설정'
+                      StaticText, 0x104bcd2c0, {{74.0, 37.5}, {227.0, 29.0}}, label: '핵심 노트'
+                        StaticText, 0x104bcd180, {{74.0, 37.5}, {227.0, 29.0}}, label: '핵심 노트'
+                      Other, 0x104bcd400, {{0.0, 84.0}, {375.0, 503.0}}
+                        ScrollView, 0x104bce800, {{0.0, 84.0}, {375.0, 503.0}}
+                          Other, 0x104bcfac0, {{0.0, 84.0}, {375.0, 924.0}}
+                            Other, 0x104bcfc00, {{0.0, 84.0}, {375.0, 924.0}}
+                              StaticText, 0x104bcf480, {{16.0, 100.0}, {343.0, 28.0}}, label: '짧게 정리하고, 예제로 확인하세요'
+                                StaticText, 0x104bcf840, {{16.0, 100.0}, {343.0, 28.0}}, label: '짧게 정리하고, 예제로 확인하세요'
+                              StaticText, 0x104bcf5c0, {{16.0, 140.0}, {343.0, 20.0}}, label: '7개 분류 · 83개 노트 · 필수 45개'
+                                StaticText, 0x104bcf700, {{16.0, 140.0}, {343.0, 20.0}}, label: '7개 분류 · 83개 노트 · 필수 45개'
+                              Other, 0x104bcef80, {{16.0, 172.0}, {343.0, 48.0}}
+                              Other, 0x104bcf340, {{29.0, 187.5}, {317.0, 17.0}}
+                                TextField, 0x104bcdb80, {{29.0, 187.5}, {317.0, 17.0}}, identifier: 'memory-search', label: '핵심 노트 검색', placeholderValue: '제목, 개념, SQL 검색'
+                              Other, 0x104bcde00, {{16.0, 232.0}, {110.0, 48.0}}, identifier: 'memory-filter-all', label: '전체', value: radio button, chec..., Selected
+                              Other, 0x104bcdf40, {{132.0, 232.0}, {110.0, 48.0}}, identifier: 'memory-filter-priority', label: '필수', value: radio button, unch...
+                              Other, 0x104bce080, {{248.0, 232.0}, {110.0, 48.0}}, identifier: 'memory-filter-saved', label: '저장', value: radio button, unch...
+                              Button, 0x104bce300, {{16.0, 292.0}, {343.0, 68.0}}, identifier: 'memory-quick', label: '빠른 암기 12줄'
+                                Other, 0x104bce1c0, {{331.0, 316.5}, {18.0, 18.0}}
+                                  Other, 0x104bced00, {{331.0, 316.5}, {18.0, 18.0}}
+                                    Other, 0x104bce940, {{337.0, 320.2}, {6.0, 10.5}}
+                                      Other, 0x104bcea80, {{337.0, 320.2}, {6.0, 10.5}}
+                              Button, 0x104bcebc0, {{16.0, 372.0}, {343.0, 68.0}}, identifier: 'memory-category-model', label: '데이터 모델링'
+                                Other, 0x104bcee40, {{331.0, 396.5}, {18.0, 18.0}}
+                                  Other, 0x104bcf0c0, {{331.0, 396.5}, {18.0, 18.0}}
+                                    Other, 0x104bcf200, {{337.0, 400.2}, {6.0, 10.5}}
+                                      Other, 0x107d44140, {{337.0, 400.2}, {6.0, 10.5}}
+                              Button, 0x107d44000, {{16.0, 452.0}, {343.0, 68.0}}, identifier: 'memory-category-basic', label: 'SQL 기본·조건'
+                                Other, 0x107d45a40, {{331.0, 476.5}, {18.0, 18.0}}
+                                  Other, 0x107d45b80, {{331.0, 476.5}, {18.0, 18.0}}
+                                    Other, 0x107d45e00, {{337.0, 480.2}, {6.0, 10.5}}
+                                      Other, 0x107d45f40, {{337.0, 480.2}, {6.0, 10.5}}
+                              Button, 0x107d45180, {{16.0, 532.0}, {343.0, 68.0}}, identifier: 'memory-category-functions', label: '함수·NULL'
+                                Other, 0x107d452c0, {{331.0, 556.5}, {18.0, 18.0}}
+                                  Other, 0x107d45400, {{331.0, 556.5}, {18.0, 18.0}}
+                                    Other, 0x107d45540, {{337.0, 560.2}, {6.0, 10.5}}
+                                      Other, 0x107d44f00, {{337.0, 560.2}, {6.0, 10.5}}
+                              Button, 0x107d44280, {{16.0, 612.0}, {343.0, 68.0}}, identifier: 'memory-category-group', label: '집계·JOIN'
+                                Other, 0x107d47e80, {{331.0, 636.5}, {18.0, 18.0}}
+                                  Other, 0x107d47c00, {{331.0, 636.5}, {18.0, 18.0}}
+                                    Other, 0x107d47d40, {{337.0, 640.2}, {6.0, 10.5}}
+                                      Other, 0x107d47980, {{337.0, 640.2}, {6.0, 10.5}}
+                              Button, 0x107d47ac0, {{16.0, 692.0}, {343.0, 68.0}}, identifier: 'memory-category-subquery', label: '서브쿼리·집합'
+                                Other, 0x107d47700, {{331.0, 716.5}, {18.0, 18.0}}
+                                  Other, 0x107d47840, {{331.0, 716.5}, {18.0, 18.0}}
+                                    Other, 0x107d443c0, {{337.0, 720.2}, {6.0, 10.5}}
+                                      Other, 0x107d44500, {{337.0, 720.2}, {6.0, 10.5}}
+                              Button, 0x107d475c0, {{16.0, 772.0}, {343.0, 68.0}}, identifier: 'memory-category-window', label: '윈도우·고급 SQL'
+                                Other, 0x107d47480, {{331.0, 796.5}, {18.0, 18.0}}
+                                  Other, 0x107d47340, {{331.0, 796.5}, {18.0, 18.0}}
+                                    Other, 0x107d46d00, {{337.0, 800.2}, {6.0, 10.5}}
+                                      Other, 0x107d46e40, {{337.0, 800.2}, {6.0, 10.5}}
+                              Button, 0x107d46f80, {{16.0, 852.0}, {343.0, 68.0}}, identifier: 'memory-category-command', label: '관리 구문·트랜잭션'
+                                Other, 0x107d470c0, {{331.0, 876.5}, {18.0, 18.0}}
+                                  Other, 0x107d47200, {{331.0, 876.5}, {18.0, 18.0}}
+                                    Other, 0x107d46a80, {{337.0, 880.2}, {6.0, 10.5}}
+                                      Other, 0x107d46bc0, {{337.0, 880.2}, {6.0, 10.5}}
+                              StaticText, 0x107d46940, {{16.0, 932.0}, {343.0, 60.0}}, label: '첨부 핵심 암기 노트를 바탕으로 정리했습니다. SQL 예제는 표기된 DBMS의 동작을 구분해 읽어 주세요. 전체 교재와 실제 시험 공지를 함께 확인해 주세요.'
+                                StaticText, 0x107d466c0, {{16.0, 932.0}, {343.0, 60.0}}, label: '첨부 핵심 암기 노트를 바탕으로 정리했습니다. SQL 예제는 표기된 DBMS의 동작을 구분해 읽어 주세요. 전체 교재와 실제 시험 공지를 함께 확인해 주세요.'
+                          Other, 0x107d46800, {{342.0, 84.0}, {30.0, 503.0}}, label: 'Vertical scroll bar, 2 pages', value: 0%
+                            Other, 0x107d46440, {{369.0, 609.0}, {3.0, 94.0}}
+                          Other, 0x107d46580, {{0.0, 554.0}, {375.0, 30.0}}, label: 'Horizontal scroll bar, 1 page', value: 0%
+                            Other, 0x107d461c0, {{3.0, 581.0}, {369.0, 3.0}}
+                          Other, 0x107d46300, {{342.0, 84.0}, {30.0, 503.0}}, label: 'Vertical scroll bar, 2 pages', value: 0%
+                            Other, 0x107d46080, {{369.0, 609.0}, {3.0, 94.0}}
+                          Other, 0x107d44640, {{0.0, 554.0}, {375.0, 30.0}}, label: 'Horizontal scroll bar, 1 page', value: 0%
+                            Other, 0x107d44780, {{3.0, 581.0}, {369.0, 3.0}}
+                      Other, 0x107d44c80, {{0.0, 587.0}, {375.0, 80.0}}
+                      Other, 0x107d44dc0, {{0.0, 588.0}, {375.0, 79.0}}
+                      Other, 0x107d44b40, {{16.0, 596.0}, {68.5, 63.0}}, identifier: 'tab-today', label: '홈', Selected
+                      Other, 0x107d44a00, {{84.5, 596.0}, {68.5, 63.0}}, identifier: 'tab-learn', label: '교재'
+                      Other, 0x107d448c0, {{153.0, 596.0}, {69.0, 63.0}}, identifier: 'tab-review', label: '문제'
+                      Other, 0x107d457c0, {{222.0, 596.0}, {68.5, 63.0}}, identifier: 'tab-exams', label: '실전'
+                      Other, 0x107d45680, {{290.5, 596.0}, {68.5, 63.0}}, identifier: 'tab-records', label: '기록'
+Path to element:
+ →Application, 0x104bcd900, pid: 36688, label: 'SQLD Pass'
+Query chain:
+ →Find: Application 'com.sqldpass.app.adsqa'
+  Output: {
+    Application, 0x107d45900, pid: 36688, label: 'SQLD Pass'
+  }
