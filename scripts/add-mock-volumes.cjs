@@ -12,13 +12,9 @@ function readVolume(root,spec){
  if(!json)throw Error('Missing mock volume content-data');
  return JSON.parse(json[1]);
 }
-function addMockVolumes(c,root){
- if(c.exams.length!==20||!c.mockPack||c.mockPack.volumes)throw Error('Expected unmodified20-exam base');
- const base=c.mockPack;
- const volumes=[{id:'vol1',number:1,title:'1권',version:base.version,examIds:c.exams.map(e=>e.id),topicIds:base.topics.map(t=>t.id),sourceIds:Object.keys(c.sources).filter(id=>id.startsWith('ME20261109:source:')),editorialNote:base.editorialNote,assumptions:base.assumptions,quality:base.quality,integrationNote:base.integrationNote}];
- for(const spec of SOURCES){
+function appendMockVolume(c,root,spec){
   const d=readVolume(root,spec),prefix=`MEV${spec.number}:`,qid=id=>prefix+id,sid=id=>prefix+'source:'+id,tid=id=>prefix+'topic:'+id;
-  const version=`mock-vol${spec.number}.20261112.1`,examIds=new Map(d.exams.map(e=>[e.id,`SQLD-M${String(e.number).padStart(2,'0')}`]));
+  const version=spec.version??`mock-vol${spec.number}.20261112.1`,examIds=new Map(d.exams.map(e=>[e.id,`SQLD-M${String(e.number).padStart(2,'0')}`]));
   for(const s of d.sources)c.sources[sid(s.id)]={...s,id:sid(s.id),originalId:s.id,provider:s.kind};
   for(const q of d.questions){
    if(c.questions[qid(q.id)])throw Error('Duplicate mock question '+q.id);
@@ -27,13 +23,21 @@ function addMockVolumes(c,root){
   const exams=d.exams.map(e=>({id:examIds.get(e.id),originalId:e.id,title:e.title,order:e.number,durationSeconds:e.durationMinutes*60,questionIds:e.questionIds.map(qid),version,releaseReady:false,statisticallyEquated:false}));
   c.exams.push(...exams);
   const topics=d.topics.map(t=>({...t,id:tid(t.id),originalId:t.id,sectionId:'TB20261109:'+t.sectionId,sourceIds:t.sourceIds.map(sid)}));
-  base.topics.push(...topics);
-  volumes.push({id:`vol${spec.number}`,number:spec.number,title:`${spec.number}권`,version,examIds:exams.map(e=>e.id),topicIds:topics.map(t=>t.id),sourceIds:d.sources.map(s=>sid(s.id)),editorialNote:d.editorialNote,assumptions:d.assumptions,quality:d.quality,integrationNote:d.integrationNote});
+  c.mockPack.topics.push(...topics);
+  const volume={id:`vol${spec.number}`,number:spec.number,title:`${spec.number}권`,version,examIds:exams.map(e=>e.id),topicIds:topics.map(t=>t.id),sourceIds:d.sources.map(s=>sid(s.id)),editorialNote:d.editorialNote,assumptions:d.assumptions,quality:d.quality,integrationNote:d.integrationNote};
   c.manifest.sourceHashes[spec.file]=spec.sha256;
+  return volume;
+}
+function addMockVolumes(c,root){
+ if(c.exams.length!==20||!c.mockPack||c.mockPack.volumes)throw Error('Expected unmodified20-exam base');
+ const base=c.mockPack;
+ const volumes=[{id:'vol1',number:1,title:'1권',version:base.version,examIds:c.exams.map(e=>e.id),topicIds:base.topics.map(t=>t.id),sourceIds:Object.keys(c.sources).filter(id=>id.startsWith('ME20261109:source:')),editorialNote:base.editorialNote,assumptions:base.assumptions,quality:base.quality,integrationNote:base.integrationNote}];
+ for(const spec of SOURCES){
+  volumes.push(appendMockVolume(c,root,spec));
  }
  base.volumes=volumes;base.id='sqld-mock60-ko';base.version='mock60.20261112.1';
  c.manifest.version='textbook.20261112.1';c.manifest.examVersion=base.version;
  c.manifest.counts.exams=60;c.manifest.counts.examQuestions=3000;
  return c;
 }
-module.exports={addMockVolumes,readVolume,SOURCES};
+module.exports={addMockVolumes,appendMockVolume,readVolume,SOURCES};
