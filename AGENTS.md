@@ -23,8 +23,17 @@ exception does not carry forward. See docs/MOCK_CURATED60_20261113.md.
 The owner directly confirmed “새 3권 내용 검수 완료” for textbook.20261113.1,
 SHA-256 61316063d2112c7b5cd25773a662a61b9037925e375073131c094d2522ca9fd5.
 The owner can connect Android only for this run. Current Android physical evidence and
-iOS simulator evidence must remain separate. No new iOS physical-validation waiver
-has been granted for0.6.0. Prior release execution authorization persists.
+iOS simulator evidence must remain separate. Prior release execution authorization persists.
+
+### Scoped owner exception — iOS 0.6.0(17), 2026-11-13
+
+After the physical iPad blocker and Android production submission were reported,
+the owner explicitly instructed “이번에도 예외 진행”. For this curated60 candidate
+only, proceed with TestFlight and App Store submission without additional physical
+iPad or consent reruns. Record these checks as unperformed; keep current iOS simulator
+and Android physical evidence separate. This is a new exception, not reuse of0.5.0.
+Preserve actual archive/export/upload validation, exact content approval, runtime
+consent, earned-reward and signing gates. Future candidates require their own evidence.
 
 ## Latest owner direction — 2026-11-12 curated40 and study review
 

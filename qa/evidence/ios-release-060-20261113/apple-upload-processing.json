@@ -1,0 +1,15 @@
+{
+  "recordedAt": "2026-11-13T08:37:12.225Z",
+  "id": "6fdbad7e-5277-4d4c-bd1d-301f563efa0a",
+  "cfBundleShortVersionString": "0.6.0",
+  "cfBundleVersion": "17",
+  "createdDate": "2026-11-13T00:29:35-08:00",
+  "state": {
+    "errors": [],
+    "warnings": [],
+    "infos": [],
+    "state": "COMPLETE"
+  },
+  "platform": "IOS",
+  "uploadedDate": "2026-11-13T00:30:39-08:00"
+}

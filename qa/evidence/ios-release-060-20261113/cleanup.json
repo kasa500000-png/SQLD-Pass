@@ -1,0 +1,9 @@
+{
+  "recordedAt": "2026-11-13T08:38:28.897239+00:00",
+  "temporarySecretDirectoryRemoved": true,
+  "ownedTemporarySigningKeychainRemoved": true,
+  "otherUserKeychainsPreserved": true,
+  "generatedXcodeTemporaryKeychainFlagRemoved": true,
+  "storeCaptureSimulatorsShutdown": true,
+  "signingSecretsCommitted": false
+}

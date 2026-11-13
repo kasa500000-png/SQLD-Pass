@@ -1,0 +1,102 @@
+{
+  "recordedAt": "2026-11-13T08:31:37.383Z",
+  "versionId": "45d4fcfe-135b-431f-9dc6-2f5757c5a7d0",
+  "sets": [
+    {
+      "setId": "71cde116-7224-4e04-be49-bbd01bce2e87",
+      "type": "APP_IPHONE_65",
+      "files": [
+        {
+          "id": "cf000019-6632-831d-800a-0cee772587e3",
+          "name": "060-iphone-50-store-home.png",
+          "state": "COMPLETE",
+          "width": 1284,
+          "height": 2778
+        },
+        {
+          "id": "2f800019-6632-831d-801a-8971da0c574e",
+          "name": "060-iphone-51-store-textbook.png",
+          "state": "COMPLETE",
+          "width": 1284,
+          "height": 2778
+        },
+        {
+          "id": "8b400019-6632-831d-802b-b31b7b3ef5ae",
+          "name": "060-iphone-52-store-practice.png",
+          "state": "COMPLETE",
+          "width": 1284,
+          "height": 2778
+        },
+        {
+          "id": "f9000019-6632-831d-803e-eeff562745f6",
+          "name": "060-iphone-53-store-mocks1.png",
+          "state": "COMPLETE",
+          "width": 1284,
+          "height": 2778
+        },
+        {
+          "id": "bac00019-6632-831d-8019-87e53d3bab83",
+          "name": "060-iphone-54-store-mocks2.png",
+          "state": "COMPLETE",
+          "width": 1284,
+          "height": 2778
+        },
+        {
+          "id": "7ec00019-6632-831d-8026-fb45b525fc7f",
+          "name": "060-iphone-55-store-mocks3.png",
+          "state": "COMPLETE",
+          "width": 1284,
+          "height": 2778
+        }
+      ]
+    },
+    {
+      "setId": "706c2f66-c590-4e16-8be7-192b4a7cbb34",
+      "type": "APP_IPAD_PRO_3GEN_129",
+      "files": [
+        {
+          "id": "ec000019-6632-831d-8013-fbfc025d29e2",
+          "name": "060-ipad-50-store-home.png",
+          "state": "COMPLETE",
+          "width": 2064,
+          "height": 2752
+        },
+        {
+          "id": "87c00019-6632-831d-801a-971af974a239",
+          "name": "060-ipad-51-store-textbook.png",
+          "state": "COMPLETE",
+          "width": 2064,
+          "height": 2752
+        },
+        {
+          "id": "e4400019-6632-831d-803d-c86eb8f13271",
+          "name": "060-ipad-52-store-practice.png",
+          "state": "COMPLETE",
+          "width": 2064,
+          "height": 2752
+        },
+        {
+          "id": "9ac00019-6632-831d-8017-3263dcf201f1",
+          "name": "060-ipad-53-store-mocks1.png",
+          "state": "COMPLETE",
+          "width": 2064,
+          "height": 2752
+        },
+        {
+          "id": "1e400019-6632-831d-8036-79719e924a87",
+          "name": "060-ipad-54-store-mocks2.png",
+          "state": "COMPLETE",
+          "width": 2064,
+          "height": 2752
+        },
+        {
+          "id": "36800019-6632-831d-8016-798345dfca21",
+          "name": "060-ipad-55-store-mocks3.png",
+          "state": "COMPLETE",
+          "width": 2064,
+          "height": 2752
+        }
+      ]
+    }
+  ]
+}
