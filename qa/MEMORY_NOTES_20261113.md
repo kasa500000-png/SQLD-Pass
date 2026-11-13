@@ -73,9 +73,38 @@ XCTest 재현 코드는 [MemoryNotesTests.swift](runners/MemoryNotesTests.swift)
 별도 승인 기록을 갱신했다. 승인 전 production 게이트가 이전 해시를 거부함도 확인했다.
 소유자가 “이번에는 Android만 가능합니다”라고 확인했다. iPad 실물은 연결 불가로 새 검증을 하지 못했다. 0.6.0 예외를 이번 버전에 재사용하지 않는다.
 
-0.7.0 TestFlight 업로드·양쪽 정식 제출·스토어용 archive/export는 아직 수행하지 않았다.
+Android0.7.0(24)은 실제 운영 서명 AAB/APK를 만들고 Google Play 정식 프로덕션에 제출했다.
+2026-11-13 20:04 KST 콘솔의 `검토 중인 변경사항`과 전체 출시, 관리형 게시 꺼짐을 확인했다.
+사전 자동 검사는 진행 중이며 승인 후100% 자동 출시다. 제출은 승인·공개 완료가 아니다.
+이전에0.6.0(23)이100% 출시된 것도 콘솔에서 확인했다.
+
+iOS0.7.0 TestFlight 업로드·정식 제출·스토어용 archive/export는 수행하지 않았다.
 [출시 후보 상태](../release/CANDIDATE_070_20261113.json)를 따른다.
 물리 iOS,VoiceOver/TalkBack 전체 탐색,모든 노트·SQL의 각 기기 전수 조작은 미수행이다.
 성능·학습 효과 향상 수치를 측정하거나 추정하지 않았다.
 
 Android EEA 진단은 공개 UMP 메시지와 공식 테스트 광고를 사용했다. 검사 후 일반 테스트 APK로 복원하고 빠른 암기 화면도 확인했다(22번 캡처). 이 결과를 iOS 동의 검증으로 대체하지 않는다.
+
+## Android 운영 파일과 제출
+
+실제 운영 파일은 package `com.kasa500000.sqldpass`,0.7.0(24)다. production/live/rewarded,
+승인 콘텐츠 해시, 노트 버전, 운영 AdMob 앱 ID, 비디버그 및 광고 식별자 권한 제외를
+APK와 AAB에서 확인했다. 두 파일의 JS·app.config가 동일하다. 서명 인증서 SHA-256은
+`ea1e8482b51d7a905271eecdabf840e244adcfaaed7da559329cb929e7171942`로 기존 업로드 키와 같다.
+bundletool 및 JAR 서명 확인,35개64비트 라이브러리의 정적16KB 검사에서 실패0이다.
+실제16KB 기기 실행을 뜻하지 않는다. JAR 자체 서명·타임스탬프·manifest 순서 경고는
+로컬 로그에 남겼으며 Google Play는 업로드를 수락했다.
+
+[배포 파일 검증](evidence/memory-notes-20261113/android-production-artifact.json),
+[심사 제출 화면](evidence/memory-notes-20261113/store/android-submission.png),
+[콘솔 상태](evidence/memory-notes-20261113/store/android-submission.txt).
+스토어의 한국어 간단한 설명·전체 설명과 출시 노트를 갱신했다. 기존 스크린샷은 유지했다.
+정식 프로덕션만 제출했고 중지된 테스트 트랙은 변경하지 않았다. 내부 검사는 공식 테스트
+광고만 사용했으며 운영 APK를 광고 검사용으로 실행하지 않았다.
+
+업로드 경고1개는 R8/proguard 가독화 파일 없음이다. 이번 빌드는 난독화를 사용하지 않아
+대응하는 mapping 파일이 없으며 제출 차단 오류는 아니다. 별도로 기존0.6 대시보드에서
+2027년2월까지 DEX 최적화 보완 안내와 넓은 화면 API 권고를 확인했다. 이번 콘텐츠/UI
+변경에 난독화 설정 변경을 섞지 않았으며 후속 빌드 최적화 검증 대상으로 남긴다.
+공개 지원 페이지의 설명은 이전 버전 기준이며 핵심 노트 소개를 게시했다고 주장하지 않는다.
+이번 기능은 새 SDK/권한/개인정보 처리 목적을 추가하지 않아 기존 개인정보 신고를 유지한다.
