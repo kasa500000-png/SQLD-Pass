@@ -1,0 +1,70 @@
+{
+  "schemaVersion": 1,
+  "observedAt": "2026-11-13T04:19:19.497Z",
+  "app": "SQLD Pass",
+  "version": "0.6.0",
+  "contentVersion": "textbook.20261113.1",
+  "contentSha256": "61316063d2112c7b5cd25773a662a61b9037925e375073131c094d2522ca9fd5",
+  "counts": {
+    "textbookSections": 216,
+    "practiceQuestions": 340,
+    "mockExams": 60,
+    "mockQuestions": 3000,
+    "freeExams": 15,
+    "rewardedExams": 45
+  },
+  "android": {
+    "versionCode": 23,
+    "package": "com.kasa500000.sqldpass",
+    "track": "production",
+    "status": "IN_REVIEW",
+    "consoleLabel": "검토 중인 변경사항",
+    "submissionConfirmed": true,
+    "rolloutPercent": 100,
+    "managedPublishing": false,
+    "releaseAfterApproval": true,
+    "adsMode": "live",
+    "examAccessPolicy": "rewarded",
+    "submittedChanges": [
+      "production release23",
+      "Korean short description",
+      "Korean full description",
+      "phone screenshots",
+      "7-inch tablet screenshots",
+      "10-inch tablet screenshots"
+    ],
+    "screenshots": {
+      "phone": 4,
+      "tablet7": 3,
+      "tablet10": 3
+    },
+    "previousPublicVersionObserved": "0.5.0(22),100% before submission",
+    "public060Confirmed": false,
+    "consoleUrl": "https://play.google.com/console/u/0/developers/7871930997193802319/app/4972123172088629069/publishing",
+    "evidence": "qa/evidence/curated60-20261113/store/play-submitted.txt"
+  },
+  "ios": {
+    "candidateBuildNumber": 17,
+    "status": "NOT_SUBMITTED",
+    "testFlightUpdated": false,
+    "currentPhysicalValidation": "not performed; owner can connect Android only",
+    "currentSimulatorValidation": "iPhone SE3 and iPad10 native flows; iPhone test reward and visible UMP accept/withdraw after retry",
+    "scoped060Waiver": "not granted; pending owner response",
+    "archiveExportUpload": "not performed"
+  },
+  "supportSite": {
+    "publishedVersion": 17,
+    "updatedFor060": false,
+    "blocker": "Sites returned codex_auth; installed source helper does not support that authentication mode; ordinary Git returned HTTP400. Existing privacy/support accessible."
+  },
+  "pullRequests": {
+    "content": 77,
+    "sdkPatch": 78,
+    "stateAndGrants": 79,
+    "catalog": 80,
+    "records": 81,
+    "integration": 82
+  },
+  "integrationCommit": "0a8d067b5bc455ad1ce3aabd463ed3b53aa9425d",
+  "note": "Review submission is not store approval or public release. Current Android physical evidence is not iOS physical evidence."
+}

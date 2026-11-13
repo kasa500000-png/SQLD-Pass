@@ -1,0 +1,412 @@
+[p1 "버전 검토 | SQLD Pass" | space "SQLD Pass 0.6.0 출시 20261113"(30): 2 managed, 0 untracked — p1* "버전 검토 | SQLD Pass", p2 "기본 스토어 등록정보 | SQLD Pass"]
+root
+  svg_root
+  text "Google Play Console 로드 중"
+  container
+    container
+      text "판매자 상태 선언"
+      link "세부정보 보기" [ref=229, loc=css:a[aria-label="세부정보 보기"], url=https://play.google.com/console/u/0/developers/7871930997193802319/home]
+        text "세부정보 보기"
+    container
+      anchor [ref=230, url=https://play.google.com/console/u/0/developers/7871930997193802319/home]
+        button [ref=231]
+      container
+        button "읽지 않은 알림 알림 센터 열기" [ref=241, loc=css:button[aria-label="읽지 않은 알림 알림 센터 열기"]]
+          image
+            text "notifications_unread"
+          text "읽지 않은 알림"
+        container
+          button "개발자 계정 전환" [ref=232, loc=role:button[name="개발자 계정 전환"]]
+            image
+            image
+              text "more_vert"
+          button "Google 계정: 김석현 (kasa500000@gmail.com), Google 멤버십" [ref=233, loc=css:a[aria-label="Google 계정: 김석현
+(kasa500000@gmail.com), Google 멤버십"], url=https://accounts.google.com/SignOutOptions?hl=ko&continue=https://play.google.com/console/u/0/developers/7871930997193802319/app/4972123172088629069/tracks/4697320985078461490%3Ftab%3DreleaseDashboard&ec=GBRAywQ]
+  image
+  image
+  list
+    listitem "홈"
+      button "홈" [ref=242, loc=css:a[aria-label="홈"], url=https://play.google.com/console/u/0/developers/7871930997193802319/home]
+        container [ref=243]
+          image
+            text "home"
+    listitem "계정 관리"
+      button "계정 관리" [ref=244, loc=css:a[aria-label="계정 관리"], url=https://play.google.com/console/u/0/developers/7871930997193802319/manage-account]
+        container [ref=245]
+          image
+            text "badge"
+    listitem "SQLD Pass"
+      button "SQLD Pass" [ref=246, loc=role:button[name="SQLD Pass"]]
+        image
+        image
+          text "play_prism"
+    listitem "대시보드"
+      button "대시보드" [ref=247, loc=css:a[aria-label="대시보드"], url=https://play.google.com/console/u/0/developers/7871930997193802319/app/4972123172088629069/app-dashboard]
+        container [ref=248]
+          image
+            text "dashboard"
+    listitem "통계"
+      button "통계" [ref=249, loc=css:a[aria-label="통계"], url=https://play.google.com/console/u/0/developers/7871930997193802319/app/4972123172088629069/statistics]
+        container [ref=250]
+          image
+            text "bar_chart"
+    listitem "게시 개요"
+      button "게시 개요" [ref=251, loc=css:a[aria-label="게시 개요"], url=https://play.google.com/console/u/0/developers/7871930997193802319/app/4972123172088629069/publishing]
+        container [ref=252]
+          image
+            text "overview"
+    listitem "Google Play로 보호됨"
+      button "Google Play로 보호됨" [ref=253, loc=css:a[aria-label="Google Play로 보호됨"], url=https://play.google.com/console/u/0/developers/7871930997193802319/app/4972123172088629069/protect-with-play]
+        container [ref=254]
+          image
+            text "shield"
+    listitem "테스트 및 출시"
+      button "테스트 및 출시" [ref=255, loc=css:a[aria-label="테스트 및 출시"], url=https://play.google.com/console/u/0/developers/7871930997193802319/app/4972123172088629069/test-and-release]
+        container [ref=256]
+          image
+            text "rocket_launch"
+    listitem "모니터링 및 개선"
+      button "모니터링 및 개선" [ref=257, loc=css:a[aria-label="모니터링 및 개선"], url=https://play.google.com/console/u/0/developers/7871930997193802319/app/4972123172088629069/monitor]
+        container [ref=258]
+          image
+            text "vital_signs"
+    listitem "사용자 늘리기"
+      button "사용자 늘리기" [ref=259, loc=css:a[aria-label="사용자 늘리기"], url=https://play.google.com/console/u/0/developers/7871930997193802319/app/4972123172088629069/grow-overview]
+        container [ref=260]
+          image
+            text "finance_mode"
+    listitem "Play를 통한 수익 창출"
+      button "Play를 통한 수익 창출" [ref=261, loc=css:a[aria-label="Play를 통한 수익 창출"], url=https://play.google.com/console/u/0/developers/7871930997193802319/app/4972123172088629069/monetize]
+        container [ref=262]
+          image
+            text "sell"
+  container [ref=263]
+    container
+      container
+        heading
+          text "프로덕션 버전 만들기"
+        container
+          container [ref=417]
+            image
+              text "warning"
+          text "버전에 문제가 있습니다."
+      container
+        tablist
+          tab "1/2단계, 새 버전 출시하기" [ref=418, loc=role:tab[name="1/2단계, 새 버전 출시하기"]]
+            image
+              text "check"
+            text "새 버전 출시하기"
+          tab "2/2단계, 미리보기 및 확인" [ref=419, loc=role:tab[name="2/2단계, 미리보기 및 확인"]]
+            text "2"
+            text "미리보기 및 확인"
+        button [ref=420]
+          text "임시 출시 삭제"
+      container
+        heading
+          text "오류, 경고 및 메시지"
+        container
+          container [ref=421]
+            image
+              text "warning"
+          container
+            text "경고 1개"
+            container
+              button "검증 세부정보 간략히 보기" [ref=422, loc=css:button[aria-label="검증 세부정보 간략히 보기"]]
+                text "간략히"
+                image
+                  text "expand_less"
+              container
+                text "버전 코드 23 메시지 1개"
+                container
+                  container [ref=548]
+                    image
+                      text "warning"
+                  container
+                    text "경고"
+                    paragraph
+                      text "이 App Bundle 유형과 연결된 가독화 파일이 없습니다. 난독화된 코드(R8/proguard)를 사용하는 경우 가독화 파일을 업로드하면 비정상 종료 및 ANR을 더 쉽게 ..."
+                      anchor [ref=549, loc=href:https://developer.android.com/studio/build/shrink-code#decode-stack-trace, url=https://developer.android.com/studio/build/shrink-code#decode-stack-trace]
+                        text "자세히 알아보기"
+      container
+        container
+          heading
+            text "지원 기기 변경사항"
+          text "지원 기기가 변경된 이유는 매니페스트가 변경되었거나 App Bundle이 누락되었기 때문일 수 있습니다. 기기 카탈로그에서 제외된 기기는 여기에 표시되�..."
+        grid "지원되는 폼 팩터" [ref=423, loc=role:grid[name="지원되는 폼 팩터"]]
+          row
+            cell [ref=424]
+            columnheader "폼 팩터" [ref=425, loc=role:columnheader[name="폼 팩터"]]
+              text "폼 팩터"
+            columnheader "마지막 출시에서 지원하는 기기 수" [ref=426, loc=role:columnheader[name="마지막 출시에서 지원하는 기기 수"]]
+              text "마지막 출시에서 지원하는 기기 수"
+              button "'마지막 출시에서 지원하는 기기 수' 열에 대한 추가 정보" [ref=427]
+                image
+                  text "help_outline"
+            columnheader "더 이상 지원되지 않는 기기" [ref=428, loc=role:columnheader[name="더 이상 지원되지 않는 기기"]]
+              text "더 이상 지원되지 않는 기기"
+              button "'더 이상 지원되지 않는 기기' 열에 대한 추가 정보" [ref=429]
+                image
+                  text "help_outline"
+            columnheader "새롭게 지원되는 기기" [ref=430, loc=role:columnheader[name="새롭게 지원되는 기기"]]
+              text "새롭게 지원되는 기기"
+              button "'새롭게 지원되는 기기' 열에 대한 추가 정보" [ref=431]
+                image
+                  text "help_outline"
+            columnheader "이 출시에서 지원하는 총 기기 수" [ref=432, loc=role:columnheader[name="이 출시에서 지원하는 총 기기 수"]]
+              text "이 출시에서 지원하는 총 기기 수"
+              button "'이 출시에서 지원하는 총 기기 수' 열에 대한 추가 정보" [ref=433]
+                image
+                  text "help_outline"
+            cell [ref=434]
+          row
+            gridcell [ref=435]
+            gridcell [ref=436]
+              text "전화"
+            gridcell [ref=437]
+              text "12,611"
+            gridcell [ref=438]
+              text "0"
+            gridcell [ref=439]
+              text "0"
+            gridcell [ref=440]
+              text "12,611"
+            gridcell [ref=441]
+          row
+            gridcell [ref=442]
+            gridcell [ref=443]
+              text "태블릿"
+            gridcell [ref=444]
+              text "6,851"
+            gridcell [ref=445]
+              text "0"
+            gridcell [ref=446]
+              text "0"
+            gridcell [ref=447]
+              text "6,851"
+            gridcell [ref=448]
+          row
+            gridcell [ref=449]
+            gridcell [ref=450]
+              text "TV"
+            gridcell [ref=451]
+              text "7"
+            gridcell [ref=452]
+              text "0"
+            gridcell [ref=453]
+              text "0"
+            gridcell [ref=454]
+              text "7"
+            gridcell [ref=455]
+          row
+            gridcell [ref=456]
+            gridcell [ref=457]
+              text "웨어러블"
+            gridcell [ref=458]
+              text "0"
+            gridcell [ref=459]
+              text "0"
+            gridcell [ref=460]
+              text "0"
+            gridcell [ref=461]
+              text "0"
+            gridcell [ref=462]
+          row
+            gridcell [ref=463]
+            gridcell [ref=464]
+              text "차량"
+            gridcell [ref=465]
+              text "29"
+            gridcell [ref=466]
+              text "0"
+            gridcell [ref=467]
+              text "0"
+            gridcell [ref=468]
+              text "29"
+            gridcell [ref=469]
+          row
+            gridcell [ref=470]
+            gridcell [ref=471]
+              text "Chromebook"
+            gridcell [ref=472]
+              text "77"
+            gridcell [ref=473]
+              text "0"
+            gridcell [ref=474]
+              text "0"
+            gridcell [ref=475]
+              text "77"
+            gridcell [ref=476]
+          gridcell [ref=477]
+          gridcell [ref=478]
+            text "Android XR"
+          gridcell [ref=479]
+            text "2"
+          gridcell [ref=480]
+            text "0"
+          gridcell [ref=481]
+            text "0"
+          gridcell [ref=482]
+            text "2"
+          gridcell [ref=483]
+      text "출시 버전 제공"
+      button [ref=484]
+        text "신규 설치 크기"
+      text "26.2MB"
+      image
+        text "arrow_right_alt"
+      text "245KB"
+      text "(이전 출시 버전 대비)"
+      button [ref=485]
+        text "다운로드 시간"
+      text "15초"
+      image
+        text "arrow_right_alt"
+      text "1초"
+      text "(이전 출시 버전 대비)"
+      button [ref=486]
+        text "업데이트 크기"
+      text "1.63MB"
+      text "새 App Bundle"
+      grid "아티팩트" [ref=487]
+        cell [ref=488]
+        columnheader "파일 형식" [ref=489]
+          text "파일 형식"
+        columnheader "버전" [ref=490]
+          text "버전"
+        columnheader "API 수준" [ref=491]
+          text "API 수준"
+        columnheader "타겟 SDK" [ref=492]
+          text "타겟 SDK"
+        columnheader "화면 레이아웃" [ref=493]
+          text "화면 레이아웃"
+        columnheader "ABI" [ref=494]
+          text "ABI"
+        columnheader "필수 기능" [ref=495]
+          text "필수 기능"
+        cell [ref=496]
+        gridcell [ref=497]
+          button "이전 출시의 App Bundle 22(0.5.0) 버전과 이 App Bundle의 세부정보에 차이가 있습니다." [ref=498]
+            container [ref=499]
+              image
+                text "info"
+        gridcell [ref=500]
+          text "App bundle"
+          container [ref=501]
+            text "attachment"
+          button [ref=502]
+            container [ref=503]
+              container [ref=504]
+                image
+                  text "info"
+              text "고급"
+        gridcell [ref=505]
+          text "23 (0.6.0)"
+        gridcell [ref=506]
+          text "24 이상"
+        gridcell [ref=507]
+          text "36"
+        gridcell [ref=508]
+          text "4"
+        gridcell [ref=509]
+          text "4"
+        gridcell [ref=510]
+          text "1"
+        gridcell [ref=511]
+          button "App Bundle: 23(0.6.0) 세부정보 보기" [ref=512]
+            image
+              text "arrow_right_alt"
+      text "이전 버전"
+      text "포함됨"
+      container [ref=513]
+        image
+          text "rocket_launch"
+      paragraph
+        text "이번 버전에 포함되는 이전 버전의 App Bundle이 없습니다"
+      text "포함되지 않음"
+      text "이전 버전의 다음과 같은 아티팩트 버전이 이번 버전에 포함되지 않습니다."
+      grid "아티팩트" [ref=514]
+        columnheader "파일 형식" [ref=515]
+          text "파일 형식"
+        columnheader "버전" [ref=516]
+          text "버전"
+        columnheader "API 수준" [ref=517]
+          text "API 수준"
+        columnheader "타겟 SDK" [ref=518]
+          text "타겟 SDK"
+        columnheader "화면 레이아웃" [ref=519]
+          text "화면 레이아웃"
+        columnheader "ABI" [ref=520]
+          text "ABI"
+        columnheader "필수 기능" [ref=521]
+          text "필수 기능"
+        cell [ref=522]
+        gridcell [ref=523]
+          text "App bundle"
+          container [ref=524]
+            text "attachment"
+          button [ref=525]
+            container [ref=526]
+              container [ref=527]
+                image
+                  text "info"
+              text "고급"
+        gridcell [ref=528]
+          text "22 (0.5.0)"
+        gridcell [ref=529]
+          text "24 이상"
+        gridcell [ref=530]
+          text "36"
+        gridcell [ref=531]
+          text "4"
+        gridcell [ref=532]
+          text "4"
+        gridcell [ref=533]
+          text "1"
+        gridcell [ref=534]
+          button "App Bundle: 22(0.5.0) 세부정보 보기" [ref=535]
+            image
+              text "arrow_right_alt"
+      text "출시 노트"
+      text "기본 언어 - ko-KR"
+      text "새 3권 41~60회·1,000문항을 추가했습니다. • 모의고사 3권 60회·3,000문항을 제공합니다. • 각 권 첫 5회(1~5·21~25·41~45회)는 광고 없이 무료입니다. • 권�..."
+      text "단계적 출시"
+      text "이 버전을 사용자층의 몇 퍼센트를 대상으로 출시할지 입력합니다."
+      text "사용 중인 기기에 설치된 횟수"
+      text "4"
+      text "출시율"
+      text "*"
+      container
+        textbox [ref=536]
+          text "100.0"
+        text "%"
+      text "제공 국가"
+      container
+        radiobutton [ref=537]
+        text "모든 대상 국가에서 제공"
+      container
+        radiobutton [ref=538]
+        text "특정 국가/지역 선택"
+      text "단계적 출시 대상 설치 사용자 수"
+      text "4"
+      container
+        text "저장하면 변경사항이 게시 개요에 저장되고 검토를 위해 Google에 전송될 준비가 됩니다."
+        container
+          button [ref=539]
+            text "뒤로"
+          button [ref=540]
+            text "저장"
+    anchor [ref=541, loc=href:/console/about/whats-new/, url=https://play.google.com/console/about/whats-new/]
+      text "제품 업데이트"
+    anchor [ref=542, loc=href:https://status.play.google.com/, url=https://status.play.google.com/]
+      text "상태 대시보드"
+    anchor [ref=543, loc=href:/console/metrics, url=https://play.google.com/console/metrics]
+      text "Google Play 측정항목"
+    anchor [ref=544, url=https://play.google.com/console/u/0/developers/7871930997193802319/help-and-support?app=4972123172088629069]
+      text "도움말"
+    text "© 2026 Google"
+    anchor [ref=545, loc=href:https://www.google.com/policies/privacy/, url=https://www.google.com/policies/privacy/]
+      text "개인 정보 보호"
+    anchor [ref=546, loc=href:/about/developer-distribution-agreement.html, url=https://play.google.com/about/developer-distribution-agreement.html]
+      text "개발자 배포 계약"
+    anchor [ref=547, loc=href:/about/console/terms-of-service/, url=https://play.google.com/about/console/terms-of-service/]
+      text "서비스 약관"

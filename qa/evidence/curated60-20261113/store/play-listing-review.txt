@@ -1,0 +1,206 @@
+[p2 "기본 스토어 등록정보 | SQLD Pass" | space "SQLD Pass 0.6.0 출시 20261113"(30): 2 managed, 0 untracked — p1 "게시 개요 | SQLD Pass", p2* "기본 스토어 등록정보 | SQLD Pass"]
+root
+  svg_root
+  text "Google Play Console 로드 중"
+  container
+    container
+      text "판매자 상태 선언"
+      link "세부정보 보기" [ref=360, loc=css:a[aria-label="세부정보 보기"], url=https://play.google.com/console/u/0/developers/7871930997193802319/home]
+        text "세부정보 보기"
+    container
+      anchor [ref=361, url=https://play.google.com/console/u/0/developers/7871930997193802319/home]
+        button [ref=362]
+      container
+        button "읽지 않은 알림 알림 센터 열기" [ref=363, loc=css:button[aria-label="읽지 않은 알림 알림 센터 열기"]]
+          image
+            text "notifications_unread"
+          text "읽지 않은 알림"
+        container
+          button "개발자 계정 전환" [ref=364, loc=role:button[name="개발자 계정 전환"]]
+            image
+            image
+              text "more_vert"
+          button "Google 계정: 김석현 (kasa500000@gmail.com), Google 멤버십" [ref=365, loc=css:a[aria-label="Google 계정: 김석현
+(kasa500000@gmail.com), Google 멤버십"], url=https://accounts.google.com/SignOutOptions?hl=ko&continue=https://play.google.com/console/u/0/developers/7871930997193802319/app/4972123172088629069/store-listings/default/edit&ec=GBRAywQ]
+  image
+  image
+  list
+    listitem "홈"
+      button "홈" [ref=366, loc=css:a[aria-label="홈"], url=https://play.google.com/console/u/0/developers/7871930997193802319/home]
+        container [ref=367]
+          image
+            text "home"
+    listitem "계정 관리"
+      button "계정 관리" [ref=368, loc=css:a[aria-label="계정 관리"], url=https://play.google.com/console/u/0/developers/7871930997193802319/manage-account]
+        container [ref=369]
+          image
+            text "badge"
+    listitem "SQLD Pass"
+      button "SQLD Pass" [ref=370, loc=role:button[name="SQLD Pass"]]
+        image
+        image
+          text "play_prism"
+    listitem "대시보드"
+      button "대시보드" [ref=371, loc=css:a[aria-label="대시보드"], url=https://play.google.com/console/u/0/developers/7871930997193802319/app/4972123172088629069/app-dashboard]
+        container [ref=372]
+          image
+            text "dashboard"
+    listitem "통계"
+      button "통계" [ref=373, loc=css:a[aria-label="통계"], url=https://play.google.com/console/u/0/developers/7871930997193802319/app/4972123172088629069/statistics]
+        container [ref=374]
+          image
+            text "bar_chart"
+    listitem "게시 개요"
+      button "게시 개요" [ref=375, loc=css:a[aria-label="게시 개요"], url=https://play.google.com/console/u/0/developers/7871930997193802319/app/4972123172088629069/publishing]
+        container [ref=376]
+          image
+            text "overview"
+    listitem "Google Play로 보호됨"
+      button "Google Play로 보호됨" [ref=377, loc=css:a[aria-label="Google Play로 보호됨"], url=https://play.google.com/console/u/0/developers/7871930997193802319/app/4972123172088629069/protect-with-play]
+        container [ref=378]
+          image
+            text "shield"
+    listitem "테스트 및 출시"
+      button "테스트 및 출시" [ref=379, loc=css:a[aria-label="테스트 및 출시"], url=https://play.google.com/console/u/0/developers/7871930997193802319/app/4972123172088629069/test-and-release]
+        container [ref=380]
+          image
+            text "rocket_launch"
+    listitem "모니터링 및 개선"
+      button "모니터링 및 개선" [ref=381, loc=css:a[aria-label="모니터링 및 개선"], url=https://play.google.com/console/u/0/developers/7871930997193802319/app/4972123172088629069/monitor]
+        container [ref=382]
+          image
+            text "vital_signs"
+    listitem "사용자 늘리기"
+      button "사용자 늘리기" [ref=383, loc=css:a[aria-label="사용자 늘리기"], url=https://play.google.com/console/u/0/developers/7871930997193802319/app/4972123172088629069/grow-overview]
+        container [ref=384]
+          image
+            text "finance_mode"
+    listitem "Play를 통한 수익 창출"
+      button "Play를 통한 수익 창출" [ref=385, loc=css:a[aria-label="Play를 통한 수익 창출"], url=https://play.google.com/console/u/0/developers/7871930997193802319/app/4972123172088629069/monetize]
+        container [ref=386]
+          image
+            text "sell"
+  container [ref=387]
+    container
+      container
+        anchor "스토어 등록정보 페이지로 돌아가기" [ref=388, loc=css:a[aria-label="스토어 등록정보 페이지로 돌아가기"], url=https://play.google.com/console/u/0/developers/7871930997193802319/app/4972123172088629069/store-listings]
+          image
+            text "keyboard_backspace"
+          text "스토어 등록정보"
+        container
+          heading
+            text "기본 스토어 등록정보"
+          container
+            unordered_list
+              list_item
+                container [ref=389]
+                  image
+                    text "check_circle"
+                text "현재 게시 중"
+            image
+              text "brightness_1"
+            text "앱 이름, 아이콘, 스크린샷 등을 수정하여 앱이 Google Play에서 사용자에게 표시될 방식을 나타내세요."
+      container
+        container
+          tablist
+            tab "1/2단계, 애셋" [ref=390, loc=role:tab[name="1/2단계, 애셋"]]
+              image
+                text "check"
+              text "애셋"
+            tab "2/2단계, 리뷰" [ref=391, loc=role:tab[name="2/2단계, 리뷰"]]
+              text "2"
+              text "리뷰"
+          tabpanel
+            container
+              heading
+                text "AI 애셋 선언"
+              paragraph
+                text "규정에 따라 특정 상황에서는 AI 생성 애셋을 사용하는 콘텐츠에 라벨을 지정해야 합니다."
+                link "AI 생성 콘텐츠 선언 자세히 알아보기, 새 탭에서 열기" [ref=770, url=https://support.google.com/googleplay/android-developer/answer/17262077?hl=ko]
+                  text "자세히 알아보기"
+              radiogroup "AI 애셋 선언 옵션"
+                container
+                  radiobutton [ref=776]
+                  text "애셋 라벨 지정 안함"
+                container
+                  radiobutton [ref=777]
+                  container
+                    text "AI를 사용하여 생성 또는 수정한 것으로 애셋 라벨 지정"
+                    text "다음 단계에서 개별 애셋에 라벨을 지정합니다."
+                    button [ref=778]
+                      text "AI 생성 애셋 라벨 지정"
+                      image
+                        text "open_in_new"
+            container
+              heading
+                text "애셋 리뷰"
+              container
+                container
+                  text "다음의 애셋 보기"
+                  button "기본값 – 한국어 – ko-KR" [ref=771, loc=css:button[aria-label="기본값 – 한국어 – ko-KR"]]
+                    text "기본값 – 한국어 – ko-KR"
+                    image
+                      text "arrow_drop_down"
+                container
+                  container
+                    text "앱 이름"
+                    text "SQLD Pass"
+                  container
+                    text "간단한 설명"
+                    text "SQLD 교재 216절, 확인 문제와 60회 모의고사로 개념부터 실전까지 공부하세요."
+                  text "자세한 설명"
+                  text "SQLD Pass에서 교재 순서대로 개념을 익히고 문제와 모의고사로 이해를 확인하세요. ■ 교재 5개 Part · 18개 장 · 216개 절 데이터 모델링, SQL 기본·활용·�..."
+                text "앱 아이콘"
+                image
+                text "그래픽 이미지"
+                image
+                text "동영상"
+                text "--"
+                text "휴대전화 스크린샷"
+                image
+                image
+                image
+                image
+                text "7인치 태블릿 스크린샷"
+                image
+                image
+                image
+                text "10인치 태블릿 스크린샷"
+                image
+                image
+                image
+                text "데스크톱 스크린샷"
+                text "--"
+                text "Android XR 스크린샷"
+                text "--"
+                text "공간 XR 동영상"
+                text "--"
+                text "비공간 XR 동영상"
+                text "--"
+        container
+          text "저장하면 변경사항이 게시 개요에 저장되고 검토를 위해 Google에 전송될 준비가 됩니다."
+          container
+            button [ref=772]
+              text "삭제"
+            container
+              button [ref=773]
+                text "뒤로"
+              button [ref=774]
+                text "임시보관함에 저장"
+              button [ref=775]
+                text "저장"
+    anchor [ref=432, loc=href:/console/about/whats-new/, url=https://play.google.com/console/about/whats-new/]
+      text "제품 업데이트"
+    anchor [ref=433, loc=href:https://status.play.google.com/, url=https://status.play.google.com/]
+      text "상태 대시보드"
+    anchor [ref=434, loc=href:/console/metrics, url=https://play.google.com/console/metrics]
+      text "Google Play 측정항목"
+    anchor [ref=435, url=https://play.google.com/console/u/0/developers/7871930997193802319/help-and-support?app=4972123172088629069]
+      text "도움말"
+    text "© 2026 Google"
+    anchor [ref=436, loc=href:https://www.google.com/policies/privacy/, url=https://www.google.com/policies/privacy/]
+      text "개인 정보 보호"
+    anchor [ref=437, loc=href:/about/developer-distribution-agreement.html, url=https://play.google.com/about/developer-distribution-agreement.html]
+      text "개발자 배포 계약"
+    anchor [ref=438, loc=href:/about/console/terms-of-service/, url=https://play.google.com/about/console/terms-of-service/]
+      text "서비스 약관"
