@@ -22,6 +22,16 @@ The owner can connect Android only for this candidate (“이번에는 Android�
 This does not waive current iOS physical/consent validation. Keep Android physical and
 iOS simulator evidence separate; prior release execution authorization persists.
 
+### Scoped owner exception — iOS 0.7.0(18), 2026-11-13
+
+After the Android production submission and unavailable iOS physical/consent evidence
+were reported, the owner explicitly instructed “이번 예외로 정식 출시 및 Testflight 업데이트 진행”.
+For this memory-notes candidate only, proceed with TestFlight and App Store submission
+without additional physical iPad or iOS consent reruns. Record them as unperformed;
+keep current Android physical and iOS simulator evidence separate. This is a new
+exception, not reuse of0.6.0. Preserve actual archive/export/upload validation, exact
+content approval, runtime consent, earned-reward and signing gates.
+
 ## Latest owner direction — 2026-11-13 curated60 extension
 
 The owner confirmed all 20 exams/1,000 questions in supplied Vol.4 and approved
