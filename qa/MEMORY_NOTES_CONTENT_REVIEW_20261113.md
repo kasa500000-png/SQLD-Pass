@@ -1293,5 +1293,3 @@ REVOKE SELECT ON emp FROM analyst;
 
 
 Atomicity: 전부 성공 또는 전부 취소. Consistency: 제약 조건을 일관되게 유지. Isolation: 동시 트랜잭션 간 영향 제어. Durability: 커밋한 결과를 보존.
-
-
