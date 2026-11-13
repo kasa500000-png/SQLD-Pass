@@ -1,0 +1,12 @@
+{
+  "recordedAt": "2026-11-13T08:31:12.347825+00:00",
+  "uploadedAtKST": "2026-11-13T17:30:39+09:00",
+  "version": "0.6.0",
+  "build": 17,
+  "deliveryId": "6fdbad7e-5277-4d4c-bd1d-301f563efa0a",
+  "bytes": 19580657,
+  "uploaderExitCode": 0,
+  "status": "UPLOAD SUCCEEDED with no errors",
+  "warning": "Uploader printed a missing resume-state-file diagnostic, then reported success with no errors. Apple server ingestion is verified separately.",
+  "artifact": "/tmp/sqld-production-0.6.0/ios-export17/SQLDPass.ipa"
+}

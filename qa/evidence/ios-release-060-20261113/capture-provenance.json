@@ -1,0 +1,61 @@
+{
+  "sourceApp": "/tmp/sqld060-ios-sim/Build/Products/Release-iphonesimulator/SQLDPass.app",
+  "bundleId": "com.sqldpass.app.adsqa",
+  "platform": "iOS27.2 simulator",
+  "devices": [
+    "iPhone14Plus 428x926pt",
+    "iPadPro13M4 1032x1376pt"
+  ],
+  "purpose": "Current0.6.0 store images only; no physical/consent rerun",
+  "all12VisuallyInspected": true,
+  "images": [
+    {
+      "file": "ipad-50-store-home.png",
+      "sha256": "772e697b7cb852332c73f8cb13e6393457c595d197e359a1ca1a85fe99d725f8"
+    },
+    {
+      "file": "ipad-51-store-textbook.png",
+      "sha256": "b0ce32e04a3c4a5d4fd7e2f5b1289581f3c4d72c12099913bf421ddee578c0ea"
+    },
+    {
+      "file": "ipad-52-store-practice.png",
+      "sha256": "f78ea211ba1e69f25408c0b1628ffb69f05a629f1c8b4928b0105bdbb3321a35"
+    },
+    {
+      "file": "ipad-53-store-mocks1.png",
+      "sha256": "bb15e98af7af1a04a90fd4831be47e5e6fd091cf97e3c86cda18379a494bf3fb"
+    },
+    {
+      "file": "ipad-54-store-mocks2.png",
+      "sha256": "4571e26b90f69bbfcc759e6c53274888928f9df4642e9457a5559fd37284e0a8"
+    },
+    {
+      "file": "ipad-55-store-mocks3.png",
+      "sha256": "b5d6cc59c2408c27665ef988d5d93a492ca2fd310c64f46ea538058082d228a6"
+    },
+    {
+      "file": "iphone-50-store-home.png",
+      "sha256": "4bdcfa85a353bfc3e5cf767be2e4ba92c3f4686fcf9d393a5bd4ec4b80f6dff2"
+    },
+    {
+      "file": "iphone-51-store-textbook.png",
+      "sha256": "6d6f553d2a4888c7de5d3eb01bc49478a90b16a7cfdc8af0fa176c57d83576f0"
+    },
+    {
+      "file": "iphone-52-store-practice.png",
+      "sha256": "5bc86d8688d96adfd4dd49a4fafd52b35470765f6578b8b1a0a6d76df2707032"
+    },
+    {
+      "file": "iphone-53-store-mocks1.png",
+      "sha256": "86e63016324c74d53026e2282648ec677894ee9a6369241034fce6bd8447a7e0"
+    },
+    {
+      "file": "iphone-54-store-mocks2.png",
+      "sha256": "6253f9233c36ab47503d6d5dfacce36516a90c033a65f5df5cf813762b74e0bb"
+    },
+    {
+      "file": "iphone-55-store-mocks3.png",
+      "sha256": "a42dd839d0dee8f44cf80b90f11774ecb23e167d371850da16b6e8aea195b873"
+    }
+  ]
+}

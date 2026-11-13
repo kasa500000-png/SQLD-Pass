@@ -1,0 +1,17 @@
+{
+  "platform": "ios",
+  "policyVersion": "2026-11-13.1",
+  "codeSha256": "4c2d548dbc69acc56f7d1591c6855736385862959057f6a1c9acf85d37979b87",
+  "iosDeviceEvidence": "Current0.6.0 physical iPad NOT PERFORMED. Owner newly instructed 이번에도 예외 진행 for0.6.0(17). Current iPhone/iPad simulator UI, immutable retained SQLite snapshots and official reward46 passed separately; qa/MOCK_CURATED60_20261113.md. No physical iOS pass claimed.",
+  "consentAndATTEvidence": "Current0.6.0 iOS simulator visible EEA accept26/withdraw28 and access30 after withdrawal verified after retry. Initial24 request failed and is not form evidence. Additional physical/consent reruns unperformed and newly waived; runtime UMP adult choice/canRequestAds/noATT unchanged.",
+  "adPlacementEvidence": "Current0.6.0 simulator UI and official reward46; Android physical banner, paused global suppression and EEA reject/accept/withdraw verified separately. AdMob both apps Ready and serving verified2026-11-13. No live impressions generated.",
+  "sdkCompatibilityEvidence": "Current0.6.0(17) actual Release archive and App Store export succeeded. Strict archive/IPA signatures, production/live/rewarded runtime, exact approved content hash and iOS ad unit IDs verified; qa/evidence/ios-release-060-20261113/artifact.json. Current489 automated checks and native simulator/Android builds remain separately scoped. Apple upload/server processing recorded separately.",
+  "appAdsTxtEvidence": "Public app-ads.txt direct seller record verified2026-11-13; AdMob readiness confirmed. iOS banner refresh previously disabled2026-11-12. No self-generated live impressions or clicks.",
+  "privacyDisclosureEvidence": "New3rd volume adds1000questions; no adSDK, data collection, tracking or sharing changes. Existing Apple ad disclosure applies. Public privacy policy remains applicable. Support site0.6content update blocked by Sites credential incompatibility; no claim published.",
+  "privacyUrl": "https://sqld-pass-support.shk1122.chatgpt.site/privacy.html",
+  "supportUrl": "https://sqld-pass-support.shk1122.chatgpt.site/support.html",
+  "approvedBy": "Owner approved exact curated60 hash61316063d2112c7b5cd25773a662a61b9037925e375073131c094d2522ca9fd5 and release execution; newly instructed 이번에도 예외 진행 for iOS0.6.0(17).",
+  "approvedAt": "2026-11-13T08:26:04.439Z",
+  "additionalValidationWaived": true,
+  "waiverScope": "iOS0.6.0(17) additional physical iPad and consent reruns only, unperformed. Actual archive/export/upload, exact content approval, runtime consent, earned-reward and signing gates remain required."
+}

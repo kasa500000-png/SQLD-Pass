@@ -1,0 +1,11 @@
+{
+  "version": "0.6.0",
+  "build": 17,
+  "sourceCommit": "aa93d4ed80f5bd6d7492d19063b251f6faea8177",
+  "archive": "/tmp/sqld-production-0.6.0/SQLDPass17.xcarchive",
+  "archiveSucceeded": true,
+  "exportSucceeded": true,
+  "uploadLog": "/tmp/sqld-ios060-upload.log",
+  "runtimeSourceChanged": false,
+  "additionalPhysicalAndConsentValidation": "NOT PERFORMED; owner scoped0.6.0 exception 이번에도 예외 진행"
+}

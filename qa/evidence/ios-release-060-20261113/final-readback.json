@@ -1,0 +1,10 @@
+{
+  "recordedAt": "2026-11-13T08:38:05.623Z",
+  "version": "0.6.0",
+  "state": "WAITING_FOR_REVIEW",
+  "releaseType": "AFTER_APPROVAL",
+  "attachedBuild": "17",
+  "buildId": "6fdbad7e-5277-4d4c-bd1d-301f563efa0a",
+  "processingState": "VALID",
+  "internalBuildState": "IN_BETA_TESTING"
+}
