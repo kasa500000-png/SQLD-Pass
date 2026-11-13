@@ -11,7 +11,7 @@
   "privacyUrl": "https://sqld-pass-support.shk1122.chatgpt.site/privacy.html",
   "supportUrl": "https://sqld-pass-support.shk1122.chatgpt.site/support.html",
   "platformReleaseStatus": {
-    "android": "0.6.0(23) current QA passed; production signing/upload pending",
+    "android": "0.6.0(23) signed production APK/AAB and bundletool/16KB/config/signature checks passed; upload/submission in progress",
     "ios": "0.6.0 candidate not submitted"
   }
 }
