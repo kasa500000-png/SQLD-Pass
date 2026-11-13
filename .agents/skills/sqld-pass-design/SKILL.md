@@ -5,6 +5,11 @@ description: Apply the SQLD Pass native app design reference when changing its s
 
 # SQLD Pass design
 
+For the approved0.6.0 extension, follow docs/MOCK_CURATED60_20261113.md and the
+2026-11-13 design-reference section. OriginalVol.4 is displayed as3권/41~60회.
+Use two-line volume/range labels with the existing accessible selection style; keep
+record/review/source filters independent. Do not restore retired originalVol.1.
+
 The 2026-11-12 curated40 plan in `docs/MOCK40_20261112.md` and the current0.5.0
 section of the design reference supersede earlier counts and collapsed-original reviews.
 Use explicit selection groups for tabs/quantity/mode filters, keep navigation distinct,

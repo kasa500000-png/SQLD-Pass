@@ -1,5 +1,15 @@
 # SQLD Pass UI reference
 
+## 0.6.0 third-volume extension — 2026-11-13
+
+Append original Vol.4 as display3권/41~60회; keep current content and interaction rules.
+Catalog selectors use two lines (volume then range), equal cells, selected underline,
+48-unit targets and accessible full labels. Three cells wrap to two/one columns when
+large text needs room; no horizontal gesture is required for primary navigation.
+Records/review/source filters use the same catalog metadata. Preserve direct submitted
+question→options→answer→explanation, original IDs and immutable snapshots. Each volume
+has five free exams, including new41~45. Runtime activation is integration-only.
+
 ## Current 0.5.0 refinement — 2026-11-12
 
 The owner-approved [40-exam plan](MOCK40_20261112.md) supersedes prior catalog counts
