@@ -1,5 +1,5 @@
 """Parse the pinned authored DOM at build time. Never execute page JavaScript."""
-import json, sys
+import gzip, json, sys
 from html.parser import HTMLParser
 
 class Parser(HTMLParser):
@@ -51,4 +51,5 @@ def parse(html):
     return {'categories': categories, 'notes': notes, 'quickLines': quick_lines}
 
 if __name__ == '__main__':
-    json.dump(parse(sys.stdin.read()), sys.stdout, ensure_ascii=False, separators=(',', ':'))
+    source = gzip.open(sys.argv[1], 'rt', encoding='utf-8').read() if len(sys.argv) > 1 else sys.stdin.read()
+    json.dump(parse(source), sys.stdout, ensure_ascii=False, separators=(',', ':'))

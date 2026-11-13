@@ -19,7 +19,7 @@ test('new runtime pack has exact planned scope and original blocks, choices and 
 test('import is deterministic and retains the complete original source hash',t=>{
  const root=fs.mkdtempSync(path.join(os.tmpdir(),'sqld-textbook-build-'));t.after(()=>fs.rmSync(root,{recursive:true,force:true}));fs.mkdirSync(path.join(root,'content-source'));fs.copyFileSync('content-source/textbook-20261109.html.gz',path.join(root,'content-source/textbook-20261109.html.gz'));
  fs.copyFileSync('content-source/mock20-20261109.html.gz',path.join(root,'content-source/mock20-20261109.html.gz'));
- for(const f of ['mock-vol2-20261112.html.gz','mock-vol3-20261112.html.gz','mock-vol4-20261113.html.gz'])fs.copyFileSync('content-source/'+f,path.join(root,'content-source',f));fs.mkdirSync(path.join(root,'content-pack'));fs.copyFileSync('content-pack/build-target.json',path.join(root,'content-pack/build-target.json'));
+ for(const f of ['mock-vol2-20261112.html.gz','mock-vol3-20261112.html.gz','mock-vol4-20261113.html.gz','memory-notes-20261113.html.gz','memory-notes-corrections.json'])fs.copyFileSync('content-source/'+f,path.join(root,'content-source',f));fs.mkdirSync(path.join(root,'content-pack'));fs.copyFileSync('content-pack/build-target.json',path.join(root,'content-pack/build-target.json'));
  const first=build(root),bytes=fs.readFileSync(path.join(root,'content-pack/content.json.gz'));a.equal(first.sha256,require('../content-pack/content.lock.json').sha256);a.deepEqual(build(root),first);a.deepEqual(fs.readFileSync(path.join(root,'content-pack/content.json.gz')),bytes);
 });
 test('all 37 tools have reachable native states and legal transitions with no runtime HTML',()=>{

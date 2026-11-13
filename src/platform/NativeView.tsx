@@ -133,7 +133,7 @@ export function NativeView({node: n, scale, dark, path = '0',maxSystemFontMultip
     </SafeAreaView>
   </LearningModal>;
   if(n.layout==='screen-title'){
-    const stacked=layout.effectiveFontScale>1.4||layout.usableWidth<340;
+    const stacked=layout.effectiveFontScale>1.4||layout.usableWidth<300;
     return <View testID={n.testId} style={[s.view,{flexDirection:stacked?'column':'row',alignItems:'stretch',minWidth:0}]}>
       {(n.children??[]).map((child,index)=><NativeView key={index} node={{...child,style:{...child.style,...(stacked?{flex:undefined,width:'100%'}:{})}}} scale={scale} dark={dark} path={`${path}.${index}`} maxSystemFontMultiplier={maxSystemFontMultiplier}/>)}
     </View>;

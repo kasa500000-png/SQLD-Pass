@@ -6,7 +6,7 @@ const VERSION='memory-notes.20261113.1';
 function readNotes(root){
  const raw=zlib.gunzipSync(fs.readFileSync(path.join(root,'content-source/memory-notes-20261113.html.gz')));
  if(hash(raw)!==SOURCE_SHA)throw Error('Memory notes authored source hash mismatch');
- const p=spawnSync('python3',[path.join(__dirname,'parse-memory-notes.py')],{input:raw,encoding:'utf8',maxBuffer:2*1024*1024});
+ const p=spawnSync('python3',[path.join(__dirname,'parse-memory-notes.py'),path.join(root,'content-source/memory-notes-20261113.html.gz')],{encoding:'utf8',maxBuffer:2*1024*1024,timeout:15000});
  if(p.status!==0)throw Error(p.stderr);return JSON.parse(p.stdout);
 }
 function addMemoryNotes(c,root){

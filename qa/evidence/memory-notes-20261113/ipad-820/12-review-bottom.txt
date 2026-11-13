@@ -1,0 +1,334 @@
+Attributes: Application, 0x10f1f3980, pid: 38517, label: 'SQLD Pass'
+Element subtree:
+ →Application, 0x10f1f3980, pid: 38517, label: 'SQLD Pass'
+    Window (Main), 0x10f1f3ac0, {{0.0, 0.0}, {820.0, 1180.0}}
+      Other, 0x10f1f3c00, {{0.0, 0.0}, {820.0, 1180.0}}
+        Other, 0x10f1f3840, {{0.0, 0.0}, {820.0, 1180.0}}
+          Other, 0x10f1f3700, {{0.0, 0.0}, {820.0, 1180.0}}
+            Other, 0x10f1f35c0, {{0.0, 0.0}, {820.0, 1180.0}}
+              Other, 0x10f1f3480, {{0.0, 0.0}, {820.0, 1180.0}}
+                Other, 0x10f1f3340, {{0.0, 0.0}, {820.0, 1180.0}}
+                  Other, 0x10f1f3200, {{0.0, 0.0}, {820.0, 1180.0}}
+                    Other, 0x10f1f30c0, {{0.0, 32.0}, {820.0, 1128.0}}
+                      Other, 0x10f1f2f80, {{0.0, 32.0}, {820.0, 64.0}}
+                      Other, 0x10f1f2e40, {{0.0, 32.0}, {820.0, 64.0}}, identifier: 'screen-titlebar'
+                      Other, 0x10f1f2d00, {{0.0, 32.0}, {820.0, 1128.0}}
+                      Button, 0x10f1f2bc0, {{24.0, 40.0}, {78.0, 48.0}}, identifier: 'result-summary', label: '결과로 돌아가기'
+                      StaticText, 0x10f1f2a80, {{112.0, 49.5}, {626.0, 29.0}}, label: '문항 해설'
+                        StaticText, 0x10f1f2800, {{112.0, 49.5}, {626.0, 29.0}}, label: '문항 해설'
+                      Button, 0x10f1f2940, {{748.0, 40.0}, {48.0, 48.0}}, label: '설정'
+                      Other, 0x10f1f2580, {{0.0, 96.0}, {820.0, 64.0}}
+                      Other, 0x10f1f26c0, {{50.0, 96.0}, {720.0, 64.0}}, identifier: 'screen-header'
+                      Other, 0x10f1f2300, {{74.0, 104.0}, {220.0, 48.0}}, identifier: 'mock-result-all', label: '전체', value: radio button, chec..., Selected
+                      Other, 0x10f1f2440, {{300.0, 104.0}, {220.0, 48.0}}, identifier: 'mock-result-wrong', label: '오답·미응답', value: radio button, unch...
+                      Other, 0x10f1f2080, {{526.0, 104.0}, {220.0, 48.0}}, identifier: 'mock-result-flagged', label: '검토', value: radio button, unch...
+                      Other, 0x10f1f21c0, {{0.0, 160.0}, {820.0, 851.0}}
+                        ScrollView, 0x10f1f1f40, {{0.0, 160.0}, {820.0, 851.0}}
+                          Other, 0x10f1f1e00, {{0.0, -1028.0}, {770.0, 2039.0}}
+                            Other, 0x10f1f1cc0, {{50.0, -1028.0}, {720.0, 2039.0}}
+                              StaticText, 0x10f1f1b80, {{74.0, -1012.0}, {672.0, 20.0}}, label: '문항 50 · 50/50'
+                                StaticText, 0x10f1f1900, {{74.0, -1012.0}, {672.0, 20.0}}, label: '문항 50 · 50/50'
+                              Other, 0x10f1f1a40, {{74.0, -980.0}, {672.0, 82.0}}
+                              StaticText, 0x10f1f1680, {{86.0, -968.0}, {648.0, 58.0}}, label: '조회 목록과 중복 단위를 적용한 다음 조회의 결과로 옳은 것은? 제시된 표가 전체 데이터이며, 여러 행은 마지막 ORDER BY 순서로 표시한다.'
+                                StaticText, 0x10f1f17c0, {{86.0, -968.0}, {648.0, 58.0}}, label: '조회 목록과 중복 단위를 적용한 다음 조회의 결과로 옳은 것은? 제시된 표가 전체 데이터이며, 여러 행은 마지막 ORDER BY 순서로 표시한다.'
+                              StaticText, 0x10f1f1400, {{74.0, -886.0}, {672.0, 14.5}}, label: 'ORDERS · 8행 × 5열'
+                                StaticText, 0x10f1f1540, {{74.0, -886.0}, {672.0, 14.5}}, label: 'ORDERS · 8행 × 5열'
+                              Other, 0x10f1f1180, {{74.0, -865.5}, {672.0, 370.0}}, label: 'ORDERS'
+                                ScrollView, 0x10f1f12c0, {{74.0, -865.5}, {672.0, 370.0}}
+                                  Other, 0x10f1f0f00, {{74.0, -865.5}, {671.0, 369.0}}
+                                    Other, 0x10f1f1040, {{75.0, -864.5}, {670.0, 368.0}}
+                                      Other, 0x10f1f0c80, {{75.0, -864.5}, {670.0, 40.0}}
+                                      Other, 0x10f1f0dc0, {{75.0, -864.5}, {134.0, 40.0}}
+                                      StaticText, 0x10f1f0a00, {{83.0, -856.0}, {117.0, 23.0}}, label: 'OID'
+                                        StaticText, 0x10f1f0b40, {{83.0, -856.0}, {117.0, 23.0}}, label: 'OID'
+                                      Other, 0x10f1f0780, {{209.0, -864.5}, {134.0, 40.0}}
+                                      StaticText, 0x10f1f08c0, {{217.0, -856.0}, {117.0, 23.0}}, label: 'CID'
+                                        StaticText, 0x10f1f0500, {{217.0, -856.0}, {117.0, 23.0}}, label: 'CID'
+                                      Other, 0x10f1f0640, {{343.0, -864.5}, {134.0, 40.0}}
+                                      StaticText, 0x10f1f0280, {{351.0, -856.0}, {117.0, 23.0}}, label: 'STATUS'
+                                        StaticText, 0x10f1f03c0, {{351.0, -856.0}, {117.0, 23.0}}, label: 'STATUS'
+                                      Other, 0x10f1f0000, {{477.0, -864.5}, {134.0, 40.0}}
+                                      StaticText, 0x10f1f0140, {{485.0, -856.0}, {117.0, 23.0}}, label: 'AMOUNT'
+                                        StaticText, 0x10f1f3e80, {{485.0, -856.0}, {117.0, 23.0}}, label: 'AMOUNT'
+                                      Other, 0x10eceae40, {{611.0, -864.5}, {134.0, 40.0}}
+                                      StaticText, 0x10eceaf80, {{619.0, -856.0}, {117.0, 23.0}}, label: 'FEE'
+                                        StaticText, 0x10ecead00, {{619.0, -856.0}, {117.0, 23.0}}, label: 'FEE'
+                                      Other, 0x10eceaa80, {{75.0, -824.5}, {670.0, 41.0}}
+                                      Other, 0x10eceabc0, {{75.0, -823.5}, {134.0, 40.0}}
+                                      StaticText, 0x10ecea940, {{83.0, -815.0}, {117.0, 23.0}}, label: 'OID: 11'
+                                        StaticText, 0x10ecea800, {{83.0, -815.0}, {117.0, 23.0}}, label: 'OID: 11'
+                                      Other, 0x10ecea580, {{209.0, -823.5}, {134.0, 40.0}}
+                                      StaticText, 0x10ecea6c0, {{217.0, -815.0}, {117.0, 23.0}}, label: 'CID: 1'
+                                        StaticText, 0x10ecea440, {{217.0, -815.0}, {117.0, 23.0}}, label: 'CID: 1'
+                                      Other, 0x10eceb0c0, {{343.0, -823.5}, {134.0, 40.0}}
+                                      StaticText, 0x10ecea300, {{351.0, -815.0}, {117.0, 23.0}}, label: 'STATUS: PAID'
+                                        StaticText, 0x10ece8500, {{351.0, -815.0}, {117.0, 23.0}}, label: 'STATUS: PAID'
+                                      Other, 0x10ece8640, {{477.0, -823.5}, {134.0, 40.0}}
+                                      StaticText, 0x10ece83c0, {{485.0, -815.0}, {117.0, 23.0}}, label: 'AMOUNT: 120'
+                                        StaticText, 0x10ece8280, {{485.0, -815.0}, {117.0, 23.0}}, label: 'AMOUNT: 120'
+                                      Other, 0x10ece8000, {{611.0, -823.5}, {134.0, 40.0}}
+                                      StaticText, 0x10ece8140, {{619.0, -815.0}, {117.0, 23.0}}, label: 'FEE: 5'
+                                        StaticText, 0x10ece8780, {{619.0, -815.0}, {117.0, 23.0}}, label: 'FEE: 5'
+                                      Other, 0x102e748c0, {{75.0, -783.5}, {670.0, 41.0}}
+                                      Other, 0x102e77340, {{75.0, -782.5}, {134.0, 40.0}}
+                                      StaticText, 0x102e75040, {{83.0, -774.0}, {117.0, 23.0}}, label: 'OID: 12'
+                                        StaticText, 0x102e77840, {{83.0, -774.0}, {117.0, 23.0}}, label: 'OID: 12'
+                                      Other, 0x102e77980, {{209.0, -782.5}, {134.0, 40.0}}
+                                      StaticText, 0x102e77ac0, {{217.0, -774.0}, {117.0, 23.0}}, label: 'CID: 1'
+                                        StaticText, 0x102e77700, {{217.0, -774.0}, {117.0, 23.0}}, label: 'CID: 1'
+                                      Other, 0x102e77200, {{343.0, -782.5}, {134.0, 40.0}}
+                                      StaticText, 0x102e775c0, {{351.0, -774.0}, {117.0, 23.0}}, label: 'STATUS: CANCEL'
+                                        StaticText, 0x10ec49e00, {{351.0, -774.0}, {117.0, 23.0}}, label: 'STATUS: CANCEL'
+                                      Other, 0x10ec49900, {{477.0, -782.5}, {134.0, 40.0}}
+                                      StaticText, 0x10ec4a080, {{485.0, -774.0}, {117.0, 23.0}}, label: 'AMOUNT: 60'
+                                        StaticText, 0x10ec497c0, {{485.0, -774.0}, {117.0, 23.0}}, label: 'AMOUNT: 60'
+                                      Other, 0x10ec4b700, {{611.0, -782.5}, {134.0, 40.0}}
+                                      StaticText, 0x10ec49f40, {{619.0, -774.0}, {117.0, 23.0}}, label: 'FEE: NULL'
+                                        StaticText, 0x10ec48500, {{619.0, -774.0}, {117.0, 23.0}}, label: 'FEE: NULL'
+                                      Other, 0x10ec49680, {{75.0, -742.5}, {670.0, 41.0}}
+                                      Other, 0x10ec4be80, {{75.0, -741.5}, {134.0, 40.0}}
+                                      StaticText, 0x10ec4bd40, {{83.0, -733.0}, {117.0, 23.0}}, label: 'OID: 13'
+                                        StaticText, 0x10ec4bc00, {{83.0, -733.0}, {117.0, 23.0}}, label: 'OID: 13'
+                                      Other, 0x10ec49cc0, {{209.0, -741.5}, {134.0, 40.0}}
+                                      StaticText, 0x10ec49b80, {{217.0, -733.0}, {117.0, 23.0}}, label: 'CID: 2'
+                                        StaticText, 0x10ec49a40, {{217.0, -733.0}, {117.0, 23.0}}, label: 'CID: 2'
+                                      Other, 0x102febd40, {{343.0, -741.5}, {134.0, 40.0}}
+                                      StaticText, 0x102febac0, {{351.0, -733.0}, {117.0, 23.0}}, label: 'STATUS: PAID'
+                                        StaticText, 0x102feb980, {{351.0, -733.0}, {117.0, 23.0}}, label: 'STATUS: PAID'
+                                      Other, 0x102febc00, {{477.0, -741.5}, {134.0, 40.0}}
+                                      StaticText, 0x102fe9040, {{485.0, -733.0}, {117.0, 23.0}}, label: 'AMOUNT: 80'
+                                        StaticText, 0x102fe8c80, {{485.0, -733.0}, {117.0, 23.0}}, label: 'AMOUNT: 80'
+                                      Other, 0x102fe9400, {{611.0, -741.5}, {134.0, 40.0}}
+                                      StaticText, 0x102fe9180, {{619.0, -733.0}, {117.0, 23.0}}, label: 'FEE: 0'
+                                        StaticText, 0x102fe92c0, {{619.0, -733.0}, {117.0, 23.0}}, label: 'FEE: 0'
+                                      Other, 0x102fe9540, {{75.0, -701.5}, {670.0, 41.0}}
+                                      Other, 0x102fea1c0, {{75.0, -700.5}, {134.0, 40.0}}
+                                      StaticText, 0x102fe97c0, {{83.0, -692.0}, {117.0, 23.0}}, label: 'OID: 14'
+                                        StaticText, 0x102fe9f40, {{83.0, -692.0}, {117.0, 23.0}}, label: 'OID: 14'
+                                      Other, 0x102fea580, {{209.0, -700.5}, {134.0, 40.0}}
+                                      StaticText, 0x102fea440, {{217.0, -692.0}, {117.0, 23.0}}, label: 'CID: 3'
+                                        StaticText, 0x102fea300, {{217.0, -692.0}, {117.0, 23.0}}, label: 'CID: 3'
+                                      Other, 0x102fea940, {{343.0, -700.5}, {134.0, 40.0}}
+                                      StaticText, 0x102feaa80, {{351.0, -692.0}, {117.0, 23.0}}, label: 'STATUS: WAIT'
+                                        StaticText, 0x102fea800, {{351.0, -692.0}, {117.0, 23.0}}, label: 'STATUS: WAIT'
+                                      Other, 0x102fea6c0, {{477.0, -700.5}, {134.0, 40.0}}
+                                      StaticText, 0x102feabc0, {{485.0, -692.0}, {117.0, 23.0}}, label: 'AMOUNT: NULL'
+                                        StaticText, 0x102fead00, {{485.0, -692.0}, {117.0, 23.0}}, label: 'AMOUNT: NULL'
+                                      Other, 0x102feae40, {{611.0, -700.5}, {134.0, 40.0}}
+                                      StaticText, 0x102feb200, {{619.0, -692.0}, {117.0, 23.0}}, label: 'FEE: 3'
+                                        StaticText, 0x102feaf80, {{619.0, -692.0}, {117.0, 23.0}}, label: 'FEE: 3'
+                                      Other, 0x102feb340, {{75.0, -660.5}, {670.0, 41.0}}
+                                      Other, 0x102fe9900, {{75.0, -659.5}, {134.0, 40.0}}
+                                      StaticText, 0x102feb0c0, {{83.0, -651.0}, {117.0, 23.0}}, label: 'OID: 15'
+                                        StaticText, 0x102fe9e00, {{83.0, -651.0}, {117.0, 23.0}}, label: 'OID: 15'
+                                      Other, 0x102feb480, {{209.0, -659.5}, {134.0, 40.0}}
+                                      StaticText, 0x102feb700, {{217.0, -651.0}, {117.0, 23.0}}, label: 'CID: 3'
+                                        StaticText, 0x102feb5c0, {{217.0, -651.0}, {117.0, 23.0}}, label: 'CID: 3'
+                                      Other, 0x102feb840, {{343.0, -659.5}, {134.0, 40.0}}
+                                      StaticText, 0x102fe9a40, {{351.0, -651.0}, {117.0, 23.0}}, label: 'STATUS: PAID'
+                                        StaticText, 0x102fe9b80, {{351.0, -651.0}, {117.0, 23.0}}, label: 'STATUS: PAID'
+                                      Other, 0x102fe88c0, {{477.0, -659.5}, {134.0, 40.0}}
+                                      StaticText, 0x102febe80, {{485.0, -651.0}, {117.0, 23.0}}, label: 'AMOUNT: 80'
+                                        StaticText, 0x102fe8500, {{485.0, -651.0}, {117.0, 23.0}}, label: 'AMOUNT: 80'
+                                      Other, 0x102fe8b40, {{611.0, -659.5}, {134.0, 40.0}}
+                                      StaticText, 0x102fea080, {{619.0, -651.0}, {117.0, 23.0}}, label: 'FEE: 5'
+                                        StaticText, 0x106540500, {{619.0, -651.0}, {117.0, 23.0}}, label: 'FEE: 5'
+                                      Other, 0x106540640, {{75.0, -619.5}, {670.0, 41.0}}
+                                      Other, 0x106540780, {{75.0, -618.5}, {134.0, 40.0}}
+                                      StaticText, 0x1065403c0, {{83.0, -610.0}, {117.0, 23.0}}, label: 'OID: 16'
+                                        StaticText, 0x106540280, {{83.0, -610.0}, {117.0, 23.0}}, label: 'OID: 16'
+                                      Other, 0x106540140, {{209.0, -618.5}, {134.0, 40.0}}
+                                      StaticText, 0x106540000, {{217.0, -610.0}, {117.0, 23.0}}, label: 'CID: 5'
+                                        StaticText, 0x106543ac0, {{217.0, -610.0}, {117.0, 23.0}}, label: 'CID: 5'
+                                      Other, 0x106540dc0, {{343.0, -618.5}, {134.0, 40.0}}
+                                      StaticText, 0x106542bc0, {{351.0, -610.0}, {117.0, 23.0}}, label: 'STATUS: PAID'
+                                        StaticText, 0x106541400, {{351.0, -610.0}, {117.0, 23.0}}, label: 'STATUS: PAID'
+                                      Other, 0x106542e40, {{477.0, -618.5}, {134.0, 40.0}}
+                                      StaticText, 0x1065412c0, {{485.0, -610.0}, {117.0, 23.0}}, label: 'AMOUNT: 40'
+                                        StaticText, 0x106542580, {{485.0, -610.0}, {117.0, 23.0}}, label: 'AMOUNT: 40'
+                                      Other, 0x106541540, {{611.0, -618.5}, {134.0, 40.0}}
+                                      StaticText, 0x1065426c0, {{619.0, -610.0}, {117.0, 23.0}}, label: 'FEE: NULL'
+                                        StaticText, 0x106542d00, {{619.0, -610.0}, {117.0, 23.0}}, label: 'FEE: NULL'
+                                      Other, 0x106543c00, {{75.0, -578.5}, {670.0, 41.0}}
+                                      Other, 0x106540b40, {{75.0, -577.5}, {134.0, 40.0}}
+                                      StaticText, 0x106543980, {{83.0, -569.0}, {117.0, 23.0}}, label: 'OID: 17'
+                                        StaticText, 0x106542940, {{83.0, -569.0}, {117.0, 23.0}}, label: 'OID: 17'
+                                      Other, 0x106542a80, {{209.0, -577.5}, {134.0, 40.0}}
+                                      StaticText, 0x106540f00, {{217.0, -569.0}, {117.0, 23.0}}, label: 'CID: NULL'
+                                        StaticText, 0x106542800, {{217.0, -569.0}, {117.0, 23.0}}, label: 'CID: NULL'
+                                      Other, 0x106543d40, {{343.0, -577.5}, {134.0, 40.0}}
+                                      StaticText, 0x106543e80, {{351.0, -569.0}, {117.0, 23.0}}, label: 'STATUS: PAID'
+                                        StaticText, 0x106542440, {{351.0, -569.0}, {117.0, 23.0}}, label: 'STATUS: PAID'
+                                      Other, 0x10f1d4000, {{477.0, -577.5}, {134.0, 40.0}}
+                                      StaticText, 0x10f1d4140, {{485.0, -569.0}, {117.0, 23.0}}, label: 'AMOUNT: 30'
+                                        StaticText, 0x10f1d4280, {{485.0, -569.0}, {117.0, 23.0}}, label: 'AMOUNT: 30'
+                                      Other, 0x10f1d43c0, {{611.0, -577.5}, {134.0, 40.0}}
+                                      StaticText, 0x10f1d4500, {{619.0, -569.0}, {117.0, 23.0}}, label: 'FEE: 2'
+                                        StaticText, 0x10f1d4640, {{619.0, -569.0}, {117.0, 23.0}}, label: 'FEE: 2'
+                                      Other, 0x10f1d4780, {{75.0, -537.5}, {670.0, 41.0}}
+                                      Other, 0x10f1d48c0, {{75.0, -536.5}, {134.0, 40.0}}
+                                      StaticText, 0x10f1d4a00, {{83.0, -528.0}, {117.0, 23.0}}, label: 'OID: 18'
+                                        StaticText, 0x10f1d4b40, {{83.0, -528.0}, {117.0, 23.0}}, label: 'OID: 18'
+                                      Other, 0x10f1d4c80, {{209.0, -536.5}, {134.0, 40.0}}
+                                      StaticText, 0x10f1d4dc0, {{217.0, -528.0}, {117.0, 23.0}}, label: 'CID: 2'
+                                        StaticText, 0x10f1d4f00, {{217.0, -528.0}, {117.0, 23.0}}, label: 'CID: 2'
+                                      Other, 0x10f1d5040, {{343.0, -536.5}, {134.0, 40.0}}
+                                      StaticText, 0x10f1d5180, {{351.0, -528.0}, {117.0, 23.0}}, label: 'STATUS: WAIT'
+                                        StaticText, 0x10f1d52c0, {{351.0, -528.0}, {117.0, 23.0}}, label: 'STATUS: WAIT'
+                                      Other, 0x10f1d5400, {{477.0, -536.5}, {134.0, 40.0}}
+                                      StaticText, 0x10f1d5540, {{485.0, -528.0}, {117.0, 23.0}}, label: 'AMOUNT: 0'
+                                        StaticText, 0x10f1d5680, {{485.0, -528.0}, {117.0, 23.0}}, label: 'AMOUNT: 0'
+                                      Other, 0x10f1d57c0, {{611.0, -536.5}, {134.0, 40.0}}
+                                      StaticText, 0x10f1d5900, {{619.0, -528.0}, {117.0, 23.0}}, label: 'FEE: 0'
+                                        StaticText, 0x10f1d5a40, {{619.0, -528.0}, {117.0, 23.0}}, label: 'FEE: 0'
+                                  Other, 0x10f1d5b80, {{713.0, -865.5}, {30.0, 370.0}}, label: 'Vertical scroll bar, 1 page', value: 0%
+                                    Other, 0x10f1d5cc0, {{740.0, -867.5}, {3.0, 36.0}}
+                                  Other, 0x10f1d5e00, {{74.0, -528.5}, {672.0, 30.0}}, label: 'Horizontal scroll bar, 1 page', value: 0%
+                                    Other, 0x10f1d5f40, {{78.0, -501.5}, {665.0, 3.0}}
+                                  Other, 0x10f1d6080, {{713.0, -865.5}, {30.0, 370.0}}, label: 'Vertical scroll bar, 1 page', value: 0%
+                                    Other, 0x10f1d61c0, {{740.0, -867.5}, {3.0, 36.0}}
+                                  Other, 0x10f1d6300, {{74.0, -528.5}, {672.0, 30.0}}, label: 'Horizontal scroll bar, 1 page', value: 0%
+                                    Other, 0x10f1d6440, {{78.0, -501.5}, {665.0, 3.0}}
+                              StaticText, 0x10f1d6580, {{74.0, -483.5}, {672.0, 20.0}}, label: 'Oracle 19c · 표시된 표가 전체 데이터이며 문항끼리 독립적입니다'
+                                StaticText, 0x10f1d66c0, {{74.0, -483.5}, {672.0, 20.0}}, label: 'Oracle 19c · 표시된 표가 전체 데이터이며 문항끼리 독립적입니다'
+                              Other, 0x10f1d6800, {{74.0, -457.5}, {672.0, 154.0}}
+                                Button, 0x10f1d6940, {{682.0, -457.5}, {64.0, 48.0}}, label: 'SQL 자동 줄바꿈'
+                                StaticText, 0x10f1d6a80, {{88.0, -441.0}, {86.5, 14.5}}, label: 'SQL · 좌우 스크롤'
+                                  StaticText, 0x10f1d6bc0, {{88.0, -441.0}, {86.5, 14.5}}, label: 'SQL · 좌우 스크롤'
+                                Other, 0x10f1d6d00, {{74.0, -409.5}, {672.0, 106.0}}, label: 'SQL 코드'
+                                  ScrollView, 0x10f1d6e40, {{74.0, -409.5}, {672.0, 106.0}}
+                                    Other, 0x10f1d6f80, {{74.0, -409.5}, {449.5, 106.0}}
+                                      Other, 0x10f1d70c0, {{74.0, -409.5}, {449.5, 106.0}}
+                                        StaticText, 0x10f1d7200, {{88.0, -409.5}, {421.5, 92.0}}, label: 'SELECT OID, AMOUNT*2+FEE AS A, (AMOUNT+FEE)*2 AS B
+FROM ORDERS
+WHERE OID IN (11,13)
+ORDER BY OID'
+                                          StaticText, 0x10f1d7340, {{88.0, -409.5}, {421.5, 92.0}}, label: 'SELECT OID, AMOUNT*2+FEE AS A, (AMOUNT+FEE)*2 AS B
+FROM ORDERS
+WHERE OID IN (11,13)
+ORDER BY OID'
+                                    Other, 0x10f1d7480, {{713.0, -409.5}, {30.0, 106.0}}, label: 'Vertical scroll bar, 1 page', value: 0%
+                                      Other, 0x10f1d75c0, {{740.0, -406.5}, {3.0, 262.0}}
+                                    Other, 0x10f1d7700, {{74.0, -336.5}, {672.0, 30.0}}, label: 'Horizontal scroll bar, 1 page', value: 0%
+                                      Other, 0x10f1d7840, {{77.0, -309.5}, {554.0, 3.0}}
+                                    Other, 0x10f1d7980, {{713.0, -409.5}, {30.0, 106.0}}, label: 'Vertical scroll bar, 1 page', value: 0%
+                                      Other, 0x10f1d7ac0, {{740.0, -406.5}, {3.0, 262.0}}
+                                    Other, 0x10f1d7c00, {{74.0, -336.5}, {672.0, 30.0}}, label: 'Horizontal scroll bar, 1 page', value: 0%
+                                      Other, 0x10f1d7d40, {{77.0, -309.5}, {554.0, 3.0}}
+                              Other, 0x10f1d7e80, {{74.0, -291.5}, {672.0, 58.0}}, identifier: 'explanation-option-1', label: '1. (11, 245, 251) / (13, 160, 160)', value: radio button, unch..., Disabled
+                              Other, 0x10f1dc000, {{74.0, -221.5}, {672.0, 60.0}}, identifier: 'explanation-option-2', label: '2. (11, 245, 250) / (13, 160, 160) · 정답', value: radio button, unch..., Disabled
+                              Other, 0x10f1dc140, {{74.0, -149.5}, {672.0, 58.0}}, identifier: 'explanation-option-3', label: '3. (11, 245, 250) / (13, 161, 160)', value: radio button, unch..., Disabled
+                              Other, 0x10f1dc280, {{74.0, -79.5}, {672.0, 58.0}}, identifier: 'explanation-option-4', label: '4. (11, 245, 250) / (13, 160, 161)', value: radio button, unch..., Disabled
+                              StaticText, 0x10f1dc3c0, {{74.0, 2.5}, {672.0, 28.0}}, label: '미응답 문항입니다'
+                                StaticText, 0x10f1dc500, {{74.0, 2.5}, {672.0, 28.0}}, label: '미응답 문항입니다'
+                              StaticText, 0x10f1dc640, {{74.0, 38.5}, {672.0, 28.0}}, label: '내 답: 미응답 · 정답: 2번'
+                                StaticText, 0x10f1dc780, {{74.0, 38.5}, {672.0, 28.0}}, label: '내 답: 미응답 · 정답: 2번'
+                              StaticText, 0x10f1dc8c0, {{74.0, 90.5}, {672.0, 28.0}}, label: '해설'
+                                StaticText, 0x10f1dca00, {{74.0, 90.5}, {672.0, 28.0}}, label: '해설'
+                              StaticText, 0x10f1dcb40, {{74.0, 130.5}, {672.0, 84.0}}, label: ' 곱셈이 덧셈보다 우선한다. 첫 식의 수수료는 한 번, 둘째 식의 수수료는 두 번 더해진다.
+
+결과 열 순서: OID, A, B. 최종 결과는 2행이며 반환값은 (11, 245, 250) / (13, 160, 160)입니다.'
+                                StaticText, 0x10f1dcc80, {{74.0, 130.5}, {672.0, 84.0}}, label: ' 곱셈이 덧셈보다 우선한다. 첫 식의 수수료는 한 번, 둘째 식의 수수료는 두 번 더해진다.
+
+결과 열 순서: OID, A, B. 최종 결과는 2행이며 반환값은 (11, 245, 250) / (13, 160, 160)입니다.'
+                              StaticText, 0x10f1dcdc0, {{74.0, 226.5}, {672.0, 14.5}}, label: '계산 결과 전체 · 2행 × 3열'
+                                StaticText, 0x10f1dcf00, {{74.0, 226.5}, {672.0, 14.5}}, label: '계산 결과 전체 · 2행 × 3열'
+                              Other, 0x10f1dd040, {{74.0, 247.0}, {672.0, 124.0}}, label: '계산 결과 전체'
+                                ScrollView, 0x10f1dd180, {{74.0, 247.0}, {672.0, 124.0}}
+                                  Other, 0x10f1dd2c0, {{74.0, 247.0}, {671.0, 123.0}}
+                                    Other, 0x10f1dd400, {{75.0, 248.0}, {670.0, 122.0}}
+                                      Other, 0x10f1dd540, {{75.0, 248.0}, {670.0, 40.0}}
+                                      Other, 0x10f1dd680, {{75.0, 248.0}, {223.5, 40.0}}
+                                      StaticText, 0x10f1dd7c0, {{83.0, 256.5}, {206.5, 23.0}}, label: 'OID'
+                                        StaticText, 0x10f1dd900, {{83.0, 256.5}, {206.5, 23.0}}, label: 'OID'
+                                      Other, 0x10f1dda40, {{298.5, 248.0}, {223.0, 40.0}}
+                                      StaticText, 0x10f1ddb80, {{306.5, 256.5}, {207.0, 23.0}}, label: 'A'
+                                        StaticText, 0x10f1ddcc0, {{306.5, 256.5}, {207.0, 23.0}}, label: 'A'
+                                      Other, 0x10f1dde00, {{521.5, 248.0}, {223.5, 40.0}}
+                                      StaticText, 0x10f1ddf40, {{529.5, 256.5}, {206.5, 23.0}}, label: 'B'
+                                        StaticText, 0x10f1de080, {{529.5, 256.5}, {206.5, 23.0}}, label: 'B'
+                                      Other, 0x10f1de1c0, {{75.0, 288.0}, {670.0, 41.0}}
+                                      Other, 0x10f1de300, {{75.0, 289.0}, {223.5, 40.0}}
+                                      StaticText, 0x10f1de440, {{83.0, 297.5}, {206.5, 23.0}}, label: 'OID: 11'
+                                        StaticText, 0x10f1de580, {{83.0, 297.5}, {206.5, 23.0}}, label: 'OID: 11'
+                                      Other, 0x10f1de6c0, {{298.5, 289.0}, {223.0, 40.0}}
+                                      StaticText, 0x10f1de800, {{306.5, 297.5}, {207.0, 23.0}}, label: 'A: 245'
+                                        StaticText, 0x10f1de940, {{306.5, 297.5}, {207.0, 23.0}}, label: 'A: 245'
+                                      Other, 0x10f1dea80, {{521.5, 289.0}, {223.5, 40.0}}
+                                      StaticText, 0x10f1debc0, {{529.5, 297.5}, {206.5, 23.0}}, label: 'B: 250'
+                                        StaticText, 0x10f1ded00, {{529.5, 297.5}, {206.5, 23.0}}, label: 'B: 250'
+                                      Other, 0x10f1dee40, {{75.0, 329.0}, {670.0, 41.0}}
+                                      Other, 0x10f1def80, {{75.0, 330.0}, {223.5, 40.0}}
+                                      StaticText, 0x10f1df0c0, {{83.0, 338.5}, {206.5, 23.0}}, label: 'OID: 13'
+                                        StaticText, 0x10f1df200, {{83.0, 338.5}, {206.5, 23.0}}, label: 'OID: 13'
+                                      Other, 0x10f1df340, {{298.5, 330.0}, {223.0, 40.0}}
+                                      StaticText, 0x10f1df480, {{306.5, 338.5}, {207.0, 23.0}}, label: 'A: 160'
+                                        StaticText, 0x10f1df5c0, {{306.5, 338.5}, {207.0, 23.0}}, label: 'A: 160'
+                                      Other, 0x10f1df700, {{521.5, 330.0}, {223.5, 40.0}}
+                                      StaticText, 0x10f1df840, {{529.5, 338.5}, {206.5, 23.0}}, label: 'B: 160'
+                                        StaticText, 0x10f1df980, {{529.5, 338.5}, {206.5, 23.0}}, label: 'B: 160'
+                                  Other, 0x10f1dfac0, {{713.0, 247.0}, {30.0, 124.0}}, label: 'Vertical scroll bar, 1 page', value: 0%
+                                    Other, 0x10f1dfc00, {{740.0, 251.0}, {3.0, 199.0}}
+                                  Other, 0x10f1dfd40, {{74.0, 338.0}, {672.0, 30.0}}, label: 'Horizontal scroll bar, 1 page', value: 0%
+                                    Other, 0x10f1dfe80, {{484.0, 365.0}, {259.0, 3.0}}
+                                  Other, 0x10f1e8000, {{713.0, 247.0}, {30.0, 124.0}}, label: 'Vertical scroll bar, 1 page', value: 0%
+                                    Other, 0x10f1e8140, {{740.0, 251.0}, {3.0, 199.0}}
+                                  Other, 0x10f1e8280, {{74.0, 338.0}, {672.0, 30.0}}, label: 'Horizontal scroll bar, 1 page', value: 0%
+                                    Other, 0x10f1e83c0, {{484.0, 365.0}, {259.0, 3.0}}
+                              StaticText, 0x10f1e8500, {{74.0, 383.0}, {672.0, 28.0}}, label: '보기별 판단 근거'
+                                StaticText, 0x10f1e8640, {{74.0, 383.0}, {672.0, 28.0}}, label: '보기별 판단 근거'
+                              StaticText, 0x10f1e8780, {{74.0, 431.0}, {672.0, 20.0}}, label: '1번 · 오답'
+                                StaticText, 0x10f1e88c0, {{74.0, 431.0}, {672.0, 20.0}}, label: '1번 · 오답'
+                              StaticText, 0x10f1e8a00, {{74.0, 457.0}, {672.0, 28.0}}, label: '1번째 행의 B 값은 250여야 합니다. 이 선택지는 그 값을 다르게 계산했습니다.'
+                                StaticText, 0x10f1e8b40, {{74.0, 457.0}, {672.0, 28.0}}, label: '1번째 행의 B 값은 250여야 합니다. 이 선택지는 그 값을 다르게 계산했습니다.'
+                              StaticText, 0x10f1e8c80, {{74.0, 513.0}, {672.0, 20.0}}, label: '2번 · 정답'
+                                StaticText, 0x10f1e8dc0, {{74.0, 513.0}, {672.0, 20.0}}, label: '2번 · 정답'
+                              StaticText, 0x10f1e8f00, {{74.0, 539.0}, {672.0, 84.0}}, label: ' 곱셈이 덧셈보다 우선한다. 첫 식의 수수료는 한 번, 둘째 식의 수수료는 두 번 더해진다.
+
+결과 열 순서: OID, A, B. 최종 결과는 2행이며 반환값은 (11, 245, 250) / (13, 160, 160)입니다.'
+                                StaticText, 0x10f1e9040, {{74.0, 539.0}, {672.0, 84.0}}, label: ' 곱셈이 덧셈보다 우선한다. 첫 식의 수수료는 한 번, 둘째 식의 수수료는 두 번 더해진다.
+
+결과 열 순서: OID, A, B. 최종 결과는 2행이며 반환값은 (11, 245, 250) / (13, 160, 160)입니다.'
+                              StaticText, 0x10f1e9180, {{74.0, 651.0}, {672.0, 20.0}}, label: '3번 · 오답'
+                                StaticText, 0x10f1e92c0, {{74.0, 651.0}, {672.0, 20.0}}, label: '3번 · 오답'
+                              StaticText, 0x10f1e9400, {{74.0, 677.0}, {672.0, 28.0}}, label: '2번째 행의 A 값은 160여야 합니다. 이 선택지는 그 값을 다르게 계산했습니다.'
+                                StaticText, 0x10f1e9540, {{74.0, 677.0}, {672.0, 28.0}}, label: '2번째 행의 A 값은 160여야 합니다. 이 선택지는 그 값을 다르게 계산했습니다.'
+                              StaticText, 0x10f1e9680, {{74.0, 733.0}, {672.0, 20.0}}, label: '4번 · 오답'
+                                StaticText, 0x10f1e97c0, {{74.0, 733.0}, {672.0, 20.0}}, label: '4번 · 오답'
+                              StaticText, 0x10f1e9900, {{74.0, 759.0}, {672.0, 28.0}}, label: '2번째 행의 B 값은 160여야 합니다. 이 선택지는 그 값을 다르게 계산했습니다.'
+                                StaticText, 0x10f1e9a40, {{74.0, 759.0}, {672.0, 28.0}}, label: '2번째 행의 B 값은 160여야 합니다. 이 선택지는 그 값을 다르게 계산했습니다.'
+                              Button, 0x10f1e9b80, {{74.0, 807.0}, {672.0, 68.0}}, identifier: 'mock-theory', label: '관련 교재 읽기
+DISTINCT — 중복을 제거하는 정확한 단위'
+                              Button, 0x10f1e9cc0, {{74.0, 887.0}, {333.0, 48.0}}, identifier: 'save-mock-question', label: '문항 저장'
+                              Button, 0x10f1e9e00, {{413.0, 887.0}, {333.0, 48.0}}, identifier: 'toggle-mock-note', label: '오답 메모'
+                              Button, 0x10f1e9f40, {{74.0, 947.0}, {672.0, 48.0}}, identifier: 'mock-evidence', label: '근거 자료·검산 방식'
+                          Other, 0x10f1ea080, {{787.0, 160.0}, {30.0, 851.0}}, label: 'Vertical scroll bar, 3 pages', value: 100%
+                            Other, 0x10f1ea1c0, {{814.0, 655.5}, {3.0, 352.5}}
+                          Other, 0x10f1ea300, {{0.0, 978.0}, {820.0, 30.0}}, label: 'Horizontal scroll bar, 1 page', value: 0%
+                            Other, 0x10f1ea440, {{53.0, 1005.0}, {764.0, 3.0}}
+                          Other, 0x10f1ea580, {{787.0, 160.0}, {30.0, 851.0}}, label: 'Vertical scroll bar, 3 pages', value: 100%
+                            Other, 0x10f1ea6c0, {{814.0, 655.5}, {3.0, 352.5}}
+                          Other, 0x10f1ea800, {{0.0, 978.0}, {820.0, 30.0}}, label: 'Horizontal scroll bar, 1 page', value: 0%
+                            Other, 0x10f1ea940, {{53.0, 1005.0}, {764.0, 3.0}}
+                      Other, 0x10f1eaa80, {{0.0, 1011.0}, {820.0, 69.0}}
+                      Other, 0x10f1eabc0, {{50.0, 1012.0}, {720.0, 68.0}}, identifier: 'screen-footer'
+                      Button, 0x10f1ead00, {{74.0, 1022.0}, {50.0, 48.0}}, identifier: 'mock-review-previous', label: '이전'
+                      Button, 0x10f1eae40, {{370.0, 1022.0}, {80.0, 48.0}}, identifier: 'review-picker', label: '문항 선택'
+                      Button, 0x10f1eaf80, {{696.0, 1022.0}, {50.0, 48.0}}, identifier: 'mock-review-next', label: '다음', Disabled
+                      Other, 0x10f1eb0c0, {{0.0, 1080.0}, {820.0, 80.0}}
+                      Other, 0x10f1eb200, {{0.0, 1081.0}, {820.0, 79.0}}
+                      Other, 0x10f1eb340, {{24.0, 1089.0}, {154.5, 63.0}}, identifier: 'tab-today', label: '홈'
+                      Other, 0x10f1eb480, {{178.5, 1089.0}, {154.5, 63.0}}, identifier: 'tab-learn', label: '교재'
+                      Other, 0x10f1eb5c0, {{333.0, 1089.0}, {154.0, 63.0}}, identifier: 'tab-review', label: '문제'
+                      Other, 0x10f1eb700, {{487.0, 1089.0}, {154.5, 63.0}}, identifier: 'tab-exams', label: '실전', Selected
+                      Other, 0x10f1eb840, {{641.5, 1089.0}, {154.5, 63.0}}, identifier: 'tab-records', label: '기록'
+    Window, 0x10f1eb980, {{0.0, 0.0}, {820.0, 1180.0}}
+      Other, 0x10f1ebac0, {{0.0, 0.0}, {820.0, 1180.0}}
+        Other, 0x10f1ebc00, {{0.0, 0.0}, {820.0, 1180.0}}
+Path to element:
+ →Application, 0x10f1f3980, pid: 38517, label: 'SQLD Pass'
+Query chain:
+ →Find: Application 'com.sqldpass.app.adsqa'
+  Output: {
+    Application, 0x10f1ebd40, pid: 38517, label: 'SQLD Pass'
+  }

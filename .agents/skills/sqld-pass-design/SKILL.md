@@ -5,6 +5,10 @@ description: Apply the SQLD Pass native app design reference when changing its s
 
 # SQLD Pass design
 
+For the approved0.7.0 memory notes work follow docs/MEMORY_NOTES_20261113.md.
+Use fixed root-tab entry, continuous native category reading, independent saved/read state
+and fixed result-review return. Keep existing content, snapshots and advertising gates.
+
 For the approved0.6.0 extension, follow docs/MOCK_CURATED60_20261113.md and the
 2026-11-13 design-reference section. OriginalVol.4 is displayed as3권/41~60회.
 Use two-line volume/range labels with the existing accessible selection style; keep

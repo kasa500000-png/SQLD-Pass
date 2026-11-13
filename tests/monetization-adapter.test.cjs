@@ -114,7 +114,7 @@ test('advertising approval hash changes when library or rendered ad placement co
  const {codeHash}=require('../config/ads-config.cjs'),path=require('node:path'),root=path.resolve(__dirname,'..');
  const original=fs.readFileSync,baseline=codeHash(root);
  try{
-  for(const name of ['src/core/domain/library.ts','src/ui/views.ts','src/ui/nodes.ts','src/platform/NativeView.tsx','plugins/withAdPrivacy.cjs','src/mocks/views.ts','src/textbook/views.ts']){
+  for(const name of ['src/core/domain/library.ts','src/ui/views.ts','src/ui/nodes.ts','src/platform/NativeView.tsx','plugins/withAdPrivacy.cjs','src/mocks/views.ts','src/textbook/views.ts','src/memory/views.ts','src/memory/domain.ts','src/memory/types.ts']){
    const target=path.join(root,name);
    fs.readFileSync=function(file,...args){const data=original.call(this,file,...args);return file===target?Buffer.concat([Buffer.from(data),Buffer.from('\nchanged')]):data;};
    assert.notEqual(codeHash(root),baseline,`${name} must invalidate ad approval`);

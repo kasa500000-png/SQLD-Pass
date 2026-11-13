@@ -1,8 +1,8 @@
 {
   "schema": 1,
-  "contentVersion": "textbook.20261113.1",
-  "sha256": "61316063d2112c7b5cd25773a662a61b9037925e375073131c094d2522ca9fd5",
-  "bytes": 9538060,
+  "contentVersion": "textbook.20261113.2",
+  "sha256": "5473eb0f7f166e8caf7b4eb7dc168e6e42592449a1bf7064fccebb9f38adc64f",
+  "bytes": 9588722,
   "counts": {
     "lessons": 216,
     "practice": 340,
@@ -13,7 +13,8 @@
     "textbook-20261109.html": "cb789f945b31c6e5f53ab0cf5e55d1ba43d5824882e1da85cd835dc8ee7e9182",
     "mock-vol2-20261112.html": "e6fef8f1291a784af1fa21f0c2d65641afa96c454c9ea7bfa971402114e296fb",
     "mock-vol3-20261112.html": "9a1c36c857d03e75398f467e9eef95af8568eb9811a3042db4a71461ed1f6979",
-    "mock-vol4-20261113.html": "0946e1889342b912c6528ae1a1897e361bd6aa3cade490cbda1cec28c5834f25"
+    "mock-vol4-20261113.html": "0946e1889342b912c6528ae1a1897e361bd6aa3cade490cbda1cec28c5834f25",
+    "memory-notes-20261113.html": "08b651aeef9b9173cf380ee4ca12c2fe9408c9b97761053976fb65466e84d56a"
   },
   "status": "editorial_draft",
   "note": "Identity only. New content requires its own review and release approval."

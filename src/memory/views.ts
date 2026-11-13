@@ -30,7 +30,13 @@ export function renderMemoryScreen(c:MonetizedController):{title:string;body:Nod
      act('전체 노트 보기',()=>{c.memorySearch='';c.memoryFilter='all';c.notify();},'memory-reset')
     ])
    ]),
-   meta(pack.editorialNote)
+   meta(pack.editorialNote),
+   {...act('자료·출처 안내',()=>c.toggleExpanded('memory:info'),'memory-info'),expanded:c.expanded.has('memory:info')},
+   ...(c.expanded.has('memory:info')?[
+    h('첨부 자료의 시험 기준'),t('50문항 · 90분. 총점 60점 이상과 각 과목 40% 이상을 모두 충족해야 합니다. 1과목 10문항 중 4개, 2과목 40문항 중 16개 이상을 맞히면서 전체 30개 이상 정답이 필요합니다.'),
+    meta('독립 제작한 요약 노트이며 공식 문제집이 아닙니다. 실제 시험의 최신 일정과 기준은 데이터자격검정 공지를 확인해 주세요.'),
+    ...([['데이터자격검정','https://www.dataq.or.kr/'],['Oracle NVL2','https://docs.oracle.com/en/database/oracle/oracle-database/21/sqlrf/NVL2.html'],['Oracle NULL','https://docs.oracle.com/en/database/oracle/oracle-database/19/sqlrf/Nulls.html'],['원문 참고: 시험 과목 안내','https://certpass.kr/cert/sqld/']] as const).map(([label,url],i)=>link(label,'외부 웹사이트',()=>{void c.external(url);},'memory-source-'+i))
+   ]:[])
   ]};
  }
  if(r==='memoryQuick')return {title:'빠른 암기',body:[h('빠른 암기 12줄'),...pack.quickLines.map(n=>box([h(n.title),t(n.text)],{gap:8,paddingVertical:16,borderBottomWidth:1,borderColor:p.line},n.id)),meta('요약만 외우기보다 분류별 설명과 예제를 함께 확인해 주세요.')]};

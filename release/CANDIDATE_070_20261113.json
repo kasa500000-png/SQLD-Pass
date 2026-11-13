@@ -1,0 +1,17 @@
+{
+  "appVersion": "0.7.0",
+  "androidVersionCode": 24,
+  "iosBuildNumber": "18",
+  "contentVersion": "textbook.20261113.2",
+  "contentSha256": "5473eb0f7f166e8caf7b4eb7dc168e6e42592449a1bf7064fccebb9f38adc64f",
+  "implementationStatus": "implemented; Android physical and iOS simulator validated",
+  "contentReview": "awaiting-owner-exact-hash-confirmation",
+  "androidBuild": "internal official test ads",
+  "androidTestApkSha256": "5316f7455d5b022d1dd8d8d337da7597405acfa92cd36b5be5463cbb416b4cd3",
+  "iosBuild": "Release iphonesimulator; not a store archive",
+  "iosPhysical": "unavailable; not performed; no waiver for 0.7.0",
+  "productionSubmitted": false,
+  "testFlightUploaded": false,
+  "notes": "0.6.0 submission records remain historical and are not 0.7.0 release evidence.",
+  "adCodeSha256": "5e48dfdebdbd872dd6fe6f042ceae80f6c84063c30821ca6076bd6629d12157f"
+}
