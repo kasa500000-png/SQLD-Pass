@@ -8,11 +8,11 @@
   "contentReview": "owner-reviewed-complete",
   "androidBuild": "production/live/rewarded signed AAB24; signature, bundletool, embedded config/content and35 ELF alignment checks passed",
   "androidTestApkSha256": "5316f7455d5b022d1dd8d8d337da7597405acfa92cd36b5be5463cbb416b4cd3",
-  "iosBuild": "Release iphonesimulator only; no0.7 store archive/upload",
-  "iosPhysical": "unavailable; not performed; no waiver for 0.7.0",
+  "iosBuild": "Production/live/rewarded signed archive and App Store IPA18; strict signatures and approved content verified; Apple VALID/APP_STORE_ELIGIBLE",
+  "iosPhysical": "unavailable; not performed; new owner exception for0.7.0(18)",
   "productionSubmitted": true,
-  "testFlightUploaded": false,
-  "notes": "Android0.6.0(23) 100% public rollout observed before0.7 submission. iOS0.6.0 exception is not reused. Owner Android-only response does not waive0.7 iOS physical/consent gates.",
+  "testFlightUploaded": true,
+  "notes": "New exact-candidate iOS exception recorded;0.6.0 exception is not reused. Android submission remains historical observation. iOS physical/consent checks remain unperformed.",
   "adCodeSha256": "5e48dfdebdbd872dd6fe6f042ceae80f6c84063c30821ca6076bd6629d12157f",
   "androidConsent": "EEA diagnostic: initial privacy error, retry displayed actual UMP; consent, reopen and decline; retained notes and earned access",
   "automatedChecks": {
@@ -30,6 +30,16 @@
     "automaticPublish": true,
     "rolloutPercent": 100,
     "preReviewChecks": "running",
+    "approvedOrPublished": false
+  },
+  "iosScopedException": "이번 예외로 정식 출시 및 Testflight 업데이트 진행",
+  "iosSubmission": {
+    "version": "0.7.0",
+    "buildNumber": 18,
+    "status": "WAITING_FOR_REVIEW",
+    "releaseType": "AFTER_APPROVAL",
+    "submittedDate": "2026-11-13T11:18:51.649Z",
+    "testFlight": "IN_BETA_TESTING",
     "approvedOrPublished": false
   }
 }

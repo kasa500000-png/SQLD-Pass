@@ -1,0 +1,40 @@
+{
+  "artifact": "/tmp/sqld-production-0.7.0/ios-export18/SQLDPass.ipa",
+  "bytes": 19606072,
+  "sha256": "4f9620848377947e3056f3901d5137bf75527780ad59c59343fda57673150168",
+  "mainJsBundleSha256": "f6ff1a6848383715b833aeee89bfd94444927feb2cb38be44ba88604da475df6",
+  "version": "0.7.0",
+  "build": "18",
+  "bundleId": "com.kasa500000.sqldpass",
+  "adMobAppId": "ca-app-pub-9314207769680999~3391326882",
+  "trackingPermissionDescriptionPresent": false,
+  "nonExemptEncryption": false,
+  "runtime": {
+    "appEnvironment": "production",
+    "contentReleaseReady": true,
+    "productionContentApproval": {
+      "schemaVersion": 1,
+      "approved": true,
+      "contentSha256": "5473eb0f7f166e8caf7b4eb7dc168e6e42592449a1bf7064fccebb9f38adc64f",
+      "contentVersion": "textbook.20261113.2"
+    },
+    "adsRuntimeEnabled": true,
+    "adsMode": "live",
+    "examAccessPolicy": "rewarded",
+    "remoteAnalyticsEnabled": false,
+    "eas": {
+      "projectId": "9c3d6489-bfb8-426a-9a6c-8673fa3c07f0"
+    }
+  },
+  "productionAdUnitsPresent": [
+    "ca-app-pub-9314207769680999/4355019185",
+    "ca-app-pub-9314207769680999/9507152408"
+  ],
+  "archiveSignatureVerified": true,
+  "exportedSignatureVerified": true,
+  "applicationIdentifier": "F4HJ438953.com.kasa500000.sqldpass",
+  "getTaskAllow": false,
+  "privacyManifestIncluded": true,
+  "diagnosticDeviceHashAbsent": true,
+  "physicalValidation": "Current0.7.0 physical iPad and regional iOS consent reruns were not performed. Owner newly instructed 이번 예외로 정식 출시 및 Testflight 업데이트 진행, waiving these additional checks for0.7.0(18) only. Simulator and Android results remain separately scoped."
+}

@@ -1,0 +1,76 @@
+{
+  "recordedAt": "2026-11-13T11:19:53.924Z",
+  "policy": "Existing0.6.0 screenshots retained; no new capture or physical validation claimed",
+  "sets": [
+    {
+      "display": "APP_IPAD_PRO_3GEN_129",
+      "images": [
+        {
+          "id": "ec000019-6632-831d-8013-fbfc025d29e2",
+          "name": "060-ipad-50-store-home.png",
+          "state": "COMPLETE"
+        },
+        {
+          "id": "87c00019-6632-831d-801a-971af974a239",
+          "name": "060-ipad-51-store-textbook.png",
+          "state": "COMPLETE"
+        },
+        {
+          "id": "e4400019-6632-831d-803d-c86eb8f13271",
+          "name": "060-ipad-52-store-practice.png",
+          "state": "COMPLETE"
+        },
+        {
+          "id": "9ac00019-6632-831d-8017-3263dcf201f1",
+          "name": "060-ipad-53-store-mocks1.png",
+          "state": "COMPLETE"
+        },
+        {
+          "id": "1e400019-6632-831d-8036-79719e924a87",
+          "name": "060-ipad-54-store-mocks2.png",
+          "state": "COMPLETE"
+        },
+        {
+          "id": "36800019-6632-831d-8016-798345dfca21",
+          "name": "060-ipad-55-store-mocks3.png",
+          "state": "COMPLETE"
+        }
+      ]
+    },
+    {
+      "display": "APP_IPHONE_65",
+      "images": [
+        {
+          "id": "cf000019-6632-831d-800a-0cee772587e3",
+          "name": "060-iphone-50-store-home.png",
+          "state": "COMPLETE"
+        },
+        {
+          "id": "2f800019-6632-831d-801a-8971da0c574e",
+          "name": "060-iphone-51-store-textbook.png",
+          "state": "COMPLETE"
+        },
+        {
+          "id": "8b400019-6632-831d-802b-b31b7b3ef5ae",
+          "name": "060-iphone-52-store-practice.png",
+          "state": "COMPLETE"
+        },
+        {
+          "id": "f9000019-6632-831d-803e-eeff562745f6",
+          "name": "060-iphone-53-store-mocks1.png",
+          "state": "COMPLETE"
+        },
+        {
+          "id": "bac00019-6632-831d-8019-87e53d3bab83",
+          "name": "060-iphone-54-store-mocks2.png",
+          "state": "COMPLETE"
+        },
+        {
+          "id": "7ec00019-6632-831d-8026-fb45b525fc7f",
+          "name": "060-iphone-55-store-mocks3.png",
+          "state": "COMPLETE"
+        }
+      ]
+    }
+  ]
+}

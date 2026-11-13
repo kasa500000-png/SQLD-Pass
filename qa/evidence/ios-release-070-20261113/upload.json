@@ -1,0 +1,9 @@
+{
+  "recordedAt": "2026-11-13T11:14:49+00:00",
+  "version": "0.7.0",
+  "build": "18",
+  "deliveryUuid": "24515e87-20a1-4ebf-9b71-6a83668cb0c0",
+  "uploadSucceeded": true,
+  "bytes": 19606072,
+  "observedUploaderDiagnostic": "Resume-state path missing; uploader then reported UPLOAD SUCCEEDED with no errors and exit0. Apple processing is checked separately."
+}

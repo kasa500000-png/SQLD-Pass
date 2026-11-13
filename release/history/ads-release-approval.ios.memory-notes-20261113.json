@@ -1,0 +1,17 @@
+{
+  "platform": "ios",
+  "policyVersion": "2026-11-13.1",
+  "codeSha256": "5e48dfdebdbd872dd6fe6f042ceae80f6c84063c30821ca6076bd6629d12157f",
+  "iosDeviceEvidence": "Current0.7.0 physical iPad NOT PERFORMED. Owner newly instructed 이번 예외로 정식 출시 및 Testflight 업데이트 진행 for0.7.0(18). Current iPhone SE3/iPad10 simulator notes/search/save/restart/dark/large-font and fixed review return passed separately; qa/MEMORY_NOTES_20261113.md. No physical iOS pass claimed.",
+  "consentAndATTEvidence": "Current0.7.0 iOS ad/consent reruns NOT PERFORMED under the new exact-candidate owner exception. Historical0.6 simulator EEA/test reward remains historical only. Current Android UMP accept/reopen/decline and reward47 verified separately. Runtime adult opt-in/UMP canRequestAds/noATT and earned-only grants unchanged.",
+  "adPlacementEvidence": "Current0.7 iPhone/iPad simulator notes and solving/review UI verified with no banners in restricted screens. Current Android official test reward47 and consent verified separately. Ads placement, no-ad-active-attempt and earned-only logic unchanged; no live impressions/clicks for QA.",
+  "sdkCompatibilityEvidence": "Current496 automated checks, native types/content and iOS simulator/Android Release builds passed. No SDK changes in0.7. Actual0.7.0(18) Release archive and App Store export succeeded; archive/IPA strict signatures, production/live/rewarded, approved hash, iOS ad units and privacy manifest verified. Apple upload/processing/submission recorded separately; qa/IOS_RELEASE_070_20261113.md.",
+  "appAdsTxtEvidence": "Public app-ads.txt seller pub-9314207769680999 and privacy/support HTTP200 checked2026-11-13 for0.7. Same-day historical AdMob Ready/serving and previously disabled refresh remain historical, not repeated checks.",
+  "privacyDisclosureEvidence": "83 local native memory notes, bookmarks and reading position add no advertising SDK, permission, analytics, data collection, sharing or tracking. Existing Apple ad disclosure and public privacy policy apply. Public support content remains historical and is not claimed updated.",
+  "privacyUrl": "https://sqld-pass-support.shk1122.chatgpt.site/privacy.html",
+  "supportUrl": "https://sqld-pass-support.shk1122.chatgpt.site/support.html",
+  "approvedBy": "Owner authorized release execution and directly confirmed exact textbook.20261113.2 hash5473eb0f7f166e8caf7b4eb7dc168e6e42592449a1bf7064fccebb9f38adc64f. Newly instructed 이번 예외로 정식 출시 및 Testflight 업데이트 진행 for iOS0.7.0(18).",
+  "approvedAt": "2026-11-13T11:11:18.701Z",
+  "additionalValidationWaived": true,
+  "waiverScope": "iOS0.7.0(18) additional physical iPad and iOS ad/consent reruns only, unperformed. Actual archive/export/upload, exact content approval, runtime consent, earned-reward and signing gates remain required."
+}
