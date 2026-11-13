@@ -1,0 +1,19 @@
+{
+  "oldVersion": "textbook.20261112.2",
+  "newVersion": "textbook.20261113.1",
+  "attemptChecks": [
+    {
+      "examId": "SQLD-M21",
+      "preservedFields": [
+        "examId",
+        "answers",
+        "flagged"
+      ],
+      "sameFields": true,
+      "wasPaused": true,
+      "statusAfterExplicitSubmit": "submitted"
+    }
+  ],
+  "unchangedSnapshotRows": 1,
+  "originalSnapshotRows": 1
+}

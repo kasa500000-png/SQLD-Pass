@@ -20,6 +20,12 @@ TestFlight and both production submissions remain authorized, but new exact-hash
 review confirmation and current native/consent evidence are required. The0.5.0 iOS
 exception does not carry forward. See docs/MOCK_CURATED60_20261113.md.
 
+The owner directly confirmed “새 3권 내용 검수 완료” for textbook.20261113.1,
+SHA-256 61316063d2112c7b5cd25773a662a61b9037925e375073131c094d2522ca9fd5.
+The owner can connect Android only for this run. Current Android physical evidence and
+iOS simulator evidence must remain separate. No new iOS physical-validation waiver
+has been granted for0.6.0. Prior release execution authorization persists.
+
 ## Latest owner direction — 2026-11-12 curated40 and study review
 
 The owner approved docs/MOCK40_20261112.md and requested implementation. Remove original

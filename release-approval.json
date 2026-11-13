@@ -1,17 +1,17 @@
 {
   "schemaVersion": 1,
   "approvedBy": "repository owner (current conversation)",
-  "approvedAt": "2026-11-12T05:37:40.375+00:00",
-  "contentSha256": "48e1214183bb4123a218a46bbce1362933778e34914cd79a7485d06d233be9b3",
-  "contentVersion": "textbook.20261112.2",
-  "humanContentReview": "Owner directly confirmed 해당 40회 구성의 콘텐츠 검수·출시 확인 완료 for this exact candidate/hash. Retained 216 sections,340 practice and2000 mock question objects match approved source; original volume1 retired.",
-  "androidDeviceQA": "Current0.5.0(22) official-test APK updated over0.4.0 on SM-F721N Android16. Retained oldM40/new20 paused01:29:54,2answers/flag/position; direct review and official rewarded new6 grant persistence verified. New9 actual test-ad process interruption before reward remains locked. Current EEA reject/accept/withdraw, age cancel/adult and test banner verified. Active paused study suppresses home banner.471 tests and native/content checks passed. qa/MOCK40_20261112.md.",
-  "iosDeviceQA": "Current0.5.0 physical iPad validation was not performed because the device is unavailable. Owner explicitly instructed 검증 생략 예외로 ios도 정식 심사 및 testflight 업데이트 반영 for this candidate. Current iPhone/iPad simulator UI, immutable SQLite update comparison, official test reward and visible EEA reject/accept/withdraw passed; qa/MOCK40_20261112.md. Additional physical/consent reruns waived, not reported as passed.",
-  "ownerApproval": "Owner authorized implementation, five PR groups, commits/merges and both production submissions; directly confirmed exact40-exam content review/release. Android-only execution uses current device/consent evidence. iOS validation and signing gates remain independent. New explicit0.5.0 iOS exception: 검증 생략 예외로 ios도 정식 심사 및 testflight 업데이트 반영. Prior0.4.0 waiver not reused.",
+  "approvedAt": "2026-11-13T03:57:27+00:00",
+  "contentSha256": "61316063d2112c7b5cd25773a662a61b9037925e375073131c094d2522ca9fd5",
+  "contentVersion": "textbook.20261113.1",
+  "humanContentReview": "Owner directly confirmed 새 3권 내용 검수 완료 for textbook.20261113.1 SHA-256 61316063d2112c7b5cd25773a662a61b9037925e375073131c094d2522ca9fd5. New1000 questions field-compared to originalVol4; retained2340 questions and216 sections unchanged.",
+  "androidDeviceQA": "Current0.6.0(23) official-test APK on SM-F721N Android16. Actual0.5→0.6 update preserves paused study/answers and prior grant6. New41 answering/50th question/submit cancellation/pause/restart/results/direct review/save passed. Earned46 and60 persist;47 interrupted before reward remains locked. Current published EEA reject/accept/withdraw and age cancellation passed; first privacy request requires retry. Android emulator timed update/dark/130% passed.489 tests and native builds passed; qa/MOCK_CURATED60_20261113.md.",
+  "iosDeviceQA": "NOT PERFORMED: physical iPad unavailable; owner can connect Android only, with no0.6 waiver. Current iPhone SE3/iPad10 simulator UI and iPhone SQLite immutable snapshot comparison, official test reward46, visible UMP accept/withdraw after retry completed. Not physical evidence. iOS production/TestFlight remain blocked.",
+  "ownerApproval": "Owner authorized implementation, separated PRs/merges and TestFlight/both production submission execution, and now directly confirmed new3rd-volume content. Android release uses current physical/consent evidence. No iOS physical waiver is inferred from Android-only device availability.",
   "privacyUrl": "https://sqld-pass-support.shk1122.chatgpt.site/privacy.html",
   "supportUrl": "https://sqld-pass-support.shk1122.chatgpt.site/support.html",
   "platformReleaseStatus": {
-    "android": "0.5.0(22) signed live-ad AAB validated and submitted to Google Play production review on 2026-11-12 14:51 KST;100% automatic rollout after approval;not yet publicly released.",
-    "ios": "0.5.0(16) actual Release archive/export, IPA signatures and production/live/rewarded/content-hash validation passed. Apple VALID/APP_STORE_ELIGIBLE; TestFlight internal group IN_BETA_TESTING and App Store WAITING_FOR_REVIEW on2026-11-12 18:06 KST; AFTER_APPROVAL. Additional physical iPad/consent reruns explicitly waived, not passed. qa/IOS_RELEASE_050_20261112.md."
+    "android": "0.6.0(23) current QA passed; production signing/upload pending",
+    "ios": "0.6.0 candidate not submitted"
   }
 }

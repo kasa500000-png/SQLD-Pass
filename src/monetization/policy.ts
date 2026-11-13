@@ -3,7 +3,7 @@ import type {AppState, Content} from '../core/types';
 export type AdMode = 'off' | 'test' | 'live';
 export type ExamAccessPolicy = 'launch-free' | 'rewarded';
 export const FREE_EXAM_IDS = ['SQLD-M01','SQLD-M02','SQLD-M03','SQLD-M04'] as const;
-export const POLICY_VERSION = '2026-11-12.2';
+export const POLICY_VERSION = '2026-11-13.1';
 // Shown beside every direct rewarded-ad button, before the user opts in.
 export const REWARD_ACTION = '광고 1회 보고 회차 열기';
 export const REWARD_DISCLOSURE = '광고 완료 후 이 회차의 두 모드·재응시·해설을 이 기기에서 계속 이용합니다.';
