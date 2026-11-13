@@ -1,0 +1,22 @@
+{
+  "schemaVersion": 1,
+  "status": "owner-reviewed-complete",
+  "contentVersion": "textbook.20261112.2",
+  "contentSha256": "48e1214183bb4123a218a46bbce1362933778e34914cd79a7485d06d233be9b3",
+  "scope": {
+    "lessons": 216,
+    "questions": 2340,
+    "practiceQuestions": 340,
+    "mockExams": 40,
+    "mockQuestions": 2000
+  },
+  "productionReleaseApproved": true,
+  "note": "Owner directly confirmed this exact curated40 candidate in the current conversation. Original volume1 and related records are retired by explicit owner choice. All retained textbook/practice/mock question objects are unchanged. Current device/consent/signing gates remain independent; no prior waiver or unprovided expert review is inferred.",
+  "recordedAt": "2026-11-12T04:55:11+00:00",
+  "declaredBy": "repository owner (current conversation)",
+  "ownerStatement": "해당 40회 구성의 콘텐츠 검수·출시 확인 완료",
+  "reviewer": null,
+  "reviewedAt": null,
+  "targetDbmsReview": null,
+  "officialSyllabusReview": null
+}

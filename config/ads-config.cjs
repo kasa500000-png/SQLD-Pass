@@ -1,6 +1,6 @@
 'use strict';
 const fs=require('node:fs'),path=require('node:path'),crypto=require('node:crypto');
-const POLICY='2026-11-12.2';
+const POLICY='2026-11-13.1';
 const CODE_FILES=['config/ads-config.cjs','src/monetization/policy.ts','src/monetization/controller.ts','src/monetization/views.ts','src/platform/ads.ts','src/platform/MonetizedRoot.tsx','src/platform/NativeView.tsx','src/platform/LearningModal.tsx','app.config.ts','react-native.config.js','package.json','package-lock.json','eas.json','scripts/patch-admob-config-plugin.cjs','plugins/withKotlinVersion.cjs','plugins/withAdPrivacy.cjs','plugins/withInterfaceTheme.cjs','src/mocks/views.ts','src/textbook/views.ts','config/public-support.json','App.tsx','src/core/types.ts','src/core/controller.ts','src/core/domain/library.ts','src/core/domain/exam.ts','src/core/domain/state.ts','src/core/domain/mock-retirement.ts','src/platform/native.ts','src/mocks/domain.ts','src/ui/learning-content.ts','src/ui/responsive-layout.ts','src/platform/StudyReadables.tsx','src/platform/TextbookWidget.tsx','src/platform/ReadingScrollView.tsx','src/platform/CatalogScrollView.tsx','src/ui/views.ts','src/ui/nodes.ts','src/ui/learning-polish.ts','src/ui/question-context.ts'];
 function codeHash(root){const h=crypto.createHash('sha256');for(const p of CODE_FILES)h.update(p+'\0').update(fs.readFileSync(path.join(root,p)));return h.digest('hex');}
 function adsBuildConfig(env=process.env){
