@@ -27,7 +27,7 @@ export interface RewardDriver {
 export const disabledAds:RewardDriver = {
   mode:'off', adultConfirmed:false, confirmAdult(){}, async showReward(){return 'unavailable';}, async privacyOptions(){}
 };
-export function validExamId(id:string):boolean {return /^SQLD-M(0[1-9]|[1-5][0-9]|60)$/.test(id);}
+export function validExamId(id:string):boolean {return /^SQLD-M(0[1-9]|[1-7][0-9]|80)$/.test(id);}
 /** Historical free-launch rights never expand with the current catalog. */
 export function legacyLaunchExam(id:string):boolean {return /^SQLD-M(0[1-9]|1[0-9]|20)$/.test(id);}
 export function isFreeExam(id:string,c?:Content):boolean {return (c?.mockPack?.freeExamIds??FREE_EXAM_IDS as readonly string[]).includes(id);}

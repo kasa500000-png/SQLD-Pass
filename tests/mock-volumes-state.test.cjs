@@ -29,7 +29,8 @@ test('failed compatibility save retains old version and records until an explici
 test('historical free rights never expand to new exams even under launch-free defaults',async()=>{
  const h=harness(content,null,{mode:'off',policy:'launch-free'});await h.ctrl.initialize();a.equal(h.ctrl.hasAccess('SQLD-M20'),true);for(const id of ['SQLD-M21','SQLD-M40','SQLD-M41','SQLD-M60']){a.equal(h.ctrl.hasAccess(id),false);a.equal(p.walletOf(h.ctrl.state).grants[id],undefined);}
  const s={...d.initialState(content),exams:[{id:'legacy',examId:'SQLD-M20',startedAt:1},{id:'unexpected',examId:'SQLD-M21',startedAt:1}]};const migrated=p.migrateWallet(s);a.ok(p.walletOf(migrated).grants['SQLD-M20']);a.equal(p.walletOf(migrated).grants['SQLD-M21'],undefined);
- for(const id of ['SQLD-M00','SQLD-M61','SQLD-M1','SQLD-M060','other'])a.equal(p.validExamId(id),false);
+ a.equal(p.canAccessExam(h.ctrl.state,'SQLD-M61','test',content),false);
+ for(const id of ['SQLD-M00','SQLD-M81','SQLD-M1','SQLD-M060','other'])a.equal(p.validExamId(id),false);
 });
 test('earned21/40/41/60 events open only that exam, once, and survive restart and both modes',async()=>{
  for(const id of ['SQLD-M21','SQLD-M40','SQLD-M41','SQLD-M60']){const h=harness(),c=h.ctrl;await c.initialize();await c.saveSettings(true);await c.watchAdToUnlock(id);a.equal(c.hasAccess(id),true);a.equal(Object.keys(p.walletOf(c.state).grants).length,1);a.equal(c.activeExam(),undefined);await c.watchAdToUnlock(id);a.equal(h.shows(),1);for(const mode of ['timed','study']){await c.beginExam(id,mode);a.equal(c.activeExam().examId,id);await c.pauseExam();c.tab('today');a.equal(c.showBanner,false);await c.finishExam('manual');}const r=harness(content,h.saved());await r.ctrl.initialize();a.equal(r.ctrl.hasAccess(id),true);a.deepEqual(p.walletOf(r.ctrl.state).grants,p.walletOf(c.state).grants);a.equal(h.shows(),1);}

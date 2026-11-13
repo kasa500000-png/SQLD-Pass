@@ -4,7 +4,7 @@ import {parseReading} from './reading';
 import {isReviewStudyDay,migrateLearningState} from './learning';
 import {clearPending,migrateWallet,walletOf} from '../../monetization/policy';
 import {matchesProductionContentApproval} from './release';
-import {CURATED_MOCK_VERSION,retireOriginalMocks} from './mock-retirement';
+import {needsOriginalMockRetirement,retireOriginalMocks} from './mock-retirement';
 
 export const SUBJECTS:Record<Subject,string>={S1:'데이터 모델링의 이해',S2:'SQL 기본 및 활용'};
 export function dayKey(time=Date.now()):string { const d=new Date(time); return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`; }
@@ -20,10 +20,11 @@ export function parseState(raw:unknown,content:Content):AppState {
   if(raw===null)return initialState(content);let s=raw as Partial<AppState>;
   const compatible:Record<string,readonly string[]>={
     'textbook.20261109.2':['textbook.20261109.1'],
-    'textbook.20261112.1':['textbook.20261109.1','textbook.20261109.2']
+    'textbook.20261112.1':['textbook.20261109.1','textbook.20261109.2'],
+    'textbook.20261113.1':['textbook.20261112.2']
   };
   if(content.mockPack&&content.manifest.theoryVersion==='textbook.20261109.1'&&compatible[content.manifest.version]?.includes(s?.contentVersion??''))s={...s,contentVersion:content.manifest.version};
-  if(content.manifest.version===CURATED_MOCK_VERSION&&['textbook.20261109.1','textbook.20261109.2','textbook.20261112.1'].includes(s?.contentVersion??''))s=retireOriginalMocks(s as AppState);
+  if(s?.contentVersion!=='phase1.20260908.1'&&needsOriginalMockRetirement(s?.contentVersion??'',content.manifest.version))s=retireOriginalMocks(s as AppState,content.manifest.version);
   if(!s||typeof s!=='object'||s.schema!==1||typeof s.revision!=='number'||!s.settings||!Array.isArray(s.exams)||!Array.isArray(s.responses)||!Array.isArray(s.readLessons)||!Array.isArray(s.bookmarks)||!Array.isArray(s.completedDays)||!Array.isArray(s.studyDays)||!s.reviews||typeof s.contentVersion!=='string'||typeof s.onboarded!=='boolean')throw new Error('학습 기록 형식이 올바르지 않습니다. 원본을 지우지 않고 복구를 중단했습니다.');
   if(![15,30,45,60,90].includes(s.settings.minutes)||![1,1.15,1.3].includes(s.settings.fontScale)||!['light','dark','system'].includes(s.settings.theme))throw new Error('설정 데이터가 손상되었습니다.');
   if(content.textbook&&s.contentVersion!==content.manifest.version){
@@ -32,7 +33,7 @@ export function parseState(raw:unknown,content:Content):AppState {
     const wallet=walletOf(clearPending(migrateWallet(s as AppState)));
     const migrated={...initialState(content),revision:s.revision,onboarded:s.onboarded,settings:{...s.settings},reading:{lastLessonId:null,positions:{}},monetization:wallet,
       textbookMigration:{version:1,fromVersion:s.contentVersion,noticePending:true}} as AppState;
-    return content.manifest.version===CURATED_MOCK_VERSION?retireOriginalMocks({...migrated,contentVersion:s.contentVersion}):migrated;
+    return needsOriginalMockRetirement(s.contentVersion,content.manifest.version)?retireOriginalMocks({...migrated,contentVersion:s.contentVersion},content.manifest.version):migrated;
   }
   for(const e of s.exams){if(!Array.isArray(e.snapshots)||e.snapshots.length!==50||!e.checkpoint||(e.mode==='study'?e.remainingMs!==null||e.durationSeconds!==null:!Number.isFinite(e.remainingMs)||e.durationSeconds!==5400)||e.mode!==undefined&&!['timed','study'].includes(e.mode)||!Number.isFinite(e.checkpoint.wall)||!Number.isFinite(e.checkpoint.mono)||!['active','submitted'].includes(e.status))throw new Error('시험 기록 형식을 확인할 수 없습니다.');}
   if(s.contentVersion!==content.manifest.version&&s.practice)throw new Error('진행 중 연습의 콘텐츠 버전이 다릅니다. 기존 버전으로 복구해야 합니다.');

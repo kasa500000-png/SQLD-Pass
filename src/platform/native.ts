@@ -3,7 +3,7 @@ import * as Crypto from 'expo-crypto';
 import {Linking, Share} from 'react-native';
 import type {AppState, Repository, Services} from '../core/types';
 import support from '../../config/public-support.json';
-import {CURATED_MOCK_VERSION,retireOriginalMocks,retiredMockSnapshot} from '../core/domain/mock-retirement';
+import {needsOriginalMockRetirement,retireOriginalMocks,retiredMockSnapshot} from '../core/domain/mock-retirement';
 
 export class NativeRepository implements Repository {
   private db?: Promise<SQLite.SQLiteDatabase>;
@@ -87,7 +87,7 @@ export class NativeRepository implements Repository {
       if ((old?.revision ?? 0) !== state.revision - 1) throw new Error('저장 기록의 버전이 다릅니다. 앱을 다시 열어 주세요.');
       const migrating=state.textbookMigration?.version===1&&!!old&&JSON.parse(old.payload).contentVersion==='phase1.20260908.1'&&state.contentVersion!==JSON.parse(old.payload).contentVersion;
       if(migrating){await tx.runAsync('DELETE FROM learner_state WHERE slot = ?', 'previous');await tx.runAsync('DELETE FROM exam_snapshot');}
-      const retiring=state.contentVersion===CURATED_MOCK_VERSION&&!!old&&JSON.parse(old.payload).contentVersion!==CURATED_MOCK_VERSION;
+      const retiring=!!old&&needsOriginalMockRetirement(JSON.parse(old.payload).contentVersion,state.contentVersion);
       if(retiring&&!migrating){
         const snapshots=await tx.getAllAsync<{attempt_id:string;payload:string}>('SELECT attempt_id, payload FROM exam_snapshot');
         for(const snap of snapshots){
@@ -98,7 +98,7 @@ export class NativeRepository implements Repository {
         }
       }
       for (const exam of pending) await tx.runAsync('INSERT OR IGNORE INTO exam_snapshot(attempt_id, payload) VALUES (?, ?)', exam.id, JSON.stringify(exam.snapshots));
-      if (old && !migrating) await tx.runAsync('INSERT OR REPLACE INTO learner_state(slot, revision, payload, saved_at) VALUES (?, ?, ?, ?)', 'previous', old.revision, retiring?JSON.stringify(retireOriginalMocks(JSON.parse(old.payload))):old.payload, old.saved_at);
+      if (old && !migrating) await tx.runAsync('INSERT OR REPLACE INTO learner_state(slot, revision, payload, saved_at) VALUES (?, ?, ?, ?)', 'previous', old.revision, retiring?JSON.stringify(retireOriginalMocks(JSON.parse(old.payload),state.contentVersion)):old.payload, old.saved_at);
       await tx.runAsync('INSERT OR REPLACE INTO learner_state(slot, revision, payload, saved_at) VALUES (?, ?, ?, ?)', 'current', state.revision, payload, Date.now());
     });
     if(state.textbookMigration&&state.exams.length===0)this.knownSnapshots.clear();
