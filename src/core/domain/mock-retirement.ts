@@ -2,7 +2,7 @@ import type {AppState,Question} from '../types';
 import {validateWallet,type MonetizedState} from '../../monetization/policy';
 
 export const CURATED_MOCK_VERSION='textbook.20261112.2';
-export const CURATED_MOCK_VERSIONS:readonly string[]=[CURATED_MOCK_VERSION,'textbook.20261113.1'];
+export const CURATED_MOCK_VERSIONS:readonly string[]=[CURATED_MOCK_VERSION,'textbook.20261113.1','textbook.20261113.2'];
 const ORIGINAL_MOCK_VERSIONS:readonly string[]=['phase1.20260908.1','textbook.20261109.1','textbook.20261109.2','textbook.20261112.1'];
 /** One shared transition predicate for parsed state, previous SQLite slot and snapshots. */
 export const needsOriginalMockRetirement=(from:string,to:string)=>ORIGINAL_MOCK_VERSIONS.includes(from)&&CURATED_MOCK_VERSIONS.includes(to);

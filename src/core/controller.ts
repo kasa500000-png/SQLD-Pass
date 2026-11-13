@@ -1,3 +1,4 @@
+import type {MemoryFilter} from '../memory/domain';
 import {withDailyPlan} from '../textbook/learning';
 import {mockVolumes,mockVolumeForExam} from '../mocks/domain';
 import type {AppState,Clock,Content,Dialog,ExamAttempt,ExamMode,LibraryItem,PracticeResult,Question,ReadingOffset,Route,Services,Settings,Tab} from './types';
@@ -8,6 +9,7 @@ import {advanceClock,applyPractice,assertContent,canStudyQuestion,completedPract
 export class Controller {
   state:AppState; ready=false; startupError=''; notice=''; busy=false; route:Route={name:'welcome'}; stack:Route[]=[];
   dialog:Dialog|null=null; search=''; subject='all'; bookmarkedOnly=false; filter='all'; expanded=new Set<string>();
+  memorySearch=''; memoryFilter:MemoryFilter='all'; memoryOrigin:Route['name']='home';
   practiceBatchSize=10; flashcardsUnknownOnly=false;
   examSheetFilter:'all'|'unanswered'|'flagged'='all';
   mockVolumeId='vol1'; mockAvailableOnly=false; mockFiltersOpen=false;
@@ -69,6 +71,29 @@ export class Controller {
   async dismissMockCatalogMigration(){await this.commit(s=>s.mockCatalogMigration?{...s,mockCatalogMigration:{...s.mockCatalogMigration,noticePending:false}}:s);}
   async dismissTextbookMigration(){await this.commit(s=>s.textbookMigration?{...s,textbookMigration:{...s.textbookMigration,noticePending:false}}:s);}
   async toggleKnownCard(id:string){if(!this.content.textbook?.flashcards.some(f=>f.id===id))return;await this.commit(s=>({...s,knownCards:(s.knownCards??[]).includes(id)?s.knownCards!.filter(x=>x!==id):[...(s.knownCards??[]),id]}));}
+  openMemoryNotes(){
+    if(!this.content.memoryNotes)return;
+    this.memoryOrigin=this.route.name;this.navigate({name:'memoryNotes'});
+  }
+  openMemoryCategory(id:string,noteId?:string){
+    const category=this.content.memoryNotes?.categories.find(g=>g.id===id);
+    if(!category||noteId&&!category.noteIds.includes(noteId))return;
+    this.navigate({name:'memoryCategory',id,noteId});
+  }
+  async bookmarkMemoryNote(id:string){
+    if(!this.content.memoryNotes?.notes.some(n=>n.id===id))return;
+    await this.commit(s=>{if(!s.onboarded)return s;const m=s.memoryNotes??{bookmarks:[],lastCategoryId:null,positions:{}};
+      return {...s,memoryNotes:{...m,bookmarks:m.bookmarks.includes(id)?m.bookmarks.filter(x=>x!==id):[...m.bookmarks,id]}};});
+  }
+  memoryPosition(id:string){const p=this.state.memoryNotes?.positions[id];return p?.version===this.content.memoryNotes?.version&&validReadingOffset(p)?p:undefined;}
+  async rememberMemoryReading(id:string,position:ReadingOffset):Promise<boolean>{
+    const pack=this.content.memoryNotes;
+    if(!this.ready||!pack?.categories.some(g=>g.id===id)||!validReadingOffset(position))return false;
+    const next={offset:Math.round(position.offset),contentHeight:Math.max(1,Math.round(position.contentHeight)),version:pack.version};
+    return this.commit(s=>{if(!s.onboarded)return s;const m=s.memoryNotes??{bookmarks:[],lastCategoryId:null,positions:{}},old=m.positions[id];
+      if(m.lastCategoryId===id&&old?.offset===next.offset&&old.contentHeight===next.contentHeight&&old.version===next.version)return s;
+      return {...s,memoryNotes:{...m,lastCategoryId:id,positions:{...m.positions,[id]:next}}};});
+  }
   get settingsChanged(){return JSON.stringify(this.draftSettings)!==JSON.stringify(this.state.settings);}
   private guardSettingsExit(action:()=>void):boolean{
     if(!this.content.textbook||!['settings','appearance'].includes(this.route.name)||!this.settingsChanged)return false;

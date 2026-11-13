@@ -1,3 +1,4 @@
+import {validateMemoryState} from '../../memory/domain';
 import type {AppState,Content,Subject} from '../types';
 import {canStudyQuestion,scoreExam} from './exam';
 import {parseReading} from './reading';
@@ -21,7 +22,8 @@ export function parseState(raw:unknown,content:Content):AppState {
   const compatible:Record<string,readonly string[]>={
     'textbook.20261109.2':['textbook.20261109.1'],
     'textbook.20261112.1':['textbook.20261109.1','textbook.20261109.2'],
-    'textbook.20261113.1':['textbook.20261112.2']
+    'textbook.20261113.1':['textbook.20261112.2'],
+    'textbook.20261113.2':['textbook.20261112.2','textbook.20261113.1']
   };
   if(content.mockPack&&content.manifest.theoryVersion==='textbook.20261109.1'&&compatible[content.manifest.version]?.includes(s?.contentVersion??''))s={...s,contentVersion:content.manifest.version};
   if(s?.contentVersion!=='phase1.20260908.1'&&needsOriginalMockRetirement(s?.contentVersion??'',content.manifest.version))s=retireOriginalMocks(s as AppState,content.manifest.version);
@@ -55,6 +57,7 @@ export function parseState(raw:unknown,content:Content):AppState {
   if(s.mockStudy){const m=s.mockStudy;const validId=(id:string)=>!!content.questions[id]?.examId;
     if(!Array.isArray(m.bookmarks)||new Set(m.bookmarks).size!==m.bookmarks.length||m.bookmarks.some(id=>!validId(id))||!m.notes||!m.mastered||Object.entries(m.notes).some(([id,v])=>!validId(id)||typeof v!=='string'||v.length>10000)||Object.entries(m.mastered).some(([id,v])=>!validId(id)||typeof v!=='boolean'))throw new Error('모의고사 복습 기록이 손상되었습니다.');
   }
+  validateMemoryState(s.memoryNotes,content.memoryNotes);
   const checked=s as AppState;
   const reviewDays=new Set(content.days.filter(isReviewStudyDay).map(d=>d.day));
   for(const r of s.responses)if(r.planDay!==undefined&&(!reviewDays.has(r.planDay)||r.mode!=='review'))throw new Error('복습일 풀이 기록이 손상되었습니다.');

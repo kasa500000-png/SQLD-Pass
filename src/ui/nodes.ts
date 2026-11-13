@@ -15,7 +15,7 @@ export interface Node {
   disabled?:boolean; selected?:boolean; expanded?:boolean; value?:string; minimumDate?:string; placeholder?:string; onChange?:(v:string)=>void;
   clearable?:boolean; numberOfLines?:number; multiline?:boolean; inputMode?:'text'|'numeric'; progress?:number; columns?:string[]; rows?:(string|number|null)[][];
   scroll?:boolean; heading?:boolean; alert?:boolean; close?:()=>void; role?:'button'|'radio'|'tab'; checked?:boolean;
-  reading?:{position?:ReadingOffset;onSave:(position:ReadingOffset)=>Promise<boolean>};
+  reading?:{position?:ReadingOffset;anchorIndex?:number;onSave:(position:ReadingOffset)=>Promise<boolean>};
   catalog?:{context:string;position?:ReadingOffset;preserveContentOffset?:boolean;onRemember:(position:ReadingOffset)=>void};
 }
 // SQLD Pass reference design tokens. Keep light/dark semantic roles aligned.

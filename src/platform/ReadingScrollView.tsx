@@ -1,18 +1,20 @@
 import React,{useEffect,useRef} from 'react';
-import {AppState,ScrollView,type ScrollViewProps} from 'react-native';
+import {AppState,ScrollView,View,type ScrollViewProps} from 'react-native';
 import type {ReadingOffset} from '../core/types';
 import {restoredReadingOffset} from '../core/domain/reading';
 
 interface Props extends ScrollViewProps {
   position?:ReadingOffset;
+  anchorIndex?:number;
   onSave:(position:ReadingOffset)=>Promise<boolean>;
 }
 
 /** Reading history is saved when scrolling settles, on leaving, or on backgrounding. */
-export function ReadingScrollView({position,onSave,...props}:Props):React.JSX.Element {
+export function ReadingScrollView({position,anchorIndex,onSave,children,...props}:Props):React.JSX.Element {
   const scroll=useRef<ScrollView>(null),save=useRef(onSave);
   save.current=onSave;
   const anchor=useRef(position),latest=useRef<ReadingOffset|undefined>(undefined);
+  const pendingAnchor=useRef(anchorIndex),anchorY=useRef<number|undefined>(undefined);
   const geometry=useRef({height:0,viewport:0});
   const sent=useRef<ReadingOffset|undefined>(undefined);
   const idle=useRef<ReturnType<typeof setTimeout>|undefined>(undefined);
@@ -30,11 +32,13 @@ export function ReadingScrollView({position,onSave,...props}:Props):React.JSX.El
   function restore(){
     const {height,viewport}=geometry.current;
     if(height<=0||viewport<=0)return;
-    const offset=restoredReadingOffset(anchor.current,height,viewport);
+    if(pendingAnchor.current!==undefined&&anchorY.current===undefined)return;
+    const offset=pendingAnchor.current!==undefined?Math.max(0,Math.min(anchorY.current!,height-viewport)):restoredReadingOffset(anchor.current,height,viewport);
     latest.current={offset,contentHeight:height};
     restoring.current=true;
     if(frame.current!==undefined)cancelAnimationFrame(frame.current);
     frame.current=requestAnimationFrame(()=>{
+      if(pendingAnchor.current!==undefined){pendingAnchor.current=undefined;anchor.current={offset,contentHeight:height};}
       scroll.current?.scrollTo({y:offset,animated:false});
       // Ignore initial native zero-offset events while applying the saved position.
       frame.current=requestAnimationFrame(()=>{restoring.current=false;frame.current=undefined;schedule();});
@@ -55,7 +59,7 @@ export function ReadingScrollView({position,onSave,...props}:Props):React.JSX.El
     }}
     onScrollBeginDrag={()=>{
       if(frame.current!==undefined)cancelAnimationFrame(frame.current);
-      frame.current=undefined;restoring.current=false;cancelIdle();
+      frame.current=undefined;restoring.current=false;pendingAnchor.current=undefined;cancelIdle();
     }}
     onScroll={event=>{
       if(restoring.current)return;
@@ -67,5 +71,7 @@ export function ReadingScrollView({position,onSave,...props}:Props):React.JSX.El
     }}
     onScrollEndDrag={schedule}
     onMomentumScrollEnd={flush}
-  />;
+  >{anchorIndex===undefined?children:React.Children.map(children,(child,index)=><View key={React.isValidElement(child)?child.key??index:index} onLayout={event=>{
+    if(index===pendingAnchor.current){anchorY.current=event.nativeEvent.layout.y;restore();}
+  }}>{child}</View>)}</ScrollView>;
 }

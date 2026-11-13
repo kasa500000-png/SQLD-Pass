@@ -1,4 +1,4 @@
-import type {MemoryNotes} from '../memory/types';
+import type {MemoryNotes,MemoryNoteState} from '../memory/types';
 import type {ContentBlock,Textbook} from '../textbook/types';
 export type Subject = 'S1' | 'S2';
 export type Cell = string | number | null;
@@ -64,6 +64,7 @@ export interface ReadingOffset { offset:number; contentHeight:number; }
 export interface ReadingPosition extends ReadingOffset { lessonVersion:string; }
 export interface ReadingState { lastLessonId:string|null; positions:Record<string,ReadingPosition>; }
 export interface AppState {
+  memoryNotes?:MemoryNoteState;
   mockCatalogMigration?:{version:1;fromVersion:string;noticePending:boolean};
   textbookMigration?:{version:1;fromVersion:string;noticePending:boolean};
   knownCards?:string[];
@@ -76,7 +77,7 @@ export interface AppState {
   practiceResults?:PracticeResult[]; lastPracticeResultId?:string|null; collections?:StudyCollection[];
 }
 export type Tab = 'today'|'learn'|'review'|'exams'|'records';
-export type Route = { name: 'mockReview'|'mockSaved'|'mockQuestion'|'mockSources'|'chapter'|'glossary'|'flashcards'|'sources'|'welcome'|'setup'|'home'|'plan'|'day'|'catalog'|'lesson'|'lessonSummary'|'library'|'collection'|'savedQuestion'|'practiceSetup'|'practice'|'practiceResult'|'review'|'exams'|'examIntro'|'exam'|'examPause'|'sheet'|'result'|'examReview'|'stats'|'calendar'|'examHistory'|'appearance'|'data'|'settings'|'reminderSettings'|'help'|'report'|'notices'|'privacy'; id?:string; index?:number; };
+export type Route = { name: 'memoryNotes'|'memoryCategory'|'memoryQuick'|'mockReview'|'mockSaved'|'mockQuestion'|'mockSources'|'chapter'|'glossary'|'flashcards'|'sources'|'welcome'|'setup'|'home'|'plan'|'day'|'catalog'|'lesson'|'lessonSummary'|'library'|'collection'|'savedQuestion'|'practiceSetup'|'practice'|'practiceResult'|'review'|'exams'|'examIntro'|'exam'|'examPause'|'sheet'|'result'|'examReview'|'stats'|'calendar'|'examHistory'|'appearance'|'data'|'settings'|'reminderSettings'|'help'|'report'|'notices'|'privacy'; id?:string; index?:number; noteId?:string; };
 export interface Dialog { title:string; body:string; confirmLabel:string; destructive?:boolean; onConfirm:()=>void|Promise<void>; secondaryLabel?:string; onSecondary?:()=>void|Promise<void>; cancelLabel?:string; }
 export interface Repository { load():Promise<unknown|null>; save(state:AppState):Promise<void>; clear():Promise<void>; }
 export interface Services {
