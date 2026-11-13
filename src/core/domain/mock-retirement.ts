@@ -2,12 +2,17 @@ import type {AppState,Question} from '../types';
 import {validateWallet,type MonetizedState} from '../../monetization/policy';
 
 export const CURATED_MOCK_VERSION='textbook.20261112.2';
+export const CURATED_MOCK_VERSIONS:readonly string[]=[CURATED_MOCK_VERSION,'textbook.20261113.1'];
+const ORIGINAL_MOCK_VERSIONS:readonly string[]=['phase1.20260908.1','textbook.20261109.1','textbook.20261109.2','textbook.20261112.1'];
+/** One shared transition predicate for parsed state, previous SQLite slot and snapshots. */
+export const needsOriginalMockRetirement=(from:string,to:string)=>ORIGINAL_MOCK_VERSIONS.includes(from)&&CURATED_MOCK_VERSIONS.includes(to);
 export const retiredMockExam=(id:string)=>/^SQLD-M(0[1-9]|1[0-9]|20)$/.test(id);
 export const retiredMockQuestion=(id:string)=>id.startsWith('ME20261109:');
 export const retiredMockSnapshot=(qs:Question[])=>qs.some(q=>retiredMockQuestion(q.id)||!!q.examId&&retiredMockExam(q.examId));
 
 /** Also accepts SQLite state payloads with detached snapshots. Never mutates the input. */
-export function retireOriginalMocks(s:AppState):AppState {
+export function retireOriginalMocks(s:AppState,targetVersion=CURATED_MOCK_VERSION):AppState {
+ if(!CURATED_MOCK_VERSIONS.includes(targetVersion))throw Error('지원하지 않는 모의고사 전환 버전입니다.');
  const retiredAttempts=new Set(s.exams.filter(e=>retiredMockExam(e.examId)).map(e=>e.id));
  const results=s.practiceResults?.filter(r=>!r.questionIds.some(retiredMockQuestion));
  const cleanMap=<T>(m:Record<string,T>)=>Object.fromEntries(Object.entries(m).filter(([id])=>!retiredMockQuestion(id)));
@@ -15,7 +20,7 @@ export function retireOriginalMocks(s:AppState):AppState {
  if(w!==undefined&&!validateWallet(w))throw Error('모의고사 이용 권한을 확인하지 못했습니다. 기존 기록을 유지했습니다.');
  const m=s.mockStudy;
  const collections=s.collections?.map(c=>({...c,items:c.items.filter(item=>item.kind==='examReview'?!retiredAttempts.has(item.attemptId)&&!retiredMockQuestion(item.questionId):item.kind!=='question'||!retiredMockQuestion(item.id))}));
- return {...s,contentVersion:CURATED_MOCK_VERSION,
+ return {...s,contentVersion:targetVersion,
   exams:s.exams.filter(e=>!retiredMockExam(e.examId)),
   responses:s.responses.filter(r=>!retiredMockQuestion(r.questionId)),reviews:cleanMap(s.reviews),
   practice:s.practice?.questionIds.some(retiredMockQuestion)?null:s.practice,
