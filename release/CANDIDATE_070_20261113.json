@@ -13,5 +13,12 @@
   "productionSubmitted": false,
   "testFlightUploaded": false,
   "notes": "0.6.0 submission records remain historical and are not 0.7.0 release evidence.",
-  "adCodeSha256": "5e48dfdebdbd872dd6fe6f042ceae80f6c84063c30821ca6076bd6629d12157f"
+  "adCodeSha256": "5e48dfdebdbd872dd6fe6f042ceae80f6c84063c30821ca6076bd6629d12157f",
+  "androidConsent": "EEA diagnostic: initial privacy error, retry displayed actual UMP; consent, reopen and decline; retained notes and earned access",
+  "automatedChecks": {
+    "unitAndContent": 496,
+    "failed": 0,
+    "nativeTypecheck": "pass",
+    "contentIntegrity": "pass"
+  }
 }
