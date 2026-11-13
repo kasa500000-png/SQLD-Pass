@@ -1,3 +1,4 @@
+import type {MemoryNotes} from '../memory/types';
 import type {ContentBlock,Textbook} from '../textbook/types';
 export type Subject = 'S1' | 'S2';
 export type Cell = string | number | null;
@@ -23,7 +24,7 @@ export interface Exam { id:string; title:string; order:number; displayNumber?:nu
 export interface StudyDay { day:number; lessonIds:string[]; task:string; mode:string; minutes:number; examId:string|null; }
 export interface Manifest { schema:number; version:string; theoryVersion:string; examVersion:string; releaseReady:boolean; humanReviewed:boolean; officialSyllabusVerified:boolean; counts:{lessons:number;practice:number;exams:number;examQuestions:number}; note:string; }
 export interface MockVolume {id:string;number:number;displayNumber?:number;title:string;version:string;examIds:string[];topicIds:string[];sourceIds:string[];editorialNote:string;assumptions:string[];quality:Record<string,unknown>;integrationNote:string;}
-export interface Content { mockPack?:{id:string;version:string;freeExamIds?:string[];editorialNote:string;assumptions:string[];topics:{id:string;title:string;subjectId:number;sectionId:string;sourceIds:string[]}[];quality:Record<string,unknown>;integrationNote:string;volumes?:MockVolume[]}; textbook?:Textbook; manifest:Manifest; lessons:Lesson[]; questions:Record<string,Question>; exams:Exam[]; days:StudyDay[]; sources:Record<string,{title:string;url:string;provider:string}>; }
+export interface Content { memoryNotes?:MemoryNotes; mockPack?:{id:string;version:string;freeExamIds?:string[];editorialNote:string;assumptions:string[];topics:{id:string;title:string;subjectId:number;sectionId:string;sourceIds:string[]}[];quality:Record<string,unknown>;integrationNote:string;volumes?:MockVolume[]}; textbook?:Textbook; manifest:Manifest; lessons:Lesson[]; questions:Record<string,Question>; exams:Exam[]; days:StudyDay[]; sources:Record<string,{title:string;url:string;provider:string}>; }
 export interface Clock { wall:number; mono:number; runtimeId:string; }
 export interface Score {
   points:number; correct:number; unanswered:number; total:number; bySubject:Record<Subject,{points:number;max:number;correct:number;total:number;meetsMinimum:boolean}>;

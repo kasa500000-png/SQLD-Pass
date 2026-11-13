@@ -38,9 +38,10 @@ function widgetsFor(html,D){
  const proc=spawnSync('python3',[path.join(__dirname,'compile-widget-tree.py')],{input:JSON.stringify(out),encoding:'utf8',maxBuffer:16*1024*1024});
  if(proc.status!==0)throw Error(proc.stderr);return JSON.parse(proc.stdout);
 }
-function build(root,{includeMocks=true,mockVolumes,mockCatalog,outputRoot=root,write=true}={}){
+function build(root,{includeMocks=true,mockVolumes,mockCatalog,memoryNotes,outputRoot=root,write=true}={}){
  const targetFile=path.join(root,'content-pack/build-target.json');
  const target=fs.existsSync(targetFile)?JSON.parse(fs.readFileSync(targetFile)):{mockVolumes:1};
+ memoryNotes??=mockCatalog===undefined&&mockVolumes===undefined&&includeMocks?target.memoryNotes===true:false;
  mockCatalog??=mockVolumes===undefined?target.mockCatalog:undefined;
  if(mockCatalog!==undefined&&!['curated40','curated60'].includes(mockCatalog))throw Error('Unsupported mock catalog');
  mockVolumes??=mockCatalog?.startsWith('curated')?3:target.mockVolumes;
@@ -58,6 +59,7 @@ function build(root,{includeMocks=true,mockVolumes,mockCatalog,outputRoot=root,w
  if(includeMocks&&mockVolumes===3)require('./add-mock-volumes.cjs').addMockVolumes(c,root);
  if(includeMocks&&mockCatalog?.startsWith('curated'))require('./curate-mock40.cjs').curateMock40(c);
  if(includeMocks&&mockCatalog==='curated60')require('./add-curated-volume.cjs').addCuratedVolume(c,root);
+ if(memoryNotes)require('./add-memory-notes.cjs').addMemoryNotes(c,root);
  validateContent(c);const raw=Buffer.from(JSON.stringify(c));const lock={schema:1,contentVersion:c.manifest.version,sha256:hash(raw),bytes:raw.length,counts:c.manifest.counts,sourceHashes:c.manifest.sourceHashes,status:'editorial_draft',note:'Identity only. New content requires its own review and release approval.'};
  if(!write)return c;
  atomicWrite(path.join(outputRoot,'content-pack/content.json.gz'),zlib.gzipSync(raw,{level:9,mtime:0}));atomicWrite(path.join(outputRoot,'content-pack/content.lock.json'),JSON.stringify(lock,null,2)+'\n');atomicWrite(path.join(outputRoot,'generated/content.json'),raw);

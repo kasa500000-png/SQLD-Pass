@@ -30,7 +30,7 @@ module.exports=function validateTextbook(c){
   check(c.exams.length===total&&counts.examQuestions===total*50,'mock totals');
   const owners=new Map();
   if(expanded){
-   check(profile&&m.version===profile.version&&m.theoryVersion==='textbook.20261109.1'&&m.examVersion===c.mockPack.version,'volume versions');
+   check(profile&&(m.version===profile.version||(m.version==='textbook.20261113.2'&&profile.version==='textbook.20261113.1'&&!!c.memoryNotes))&&m.theoryVersion==='textbook.20261109.1'&&m.examVersion===c.mockPack.version,'volume versions');
    check(c.mockPack.volumes.length===profile.volumes,'volume count');
    if(curated)check(JSON.stringify(c.mockPack.freeExamIds)===JSON.stringify(Array.from({length:profile.volumes},(_,i)=>Array.from({length:5},(_,n)=>'SQLD-M'+(offset+i*20+n+1))).flat()),'free exam scope');
    for(const [i,v] of c.mockPack.volumes.entries()){
@@ -49,5 +49,6 @@ module.exports=function validateTextbook(c){
   for(const [i,e] of c.exams.entries()){check(e.id===`SQLD-M${String(e.order).padStart(2,'0')}`&&e.order===i+1+offset&&e.order<=total+offset&&(!curated||e.displayNumber===i+1)&&e.durationSeconds===5400,'exam identity');check(e.questionIds.length===50&&unique(e.questionIds),'exam size');const owner=owners.get(e.id),prefix=owner&&owner.number>1?`MEV${owner.number}:`:'ME20261109:';let s1=0;for(const id of e.questionIds){const q=qs[id];check(q&&q.examId===e.id&&!seen.has(id)&&id.startsWith(prefix),'exam assignment');seen.add(id);check(['S1','S2'].includes(q.subject)&&q.number===e.questionIds.indexOf(id)+1,'exam subject/order');check(c.mockPack.topics.some(t=>t.id===q.conceptId),'question concept');if(owner)check(owner.topicIds.includes(q.conceptId)&&q.sourceIds.every(id=>owner.sourceIds.includes(id)),'volume question references');if(q.subject==='S1')s1++;}check(s1===10,'exam subject ratio');}
   check(seen.size===counts.examQuestions,'unassigned exam question');
  }else check(c.exams.length===0&&counts.examQuestions===0,'unlabelled mock pack');
+ if(c.memoryNotes||m.version==='textbook.20261113.2')require('./add-memory-notes.cjs').validateMemoryNotes(c);
  return {...counts,questions:counts.practice+counts.examQuestions,days:0};
 };
