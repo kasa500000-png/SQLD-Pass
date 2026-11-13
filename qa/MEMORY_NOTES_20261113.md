@@ -78,7 +78,7 @@ Android0.7.0(24)은 실제 운영 서명 AAB/APK를 만들고 Google Play 정식
 사전 자동 검사는 진행 중이며 승인 후100% 자동 출시다. 제출은 승인·공개 완료가 아니다.
 이전에0.6.0(23)이100% 출시된 것도 콘솔에서 확인했다.
 
-iOS0.7.0 TestFlight 업로드·정식 제출·스토어용 archive/export는 수행하지 않았다.
+후속 소유자 지시 “이번 예외로 정식 출시 및 Testflight 업데이트 진행”로 이번 후보의 추가 iOS 실기기·동의 검증을 생략했다. 실제 archive/export/upload·서명·콘텐츠 검증을 완료했고0.7.0(18)을 TestFlight 내부 그룹과 App Store 정식 심사에 제출했다. 현재 WAITING_FOR_REVIEW,승인 후 자동 출시다. [iOS 실행 기록](IOS_RELEASE_070_20261113.md).
 [출시 후보 상태](../release/CANDIDATE_070_20261113.json)를 따른다.
 물리 iOS,VoiceOver/TalkBack 전체 탐색,모든 노트·SQL의 각 기기 전수 조작은 미수행이다.
 성능·학습 효과 향상 수치를 측정하거나 추정하지 않았다.

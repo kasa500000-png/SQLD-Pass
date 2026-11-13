@@ -1,6 +1,6 @@
 {
   "appVersion": "0.7.0",
-  "observedAt": "2026-11-13T11:05:20+00:00",
+  "observedAt": "2026-11-13T11:18:53.223Z",
   "android": {
     "package": "com.kasa500000.sqldpass",
     "versionCode": 24,
@@ -17,15 +17,34 @@
     "adsMode": "live",
     "examAccessPolicy": "rewarded",
     "priorPublicVersion": "0.6.0(23)",
-    "evidence": "qa/evidence/memory-notes-20261113/store/android-submission.txt"
+    "evidence": "qa/evidence/memory-notes-20261113/store/android-submission.txt",
+    "observedAt": "2026-11-13T11:05:20+00:00"
   },
   "ios": {
-    "buildNumber": "18 (planned)",
-    "status": "NOT_SUBMITTED",
-    "testFlightUploaded": false,
-    "physicalQA": "unavailable",
-    "consentRerun": "not performed",
-    "scopedWaiver": false
+    "version": "0.7.0",
+    "buildNumber": 18,
+    "appId": "6818046749",
+    "versionId": "45d4fcfe-135b-431f-9dc6-2f5757c5a7d0",
+    "buildId": "24515e87-20a1-4ebf-9b71-6a83668cb0c0",
+    "status": "WAITING_FOR_REVIEW",
+    "submissionConfirmed": true,
+    "reviewSubmissionId": "c1412728-799b-4128-964b-f6a7a8b199a7",
+    "submittedDate": "2026-11-13T11:18:51.649Z",
+    "releaseType": "AFTER_APPROVAL",
+    "releaseAfterApproval": true,
+    "adsMode": "live",
+    "examAccessPolicy": "rewarded",
+    "testFlightUploaded": true,
+    "testFlightUpdated": true,
+    "internalBuildState": "IN_BETA_TESTING",
+    "testFlightGroup": "SQLD Pass 내부 검증",
+    "physicalQA": "NOT PERFORMED; unavailable iPad",
+    "consentRerun": "NOT PERFORMED; new owner scoped exception",
+    "scopedWaiver": "이번 예외로 정식 출시 및 Testflight 업데이트 진행",
+    "archiveExportUpload": "SUCCEEDED; strict signature, config/content verified; Apple VALID and APP_STORE_ELIGIBLE",
+    "previousPendingVersionReplaced": "0.6.0(17), awaiting review; public0.5.0 preserved",
+    "public070Confirmed": false,
+    "evidence": "qa/IOS_RELEASE_070_20261113.md"
   },
   "contentSha256": "5473eb0f7f166e8caf7b4eb7dc168e6e42592449a1bf7064fccebb9f38adc64f"
 }
