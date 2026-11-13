@@ -1,3 +1,4 @@
+import {renderMemoryScreen} from '../memory/views';
 import {renderMockScreen,mockExplanation,mockStatsSummary} from '../mocks/views';
 import {mockVolumes,mockExamTitle} from '../mocks/domain';
 import {canStudyQuestion,formatTime,isExamPaused} from '../core/domain/exam';
@@ -34,9 +35,11 @@ export function renderTextbook(c:MonetizedController):Node{
   }
  });
  const mockUi={t,small,h,card,act,primary,link,choice,go,blocks};
+ const memoryScreen=c.ready?renderMemoryScreen(c):undefined;
  const mockScreen=c.ready?renderMockScreen(c,mockUi):undefined;
  let body:Node[]=[],footer:Node[]=[],header:Node[]=[];let title='SQLD Pass';const r=c.route.name;
  if(!c.ready)body=[h(c.startupError?'기록을 불러오지 못했습니다':'교재를 준비하고 있습니다'),t(c.startupError?'저장된 기록을 삭제하지 않았습니다. 다시 불러오기를 시도해 주세요.':'잠시 기다려 주세요.'),...(c.startupError?[primary('다시 시도',()=>c.initialize(),'retry-startup'),act(c.expanded.has('startup-details')?'오류 정보 접기':'오류 정보 보기',()=>c.toggleExpanded('startup-details'),'startup-details'),...(c.expanded.has('startup-details')?[small(c.startupError)]:[])]:[])];
+ else if(memoryScreen){title=memoryScreen.title;body=memoryScreen.body;}
  else if(mockScreen){title=mockScreen.title;body=mockScreen.body;footer=mockScreen.footer??[];header=mockScreen.header??[];}
  else if(r==='welcome')body=[h('표에서 시작하는 SQLD 학습'),t('5개 Part · 18개 Chapter · 216개 학습 절'),t('개념을 읽고, SQL 결과를 살펴보고, 확인 문제로 이해를 점검하세요.'),small(`학습 기록은 이 기기에 저장됩니다. 실전 탭에서 ${c.content.exams.length}회 모의고사를 이용하세요.`),primary('학습 시작',go('setup'),'textbook-start')];
  else if(r==='setup'||r==='settings'||r==='appearance'){
@@ -135,11 +138,17 @@ export function renderTextbook(c:MonetizedController):Node{
   const context=JSON.stringify([r,c.route.id,c.search,c.bookmarkedOnly,r==='exams'?[c.examProgressFilter,c.mockVolumeId,c.mockAvailableOnly]:null,r in c.mockRecordVolumes?c.mockRecordVolumes[r as keyof typeof c.mockRecordVolumes]:null,c.mockSearch,c.mockTopicFilter,c.mockResultFilter,c.examSheetFilter,c.route.index,r==='practice'?s.practice?.id:null,r==='practice'?s.practice?.index:r==='exam'?c.activeExam()?.index:null,r==='practice'?s.practice?.submitted:null]);
   scroll.catalog={context,position:c.screenPosition(context),preserveContentOffset:true,onRemember:position=>c.rememberScreen(context,position)};
  }
- const activeRoute=['exams','examIntro','exam','examPause','sheet','result','examReview','mockReview','mockSaved','mockQuestion','mockSources'].includes(r)?'exams':r==='examHistory'?'stats':['chapter','lesson','lessonSummary','glossary','flashcards','sources'].includes(r)?'catalog':['practice','practiceSetup','practiceResult'].includes(r)?'review':['settings','appearance','privacy','help','report','data'].includes(r)?'stats':r;
+ if(r==='memoryCategory'&&c.route.id){
+  const id=c.route.id,category=c.content.memoryNotes?.categories.find(g=>g.id===id),index=category?.noteIds.indexOf(c.route.noteId??'')??-1;
+  scroll.contentWidth='reading';scroll.key=`memory:${id}:${c.route.noteId??''}`;scroll.reading={position:c.memoryPosition(id),anchorIndex:index>=0?index+1:undefined,onSave:pos=>c.rememberMemoryReading(id,pos)};
+ }
+ if(r==='memoryNotes'){const context=JSON.stringify([r,c.memorySearch,c.memoryFilter]);scroll.catalog={context,position:c.screenPosition(context),preserveContentOffset:true,onRemember:pos=>c.rememberScreen(context,pos)};}
+ if(r==='memoryQuick')scroll.contentWidth='reading';
+ const activeRoute=memoryScreen?c.memoryOrigin:['exams','examIntro','exam','examPause','sheet','result','examReview','mockReview','mockSaved','mockQuestion','mockSources'].includes(r)?'exams':r==='examHistory'?'stats':['chapter','lesson','lessonSummary','glossary','flashcards','sources'].includes(r)?'catalog':['practice','practiceSetup','practiceResult'].includes(r)?'review':['settings','appearance','privacy','help','report','data'].includes(r)?'stats':r;
  const focus=!!mockScreen?.focus||r==='practice';
  const nav:Node[]=c.ready&&s.onboarded&&!focus?[row(([['홈','today','home','home'],['교재','learn','catalog','book'],['문제','review','review','list'],['실전','exams','exams','timer'],['기록','records','stats','chart']] as const).map(([label,tab,route,icon])=>button(label,()=>{c.search='';c.tab(tab);},{flexGrow:0,flexShrink:0,width:'20%',paddingHorizontal:0,color:activeRoute===route?p.blue:p.muted,minHeight:52,fontSize:13},{key:`tab-${tab}`,role:'tab',disabled:c.rewardBusy,icon,iconPosition:'above',selected:activeRoute===route,testId:`tab-${tab}`})),{gap:0,backgroundColor:p.surface,borderTopWidth:1,borderColor:p.line})]:[];
  const chrome=(ns:Node[],id:string)=>({...box(ns,{width:'100%',maxWidth:1160,alignSelf:'center',paddingHorizontal:16,paddingVertical:8,gap:8,backgroundColor:p.surface,borderColor:p.line,borderTopWidth:id==='screen-footer'?1:0}),testId:id,contentWidth:scroll.contentWidth});
- const root=box([row([...(focus?(r==='examPause'?[]:[act(r==='practice'?'나가기':'일시정지',()=>c.back(),r==='practice'?'leave-practice':'leave-exam')]):c.stack.length?[{...act('',()=>c.back()),label:'뒤로',icon:'chevron-left' as const,style:{minWidth:48,minHeight:48,color:p.ink}}]:[]),text(title,{...learningType.title,color:p.ink,flex:1}),...(s.onboarded&&!focus&&!['settings','appearance','setup'].includes(r)?[{...act('',go('settings')),label:'설정',icon:'settings' as const,style:{minWidth:48,minHeight:48,color:p.muted}}]:[])],{padding:12,backgroundColor:p.surface}),...(header.length?[chrome(header,'screen-header')]:[]),scroll,...(footer.length?[chrome(footer,'screen-footer')]:[]),...(c.showBanner?[box([],{},'monetization-banner')]:[]),...nav.map(n=>({...n,key:'bottom-tabs'}))],{flex:1,backgroundColor:p.bg});
+ const root=box([row([...(focus?(r==='examPause'?[]:[act(r==='practice'?'나가기':'일시정지',()=>c.back(),r==='practice'?'leave-practice':'leave-exam')]):c.stack.length?[{...act('',()=>c.back()),label:'뒤로',icon:'chevron-left' as const,style:{minWidth:48,minHeight:48,color:p.ink}}]:[]),text(title,{...learningType.title,color:p.ink,flex:1}),...(c.content.memoryNotes&&['home','catalog','review','exams','stats'].includes(r)?[act('핵심 노트',()=>c.openMemoryNotes(),'open-memory-notes')]:[]),...(s.onboarded&&!focus&&!['settings','appearance','setup'].includes(r)?[{...act('',go('settings')),label:'설정',icon:'settings' as const,style:{minWidth:48,minHeight:48,color:p.muted}}]:[])],{padding:12,backgroundColor:p.surface}),...(header.length?[chrome(header,'screen-header')]:[]),scroll,...(footer.length?[chrome(footer,'screen-footer')]:[]),...(c.showBanner?[box([],{},'monetization-banner')]:[]),...nav.map(n=>({...n,key:'bottom-tabs'}))],{flex:1,backgroundColor:p.bg});
  if(c.dialog)root.children!.push({kind:'modal',close:()=>c.cancelDialog(),children:[card([h(c.dialog.title),t(c.dialog.body),{...primary(c.dialog.confirmLabel,()=>c.acceptDialog()),buttonKind:c.dialog.destructive?'danger':'primary'},...(c.dialog.secondaryLabel?[act(c.dialog.secondaryLabel,()=>c.secondaryDialog(),'dialog-secondary')]:[]),act(c.dialog.cancelLabel??'취소',()=>c.cancelDialog())])]});
  return root;
 }

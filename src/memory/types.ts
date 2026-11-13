@@ -5,3 +5,8 @@ export interface MemoryNotes {
   notes:MemoryNote[];quickLines:{id:string;title:string;text:string}[];
   corrections:{id:string;field:string;before:string;after:string;source:string}[];
 }
+export interface MemoryNoteState {
+  bookmarks:string[];
+  lastCategoryId:string|null;
+  positions:Record<string,{offset:number;contentHeight:number;version:string}>;
+}

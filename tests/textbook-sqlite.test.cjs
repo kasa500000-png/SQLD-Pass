@@ -61,7 +61,7 @@ test('60-exam compatible upgrade rolls back without deleting previous slots or r
 
 test('curated40 and curated60 remove only retired data in both slots and detached snapshots, with atomic retry',async t=>{
  const old=require('./fixtures/mock60.cjs')(),{startExam,pauseExam,submitExam}=require('../.build/core/domain');
- for(const nextContent of [require('./fixtures/mock40.cjs')(),require('./fixtures/curated60.cjs')()])for(const mode of ['timed','study']){
+ for(const nextContent of [require('./fixtures/mock40.cjs')(),require('./fixtures/curated60.cjs')(),require('./fixtures/memory-notes.cjs')()])for(const mode of ['timed','study']){
   const x=setup(t),clock={wall:10000,mono:10000,runtimeId:'curated40'};await x.repo.load();
   const s={...initialState(old),revision:1,onboarded:true};
   const retired=submitExam(startExam(s,old.exams[0],old,clock,'retired-'+mode),clock,'manual');
@@ -82,6 +82,15 @@ test('curated40 and curated60 remove only retired data in both slots and detache
 
 test('40-to60 keeps prior slot bytes, all snapshot bytes and pause data, including rollback and retry',async t=>{
  const old=require('./fixtures/mock40.cjs')(),nextContent=require('./fixtures/curated60.cjs')(),{startExam,pauseExam,submitExam}=require('../.build/core/domain');
+ for(const mode of ['timed','study']){const x=setup(t);await x.repo.load();const clock={wall:10000,mono:10000,runtimeId:'curated60'},s={...initialState(old),revision:1,onboarded:true,mockCatalogMigration:{version:1,fromVersion:'textbook.20261112.1',noticePending:false}};
+ const done=submitExam(startExam(s,old.exams[0],old,clock,'done-'+mode,'study'),clock,'manual'),active=pauseExam(startExam(s,old.exams[19],old,clock,'active-'+mode,mode),{...clock,wall:12000,mono:12000});active.answers[active.snapshots[9].id]='2';active.flagged=[active.snapshots[9].id];active.index=9;s.exams=[done,active];await x.repo.save(s);await x.repo.save({...s,revision:2});x.db.prepare('INSERT INTO exam_snapshot VALUES (?,?)').run('orphan-retained',JSON.stringify(done.snapshots));
+ const before=x.db.prepare('SELECT * FROM learner_state ORDER BY slot').all(),snapshots=x.db.prepare('SELECT * FROM exam_snapshot ORDER BY attempt_id').all(),current=x.db.prepare("SELECT payload FROM learner_state WHERE slot='current'").get().payload;const next={...parseState(await x.repo.load(),nextContent),revision:3};x.fail(true);await a.rejects(x.repo.save(next));a.deepEqual(x.db.prepare('SELECT * FROM learner_state ORDER BY slot').all(),before);a.deepEqual(x.db.prepare('SELECT * FROM exam_snapshot ORDER BY attempt_id').all(),snapshots);
+ x.fail(false);await x.repo.save(next);a.equal(x.db.prepare("SELECT payload FROM learner_state WHERE slot='previous'").get().payload,current);const loaded=parseState(await x.newRepo().load(),nextContent);a.deepEqual(loaded.exams,s.exams);a.equal(loaded.mockCatalogMigration.noticePending,false);a.deepEqual(x.db.prepare('SELECT * FROM exam_snapshot ORDER BY attempt_id').all(),snapshots);await x.repo.save({...loaded,revision:4});a.deepEqual(x.db.prepare('SELECT * FROM exam_snapshot ORDER BY attempt_id').all(),snapshots);
+ }
+});
+
+test('60-to-notes keeps prior slot bytes, all snapshot bytes and pause data, including rollback and retry',async t=>{
+ const old=require('./fixtures/curated60.cjs')(),nextContent=require('./fixtures/memory-notes.cjs')(),{startExam,pauseExam,submitExam}=require('../.build/core/domain');
  for(const mode of ['timed','study']){const x=setup(t);await x.repo.load();const clock={wall:10000,mono:10000,runtimeId:'curated60'},s={...initialState(old),revision:1,onboarded:true,mockCatalogMigration:{version:1,fromVersion:'textbook.20261112.1',noticePending:false}};
  const done=submitExam(startExam(s,old.exams[0],old,clock,'done-'+mode,'study'),clock,'manual'),active=pauseExam(startExam(s,old.exams[19],old,clock,'active-'+mode,mode),{...clock,wall:12000,mono:12000});active.answers[active.snapshots[9].id]='2';active.flagged=[active.snapshots[9].id];active.index=9;s.exams=[done,active];await x.repo.save(s);await x.repo.save({...s,revision:2});x.db.prepare('INSERT INTO exam_snapshot VALUES (?,?)').run('orphan-retained',JSON.stringify(done.snapshots));
  const before=x.db.prepare('SELECT * FROM learner_state ORDER BY slot').all(),snapshots=x.db.prepare('SELECT * FROM exam_snapshot ORDER BY attempt_id').all(),current=x.db.prepare("SELECT payload FROM learner_state WHERE slot='current'").get().payload;const next={...parseState(await x.repo.load(),nextContent),revision:3};x.fail(true);await a.rejects(x.repo.save(next));a.deepEqual(x.db.prepare('SELECT * FROM learner_state ORDER BY slot').all(),before);a.deepEqual(x.db.prepare('SELECT * FROM exam_snapshot ORDER BY attempt_id').all(),snapshots);
