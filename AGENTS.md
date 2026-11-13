@@ -16,6 +16,12 @@ Use textbook.20261113.2 and memory-notes.20261113.1. Split4 PRs; activate only i
 Prior release execution authorization persists. New exact-hash owner content review and
 current native/consent evidence remain required. The0.6.0 exception does not carry forward.
 
+The owner directly confirmed “새 핵심 노트의 내용 검수 완료” for textbook.20261113.2,
+SHA-256 5473eb0f7f166e8caf7b4eb7dc168e6e42592449a1bf7064fccebb9f38adc64f.
+The owner can connect Android only for this candidate (“이번에는 Android만 가능합니다”).
+This does not waive current iOS physical/consent validation. Keep Android physical and
+iOS simulator evidence separate; prior release execution authorization persists.
+
 ## Latest owner direction — 2026-11-13 curated60 extension
 
 The owner confirmed all 20 exams/1,000 questions in supplied Vol.4 and approved

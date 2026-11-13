@@ -5,7 +5,7 @@
   "contentVersion": "textbook.20261113.2",
   "contentSha256": "5473eb0f7f166e8caf7b4eb7dc168e6e42592449a1bf7064fccebb9f38adc64f",
   "implementationStatus": "implemented; Android physical and iOS simulator validated",
-  "contentReview": "awaiting-owner-exact-hash-confirmation",
+  "contentReview": "owner-reviewed-complete: 새 핵심 노트의 내용 검수 완료",
   "androidBuild": "internal official test ads",
   "androidTestApkSha256": "5316f7455d5b022d1dd8d8d337da7597405acfa92cd36b5be5463cbb416b4cd3",
   "iosBuild": "Release iphonesimulator; not a store archive",
@@ -20,5 +20,6 @@
     "failed": 0,
     "nativeTypecheck": "pass",
     "contentIntegrity": "pass"
-  }
+  },
+  "ownerConfirmationRecordedAt": "2026-11-13T10:58:02.603Z"
 }
