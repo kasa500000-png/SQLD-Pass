@@ -1,0 +1,79 @@
+[
+  {
+    "id": "functions-19",
+    "field": "watch",
+    "before": "Oracle 관점:  는 NULL 취급,  (공백 한 칸)은 NULL이 아니다.",
+    "after": "Oracle의 현재 동작: ''는 NULL 취급, ' '(공백 한 칸)은 NULL이 아니다.",
+    "source": "https://docs.oracle.com/en/database/oracle/oracle-database/19/sqlrf/Nulls.html"
+  },
+  {
+    "id": "functions-19",
+    "field": "explanation",
+    "before": "Oracle은 길이가 0인 문자값 을 NULL로 취급한다(향후 변경 가능성 공식 고지). 다른 DBMS는 다를 수 있다. 공백 한 칸 은 빈 문자열과 다르다.",
+    "after": "Oracle은 길이가 0인 문자값 ''를 현재 NULL로 취급한다(향후 변경 가능성 공식 고지). 다른 DBMS는 다를 수 있다. 공백 한 칸 ' '은 빈 문자열과 다르다.",
+    "source": "https://docs.oracle.com/en/database/oracle/oracle-database/19/sqlrf/Nulls.html"
+  },
+  {
+    "id": "functions-20",
+    "field": "explanation",
+    "before": "모든 x가 NULL인 그룹이라면 SUM(NVL(x,0))=0이고 NVL(SUM(x),0)=0이다. 그러나 행이 0개인 집합에서 SUM(NVL(x,0))은 NULL인 반면 NVL(SUM(x),0)은 0이다.",
+    "after": "행이 있고 모든 x가 NULL인 그룹이라면 SUM(NVL(x,0))=0이고 NVL(SUM(x),0)=0이다. GROUP BY 없이 전체를 집계할 때 입력 행이 0개이면 SUM(NVL(x,0))은 NULL, NVL(SUM(x),0)은 0이다. GROUP BY로 묶을 행 자체가 없으면 결과 그룹도 없다.",
+    "source": "https://docs.oracle.com/en/database/oracle/oracle-database/19/sqlrf/Aggregate-Functions.html"
+  },
+  {
+    "id": "functions-20",
+    "field": "example",
+    "before": "-- 필터 결과 행이 0개\nSUM(NVL(x, 0)) → NULL\nNVL(SUM(x), 0) → 0",
+    "after": "-- GROUP BY 없이 전체 집계, 필터 결과 행이 0개\nSUM(NVL(x, 0)) → NULL\nNVL(SUM(x), 0) → 0",
+    "source": "https://docs.oracle.com/en/database/oracle/oracle-database/19/sqlrf/Aggregate-Functions.html"
+  },
+  {
+    "id": "group-04",
+    "field": "explanation",
+    "before": "동등 조건을 만족하는 양쪽 행만 반환한다. FK가 유일하지 않거나 조인키가 중복이면 행이 여러 개로 증식한다.",
+    "after": "조인 조건이 TRUE인 양쪽 행의 조합을 반환한다. 동등 조건뿐 아니라 부등호 등의 비동등 조건도 사용할 수 있다. 조인키가 중복이면 조건에 맞는 조합 수만큼 행이 늘어난다.",
+    "source": "https://docs.oracle.com/en/database/oracle/oracle-database/19/sqlrf/Joins.html"
+  },
+  {
+    "id": "group-07",
+    "field": "explanation",
+    "before": "A가 3행, B가 4행이면 12행을 만든다. INNER JOIN에서 조인 조건을 빠뜨려도 대량 곱집합이 발생할 수 있다.",
+    "after": "A가 3행, B가 4행이면 12행을 만든다. 쉼표 조인에서 WHERE의 조인 조건을 빠뜨리면 카티션 곱이 발생할 수 있다.",
+    "source": "https://docs.oracle.com/en/database/oracle/oracle-database/19/sqlrf/Joins.html"
+  },
+  {
+    "id": "group-12",
+    "field": "watch",
+    "before": "LEFT JOIN 미매칭을 세려면 COUNT(오른쪽의 NOT NULL 키)를 고려한다.",
+    "after": "COUNT(B.pk)는 오른쪽의 NOT NULL 키를 기준으로 매칭된 행을 센다. 결과가 0이면 해당 그룹에 매칭이 없다. 미매칭 행은 LEFT JOIN 후 B.pk IS NULL로 구분한다.",
+    "source": "https://docs.oracle.com/en/database/oracle/oracle-database/19/sqlrf/COUNT.html"
+  },
+  {
+    "id": "command-01",
+    "field": "title",
+    "before": "명령어 5종 분류",
+    "after": "SQL 명령어 분류",
+    "source": "첨부 원문의 분류와 제목 일치"
+  },
+  {
+    "id": "command-08",
+    "field": "core",
+    "before": "DDL 실행 전·후 암묵적 커밋 발생",
+    "after": "Oracle: 문법적으로 유효한 DDL 실행 전, 성공한 DDL 실행 후 암묵적 COMMIT",
+    "source": "https://docs.oracle.com/en/database/oracle/oracle-database/19/sqlrf/COMMIT.html"
+  },
+  {
+    "id": "command-08",
+    "field": "explanation",
+    "before": "Oracle에서 CREATE/ALTER/DROP/TRUNCATE 등의 DDL은 암묵적 커밋과 관련되며, 성공한 DDL은 보통 ROLLBACK으로 취소할 수 없다. 다른 DBMS와 혼동하지 않는다.",
+    "after": "Oracle은 문법적으로 유효한 DDL 실행 전에 암묵적으로 COMMIT한다. 해당 DDL 실행이 오류로 끝나더라도 이전 DML은 이미 커밋될 수 있다. DDL 실행 후에는 성공했을 때만 암묵적으로 COMMIT한다. 다른 DBMS의 동작과 혼동하지 않는다.",
+    "source": "https://docs.oracle.com/en/database/oracle/oracle-database/19/sqlrf/COMMIT.html"
+  },
+  {
+    "id": "quick-11",
+    "field": "text",
+    "before": "n개 컬럼 → ROLLUP n+1개 / CUBE 2ⁿ개 그룹 집합",
+    "after": "단순 그룹화 컬럼 n개 → ROLLUP n+1개 / CUBE 2ⁿ개 그룹 집합. 출력 행 수와는 다름.",
+    "source": "https://docs.oracle.com/en/database/oracle/oracle-database/19/sqlrf/SELECT.html"
+  }
+]
